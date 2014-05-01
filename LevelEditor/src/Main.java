@@ -19,9 +19,18 @@ import javax.swing.WindowConstants;
 
 
 public class Main {
+	private static final int TILE_WIDTH = 40;
+	private static final int TILE_HEIGHT = 30;
 	
 	public static void main(String[] args) {
-		JFrame le = new LevelEditor();
+		int w = TILE_WIDTH;
+		int h = TILE_HEIGHT;
+		if (args.length == 2) {
+			// use default values
+			w = Integer.parseInt(args[0]);
+			h = Integer.parseInt(args[1]);
+		}
+		JFrame le = new LevelEditor(w, h);
 		le.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		le.setPreferredSize(new Dimension(600, 500));
 		le.pack();
@@ -29,9 +38,9 @@ public class Main {
 	}
 }
 
+@SuppressWarnings("serial")
 class LevelEditor extends JFrame {
-	private static final int TILE_WIDTH = 20;
-	private static final int TILE_HEIGHT = 16;
+
 	
 	private static final Color WALL = Color.BLACK;
 	private static final Color ICE = Color.WHITE;
@@ -43,7 +52,8 @@ class LevelEditor extends JFrame {
 	private JButton[] buttonArray;
 	private JTextField filenameField;
 	
-	public LevelEditor() {
+	public LevelEditor(final int tileWidth, final int tileHeight) {
+		
 		// add color labels
 		JPanel colorLabels = new JPanel();
 		colorLabels.setLayout(new GridLayout(1, 4));
@@ -60,8 +70,8 @@ class LevelEditor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				StringBuilder sb = new StringBuilder();
 				sb.append(getColorNum(buttonArray[0]));
-				for (int i = 1, numTiles = TILE_WIDTH*TILE_HEIGHT; i < numTiles; ++i) {
-					sb.append(",").append(getColorNum(buttonArray[i]));
+				for (int i = 1, numTiles = tileWidth*tileHeight; i < numTiles; ++i) {
+					sb.append(", ").append(getColorNum(buttonArray[i]));
 				}
 				String csv = sb.toString();
 				String filename = filenameField.getText();
@@ -97,15 +107,16 @@ class LevelEditor extends JFrame {
 		// add ALL of the buttons
 		JPanel buttonPanel = new JPanel();
 		
-		int numTiles = TILE_HEIGHT*TILE_WIDTH;
+		int numTiles = tileWidth*tileHeight;
 		buttonArray = new JButton[numTiles];
-		buttonPanel.setLayout(new GridLayout(TILE_HEIGHT, TILE_WIDTH));
+		buttonPanel.setLayout(new GridLayout(tileHeight, tileWidth));
 		for (int i = 0; i < numTiles; ++i) {
 			JButton next = new JButton();
 			
 			
 			//Preset edges to be walls
-			if ((i < TILE_WIDTH) || (i >= numTiles - TILE_WIDTH) || (i % TILE_WIDTH == 0) || ((i+1) % TILE_WIDTH == 0)) {
+			if ((i < tileWidth) || (i >= numTiles - tileWidth) ||
+				(i % tileWidth == 0) || ((i+1) % tileWidth == 0)) {
 				next.setBackground(WALL);
 			} else {
 				next.setBackground(ICE);
