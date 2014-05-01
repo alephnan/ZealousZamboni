@@ -29,11 +29,11 @@ package
 				1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 				1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 				1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1,
-				1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1,
 				1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 				1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
 				1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
@@ -63,8 +63,9 @@ package
 			add(level);
 			player = new Zamboni(FlxG.width / 2 - 5);
 			addUnit(player);
-			var skater:Skater = new Skater(50,25);
-			addUnit(skater);
+			addUnit(new Skater(50, 25));
+			addUnit(new Skater(128,192));
+			FlxG.mouse.show();
 		}
 		
 		//Adds a ZzUnit to the appropriate lists
@@ -73,12 +74,17 @@ package
 			movables.add(z);
 			activeSprites.add(z);
 			add(z);
+			if (z is Skater) {
+				add(Skater(z).getTrail());
+				activeSprites.add(Skater(z).getTrail());
+			}
 		}
 		
 		override public function update():void
 		{
-			player.acceleration.x = 0;
+			/*player.acceleration.x = 0;
 			player.acceleration.y = 0;
+			FlxG.mouse.getWorldPosition
 			if(FlxG.keys.LEFT)
 				player.acceleration.x = -player.maxVelocity.x*4;
 			if(FlxG.keys.RIGHT)
@@ -86,20 +92,47 @@ package
 			if (FlxG.keys.UP)
 				player.acceleration.y = -player.maxVelocity.y * 4;
 			if (FlxG.keys.DOWN)
-				player.acceleration.y = player.maxVelocity.y * 4;
+				player.acceleration.y = player.maxVelocity.y * 4;*/
+			var mouse:FlxPoint = FlxG.mouse.getWorldPosition(); //mouse coordinates
+			
+			var z:FlxPoint = player.getMidpoint();	//player coordinates
+			var n:Number = 5;	//tolerance in pixels
+			if(FlxG.mouse.pressed()){
+				if (mouse.x < z.x - n) {
+					player.velocity.x = -player.maxVelocity.x;
+				}else if (mouse.x - n > z.x) {
+					player.velocity.x = player.maxVelocity.x;
+				}else {
+					player.velocity.x = 0;
+				}
+				if (mouse.y < z.y - n) {
+					player.velocity.y = -player.maxVelocity.y;
+				}else if (mouse.y - n > z.y) {
+					player.velocity.y = player.maxVelocity.y;
+				}else {
+					player.velocity.y = 0;
+				}
+			}else {
+				player.velocity.x = 0;
+				player.velocity.y = 0;
+			}
 			
 			super.update();
-			
+			for each(var m:FlxBasic in members) {
+				if (!m.exists) {
+					remove(m);
+				}
+			}
 			FlxG.collide(level, activeSprites, onCollision);
 			FlxG.collide(activeSprites, activeSprites);
 		}
 		
 		private function onCollision(a:FlxObject, b:FlxObject) : void {
-			if (a is ZzUnit) {
-				ZzUnit(a).onCollision(b);
+			if (a is ICollidable) {
+				ICollidable(a).onCollision(b);
 			}
-			if (b is ZzUnit) {
-				ZzUnit(b).onCollision(a);
+			if (b is ICollidable) {
+				ICollidable(b).onCollision(a);
 			}
 		}
 		

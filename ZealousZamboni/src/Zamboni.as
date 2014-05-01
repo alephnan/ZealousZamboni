@@ -2,6 +2,8 @@ package
 {
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
+	import org.flixel.*;
+	import flash.utils.getQualifiedClassName;
 	
 	/**
 	 * ...
@@ -17,6 +19,15 @@ package
 			maxVelocity.y = 80;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
+		}
+		
+		override public function onCollision(other:FlxObject) : void {
+			if (other is TrailTile) {
+				trace("Ran over by zamboni");
+				other.kill()
+			}else {
+				trace("Zamboni collided with "+getQualifiedClassName(other));
+			}
 		}
 	}
 	

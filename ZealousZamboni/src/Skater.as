@@ -17,9 +17,11 @@ package
 		private var goingUp:Boolean = false;
 		private var goingDown:Boolean = false;
 		private var isControlled:Boolean = false;
+		private var trail:Trail;
 		
 		public function Skater(X:Number, Y:Number) {
 			super(X, Y);
+			trail = new Trail();
 			//place holder stuff
 			makeGraphic(10,12,0xff1111aa);
 			maxVelocity.x = 80;
@@ -27,6 +29,10 @@ package
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			goingRight = true;
+		}
+		
+		public function getTrail() : Trail {
+			return trail;
 		}
 		
 		override public function update() : void {
@@ -46,6 +52,8 @@ package
 				velocity.x = 0;
 				velocity.y = -maxVelocity.y;
 			}
+			if(!FlxG.overlap(trail, this))
+				trail.addTile(this.getMidpoint().x, this.getMidpoint().y);
 		}
 		
 		
@@ -57,7 +65,7 @@ package
 			rotate();
 		}
 		
-		public function rotate() {
+		public function rotate() : void{
 			if (goingLeft) {
 				goingLeft = false;
 				goingDown = true;

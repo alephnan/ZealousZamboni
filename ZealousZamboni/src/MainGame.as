@@ -10,7 +10,7 @@ package
 	{
 		public function MainGame()
 		{
-			super(320,240,PlayState,2);
+			super(320,240,StartState,2);
 		}
 	}
 	

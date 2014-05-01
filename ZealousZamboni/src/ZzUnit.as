@@ -11,7 +11,7 @@ package
 	 * 
 	 * Parent class for anything that has special collision and/or path finding logic
 	 */
-	public class ZzUnit extends FlxSprite 
+	public class ZzUnit extends FlxSprite implements ICollidable
 	{
 		public function ZzUnit(X:Number, Y:Number) {
 			super(X, Y);
