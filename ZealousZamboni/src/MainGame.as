@@ -1,6 +1,6 @@
-package 
+package
 {
-	import org.flixel.*;
+	import org.flixel.FlxGame;
 	/**
 	 * ...
 	 * @author Kenny
@@ -10,7 +10,7 @@ package
 	{
 		public function MainGame()
 		{
-			super(640,480,StartMenu,1);
+			super(320,240,PlayState,2);
 		}
 	}
 	
