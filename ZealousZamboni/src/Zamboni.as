@@ -22,12 +22,7 @@ package
 		}
 		
 		override public function onCollision(other:FlxObject) : void {
-			if (other is TrailTile) {
-				trace("Ran over by zamboni");
-				other.kill()
-			}else {
-				trace("Zamboni collided with "+getQualifiedClassName(other));
-			}
+			
 		}
 	}
 	

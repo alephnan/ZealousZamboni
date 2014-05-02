@@ -17,10 +17,7 @@ package
 		
 		public function onCollision(other:FlxObject) : void {
 			if (other is Zamboni) {
-				trace("Ran over by zamboni");
 				this.kill();
-			}else {
-				trace("Ran over by " + getQualifiedClassName(other));
 			}
 		}
 		

@@ -100,7 +100,7 @@ package
 				}
 			}
 			FlxG.collide(level, activeSprites, onCollision);
-			FlxG.collide(activeSprites, activeSprites);
+			FlxG.collide(activeSprites, activeSprites, onCollision);
 		}
 		
 		private function onCollision(a:FlxObject, b:FlxObject) : void {

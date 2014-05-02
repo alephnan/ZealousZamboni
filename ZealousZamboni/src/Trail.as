@@ -20,7 +20,7 @@ package
 		override public function update() : void {
 			super.update();
 			for each(var m:FlxBasic in members) {
-				if (!m.exists) {
+				if (m != null && !m.exists) {
 					remove(m);
 				}
 			}
