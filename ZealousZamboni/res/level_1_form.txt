@@ -1,0 +1,54 @@
+#Number of player lives:
+2
+#Zamboni start positionX:
+4
+#Zamboni start positionY:
+4
+#Number of skaters:
+2
+#####Skater1#####
+#Skater path type:(LEFT=0 is only option right now)
+0
+#Skater entrance (NORTH=0 or SOUTH=1):
+0
+#Skater time on ice (seconds):
+15
+#####Skater2#####
+#Skater path type:(LEFT=0 is only option right now)
+0
+#Skater entrance (NORTH=0 or SOUTH=1):
+1
+#Skater time on ice (seconds):
+10
+#Number of powerups:
+2
+#####Powerup1#####
+#Powerup positionX:
+10
+#Powerup positionY:
+20
+#Powerup type (LAWYER=0,HOURGLASS=1,BIGZAMBONI=2):
+0
+#Powerup time on ice (seconds):
+7
+#####Powerup2#####
+#Powerup positionX:
+8
+#Powerup positionY:
+8
+#Powerup type (LAWYER=0,HOURGLASS=1,BIGZAMBONI=2):
+1
+#Powerup time on ice (seconds):
+5
+#Number of zombies:
+2
+#####Zombie1#####
+#Zombie start positionX:
+10
+#Zombie start positionY:
+25
+#####Zombie2#####
+#Zombie start positionX:
+5
+#Zombie start positionY:
+15
