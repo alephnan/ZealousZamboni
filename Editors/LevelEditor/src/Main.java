@@ -41,7 +41,7 @@ public class Main {
 class LevelEditor extends JFrame {
 	
 	// This is the path to the resources directory in our zamboni code
-	public static final String PATH = "ZealousZamboni/res/";
+	public static final String PATH = "../ZealousZamboni/res/";
 	
 	// GUI strings
 	private static final String FILEMSG = "enter filename here";

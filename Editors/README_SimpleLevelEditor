@@ -3,8 +3,8 @@ SimpleLevelEditor.jar:
 Provides a GUI to create levels for our game.  The editor allows you to create a level, and then writes that level to the Zamboni resource folder in the proper CSV format needed by FlxTilemap.
 
 - Requirements:
-    - Jar file must be in "main" directory s.t. the path to the Zealous
-      Zamboni resources file is: "./ZealousZamboni/res"
+    - Jar file must be in "Editors" directory s.t. the path to the Zealous
+      Zamboni resources file is: "../ZealousZamboni/res"
   
       You can change this path by editing the PATH variable in Main.java in
       the Level Editor src code folder, and recreating the jar file (just
