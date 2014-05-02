@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -69,9 +70,12 @@ class LevelEditor extends JFrame {
 		doneButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				StringBuilder sb = new StringBuilder();
-				sb.append(getColorNum(buttonArray[0]));
-				for (int i = 1, numTiles = tileWidth*tileHeight; i < numTiles; ++i) {
-					sb.append(", ").append(getColorNum(buttonArray[i]));
+				for (int i = 0, numTiles = tileWidth*tileHeight; i < numTiles; ++i) {
+					sb.append(getColorNum(buttonArray[i]));
+					if ((i + 1) % tileWidth == 0)
+						sb.append("\n");
+					else
+						sb.append(", ");
 				}
 				String csv = sb.toString();
 				String filename = filenameField.getText();
@@ -113,7 +117,6 @@ class LevelEditor extends JFrame {
 		for (int i = 0; i < numTiles; ++i) {
 			JButton next = new JButton();
 			
-			
 			//Preset edges to be walls
 			if ((i < tileWidth) || (i >= numTiles - tileWidth) ||
 				(i % tileWidth == 0) || ((i+1) % tileWidth == 0)) {
@@ -144,9 +147,9 @@ class LevelEditor extends JFrame {
 	}
 	
 	private int getColorNum(JButton b) {
-		if (b.getBackground().equals(WALL)) {
+		if (b.getBackground().equals(ICE)) {
 			return 0;
-		} else if (b.getBackground().equals(ICE)) {
+		} else if (b.getBackground().equals(WALL)) {
 			return 1;
 		} else if (b.getBackground().equals(BLOCK)) {
 			return 2;
