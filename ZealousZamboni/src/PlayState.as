@@ -11,8 +11,8 @@ package
 	public class PlayState extends FlxState
 	{
 		[Embed(source = "../res/tiles.jpg")] public var TileSheet:Class;
-		[Embed(source = '../res/level1.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
-		[Embed(source = "../res/level_1.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
+		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
+		[Embed(source = "../res/level_0.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
 		[Embed(source = "../res/xml_test.xml", mimeType = "application/octet-stream")] public var XmlTest:Class;
 		
 		private static const DEBUG:Boolean = true;
