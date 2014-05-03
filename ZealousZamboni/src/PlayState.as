@@ -23,11 +23,11 @@ package
 		private static const TILE_SIZE:int = 8;
 
 		//Set of all blocks in the level
-		private var level:FlxTilemap;
+		public var level:FlxTilemap;
 		
 		//Set of all sprites active in the level (including the player)
 		//TODO Decide if we should just add sprites directly to this?
-		private var activeSprites:FlxGroup;
+		public var activeSprites:FlxGroup;
 		
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
 		private var player:Zamboni;
@@ -163,7 +163,7 @@ package
 				var skateTime:int = s.time;
 				if (DEBUG)
 					trace("Skater time on ice: " + skateTime);
-				addUnit(new Skater(skaterX, skaterY));
+				addUnit(new Skater(skaterX, skaterY, skateTime));
 			}
 			
 			// Powerups: coordinates, time, and type

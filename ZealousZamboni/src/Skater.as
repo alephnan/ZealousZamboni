@@ -6,6 +6,9 @@ package
 	import org.flixel.FlxTilemap;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxG;
+	import org.flixel.FlxTimer;
+	import org.flixel.FlxPath;
+	import org.flixel.plugin.photonstorm.FlxBar;
 	
 	/**
 	 * ...
@@ -22,13 +25,27 @@ package
 		private var isControlled:Boolean = false;
 		private var trail:Trail;
 		private var lastTrailTile:FlxPoint;
+		//The total time that this skater should skate for in seconds
+		private var timeToSkate:int;
+		//The internal timer that tracks how long to skate for
+		public var timer:FlxTimer;
+		//The progress bar for displaying how much time is left
+		private var progress:FlxBar;
+		//A value counting up to timeToSkate
+		public var progressTime:int;
 		
-		public function Skater(X:Number, Y:Number) {
+		public function Skater(X:Number, Y:Number, time:int) {
 			super(X, Y);
+			timeToSkate = time;
+			timer = new FlxTimer();
+			timer.start(time, 1, timerUp);
+			progress = new FlxBar(x, y, 1, 48, 8, this, "progressTime", 0, time);
+			progressTime = 0;
+			PlayState(FlxG.state).add(progress);
+			progress.trackParent(0, -5);
 			lastTrailTile = new FlxPoint(X, Y);
 			trail = new Trail();
 			//place holder stuff
-			//makeGraphic(10,12,0xff1111aa);
 			loadGraphic(skaterPNG, true, true, 32, 32, true);
 			var o:Number = 0;	//offset for specifying animations
 			addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
@@ -46,37 +63,50 @@ package
 			this.play("walkS", true);
 		}
 		
+		
 		public function getTrail() : Trail {
 			return trail;
 		}
 		
 		override public function update() : void {
-			if (goingLeft) {
-				velocity.x = -maxVelocity.x;
-				velocity.y = 0;
-				this.play("walkW", false);
-			}
-			if (goingRight) {
-				velocity.x = maxVelocity.x;
-				velocity.y = 0;
-				this.play("walkE", false);
-			}
-			if (goingDown) {
-				velocity.x = 0;
-				velocity.y = maxVelocity.y;
-				this.play("walkS", false);
-			}
-			if (goingUp) {
-				velocity.x = 0;
-				velocity.y = -maxVelocity.y;
-				this.play("walkN", false);
-			}
-			if (Math.abs(x - lastTrailTile.x) > 7 || Math.abs(y - lastTrailTile.y) > 7) {
-				trail.addTile(this.getMidpoint().x, this.getMidpoint().y);
-				lastTrailTile.x = x;
-				lastTrailTile.y = y;
+			super.update();
+			if(!timer.finished){
+				if (goingLeft) {
+					velocity.x = -maxVelocity.x;
+					velocity.y = 0;
+					this.play("walkW", false);
+				}
+				if (goingRight) {
+					velocity.x = maxVelocity.x;
+					velocity.y = 0;
+					this.play("walkE", false);
+				}
+				if (goingDown) {
+					velocity.x = 0;
+					velocity.y = maxVelocity.y;
+					this.play("walkS", false);
+				}
+				if (goingUp) {
+					velocity.x = 0;
+					velocity.y = -maxVelocity.y;
+					this.play("walkN", false);
+				}
+				if (Math.abs(x - lastTrailTile.x) > 7 || Math.abs(y - lastTrailTile.y) > 7) {
+					trail.addTile(this.getMidpoint().x, this.getMidpoint().y);
+					lastTrailTile.x = x;
+					lastTrailTile.y = y;
+				}
+				progressTime = timeToSkate-timer.timeLeft;
+			}else {
+				progressTime = timeToSkate;
+				this.allowCollisions = 0;
 			}
 			
+		}
+		
+		private function timerUp(t:FlxTimer) : void {
+			var p:FlxPath = PlayState(FlxG.state).level.findPath(getMidpoint(), new FlxPoint(32, 32));
+			this.followPath(p, 100);
 		}
 		
 		
