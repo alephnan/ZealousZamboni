@@ -7,9 +7,11 @@ package
 	 * ...
 	 * @author Kenny
 	 * This is the actual in-game playing state that controls most of the game
+	 * Other components can access it via the field FlxG.state when this is the current state
 	 */
 	public class PlayState extends FlxState
 	{
+		//Embed level assets-- this should probably be moved to another file later
 		[Embed(source = "../res/tiles.jpg")] public var TileSheet:Class;
 		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
 		[Embed(source = "../res/level_0.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
@@ -24,10 +26,13 @@ package
 		private var level:FlxTilemap;
 		
 		//Set of all sprites active in the level (including the player)
+		//TODO Decide if we should just add sprites directly to this?
 		private var activeSprites:FlxGroup;
-		private var player:Zamboni;
-		private var movables:ArrayList;
 		
+		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
+		private var player:Zamboni;
+		
+		//Empty constructor-- most of the logic happens in the create() function
 		public function PlayState() {
 			
 		}
@@ -38,7 +43,7 @@ package
 			level.loadMap(new Level1Csv(), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 1);
 			add(level);
 			activeSprites = new FlxGroup();
-			movables = new ArrayList();
+			add(activeSprites);
 			parseXML();
 			FlxG.mouse.show();
 		}
@@ -46,17 +51,16 @@ package
 		//Adds a ZzUnit to the appropriate lists
 		//This should be called only when the target unit should be placed in the game
 		public function addUnit(z:ZzUnit) : void {
-			movables.add(z);
 			activeSprites.add(z);
-			add(z);
 			if (z is Skater) {
-				add(Skater(z).getTrail());
 				activeSprites.add(Skater(z).getTrail());
 			}
 		}
 		
 		override public function update():void
 		{
+			super.update();
+			//Old keyboard control code
 			/*player.acceleration.x = 0;
 			player.acceleration.y = 0;
 			FlxG.mouse.getWorldPosition
@@ -72,6 +76,7 @@ package
 			
 			var z:FlxPoint = player.getMidpoint();	//player coordinates
 			var n:Number = 5;	//tolerance in pixels
+			//Logic for causing player fo follow mouse
 			if(FlxG.mouse.pressed()){
 				if (mouse.x < z.x - n) {
 					player.velocity.x = -player.maxVelocity.x;
@@ -92,16 +97,15 @@ package
 				player.velocity.y = 0;
 			}
 			
-			super.update();
-			for each(var m:FlxBasic in members) {
-				if (!m.exists) {
-					remove(m);
-				}
-			}
+			//Collide all sprites with the level tiles
 			FlxG.collide(level, activeSprites, onCollision);
+			//Collide all sprites with each other
 			FlxG.collide(activeSprites, activeSprites, onCollision);
 		}
 		
+		//Callback function for when two sprites collide
+		//The purpose of this function is to call a function on the objects in question
+		//if they implement the right interface
 		private function onCollision(a:FlxObject, b:FlxObject) : void {
 			if (a is ICollidable) {
 				ICollidable(a).onCollision(b);
