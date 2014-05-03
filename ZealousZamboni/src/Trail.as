@@ -14,7 +14,14 @@ package
 	public class Trail extends FlxGroup
 	{
 		public function addTile(X:Number, Y:Number) : void {
-			add(new TrailTile(X, Y));
+			//add(new TrailTile(X, Y));
+			var tile:TrailTile = recycle() as TrailTile;
+			if (tile == null) {
+				tile = new TrailTile(X, Y);
+				add(tile);
+			}else{
+				tile.reset(X, Y);
+			}
 		}
 		
 		override public function update() : void {

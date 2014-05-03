@@ -1,6 +1,7 @@
 package
 {
 	import org.flixel.FlxObject;
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTilemap;
 	import org.flixel.FlxGroup;
@@ -20,9 +21,11 @@ package
 		private var goingDown:Boolean = false;
 		private var isControlled:Boolean = false;
 		private var trail:Trail;
+		private var lastTrailTile:FlxPoint;
 		
 		public function Skater(X:Number, Y:Number) {
 			super(X, Y);
+			lastTrailTile = new FlxPoint(X, Y);
 			trail = new Trail();
 			//place holder stuff
 			//makeGraphic(10,12,0xff1111aa);
@@ -68,8 +71,12 @@ package
 				velocity.y = -maxVelocity.y;
 				this.play("walkN", false);
 			}
-			if(!FlxG.overlap(trail, this))
+			if (Math.abs(x - lastTrailTile.x) > 7 || Math.abs(y - lastTrailTile.y) > 7) {
 				trail.addTile(this.getMidpoint().x, this.getMidpoint().y);
+				lastTrailTile.x = x;
+				lastTrailTile.y = y;
+			}
+			
 		}
 		
 		
