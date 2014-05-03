@@ -12,6 +12,10 @@ package
 	{
 		[Embed(source = "../res/tiles.jpg")] public var TileSheet:Class;
 		[Embed(source = '../res/level1.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
+		[Embed(source = "../res/level_1.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
+		[Embed(source = "../res/xml_test.xml", mimeType = "application/octet-stream")] public var XmlTest:Class;
+		
+		private static const DEBUG:Boolean = true;
 		
 		//Size of tiles in pixels
 		private static const TILE_SIZE:int = 8;
@@ -30,17 +34,12 @@ package
 		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
-			//TODO Replace the following with something that actually loads levels
 			level = new FlxTilemap();
-			//level.loadMap(FlxTilemap.arrayToCSV(data, 40), FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
 			level.loadMap(new Level1Csv(), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 1);
+			add(level);
 			activeSprites = new FlxGroup();
 			movables = new ArrayList();
-			add(level);
-			player = new Zamboni(FlxG.width / 2 - 5);
-			addUnit(player);
-			addUnit(new Skater(50, 25));
-			addUnit(new Skater(128,192));
+			parseXML();
 			FlxG.mouse.show();
 		}
 		
@@ -112,6 +111,89 @@ package
 			}
 		}
 		
+		private function parseXML():void {
+			var xml:XML = new XML(new Level1XML());
+			
+			// Get assumed framewidth and frameheight
+			var assumedWidth:int = parseInt(xml.@width);
+			var assumedHeight:int = parseInt(xml.@height);
+			if (DEBUG)
+				trace("assumed framewidth = " + assumedWidth + ", assumed frameheight = " + assumedHeight);
+			
+			// If actual w/h != assumed, "resize" level
+			var resize:Boolean = (assumedWidth != FlxG.width) || (assumedHeight != FlxG.height);
+			var resizeX:Number = 1;
+			var resizeY:Number = 1;
+			if (resize) {
+				resizeX = Number(FlxG.width) / Number(assumedWidth);
+				resizeY = Number(FlxG.height) / Number(assumedHeight);
+			}
+			
+			// Player lives
+			var lives:int = parseInt(xml.@lives, 10);
+			if (DEBUG)
+				trace("Number of player lives: " + lives);
+			
+			// Zamboni starting coordinates
+			var zamboniX:int = parseInt(xml.zamboni.@x);
+			var zamboniY:int = parseInt(xml.zamboni.@y);
+			if (DEBUG)
+				trace("zamboni x = " + zamboniX + ", zamboni y = " + zamboniY);
+			if (resize) {
+				zamboniX *= resizeX;
+				zamboniY *= resizeY;
+			}
+			player = new Zamboni(zamboniX, zamboniY);
+			addUnit(player);
+			
+			// Skaters: coordinates and time
+			for each (var s:XML in xml.skater) {
+				var skaterX:int = s.@x;
+				var skaterY:int = s.@y;
+				if (DEBUG)
+					trace("skater x = " + skaterX + ", skater y = " + skaterY);
+				if (resize) {
+					skaterX *= resizeX;
+					skaterY *= resizeY;
+				}
+				var skateTime:int = s.time;
+				if (DEBUG)
+					trace("Skater time on ice: " + skateTime);
+				addUnit(new Skater(skaterX, skaterY));
+			}
+			
+			// Powerups: coordinates, time, and type
+			for each (var p:XML in xml.powerup) {
+				var powerupX:int = p.@x;
+				var powerupY:int = p.@y;
+				if (DEBUG)
+					trace("powerup x = " + powerupX + ", powerup y = " + powerupY);
+				if (resize) {
+					powerupX *= resizeX;
+					powerupY *= resizeY;
+				}
+				var powerupTime:int = p.time;
+				if (DEBUG)
+					trace("Powerup time on ice: " + powerupTime);
+					
+				var powerupType:String = p.type;
+				if (DEBUG)
+					trace("Powerup type: " + powerupType);
+			}
+			
+			// Zombies: coordinates
+			for each (var z:XML in xml.zombie) {
+				var zombieX:int = z.@x;
+				var zombieY:int = z.@y;
+				if (DEBUG)
+					trace("zombie x = " + zombieX + ", zombie y = " + zombieY);
+				if (resize) {
+					zombieX *= resizeX;
+					zombieY *= resizeY;
+				}
+			}
+			
+		}
 	}
 	
 }

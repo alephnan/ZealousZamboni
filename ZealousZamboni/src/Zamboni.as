@@ -10,9 +10,9 @@ package
 	 * @author Kenny
 	 */
 	public class Zamboni extends ZzUnit 
-	{
-		public function Zamboni(startX:Number) {
-			super(startX, 0);
+	{	
+		public function Zamboni(startX:Number, startY:Number) {
+			super(startX, startY);
 			//place holder stuff
 			makeGraphic(10,12,0xffaa1111);
 			maxVelocity.x = 80;
