@@ -12,8 +12,8 @@ public class Main {
 	// This is the path to the resources directory in our zamboni code
 	public static final String PATH = "../../ZealousZamboni/res/";
 	// Default frame size (change as needed)
-	private static int frameWidth = 320;
-	private static int frameHeight = 240;
+	private static int frameWidth = 640;
+	private static int frameHeight = 480;
 	
 	public static void main(String[] args) {
 		if (args.length != 0) {
@@ -118,6 +118,9 @@ public class Main {
 		System.out.print("Enter the skater starting Y coordinate [assumes (" + frameWidth + ", " + frameHeight + ")]:");
 		int y = readInt(input, "(Example: 10)");
 		sb.append("\t<skater x=\"" + x + "\" y=\"" + y + "\">\n");
+		System.out.print("Enter skater start time in seconds: ");
+		x = readInt(input, "(Example: 5)");
+		sb.append("\t\t<start>" + x + "</start>\n");
 		System.out.print("Enter skater time on ice in seconds: ");
 		x = readInt(input, "(Example: 15)");
 		sb.append("\t\t<time>" + x + "</time>\n");
