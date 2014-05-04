@@ -26,7 +26,7 @@ package
 		}
 		
 		override public function update() : void {
-			if(FlxG.mouse.pressed){
+			if(FlxG.mouse.pressed()){
 				this.angle = 180 / Math.PI * Math.atan2(FlxG.mouse.x - x, y - FlxG.mouse.y);
 			}
 		}

@@ -116,7 +116,7 @@ package
 		}
 		
 		private function parseXML():void {
-			var xml:XML = new XML(new Level1XML());
+			var xml:XML = new XML(new XmlTest());
 			
 			// Get assumed framewidth and frameheight
 			var assumedWidth:int = parseInt(xml.@width);
@@ -160,6 +160,9 @@ package
 					skaterX *= resizeX;
 					skaterY *= resizeY;
 				}
+				var startTime:int = s.start;
+				if (DEBUG)
+					trace("Skater start time: " + startTime);
 				var skateTime:int = s.time;
 				if (DEBUG)
 					trace("Skater time on ice: " + skateTime);
