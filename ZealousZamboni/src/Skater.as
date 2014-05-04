@@ -38,10 +38,8 @@ package
 			super(X, Y);
 			timeToSkate = time;
 			timer = new FlxTimer();
-			timer.start(time, 1, timerUp);
 			progress = new FlxBar(x, y, 1, 48, 8, this, "progressTime", 0, time);
 			progressTime = 0;
-			PlayState(FlxG.state).add(progress);
 			progress.trackParent(0, -5);
 			lastTrailTile = new FlxPoint(X, Y);
 			trail = new Trail();
@@ -63,6 +61,12 @@ package
 			this.play("walkS", true);
 		}
 		
+		
+		override public function postConstruct(addDependency : Function) : void {
+			timer.start(timeToSkate, 1, timerUp);
+			addDependency(progress);
+			addDependency(trail);
+		}
 		
 		public function getTrail() : Trail {
 			return trail;
