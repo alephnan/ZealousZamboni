@@ -11,16 +11,9 @@ package
 	 */
 	public class PlayState extends FlxState
 	{
-		//Embed level assets-- this should probably be moved to another file later
-		[Embed(source = "../res/tiles.jpg")] public var TileSheet:Class;
-		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
-		[Embed(source = "../res/level_0.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
-		[Embed(source = "../res/xml_test.xml", mimeType = "application/octet-stream")] public var XmlTest:Class;
+		public static const DEBUG:Boolean = true;
 		
-		private static const DEBUG:Boolean = true;
-		
-		//Size of tiles in pixels
-		private static const TILE_SIZE:int = 8;
+		private var levelLoader:LevelLoader;
 
 		//Set of all blocks in the level
 		public var level:FlxTilemap;
@@ -34,29 +27,50 @@ package
 		
 		//Empty constructor-- most of the logic happens in the create() function
 		public function PlayState() {
-			
+			levelLoader = new LevelLoader();
+		}
+		
+		/**
+		 * Queues up the given unit to be added to this after the given number of seconds
+		 *  This will also invoke the postConstruct method on the unit
+		 * @param	s the unit to add
+		 * @param	time the amount of seconds to wait before adding the unit
+		 */
+		public function addUnitDelayed(s:ZzUnit, time:Number) : void {
+			var t:FlxTimer = new FlxTimer();
+			t.start(time, 1, function() : void {
+				addActiveUnit(s);
+				s.postConstruct(addDep);
+			});
 		}
 		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
-			level = new FlxTilemap();
-			level.loadMap(new Level1Csv(), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 1);
-			add(level);
 			activeSprites = new FlxGroup();
+			levelLoader.loadLevel("level0", addUnitDelayed, DEBUG);
+			level = levelLoader.getTilemap();
+			add(level);
+			//activeSprites.add(levelLoader.getSkaters());
+			activeSprites.add(levelLoader.getPlayer());
 			add(activeSprites);
-			parseXML();
+			player = levelLoader.getPlayer();
 			FlxG.mouse.show();
 		}
 		
-		//Adds a ZzUnit to the appropriate lists
-		//This should be called only when the target unit should be placed in the game
-		public function addUnit(z:ZzUnit) : void {
-			activeSprites.add(z);
-			if (z is Skater) {
-				activeSprites.add(Skater(z).getTrail());
-			}
+		private function addDep(o:FlxBasic) : void {
+			//problem: adds before tilemap
+			add(o);
+			trace("added obj "+o);
 		}
 		
+		//Adds a unit to the active set of sprites
+		//This is provided as a convenience for any sprites that have "sub sprites" such as skaters that have trails
+		public function addActiveUnit(u:FlxBasic) : void {
+			activeSprites.add(u);
+		}
+		
+		//This is the main function that causes stuff to actually happen in the game
+		//It is called periodically by some higher power
 		override public function update():void
 		{
 			super.update();
@@ -113,93 +127,6 @@ package
 			if (b is ICollidable) {
 				ICollidable(b).onCollision(a);
 			}
-		}
-		
-		private function parseXML():void {
-			var xml:XML = new XML(new XmlTest());
-			
-			// Get assumed framewidth and frameheight
-			var assumedWidth:int = parseInt(xml.@width);
-			var assumedHeight:int = parseInt(xml.@height);
-			if (DEBUG)
-				trace("assumed framewidth = " + assumedWidth + ", assumed frameheight = " + assumedHeight);
-			
-			// If actual w/h != assumed, "resize" level
-			var resize:Boolean = (assumedWidth != FlxG.width) || (assumedHeight != FlxG.height);
-			var resizeX:Number = 1;
-			var resizeY:Number = 1;
-			if (resize) {
-				resizeX = Number(FlxG.width) / Number(assumedWidth);
-				resizeY = Number(FlxG.height) / Number(assumedHeight);
-			}
-			
-			// Player lives
-			var lives:int = parseInt(xml.@lives, 10);
-			if (DEBUG)
-				trace("Number of player lives: " + lives);
-			
-			// Zamboni starting coordinates
-			var zamboniX:int = parseInt(xml.zamboni.@x);
-			var zamboniY:int = parseInt(xml.zamboni.@y);
-			if (DEBUG)
-				trace("zamboni x = " + zamboniX + ", zamboni y = " + zamboniY);
-			if (resize) {
-				zamboniX *= resizeX;
-				zamboniY *= resizeY;
-			}
-			player = new Zamboni(zamboniX, zamboniY);
-			addUnit(player);
-			
-			// Skaters: coordinates and time
-			for each (var s:XML in xml.skater) {
-				var skaterX:int = s.@x;
-				var skaterY:int = s.@y;
-				if (DEBUG)
-					trace("skater x = " + skaterX + ", skater y = " + skaterY);
-				if (resize) {
-					skaterX *= resizeX;
-					skaterY *= resizeY;
-				}
-				var startTime:int = s.start;
-				if (DEBUG)
-					trace("Skater start time: " + startTime);
-				var skateTime:int = s.time;
-				if (DEBUG)
-					trace("Skater time on ice: " + skateTime);
-				addUnit(new Skater(skaterX, skaterY, skateTime));
-			}
-			
-			// Powerups: coordinates, time, and type
-			for each (var p:XML in xml.powerup) {
-				var powerupX:int = p.@x;
-				var powerupY:int = p.@y;
-				if (DEBUG)
-					trace("powerup x = " + powerupX + ", powerup y = " + powerupY);
-				if (resize) {
-					powerupX *= resizeX;
-					powerupY *= resizeY;
-				}
-				var powerupTime:int = p.time;
-				if (DEBUG)
-					trace("Powerup time on ice: " + powerupTime);
-					
-				var powerupType:String = p.type;
-				if (DEBUG)
-					trace("Powerup type: " + powerupType);
-			}
-			
-			// Zombies: coordinates
-			for each (var z:XML in xml.zombie) {
-				var zombieX:int = z.@x;
-				var zombieY:int = z.@y;
-				if (DEBUG)
-					trace("zombie x = " + zombieX + ", zombie y = " + zombieY);
-				if (resize) {
-					zombieX *= resizeX;
-					zombieY *= resizeY;
-				}
-			}
-			
 		}
 	}
 	

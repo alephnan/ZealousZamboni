@@ -17,6 +17,15 @@ package
 			super(X, Y);
 		}
 		
+		/**
+		 * FUnction to be called upon creation of a ZzUnit
+		 * This takes a function that adds other units to the stage
+		 * @param	addDependency
+		 */
+		public function postConstruct(addDependency:Function) : void {
+			
+		}
+		
 		public function setNextMove(level:FlxTilemap, entities:FlxGroup) : void {
 			
 		}
