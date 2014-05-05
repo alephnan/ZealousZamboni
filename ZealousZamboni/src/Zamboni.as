@@ -33,10 +33,6 @@ package
 		}
 		
 		override public function update() : void {
-<<<<<<< HEAD
-			if(FlxG.mouse.pressed()){
-				this.angle = 180 / Math.PI * Math.atan2(FlxG.mouse.x - x, y - FlxG.mouse.y);
-=======
 			if (FlxG.mouse.pressed()) {
 				//Old code that rotated in 360 degree coords
 				//this.angle = 180 / Math.PI * Math.atan2(FlxG.mouse.x - x, y - FlxG.mouse.y);
@@ -58,7 +54,6 @@ package
 					this.angle = 0;
 					play("walkE");
 				}
->>>>>>> 893e6c9bb2c55dd0e513c699e5da35add7614ac5
 			}
 			
 			
