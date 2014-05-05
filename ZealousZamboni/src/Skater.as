@@ -32,15 +32,17 @@ package
 		//The progress bar for displaying how much time is left
 		private var progress:FlxBar;
 		//A value counting up to timeToSkate
-		public var progressTime:int;
+		public var progressTime:Number;
 		
 		public function Skater(X:Number, Y:Number, time:int) {
 			super(X, Y);
 			timeToSkate = time;
 			timer = new FlxTimer();
 			progress = new FlxBar(x, y, 1, 48, 8, this, "progressTime", 0, time);
-			progressTime = 0;
+			progressTime = 1;
 			progress.trackParent(0, -5);
+			progress.createFilledBar(0xA0112080,0xF060A0FF, true, 0xff000000);
+			progress.update();
 			lastTrailTile = new FlxPoint(X, Y);
 			trail = new Trail();
 			//place holder stuff
@@ -103,9 +105,9 @@ package
 				progressTime = timeToSkate-timer.timeLeft;
 			}else {
 				progressTime = timeToSkate;
-				this.allowCollisions = 0;
 				if (this.pathSpeed == 0) {
 					exists = false;
+					progress.exists = false;
 					PlayState(FlxG.state).skaterComplete(this);
 				}
 			}
@@ -114,6 +116,9 @@ package
 		
 		private function timerUp(t:FlxTimer) : void {
 			var p:FlxPath = PlayState(FlxG.state).level.findPath(getMidpoint(), PlayState(FlxG.state).getNearestEntrance(getMidpoint()));
+			this.allowCollisions = 0;
+			progress.createFilledBar(0xFFFFFF00,0xFFFFFF00, true, 0xff000000);
+			progress.update();
 			this.followPath(p, 100);
 		}
 		
