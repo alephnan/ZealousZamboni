@@ -15,6 +15,9 @@ package
 		//Size of tiles in pixels
 		public static const TILE_SIZE:int = 8;
 		
+		//Tile index of entrance tiles
+		public static const ENTRANCE_TILE_INDEX:uint = 3;
+		
 		//Embed level assets-- this should probably be moved to another file later
 		[Embed(source = "../res/tiles.jpg")] public var TileSheet:Class;
 		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
@@ -44,6 +47,8 @@ package
 			this.fAddUnitDelayed = fAddUnitDelayed;
 			level = new FlxTilemap();
 			level.loadMap(new Level1Csv(), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 1);
+			//Set entrances as non-collidable
+			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
 			skaters = new FlxGroup();
 			name = level_name;
 			parseXML();

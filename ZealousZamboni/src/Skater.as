@@ -104,12 +104,16 @@ package
 			}else {
 				progressTime = timeToSkate;
 				this.allowCollisions = 0;
+				if (this.pathSpeed == 0) {
+					exists = false;
+					PlayState(FlxG.state).skaterComplete(this);
+				}
 			}
 			
 		}
 		
 		private function timerUp(t:FlxTimer) : void {
-			var p:FlxPath = PlayState(FlxG.state).level.findPath(getMidpoint(), new FlxPoint(32, 32));
+			var p:FlxPath = PlayState(FlxG.state).level.findPath(getMidpoint(), PlayState(FlxG.state).getNearestEntrance(getMidpoint()));
 			this.followPath(p, 100);
 		}
 		

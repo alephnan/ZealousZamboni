@@ -31,7 +31,30 @@ package
 		}
 		
 		/**
+		 * Returns the nearest entrance to the given point
+		 * @param	p the point to check near
+		 * @return the coordinates of the upper-left corner of the entrance tile
+		 */
+		public function getNearestEntrance(p:FlxPoint) : FlxPoint {
+			var dist:Function = function(a:FlxPoint) : Number{
+				return Math.sqrt(Math.pow(p.x - a.x, 2) + Math.pow(p.y - a.y, 2));
+			}
+			var tiles:Array = level.getTileCoords(LevelLoader.ENTRANCE_TILE_INDEX, false);
+			var i:int;
+			var minTile:FlxPoint = tiles[0];
+			var minDist:Number = dist(minTile);
+			tiles.forEach(function (t:FlxPoint, index:int, arr:Array) : void{
+				if (dist(t) < minDist) {
+					minTile = t;
+					minDist = dist(t);
+				}
+			});
+			return minTile;
+		}
+		
+		/**
 		 * Queues up the given unit to be added to this after the given number of seconds
+		 * This should be the main way that skaters are added to this, probably called from the LevelLoader
 		 *  This will also invoke the postConstruct method on the unit
 		 * @param	s the unit to add
 		 * @param	time the amount of seconds to wait before adding the unit
@@ -50,17 +73,27 @@ package
 			levelLoader.loadLevel("level0", addUnitDelayed, DEBUG);
 			level = levelLoader.getTilemap();
 			add(level);
-			//activeSprites.add(levelLoader.getSkaters());
 			activeSprites.add(levelLoader.getPlayer());
 			add(activeSprites);
 			player = levelLoader.getPlayer();
 			FlxG.mouse.show();
 		}
 		
+		/**
+		 * Function called when a skater successfully comes back
+		 * @param	s
+		 */
+		public function skaterComplete(s:Skater) : void {
+			
+		}
+		/**
+		 * Function for adding a sprite to be displayed
+		 * Probably needs to be modified to add sprites to appropriate collision groups later
+		 * @param	o
+		 */
 		private function addDep(o:FlxBasic) : void {
 			//problem: adds before tilemap
 			add(o);
-			trace("added obj "+o);
 		}
 		
 		//Adds a unit to the active set of sprites
