@@ -1,5 +1,6 @@
 package
 {
+	import flash.events.SoftKeyboardTrigger;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.*;
@@ -30,7 +31,10 @@ package
 			maxVelocity.y = 80;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
-			//play("WalkE");
+			
+			// This makes the path erasing a little more realistic
+			width = 60;
+			height = 28;
 		}
 		
 		override public function update() : void {
@@ -45,15 +49,19 @@ package
 				if (0+QUAD_OFFSET <= ang && ang < 90 +QUAD_OFFSET) {
 					play("walkN");
 					this.angle = NS_ANGLE;
+					facing = FlxObject.UP;
 				}else if (90 + QUAD_OFFSET <= ang && ang < 180 + QUAD_OFFSET) {
 					this.angle = 0;
 					play("walkW");
+					facing = FlxObject.LEFT;
 				}else if (180 + QUAD_OFFSET <= ang && ang < 270 + QUAD_OFFSET) {
 					this.angle = NS_ANGLE;
 					play("walkS");
+					facing = FlxObject.DOWN;
 				}else {
 					this.angle = 0;
 					play("walkE");
+					facing = FlxObject.RIGHT;
 				}
 			}
 			
@@ -61,8 +69,10 @@ package
 		}
 		
 		override public function onCollision(other:FlxObject) : void {
-			if (other != null && other is FlxTile && FlxTile(other).index == LevelLoader.TRAIL_TILE_INDEX) {
+			if (other is FlxTile && FlxTile(other).index == LevelLoader.TRAIL_TILE_INDEX) {
 				PlayState(FlxG.state).level.setTile(other.x / LevelLoader.TILE_SIZE, other.y / LevelLoader.TILE_SIZE, 0, true);
+			} else if (other is Skater) {
+				
 			}
 		}
 	}
