@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level width="320" height="240" lives="2">
-	<zamboni x="160" y="0"/>
-	<skater x="30" y="50">
+<level width="640" height="480" lives="2">
+	<zamboni x="320" y="0"/>
+	<skater x="33" y="44">
+		<start>5</start>
+		<time>15</time>
+	</skater>
+	<skater x="55" y="66">
+		<start>6</start>
 		<time>10</time>
 	</skater>
-	<skater x="90" y="30">
-		<time>10</time>
-	</skater>
-	<powerup x="22" y="33">
-		<type>lawyer</type>
-		<time>5</time>
-	</powerup>
-	<powerup x="55" y="66">
-		<type>hourglass</type>
-		<time>7</time>
-	</powerup>
-	<zombie x="54" y="76"/>
-	<zombie x="34" y="65"/>
-	<zombie x="43" y="76"/>
 </level>

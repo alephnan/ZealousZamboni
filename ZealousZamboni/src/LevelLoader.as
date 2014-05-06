@@ -15,11 +15,17 @@ package
 		//Size of tiles in pixels
 		public static const TILE_SIZE:int = 8;
 		
+		// Tile index of ice tiles
+		public static const ICE_TILE_INDEX:uint = 0;
+		
 		//Tile index of entrance tiles
 		public static const ENTRANCE_TILE_INDEX:uint = 3;
 		
+		// Tile index of trail tiles
+		public static const TRAIL_TILE_INDEX:uint = 4;
+		
 		//Embed level assets-- this should probably be moved to another file later
-		[Embed(source = "../res/tiles.jpg")] public var TileSheet:Class;
+		[Embed(source = "../res/tiles_new.png")] public var TileSheet:Class;
 		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
 		[Embed(source = "../res/level_0.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
 		[Embed(source = "../res/xml_test.xml", mimeType = "application/octet-stream")] public var XmlTest:Class;

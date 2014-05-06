@@ -4,6 +4,7 @@ package
 	import org.flixel.FlxSprite;
 	import org.flixel.*;
 	import flash.utils.getQualifiedClassName;
+	import org.flixel.system.FlxTile;
 	
 	/**
 	 * ...
@@ -60,7 +61,9 @@ package
 		}
 		
 		override public function onCollision(other:FlxObject) : void {
-			
+			if (other != null && other is FlxTile && FlxTile(other).index == LevelLoader.TRAIL_TILE_INDEX) {
+				PlayState(FlxG.state).level.setTile(other.x / LevelLoader.TILE_SIZE, other.y / LevelLoader.TILE_SIZE, 0, true);
+			}
 		}
 	}
 	

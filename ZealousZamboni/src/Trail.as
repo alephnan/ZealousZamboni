@@ -15,13 +15,16 @@ package
 	{
 		public function addTile(X:Number, Y:Number) : void {
 			//add(new TrailTile(X, Y));
-			var tile:TrailTile = recycle() as TrailTile;
+			/*var tile:TrailTile = recycle() as TrailTile;
 			if (tile == null) {
 				tile = new TrailTile(X, Y);
 				add(tile);
 			}else{
 				tile.reset(X, Y);
-			}
+			}*/
+			var xTile:uint = uint(X / LevelLoader.TILE_SIZE);
+			var yTile:uint = uint(Y / LevelLoader.TILE_SIZE);
+			PlayState(FlxG.state).level.setTile(xTile, yTile, LevelLoader.TRAIL_TILE_INDEX, true);
 		}
 		
 		override public function update() : void {

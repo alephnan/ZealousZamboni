@@ -72,6 +72,7 @@ package
 			activeSprites = new FlxGroup();
 			levelLoader.loadLevel("level0", addUnitDelayed, DEBUG);
 			level = levelLoader.getTilemap();
+			level.setTileProperties(LevelLoader.TRAIL_TILE_INDEX, FlxObject.ANY, onCollision);
 			add(level);
 			activeSprites.add(levelLoader.getPlayer());
 			add(activeSprites);
