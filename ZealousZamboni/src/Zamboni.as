@@ -27,8 +27,8 @@ package
 			addAnimation("walkE", [4,5,6,7], 4, true);
 			addAnimation("walkN", [8, 9, 10, 11], 4, true);
 			addAnimation("walkS", [12,13,14,15], 4, true);
-			maxVelocity.x = 80;
-			maxVelocity.y = 80;
+			maxVelocity.x = 120;
+			maxVelocity.y = 120;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			
@@ -37,7 +37,25 @@ package
 			height = 28;
 		}
 		
+		/*
+		 * Function used to melt ice BEFORE the zamboni collides with it (which would slow it down)
+		 */
+		private function meltIce() : void {
+			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
+			var oldx:Number = x;
+			var oldy:Number = y;
+			this.updateMotion();
+			tileMap.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
+				if (tile.index == LevelLoader.TRAIL_TILE_INDEX) {
+					tileMap.setTile(tile.x / LevelLoader.TILE_SIZE, tile.y / LevelLoader.TILE_SIZE, 0, true);
+				}
+			})
+			y = oldy;
+			x = oldx;
+		}
+		
 		override public function update() : void {
+			meltIce();
 			if (FlxG.mouse.pressed()) {
 				//Old code that rotated in 360 degree coords
 				//this.angle = 180 / Math.PI * Math.atan2(FlxG.mouse.x - x, y - FlxG.mouse.y);
@@ -53,7 +71,7 @@ package
 				}else if (90 + QUAD_OFFSET <= ang && ang < 180 + QUAD_OFFSET) {
 					this.angle = 0;
 					play("walkW");
-					facing = FlxObject.LEFT;
+					facing = FlxObject.RIGHT;
 				}else if (180 + QUAD_OFFSET <= ang && ang < 270 + QUAD_OFFSET) {
 					this.angle = NS_ANGLE;
 					play("walkS");

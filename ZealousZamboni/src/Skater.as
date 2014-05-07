@@ -158,6 +158,10 @@ package
 			PlayState(FlxG.state).skaterComplete(this);
 		}
 		
+		override public function onOverlap(other:FlxObject) : void {
+			onCollision(other);
+		}
+		
 		override public function onCollision(other:FlxObject) : void {
 			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
 			var curTile:FlxPoint = getMidpoint();
@@ -190,23 +194,7 @@ package
 			else if (goingRight) 
 				isGoingRight();
 		}
-		
-		/*public function rotate() : void{
-			if (goingLeft) {
-				goingLeft = false;
-				goingDown = true;
-			}else if (goingDown) {
-				goingDown = false;
-				goingRight = true;
-			}else if (goingRight) {
-				goingRight = false;
-				goingUp = true;
-			}else if (goingUp) {
-				goingUp = false;
-				goingLeft = true;
-			}
-		}*/
-		
+	
 		public function isGoingLeft(): void {
 			if (goingLeft && (touching & FlxObject.LEFT)) {
 				if (!(touching & FlxObject.DOWN)) {

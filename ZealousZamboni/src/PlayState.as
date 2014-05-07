@@ -108,18 +108,6 @@ package
 		override public function update():void
 		{
 			super.update();
-			//Old keyboard control code
-			/*player.acceleration.x = 0;
-			player.acceleration.y = 0;
-			FlxG.mouse.getWorldPosition
-			if(FlxG.keys.LEFT)
-				player.acceleration.x = -player.maxVelocity.x*4;
-			if(FlxG.keys.RIGHT)
-				player.acceleration.x = player.maxVelocity.x*4;
-			if (FlxG.keys.UP)
-				player.acceleration.y = -player.maxVelocity.y * 4;
-			if (FlxG.keys.DOWN)
-				player.acceleration.y = player.maxVelocity.y * 4;*/
 			var mouse:FlxPoint = FlxG.mouse.getWorldPosition(); //mouse coordinates
 			
 			var z:FlxPoint = player.getMidpoint();	//player coordinates
