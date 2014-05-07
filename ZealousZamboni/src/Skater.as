@@ -158,10 +158,6 @@ package
 			PlayState(FlxG.state).skaterComplete(this);
 		}
 		
-		override public function onOverlap(other:FlxObject) : void {
-			onCollision(other);
-		}
-		
 		override public function onCollision(other:FlxObject) : void {
 			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
 			var curTile:FlxPoint = getMidpoint();
