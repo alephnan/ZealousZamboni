@@ -33,7 +33,7 @@ package
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
 		private var player:Zamboni;
 		
-		public function PlayState(levelNum:uint=0) {
+		public function PlayState(levelNum:uint=2) {
 			levelLoader = new LevelLoader();
 			this.levelNum = levelNum;
 		}
@@ -84,12 +84,6 @@ package
 			levelLoader.loadLevel(levelNum, addUnitDelayed, DEBUG);
 			level = levelLoader.getTilemap();
 			add(level);
-			
-			// Arrow blocks
-			/*level.setTileProperties(LevelLoader.DOWN_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);
-			level.setTileProperties(LevelLoader.UP_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);
-			level.setTileProperties(LevelLoader.RIGHT_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);
-			level.setTileProperties(LevelLoader.LEFT_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);*/
 			
 			activeSprites.add(levelLoader.getPlayer());
 			add(activeSprites);
