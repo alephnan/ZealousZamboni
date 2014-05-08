@@ -245,10 +245,11 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 			for (int i = 0; i < numTiles; ++i) {
 				GridButton next = new GridButton(0);
 				next.addMouseMotionListener(this);
+				next.addActionListener(buttListener);
 				next.setIcon(icons[0]);
 				
 				// add action listener to change color
-				next.addActionListener(buttListener);
+				
 				buttonPanel.add(next);
 				buttonArray[i] = next;
 			}
@@ -385,6 +386,8 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 		for (int i = 0; i < tileWidth; ++i) {
 			int index = Integer.parseInt(tiles[i]);
 			GridButton next = new GridButton(index);
+			next.addMouseMotionListener(this);
+			next.addActionListener(buttListener);
 			next.setIcon(icons[index]);
 			next.addActionListener(new GridButtonListener());
 			buttonPanel.add(next);

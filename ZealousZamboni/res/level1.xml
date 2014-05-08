@@ -3,14 +3,14 @@
 	<zamboni x="550" y="240"/>
 	<skater x="112" y="64">
 		<start>5</start>
-		<time>10</time>
+		<time>15</time>
 	</skater>
 	<skater x="120" y="64">
-		<start>1</start>
+		<start>10</start>
 		<time>30</time>
 	</skater>
 	<skater x="128" y="64">
-		<start>9</start>
+		<start>15</start>
 		<time>30</time>
 	</skater>
 </level>

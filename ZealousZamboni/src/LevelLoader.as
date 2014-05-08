@@ -29,12 +29,12 @@ package
 		
 		//level specific assets
 		[Embed(source = '../res/level1.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
-		[Embed(source = "../res/level_1.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
+		[Embed(source = "../res/level1.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
 		[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
-		[Embed(source = "../res/level_2.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
-		/*[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
-		[Embed(source = "../res/level_2.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
-		[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
+		[Embed(source = "../res/level2.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
+		[Embed(source = '../res/level3.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
+		[Embed(source = "../res/level3.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
+		/*[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
 		[Embed(source = "../res/level_2.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;*/
 		
 		public static const NUM_LEVELS = 2;
