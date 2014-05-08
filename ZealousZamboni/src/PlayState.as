@@ -71,6 +71,9 @@ package
 			var t:FlxTimer = new FlxTimer();
 			t.start(time, 1, function() : void {
 				addActiveUnit(s);
+				var p:FlxPoint = getNearestEntrance(s.getMidpoint());
+				s.x = p.x;
+				s.y = p.y;
 				s.postConstruct(addDep);
 			});
 		}
