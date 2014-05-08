@@ -27,6 +27,9 @@ package
 		//TODO Decide if we should just add sprites directly to this?
 		public var activeSprites:FlxGroup;
 		
+		// A ref to the player health bar group at the top of the level
+		private var playerBar:PlayerBar;
+		
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
 		private var player:Zamboni;
 		
@@ -77,26 +80,30 @@ package
 			activeSprites = new FlxGroup();
 			levelLoader.loadLevel(levelNum, addUnitDelayed, DEBUG);
 			level = levelLoader.getTilemap();
-			/*level.setTileProperties(LevelLoader.TRAIL_TILE_INDEX, FlxObject.ANY, onCollision);
-			level.setTileProperties(LevelLoader.DOWN_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);
-			level.setTileProperties(LevelLoader.UP_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);
-			level.setTileProperties(LevelLoader.LEFT_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);
-			level.setTileProperties(LevelLoader.RIGHT_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);*/
 			add(level);
+			
+			// Arrow blocks
+			level.setTileProperties(LevelLoader.DOWN_ARROW_BLOCK, FlxObject.ANY, arrowBlockCollision, Skater, 1);
+			level.setTileProperties(LevelLoader.UP_ARROW_BLOCK, FlxObject.ANY, arrowBlockCollision, Skater, 1);
+			level.setTileProperties(LevelLoader.RIGHT_ARROW_BLOCK, FlxObject.ANY, arrowBlockCollision, Skater, 1);
+			level.setTileProperties(LevelLoader.LEFT_ARROW_BLOCK, FlxObject.ANY, arrowBlockCollision, Skater, 1);
+			
 			activeSprites.add(levelLoader.getPlayer());
 			add(activeSprites);
 			player = levelLoader.getPlayer();
 			FlxG.mouse.show();
+			playerBar = new PlayerBar(player.health);
+			add(playerBar);
 		}
 		
 		/**
 		 * Function called when a skater successfully comes back
 		 * @param	s
 		 */
-		public function skaterComplete(s:Skater, died:Boolean) : void {
-			finishedSkaters++;
-			if (finishedSkaters == levelLoader.numSkaters) {
-				FlxG.switchState(new StartState());
+		public function skaterComplete(s:Skater, killed:Boolean = false) : void {
+			if (killed) {
+				player.hurt(1);
+				playerBar.updatePlayerHealth(player.health);
 			}
 		}
 		/**
@@ -144,7 +151,6 @@ package
 				player.velocity.x = 0;
 				player.velocity.y = 0;
 			}
-			
 			//Collide all sprites with the level tiles
 			FlxG.collide(level, activeSprites, onCollision);
 			//Collide all sprites with each other
@@ -163,15 +169,9 @@ package
 			}
 		}
 		
-		/*private function arrowBlockCollision(tile:FlxTile, skater:Skater):void {
-			if (!(skater is Skater)) {
-				trace ("ERROR: something other than skater collided!");
-			} else {
-				trace(tile.index);
-				trace(tile.mapIndex);
-				skater.handleArrowBlock(tile.index);
-			}
-		}*/
+		private function arrowBlockCollision(tile:FlxTile, skater:Skater):void {
+			skater.handleArrowBlock(tile.index);
+		}
 		
 		private function getObjectTile(obj: FlxObject):FlxPoint {
 			return new FlxPoint(obj.getMidpoint().x / LevelLoader.TILE_SIZE, obj.getMidpoint().y / LevelLoader.TILE_SIZE);

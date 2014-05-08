@@ -63,6 +63,7 @@ package
 			level.loadMap(new this["Level"+level_num+"Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
 			//Set entrances as non-collidable
 			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
+			
 			skaters = new FlxGroup();
 			parseXML(this["Level"+level_num+"XML"]);
 		}
@@ -108,7 +109,7 @@ package
 			var lives:int = parseInt(xml.@lives, 10);
 			if (DEBUG)
 				trace("Number of player lives: " + lives);
-			
+
 			// Zamboni starting coordinates
 			var zamboniX:int = parseInt(xml.zamboni.@x);
 			var zamboniY:int = parseInt(xml.zamboni.@y);
@@ -120,6 +121,8 @@ package
 			}
 			player = new Zamboni(zamboniX, zamboniY);
 			//addUnit(player);
+			
+			player.health = lives;
 			
 			// Skaters: coordinates and time
 			for each (var s:XML in xml.skater) {
