@@ -104,7 +104,22 @@ package
 			if (killed) {
 				player.hurt(1);
 				playerBar.updatePlayerHealth(player.health);
+				if (player.alive == false) {
+					FlxG.switchState(new LevelFailedState(this));
+					return;
+				}
 			}
+			finishedSkaters++;
+			if (finishedSkaters == levelLoader.numSkaters) {
+				winLevel();
+			}
+		}
+		
+		/**
+		 * Function invoked when the player wins the level
+		 */
+		public function winLevel() : void {
+			FlxG.switchState(new LevelWinState(this));
 		}
 		/**
 		 * Function for adding a sprite to be displayed
@@ -175,6 +190,13 @@ package
 		
 		private function getObjectTile(obj: FlxObject):FlxPoint {
 			return new FlxPoint(obj.getMidpoint().x / LevelLoader.TILE_SIZE, obj.getMidpoint().y / LevelLoader.TILE_SIZE);
+		}
+		
+		override public function destroy() : void {
+			super.destroy();
+			this.members = null;
+			levelLoader = null;
+			player = null;
 		}
 	}
 	

@@ -37,6 +37,8 @@ package
 		[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
 		[Embed(source = "../res/level_2.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;*/
 		
+		public static const NUM_LEVELS = 2;
+		
 		private var level:FlxTilemap;
 		
 		private var name:String;
