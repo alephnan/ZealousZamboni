@@ -33,7 +33,7 @@ package
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
 		private var player:Zamboni;
 		
-		public function PlayState(levelNum:uint=1) {
+		public function PlayState(levelNum:uint=2) {
 			levelLoader = new LevelLoader();
 			this.levelNum = levelNum;
 		}
@@ -71,6 +71,9 @@ package
 			var t:FlxTimer = new FlxTimer();
 			t.start(time, 1, function() : void {
 				addActiveUnit(s);
+				var p:FlxPoint = getNearestEntrance(s.getMidpoint());
+				s.x = p.x;
+				s.y = p.y;
 				s.postConstruct(addDep);
 			});
 		}
@@ -81,12 +84,6 @@ package
 			levelLoader.loadLevel(levelNum, addUnitDelayed, DEBUG);
 			level = levelLoader.getTilemap();
 			add(level);
-			
-			// Arrow blocks
-			level.setTileProperties(LevelLoader.DOWN_ARROW_BLOCK, FlxObject.ANY, arrowBlockCollision, Skater, 1);
-			level.setTileProperties(LevelLoader.UP_ARROW_BLOCK, FlxObject.ANY, arrowBlockCollision, Skater, 1);
-			level.setTileProperties(LevelLoader.RIGHT_ARROW_BLOCK, FlxObject.ANY, arrowBlockCollision, Skater, 1);
-			level.setTileProperties(LevelLoader.LEFT_ARROW_BLOCK, FlxObject.ANY, arrowBlockCollision, Skater, 1);
 			
 			activeSprites.add(levelLoader.getPlayer());
 			add(activeSprites);
@@ -182,10 +179,6 @@ package
 			if (b is ICollidable) {
 				ICollidable(b).onCollision(a);
 			}
-		}
-		
-		private function arrowBlockCollision(tile:FlxTile, skater:Skater):void {
-			skater.handleArrowBlock(tile.index);
 		}
 		
 		private function getObjectTile(obj: FlxObject):FlxPoint {

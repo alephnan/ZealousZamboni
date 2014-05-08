@@ -28,16 +28,14 @@ package
 		[Embed(source = "../res/tiles_new.png")] public var TileSheet:Class;
 		
 		//level specific assets
-		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
-		[Embed(source = "../res/level_0.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
-		[Embed(source = '../res/level1.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
-		[Embed(source = "../res/level_1.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
-		/*[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
-		[Embed(source = "../res/level_2.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
-		[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
-		[Embed(source = "../res/level_2.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;*/
+		[Embed(source = '../res/level1.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
+		[Embed(source = "../res/level1.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
+		[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
+		[Embed(source = "../res/level2.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
+		[Embed(source = '../res/level3.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
+		[Embed(source = "../res/level3.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
 		
-		public static const NUM_LEVELS = 2;
+		public static const NUM_LEVELS:uint = 2;
 		
 		private var level:FlxTilemap;
 		
@@ -126,7 +124,8 @@ package
 			
 			player.health = lives;
 			
-			// Skaters: coordinates and time
+			// Skaters: coordinates, start time, skate time
+			
 			for each (var s:XML in xml.skater) {
 				numSkaters++;
 				var skaterX:int = s.@x;

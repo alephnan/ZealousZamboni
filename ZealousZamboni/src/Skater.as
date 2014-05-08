@@ -1,5 +1,6 @@
 package
 {
+	import flash.media.SoundChannel;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
@@ -39,6 +40,8 @@ package
 		private var deathTimer:FlxTimer;
 		//This is set when a skater is stuck
 		private var skaterStuck:Boolean;
+		//Sound played when this skater is stuck
+		private var skaterStuckSnd:SoundChannel;
 		
 		public function Skater(X:Number, Y:Number, time:int) {
 			super(X, Y);
@@ -78,12 +81,12 @@ package
 			drag.y = maxVelocity.y * 4;
 			goingRight = true;
 			this.play("walkS", true);
-			
 		}
 		
 		
 		override public function postConstruct(addDependency : Function) : void {
 			timer.start(timeToSkate, 1, timerUp);
+			SoundPlayer.skaterStart.play();
 			addDependency(progress);
 			addDependency(trail);
 		}
@@ -103,7 +106,31 @@ package
 				if (currentTile == LevelLoader.ICE_TILE_INDEX) {
 					// Add skater trail
 					tilemap.setTile(xTile, yTile, LevelLoader.TRAIL_TILE_INDEX, true);
-				} 
+				} else if (currentTile >= LevelLoader.DOWN_ARROW_BLOCK && currentTile <= LevelLoader.RIGHT_ARROW_BLOCK) {
+					// We are on top of an arrow block.  We have to check for < 3 obstacles because 
+					// otherwise we will get stuck and not trigger a skater death.
+					if (currentTile == LevelLoader.DOWN_ARROW_BLOCK) {
+						if (!goingDown && !(touching & FlxObject.DOWN)) {
+							clearDirection();
+							goingDown = true;
+						}
+					} else if (currentTile == LevelLoader.UP_ARROW_BLOCK) {
+						if (!goingUp && !(touching & FlxObject.UP)) {
+							clearDirection();
+							goingUp = true;
+						}
+					} else if (currentTile == LevelLoader.RIGHT_ARROW_BLOCK) {
+						if (!goingRight && !(touching & FlxObject.RIGHT)) {
+							clearDirection();
+							goingRight = true;
+						}
+					} else if (currentTile == LevelLoader.LEFT_ARROW_BLOCK) {
+						if (!goingLeft && !(touching & FlxObject.LEFT)) {
+							clearDirection();
+							goingLeft = true;
+						}
+					}
+				}
 			}
 		}
 		
@@ -142,6 +169,7 @@ package
 		}
 		
 		private function timerUp(t:FlxTimer) : void {
+			SoundPlayer.skaterSuccess.play();
 			var p:FlxPath = new FlxPath();
 			p.addPoint(getMidpoint());
 			p.addPoint(PlayState(FlxG.state).getNearestEntrance(getMidpoint()));
@@ -155,7 +183,8 @@ package
 		override public function setNextMove(level:FlxTilemap, entities:FlxGroup) : void {
 		}
 		
-		private function skaterDeathHandler(timer:FlxTimer=null):void {
+		private function skaterDeathHandler(timer:FlxTimer = null):void {
+			SoundPlayer.skaterDeath.play();
 			exists = false;
 			progress.exists = false;
 			PlayState(FlxG.state).skaterComplete(this, true);
@@ -170,7 +199,11 @@ package
 					this.flicker(SKATER_DEATH_SLACK);
 					deathTimer.start(SKATER_DEATH_SLACK, 1, skaterDeathHandler);
 				}
+				skaterStuckSnd = SoundPlayer.skaterStuck.play(0, (int)( SKATER_DEATH_SLACK / (SoundPlayer.skaterStuck.length / 1000)));
 			} else if (skaterStuck) {
+				if (skaterStuckSnd) {
+					skaterStuckSnd.stop();
+				}
 				skaterStuck = false;
 				deathTimer.stop();
 				_flicker = false;
@@ -199,34 +232,6 @@ package
 					goingUp = true;
 				}
 			}
-		}
-		
-		public function handleArrowBlock(currentTile:uint):void {
-			if (!timer.finished && !skaterStuck) {
-					// We are on top of an arrow block.  We have to check for < 3 obstacles because 
-					// otherwise we will get stuck and not trigger a skater death.
-					if (currentTile == LevelLoader.DOWN_ARROW_BLOCK) {
-						if (!goingDown && !(touching & FlxObject.DOWN)) {
-							clearDirection();
-							goingDown = true;
-						}
-					} else if (currentTile == LevelLoader.UP_ARROW_BLOCK) {
-						if (!goingUp && !(touching & FlxObject.UP)) {
-							clearDirection();
-							goingUp = true;
-						}
-					} else if (currentTile == LevelLoader.RIGHT_ARROW_BLOCK) {
-						if (!goingRight && !(touching & FlxObject.RIGHT)) {
-							clearDirection();
-							goingRight = true;
-						}
-					} else if (currentTile == LevelLoader.LEFT_ARROW_BLOCK) {
-						if (!goingLeft && !(touching & FlxObject.LEFT)) {
-							clearDirection();
-							goingLeft = true;
-						}
-					}
-				}
 		}
 		
 		private function checkNumObstacles(curPosX:uint, curPosY:uint):uint {
