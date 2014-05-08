@@ -71,6 +71,7 @@ package
 			o = 48;
 			addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 			addAnimation("death", [6, 22, 38, 54], 8, true);
+			addAnimation("hurt", [16], 1, true);
 			maxVelocity.x = 120;
 			maxVelocity.y = 120;
 			drag.x = maxVelocity.x * 4;
@@ -102,33 +103,7 @@ package
 				if (currentTile == LevelLoader.ICE_TILE_INDEX) {
 					// Add skater trail
 					tilemap.setTile(xTile, yTile, LevelLoader.TRAIL_TILE_INDEX, true);
-				} else if (currentTile >= LevelLoader.DOWN_ARROW_BLOCK && 
-				           currentTile <= LevelLoader.RIGHT_ARROW_BLOCK && 
-						   checkNumObstacles(xTile, yTile) < 3) {
-					// We are on top of an arrow block.  We have to check for < 3 obstacles because 
-					// otherwise we will get stuck and not trigger a skater death.
-					if (currentTile == LevelLoader.DOWN_ARROW_BLOCK) {
-						if (!goingDown && !(touching & FlxObject.DOWN)) {
-							clearDirection();
-							goingDown = true;
-						}
-					} else if (currentTile == LevelLoader.UP_ARROW_BLOCK) {
-						if (!goingUp && !(touching & FlxObject.UP)) {
-							clearDirection();
-							goingUp = true;
-						}
-					} else if (currentTile == LevelLoader.RIGHT_ARROW_BLOCK) {
-						if (!goingRight && !(touching & FlxObject.RIGHT)) {
-							clearDirection();
-							goingRight = true;
-						}
-					} else if (currentTile == LevelLoader.LEFT_ARROW_BLOCK) {
-						if (!goingLeft && !(touching & FlxObject.LEFT)) {
-							clearDirection();
-							goingLeft = true;
-						}
-					}
-				}
+				} 
 			}
 		}
 		
@@ -178,13 +153,12 @@ package
 		
 		
 		override public function setNextMove(level:FlxTilemap, entities:FlxGroup) : void {
-			
 		}
 		
-		private function skaterDeathHandler(timer:FlxTimer):void {
+		private function skaterDeathHandler(timer:FlxTimer=null):void {
 			exists = false;
 			progress.exists = false;
-			PlayState(FlxG.state).skaterComplete(this);
+			PlayState(FlxG.state).skaterComplete(this, true);
 		}
 		
 		override public function onCollision(other:FlxObject) : void {
@@ -227,23 +201,44 @@ package
 			}
 		}
 		
-		/**
-		 * Returns the number of obstacles around the object located at curPosX IN TILES
-		 * and curPosY IN TILES.
-		 * @param	curPosX
-		 * @param	curPosY
-		 * @return
-		 */
+		public function handleArrowBlock(currentTile:uint):void {
+			if (!timer.finished && !skaterStuck) {
+					// We are on top of an arrow block.  We have to check for < 3 obstacles because 
+					// otherwise we will get stuck and not trigger a skater death.
+					if (currentTile == LevelLoader.DOWN_ARROW_BLOCK) {
+						if (!goingDown && !(touching & FlxObject.DOWN)) {
+							clearDirection();
+							goingDown = true;
+						}
+					} else if (currentTile == LevelLoader.UP_ARROW_BLOCK) {
+						if (!goingUp && !(touching & FlxObject.UP)) {
+							clearDirection();
+							goingUp = true;
+						}
+					} else if (currentTile == LevelLoader.RIGHT_ARROW_BLOCK) {
+						if (!goingRight && !(touching & FlxObject.RIGHT)) {
+							clearDirection();
+							goingRight = true;
+						}
+					} else if (currentTile == LevelLoader.LEFT_ARROW_BLOCK) {
+						if (!goingLeft && !(touching & FlxObject.LEFT)) {
+							clearDirection();
+							goingLeft = true;
+						}
+					}
+				}
+		}
+		
 		private function checkNumObstacles(curPosX:uint, curPosY:uint):uint {
 			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
 			var numObstacles:uint = 0;
-			if (tileMap.getTile(curPosX, curPosY - 1) >= LevelLoader.SOLID_BLOCK)
+			if (tileMap.getTile(curPosX, curPosY - 1) >= LevelLoader.DOWN_ARROW_BLOCK)
 				numObstacles++;
-			if (tileMap.getTile(curPosX, curPosY + 1) >= LevelLoader.SOLID_BLOCK)
+			if (tileMap.getTile(curPosX, curPosY + 1) >= LevelLoader.DOWN_ARROW_BLOCK)
 				numObstacles++;
-			if (tileMap.getTile(curPosX - 1, curPosY) >= LevelLoader.SOLID_BLOCK)
+			if (tileMap.getTile(curPosX - 1, curPosY) >= LevelLoader.DOWN_ARROW_BLOCK)
 				numObstacles++;
-			if (tileMap.getTile(curPosX + 1, curPosY) >= LevelLoader.SOLID_BLOCK)
+			if (tileMap.getTile(curPosX + 1, curPosY) >= LevelLoader.DOWN_ARROW_BLOCK)
 				numObstacles++;
 			return numObstacles;
 		}
