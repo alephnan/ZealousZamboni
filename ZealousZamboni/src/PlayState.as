@@ -19,6 +19,10 @@ package
 		//Set of all blocks in the level
 		public var level:FlxTilemap;
 		
+		public var levelNum:uint = 1;
+		
+		public var finishedSkaters:uint = 0;
+		
 		//Set of all sprites active in the level (including the player)
 		//TODO Decide if we should just add sprites directly to this?
 		public var activeSprites:FlxGroup;
@@ -26,9 +30,9 @@ package
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
 		private var player:Zamboni;
 		
-		//Empty constructor-- most of the logic happens in the create() function
-		public function PlayState() {
+		public function PlayState(levelNum:uint=1) {
 			levelLoader = new LevelLoader();
+			this.levelNum = levelNum;
 		}
 		
 		/**
@@ -71,7 +75,7 @@ package
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
 			activeSprites = new FlxGroup();
-			levelLoader.loadLevel("level0", addUnitDelayed, DEBUG);
+			levelLoader.loadLevel(levelNum, addUnitDelayed, DEBUG);
 			level = levelLoader.getTilemap();
 			/*level.setTileProperties(LevelLoader.TRAIL_TILE_INDEX, FlxObject.ANY, onCollision);
 			level.setTileProperties(LevelLoader.DOWN_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);
@@ -89,8 +93,11 @@ package
 		 * Function called when a skater successfully comes back
 		 * @param	s
 		 */
-		public function skaterComplete(s:Skater) : void {
-			
+		public function skaterComplete(s:Skater, died:Boolean) : void {
+			finishedSkaters++;
+			if (finishedSkaters == levelLoader.numSkaters) {
+				FlxG.switchState(new StartState());
+			}
 		}
 		/**
 		 * Function for adding a sprite to be displayed

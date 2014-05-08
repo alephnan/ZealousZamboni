@@ -160,7 +160,7 @@ package
 				if (this.pathSpeed == 0) {
 					exists = false;
 					progress.exists = false;
-					PlayState(FlxG.state).skaterComplete(this);
+					PlayState(FlxG.state).skaterComplete(this, false);
 				}
 			}
 			
@@ -184,7 +184,7 @@ package
 		private function skaterDeathHandler(timer:FlxTimer):void {
 			exists = false;
 			progress.exists = false;
-			PlayState(FlxG.state).skaterComplete(this);
+			PlayState(FlxG.state).skaterComplete(this, true);
 		}
 		
 		override public function onCollision(other:FlxObject) : void {

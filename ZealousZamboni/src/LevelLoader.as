@@ -25,18 +25,25 @@ package
 		public static const SOLID_BLOCK:uint = 6;
 		public static const WALL_INDEX:uint = 7;
 		public static const TRAIL_TILE_INDEX:uint = 8;		// Trail skaters leave
-		
-		//Embed level assets-- this should probably be moved to another file later
 		[Embed(source = "../res/tiles_new.png")] public var TileSheet:Class;
+		
+		//level specific assets
 		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
 		[Embed(source = "../res/level_0.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
-		[Embed(source = "../res/xml_test.xml", mimeType = "application/octet-stream")] public var XmlTest:Class;
+		[Embed(source = '../res/level1.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
+		[Embed(source = "../res/level_1.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
+		/*[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
+		[Embed(source = "../res/level_2.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
+		[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
+		[Embed(source = "../res/level_2.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;*/
 		
 		private var level:FlxTilemap;
 		
 		private var name:String;
 		
 		private var skaters:FlxGroup;
+		
+		public var numSkaters:uint;
 		
 		private var player:Zamboni;
 		
@@ -46,20 +53,18 @@ package
 		
 		/**
 		 * Loads the specified level into memory
-		 * @param	level_name the name of the level to load. This should be the prefix name used for both the level XML
-		 * 			as well as the csv
+		 * @param	level_num the level number to load
 		 * @param fAddUnitDelayed a function for adding units to the PlayState after a certain number of seconds
 		 * 			The function format should be the following: addUnitDelayed(z:ZzUnit, time:Number)
 		 */
-		public function loadLevel(level_name:String, fAddUnitDelayed:Function, debugEnabled:Boolean=false) : void {
+		public function loadLevel(level_num:uint, fAddUnitDelayed:Function, debugEnabled:Boolean = false) : void {
 			this.fAddUnitDelayed = fAddUnitDelayed;
 			level = new FlxTilemap();
-			level.loadMap(new Level1Csv(), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
+			level.loadMap(new this["Level"+level_num+"Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
 			//Set entrances as non-collidable
 			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
 			skaters = new FlxGroup();
-			name = level_name;
-			parseXML();
+			parseXML(this["Level"+level_num+"XML"]);
 		}
 		
 		public function getPlayer() : Zamboni {
@@ -81,9 +86,9 @@ package
 		}
 		
 		//Helper function for parsing xml data associated with a level
-		private function parseXML():void {
-			var xml:XML = new XML(new Level1XML());
-			
+		private function parseXML(clazz:Class):void {
+			var xml:XML = new XML(new clazz());
+			numSkaters = 0;
 			// Get assumed framewidth and frameheight
 			var assumedWidth:int = parseInt(xml.@width);
 			var assumedHeight:int = parseInt(xml.@height);
@@ -118,6 +123,7 @@ package
 			
 			// Skaters: coordinates and time
 			for each (var s:XML in xml.skater) {
+				numSkaters++;
 				var skaterX:int = s.@x;
 				var skaterY:int = s.@y;
 				if (DEBUG)
