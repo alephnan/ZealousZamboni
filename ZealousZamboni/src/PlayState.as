@@ -33,7 +33,7 @@ package
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
 		private var player:Zamboni;
 		
-		public function PlayState(levelNum:uint=1) {
+		public function PlayState(levelNum:uint=2) {
 			levelLoader = new LevelLoader();
 			this.levelNum = levelNum;
 		}

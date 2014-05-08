@@ -1,5 +1,6 @@
 package
 {
+	import flash.media.SoundChannel;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
@@ -39,6 +40,8 @@ package
 		private var deathTimer:FlxTimer;
 		//This is set when a skater is stuck
 		private var skaterStuck:Boolean;
+		//Sound played when this skater is stuck
+		private var skaterStuckSnd:SoundChannel;
 		
 		public function Skater(X:Number, Y:Number, time:int) {
 			super(X, Y);
@@ -84,6 +87,7 @@ package
 		
 		override public function postConstruct(addDependency : Function) : void {
 			timer.start(timeToSkate, 1, timerUp);
+			SoundPlayer.skaterStart.play();
 			addDependency(progress);
 			addDependency(trail);
 		}
@@ -142,6 +146,7 @@ package
 		}
 		
 		private function timerUp(t:FlxTimer) : void {
+			SoundPlayer.skaterSuccess.play();
 			var p:FlxPath = new FlxPath();
 			p.addPoint(getMidpoint());
 			p.addPoint(PlayState(FlxG.state).getNearestEntrance(getMidpoint()));
@@ -155,7 +160,8 @@ package
 		override public function setNextMove(level:FlxTilemap, entities:FlxGroup) : void {
 		}
 		
-		private function skaterDeathHandler(timer:FlxTimer=null):void {
+		private function skaterDeathHandler(timer:FlxTimer = null):void {
+			SoundPlayer.skaterDeath.play();
 			exists = false;
 			progress.exists = false;
 			PlayState(FlxG.state).skaterComplete(this, true);
@@ -170,7 +176,11 @@ package
 					this.flicker(SKATER_DEATH_SLACK);
 					deathTimer.start(SKATER_DEATH_SLACK, 1, skaterDeathHandler);
 				}
+				skaterStuckSnd = SoundPlayer.skaterStuck.play(0, (int)( SKATER_DEATH_SLACK / (SoundPlayer.skaterStuck.length / 1000)));
 			} else if (skaterStuck) {
+				if (skaterStuckSnd) {
+					skaterStuckSnd.stop();
+				}
 				skaterStuck = false;
 				deathTimer.stop();
 				_flicker = false;
