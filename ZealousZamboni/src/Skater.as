@@ -81,7 +81,6 @@ package
 			drag.y = maxVelocity.y * 4;
 			goingRight = true;
 			this.play("walkS", true);
-			
 		}
 		
 		
@@ -107,7 +106,31 @@ package
 				if (currentTile == LevelLoader.ICE_TILE_INDEX) {
 					// Add skater trail
 					tilemap.setTile(xTile, yTile, LevelLoader.TRAIL_TILE_INDEX, true);
-				} 
+				} else if (currentTile >= LevelLoader.DOWN_ARROW_BLOCK && currentTile <= LevelLoader.RIGHT_ARROW_BLOCK) {
+					// We are on top of an arrow block.  We have to check for < 3 obstacles because 
+					// otherwise we will get stuck and not trigger a skater death.
+					if (currentTile == LevelLoader.DOWN_ARROW_BLOCK) {
+						if (!goingDown && !(touching & FlxObject.DOWN)) {
+							clearDirection();
+							goingDown = true;
+						}
+					} else if (currentTile == LevelLoader.UP_ARROW_BLOCK) {
+						if (!goingUp && !(touching & FlxObject.UP)) {
+							clearDirection();
+							goingUp = true;
+						}
+					} else if (currentTile == LevelLoader.RIGHT_ARROW_BLOCK) {
+						if (!goingRight && !(touching & FlxObject.RIGHT)) {
+							clearDirection();
+							goingRight = true;
+						}
+					} else if (currentTile == LevelLoader.LEFT_ARROW_BLOCK) {
+						if (!goingLeft && !(touching & FlxObject.LEFT)) {
+							clearDirection();
+							goingLeft = true;
+						}
+					}
+				}
 			}
 		}
 		
@@ -209,34 +232,6 @@ package
 					goingUp = true;
 				}
 			}
-		}
-		
-		public function handleArrowBlock(currentTile:uint):void {
-			if (!timer.finished && !skaterStuck) {
-					// We are on top of an arrow block.  We have to check for < 3 obstacles because 
-					// otherwise we will get stuck and not trigger a skater death.
-					if (currentTile == LevelLoader.DOWN_ARROW_BLOCK) {
-						if (!goingDown && !(touching & FlxObject.DOWN)) {
-							clearDirection();
-							goingDown = true;
-						}
-					} else if (currentTile == LevelLoader.UP_ARROW_BLOCK) {
-						if (!goingUp && !(touching & FlxObject.UP)) {
-							clearDirection();
-							goingUp = true;
-						}
-					} else if (currentTile == LevelLoader.RIGHT_ARROW_BLOCK) {
-						if (!goingRight && !(touching & FlxObject.RIGHT)) {
-							clearDirection();
-							goingRight = true;
-						}
-					} else if (currentTile == LevelLoader.LEFT_ARROW_BLOCK) {
-						if (!goingLeft && !(touching & FlxObject.LEFT)) {
-							clearDirection();
-							goingLeft = true;
-						}
-					}
-				}
 		}
 		
 		private function checkNumObstacles(curPosX:uint, curPosY:uint):uint {
