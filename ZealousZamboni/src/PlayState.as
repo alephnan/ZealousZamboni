@@ -3,6 +3,7 @@ package
 	import adobe.utils.CustomActions;
 	import org.flixel.*;
 	import org.as3commons.collections.ArrayList;
+	import org.flixel.system.FlxTile;
 	/**
 	 * ...
 	 * @author Kenny
@@ -72,7 +73,11 @@ package
 			activeSprites = new FlxGroup();
 			levelLoader.loadLevel("level0", addUnitDelayed, DEBUG);
 			level = levelLoader.getTilemap();
-			level.setTileProperties(LevelLoader.TRAIL_TILE_INDEX, FlxObject.ANY, onCollision);
+			/*level.setTileProperties(LevelLoader.TRAIL_TILE_INDEX, FlxObject.ANY, onCollision);
+			level.setTileProperties(LevelLoader.DOWN_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);
+			level.setTileProperties(LevelLoader.UP_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);
+			level.setTileProperties(LevelLoader.LEFT_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);
+			level.setTileProperties(LevelLoader.RIGHT_ARROW_BLOCK, FlxObject.NONE, arrowBlockCollision, Skater, 1);*/
 			add(level);
 			activeSprites.add(levelLoader.getPlayer());
 			add(activeSprites);
@@ -149,6 +154,20 @@ package
 			if (b is ICollidable) {
 				ICollidable(b).onCollision(a);
 			}
+		}
+		
+		/*private function arrowBlockCollision(tile:FlxTile, skater:Skater):void {
+			if (!(skater is Skater)) {
+				trace ("ERROR: something other than skater collided!");
+			} else {
+				trace(tile.index);
+				trace(tile.mapIndex);
+				skater.handleArrowBlock(tile.index);
+			}
+		}*/
+		
+		private function getObjectTile(obj: FlxObject):FlxPoint {
+			return new FlxPoint(obj.getMidpoint().x / LevelLoader.TILE_SIZE, obj.getMidpoint().y / LevelLoader.TILE_SIZE);
 		}
 	}
 	

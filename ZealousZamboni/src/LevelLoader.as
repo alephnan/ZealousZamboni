@@ -15,14 +15,16 @@ package
 		//Size of tiles in pixels
 		public static const TILE_SIZE:int = 8;
 		
-		// Tile index of ice tiles
-		public static const ICE_TILE_INDEX:uint = 0;
-		
-		//Tile index of entrance tiles
-		public static const ENTRANCE_TILE_INDEX:uint = 3;
-		
-		// Tile index of trail tiles
-		public static const TRAIL_TILE_INDEX:uint = 4;
+		/* TILE INDICES */
+		public static const ICE_TILE_INDEX:uint = 0;		
+		public static const ENTRANCE_TILE_INDEX:uint = 1;	// Skater entrance
+		public static const DOWN_ARROW_BLOCK:uint = 2;		// Arrow block -- DOWN
+		public static const UP_ARROW_BLOCK:uint = 3;		// Arrow block -- UP
+		public static const LEFT_ARROW_BLOCK:uint = 4;		// Arrow block -- LEFT
+		public static const RIGHT_ARROW_BLOCK:uint = 5;		// Arrow block -- RIGHT
+		public static const SOLID_BLOCK:uint = 6;
+		public static const WALL_INDEX:uint = 7;
+		public static const TRAIL_TILE_INDEX:uint = 8;		// Trail skaters leave
 		
 		//Embed level assets-- this should probably be moved to another file later
 		[Embed(source = "../res/tiles_new.png")] public var TileSheet:Class;
@@ -52,7 +54,7 @@ package
 		public function loadLevel(level_name:String, fAddUnitDelayed:Function, debugEnabled:Boolean=false) : void {
 			this.fAddUnitDelayed = fAddUnitDelayed;
 			level = new FlxTilemap();
-			level.loadMap(new Level1Csv(), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 1);
+			level.loadMap(new Level1Csv(), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
 			//Set entrances as non-collidable
 			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
 			skaters = new FlxGroup();

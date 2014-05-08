@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level width="640" height="480" lives="2">
 	<zamboni x="155" y="0"/>
-	<skater x="50" y="25">
+	<skater x="56" y="8">
 		<start>5</start>
 		<time>10</time>
 	</skater>
-	<skater x="128" y="92">
+	<skater x="512" y="472">
 		<start>1</start>
-		<time>2</time>
+		<time>30</time>
 	</skater>
 	<skater x="128" y="92">
 		<start>9</start>

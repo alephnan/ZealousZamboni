@@ -91,6 +91,47 @@ package
 			return trail;
 		}
 		
+		override public function preUpdate():void {
+			super.preUpdate();
+			if (!timer.finished) {
+				var mp:FlxPoint = getMidpoint();
+				var tilemap:FlxTilemap = PlayState(FlxG.state).level;
+				var xTile:uint = uint(mp.x / LevelLoader.TILE_SIZE);
+				var yTile:uint = uint(mp.y / LevelLoader.TILE_SIZE);
+				var currentTile:uint = tilemap.getTile(xTile, yTile);
+				if (currentTile == LevelLoader.ICE_TILE_INDEX) {
+					// Add skater trail
+					tilemap.setTile(xTile, yTile, LevelLoader.TRAIL_TILE_INDEX, true);
+				} else if (currentTile >= LevelLoader.DOWN_ARROW_BLOCK && 
+				           currentTile <= LevelLoader.RIGHT_ARROW_BLOCK && 
+						   checkNumObstacles(xTile, yTile) < 3) {
+					// We are on top of an arrow block.  We have to check for < 3 obstacles because 
+					// otherwise we will get stuck and not trigger a skater death.
+					if (currentTile == LevelLoader.DOWN_ARROW_BLOCK) {
+						if (!goingDown && !(touching & FlxObject.DOWN)) {
+							clearDirection();
+							goingDown = true;
+						}
+					} else if (currentTile == LevelLoader.UP_ARROW_BLOCK) {
+						if (!goingUp && !(touching & FlxObject.UP)) {
+							clearDirection();
+							goingUp = true;
+						}
+					} else if (currentTile == LevelLoader.RIGHT_ARROW_BLOCK) {
+						if (!goingRight && !(touching & FlxObject.RIGHT)) {
+							clearDirection();
+							goingRight = true;
+						}
+					} else if (currentTile == LevelLoader.LEFT_ARROW_BLOCK) {
+						if (!goingLeft && !(touching & FlxObject.LEFT)) {
+							clearDirection();
+							goingLeft = true;
+						}
+					}
+				}
+			}
+		}
+		
 		override public function update() : void {
 			super.update();
 			if (!timer.finished) {
@@ -113,17 +154,6 @@ package
 					velocity.y = -maxVelocity.y;
 					this.play("walkN", false);
 				}
-				/*if (Math.abs(x - lastTrailTile.x) > 7 || Math.abs(y - lastTrailTile.y) > 7) {
-					trail.addTile(this.getMidpoint().x, this.getMidpoint().y);
-					lastTrailTile.x = x;
-					lastTrailTile.y = y;
-				}*/
-				var tilemap:FlxTilemap = PlayState(FlxG.state).level;
-				var xTile:uint = uint(getMidpoint().x / LevelLoader.TILE_SIZE);
-				var yTile:uint = uint(getMidpoint().y / LevelLoader.TILE_SIZE);
-				if (tilemap.getTile(xTile, yTile) == LevelLoader.ICE_TILE_INDEX) {
-					tilemap.setTile(xTile, yTile, LevelLoader.TRAIL_TILE_INDEX, true);
-				}
 				progressTime = timeToSkate-timer.timeLeft;
 			}else {
 				progressTime = timeToSkate;
@@ -137,7 +167,6 @@ package
 		}
 		
 		private function timerUp(t:FlxTimer) : void {
-			//var p:FlxPath = PlayState(FlxG.state).level.findPath(getMidpoint(), PlayState(FlxG.state).getNearestEntrance(getMidpoint()));
 			var p:FlxPath = new FlxPath();
 			p.addPoint(getMidpoint());
 			p.addPoint(PlayState(FlxG.state).getNearestEntrance(getMidpoint()));
@@ -159,28 +188,20 @@ package
 		}
 		
 		override public function onCollision(other:FlxObject) : void {
-			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
 			var curTile:FlxPoint = getMidpoint();
-			curTile.x /= LevelLoader.TILE_SIZE;
-			curTile.y /= LevelLoader.TILE_SIZE;
-			
-			// TODO: is there a way to implement this more efficiently?
 			// Check tiles around current tile to see if skater is stuck
-			if ((tileMap.getTile(curTile.x, curTile.y - 1) == LevelLoader.TRAIL_TILE_INDEX) && 
-			    (tileMap.getTile(curTile.x, curTile.y + 1) == LevelLoader.TRAIL_TILE_INDEX) &&
-				(tileMap.getTile(curTile.x - 1, curTile.y) == LevelLoader.TRAIL_TILE_INDEX) &&
-				(tileMap.getTile(curTile.x + 1, curTile.y) == LevelLoader.TRAIL_TILE_INDEX)) {
+			if (checkNumObstacles(curTile.x / LevelLoader.TILE_SIZE, curTile.y / LevelLoader.TILE_SIZE) == 4) {
 				if (!skaterStuck) {
 					skaterStuck = true;
-					
+					this.flicker(SKATER_DEATH_SLACK);
 					deathTimer.start(SKATER_DEATH_SLACK, 1, skaterDeathHandler);
 				}
 			} else if (skaterStuck) {
 				skaterStuck = false;
 				deathTimer.stop();
+				_flicker = false;
+				_flickerTimer = 0;
 			}
-			
-			//rotate();
 			if (goingLeft) 
 				isGoingLeft();
 			else if (goingDown) 
@@ -204,6 +225,27 @@ package
 					goingUp = true;
 				}
 			}
+		}
+		
+		/**
+		 * Returns the number of obstacles around the object located at curPosX IN TILES
+		 * and curPosY IN TILES.
+		 * @param	curPosX
+		 * @param	curPosY
+		 * @return
+		 */
+		private function checkNumObstacles(curPosX:uint, curPosY:uint):uint {
+			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
+			var numObstacles:uint = 0;
+			if (tileMap.getTile(curPosX, curPosY - 1) >= LevelLoader.SOLID_BLOCK)
+				numObstacles++;
+			if (tileMap.getTile(curPosX, curPosY + 1) >= LevelLoader.SOLID_BLOCK)
+				numObstacles++;
+			if (tileMap.getTile(curPosX - 1, curPosY) >= LevelLoader.SOLID_BLOCK)
+				numObstacles++;
+			if (tileMap.getTile(curPosX + 1, curPosY) >= LevelLoader.SOLID_BLOCK)
+				numObstacles++;
+			return numObstacles;
 		}
 		
 		public function isGoingRight(): void {
@@ -249,6 +291,10 @@ package
 					goingLeft = true;
 				}
 			}
+		}
+		
+		private function clearDirection(): void {
+			goingDown = goingUp = goingLeft = goingRight = false;
 		}
 	}
 	
