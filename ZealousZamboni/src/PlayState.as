@@ -33,8 +33,8 @@ package
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
 		private var player:Zamboni;
 		
-		public function PlayState(levelNum:uint=2) {
-			levelLoader = new LevelLoader();
+		public function PlayState(levelNum:uint=1) {
+			levelLoader = new LevelLoader(DEBUG);
 			this.levelNum = levelNum;
 		}
 		
@@ -67,21 +67,23 @@ package
 		 * @param	s the unit to add
 		 * @param	time the amount of seconds to wait before adding the unit
 		 */
-		public function addUnitDelayed(s:ZzUnit, time:Number) : void {
+		public function addUnitDelayed(s:FlxObject, time:Number) : void {
 			var t:FlxTimer = new FlxTimer();
 			t.start(time, 1, function() : void {
 				addActiveUnit(s);
-				var p:FlxPoint = getNearestEntrance(s.getMidpoint());
-				s.x = p.x;
-				s.y = p.y;
-				s.postConstruct(addDep);
+				if (s is ZzUnit) {
+					var p:FlxPoint = getNearestEntrance(s.getMidpoint());
+					s.x = p.x;
+					s.y = p.y;
+					ZzUnit(s).postConstruct(addDep);
+				}
 			});
 		}
 		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
 			activeSprites = new FlxGroup();
-			levelLoader.loadLevel(levelNum, addUnitDelayed, DEBUG);
+			levelLoader.loadLevel(levelNum, addUnitDelayed);
 			level = levelLoader.getTilemap();
 			add(level);
 			

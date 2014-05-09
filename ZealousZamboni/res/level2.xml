@@ -17,4 +17,8 @@
 		<start>15</start>
 		<time>30</time>
 	</skater>
+	<powerup x="140" y="228">
+		<type>booster</type>
+		<start>30</start>
+	</powerup>
 </level>

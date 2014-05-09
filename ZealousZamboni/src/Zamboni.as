@@ -91,6 +91,17 @@ package
 				PlayState(FlxG.state).level.setTile(other.x / LevelLoader.TILE_SIZE, other.y / LevelLoader.TILE_SIZE, 0, true);
 			} else if (other is Skater) {
 				
+			} else if (other is PowerUp) {
+				if (PowerUp(other).type == PowerUp.BOOSTER) {
+					maxVelocity.y *= PowerUp.BOOSTER_SPEED_AMT;
+					maxVelocity.x *= PowerUp.BOOSTER_SPEED_AMT;
+					var t:FlxTimer = new FlxTimer();
+					t.start(PowerUp.BOOSTER_TIME_LENGTH, 1, function(timer:*) : void { 
+						maxVelocity.x /= PowerUp.BOOSTER_SPEED_AMT; 
+						maxVelocity.y /= PowerUp.BOOSTER_SPEED_AMT; 
+					} );
+					other.kill();
+				}
 			}
 		}
 	}

@@ -51,13 +51,17 @@ package
 		
 		private var fAddUnitDelayed:Function;
 		
+		public function LevelLoader(debugEnabled:Boolean = false) {
+			this.DEBUG = debugEnabled;
+		}
+		
 		/**
 		 * Loads the specified level into memory
 		 * @param	level_num the level number to load
 		 * @param fAddUnitDelayed a function for adding units to the PlayState after a certain number of seconds
 		 * 			The function format should be the following: addUnitDelayed(z:ZzUnit, time:Number)
 		 */
-		public function loadLevel(level_num:uint, fAddUnitDelayed:Function, debugEnabled:Boolean = false) : void {
+		public function loadLevel(level_num:uint, fAddUnitDelayed:Function) : void {
 			this.fAddUnitDelayed = fAddUnitDelayed;
 			level = new FlxTilemap();
 			level.loadMap(new this["Level"+level_num+"Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
@@ -154,14 +158,14 @@ package
 				if (resize) {
 					powerupX *= resizeX;
 					powerupY *= resizeY;
-				}
-				var powerupTime:int = p.time;
-				if (DEBUG)
-					trace("Powerup time on ice: " + powerupTime);
-					
+				}	
 				var powerupType:String = p.type;
+				startTime = p.start;
 				if (DEBUG)
+					trace("power up start = " + startTime);
 					trace("Powerup type: " + powerupType);
+				var powerUp:PowerUp = new PowerUp(powerupX, powerupY, powerupType);
+				fAddUnitDelayed(powerUp, startTime);
 			}
 			
 			// Zombies: coordinates
