@@ -163,6 +163,22 @@ package
 			levelLoader = null;
 			player = null;
 		}
+		
+		public function getNearestSkater(p:FlxPoint) : FlxPoint {
+			var skaters:Array = activeSprites.members;
+			var i:int;
+			var minTile:FlxPoint = new FlxPoint(320,280);
+			var minDist:Number = Number.MAX_VALUE;
+			skaters.forEach(function (o:FlxObject, index:int, arr:Array) : void {
+				if (Skater == null || !(o is Skater) || !o.exists) return;
+				var t:FlxPoint = o.getMidpoint();
+				if (ZzUtils.dist(p, t) < minDist) {
+					minTile = t;
+					minDist = ZzUtils.dist(p, t);
+				}
+			});
+			return minTile;
+		}
 	}
 	
 }

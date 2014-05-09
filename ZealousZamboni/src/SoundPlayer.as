@@ -22,6 +22,10 @@ package
 		[Embed(source='../media/skatersuccess.mp3')] 		 
 		private static var SkaterSuccess : Class; 		 
 		public static var skaterSuccess : Sound = (new SkaterSuccess) as Sound;	
+		
+		[Embed(source='../media/zombiedeath.mp3')] 		 
+		private static var ZombieDeath : Class; 		 
+		public static var zombieDeath : Sound = (new ZombieDeath) as Sound;
 	}
 	
 }

@@ -23,7 +23,6 @@ package
 			initialNumSkaters = skaters.length;
 			this.skaters.sortOn("startTime", Array.NUMERIC | Array.DESCENDING);
 			for each (var skater:SpriteData in skaters) {
-				//trace(skater.toString());
 				var timer:FlxTimer = new FlxTimer();
 				timer.start(skater.startTime, 1, startSprite);
 			}
@@ -38,7 +37,6 @@ package
 		
 		
 		public function skatersLeft():uint {
-			trace(skaters.length);
 			return skaters.length;
 		}
 		
