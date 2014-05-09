@@ -20,6 +20,10 @@ package
 			skaters.push(sd);
 		}
 		
+		public function skatersFinished():Boolean {
+			return skaters.length == 0 && countLiving() == 0;
+		}
+		
 		public function startTimer():void {
 			initialNumSkaters = skaters.length;
 			this.skaters.sortOn("startTime", Array.NUMERIC | Array.DESCENDING);
@@ -38,13 +42,33 @@ package
 			updateSkatersLeft(skaters.length);
 		}
 		
-		public function getInitialNumSkaters():uint {
-			return initialNumSkaters;
-		}
-		
 		public function setUpdateSkatersFunction(updateSkatersLeft:Function):uint {
 			this.updateSkatersLeft = updateSkatersLeft;
 			return skaters.length;
+		}
+		
+		/**
+		 * Call this function to find out how many members of the group are dead.
+		 * 
+		 * @return	The number of <code>FlxBasic</code>s flagged as dead.  Returns -1 if group is empty.
+		 */
+		public function countNotExists():int
+		{
+			var count:int = -1;
+			var basic:FlxBasic;
+			var i:uint = 0;
+			while(i < length)
+			{
+				basic = members[i++] as FlxBasic;
+				if(basic != null)
+				{
+					if(count < 0)
+						count = 0;
+					if(!basic.exists)
+						count++;
+				}
+			}
+			return count;
 		}
 	}
 

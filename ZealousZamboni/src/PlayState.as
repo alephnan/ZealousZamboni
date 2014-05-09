@@ -34,7 +34,7 @@ package
 		public var activeSprites:Array;
 		
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
-		private var player:Zamboni;
+		public var player:Zamboni;
 		
 		private var hud:ZzHUD;
 		
@@ -80,10 +80,7 @@ package
 					return;
 				}
 			}
-			
-			finishedSkaters++;
-			if (finishedSkaters == SkaterQueue(
-					activeSprites[SKATERS_INDEX]).getInitialNumSkaters()) {
+			if (SkaterQueue(activeSprites[SKATERS_INDEX]).skatersFinished()) {
 				winLevel();
 			}
 		}

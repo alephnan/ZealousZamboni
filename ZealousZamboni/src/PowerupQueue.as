@@ -21,7 +21,6 @@ package
 		public function startTimer():void {
 			this.powerups.sortOn("startTime", Array.NUMERIC | Array.DESCENDING);
 			for each (var powerup:SpriteData in powerups) {
-				//trace(skater.toString());
 				var timer:FlxTimer = new FlxTimer();
 				timer.start(powerup.startTime, 1, startSprite);
 			}

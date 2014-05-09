@@ -46,7 +46,6 @@ package
 		{
 			super(X, Y);
 			timeToSkate = time;
-			trace("time = " + time);
 			timer = new FlxTimer();
 			progress = new FlxBar(x, y, 1, 48, 8, this, "progressTime", 0, time);
 			progressTime = 1;

@@ -147,9 +147,10 @@ package
 				}	
 				var powerupType:String = p.type;
 				startTime = p.start;
-				if (DEBUG)
+				if (DEBUG) {
 					trace("power up start = " + startTime);
 					trace("Powerup type: " + powerupType);
+				}
 				powerups.addSpriteData(new SpriteData(powerupX, powerupY, startTime, 0, powerupType));
 			}
 			queues.push(powerups);
