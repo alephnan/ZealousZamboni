@@ -5,7 +5,7 @@ package
 	 * ...
 	 * @author Dana Van Aken
 	 */
-	public class WalkingDeadQueue implements SpriteQueue
+	public class WalkingDeadQueue extends FlxGroup implements SpriteQueue
 	{
 		private var zombies:Array;
 		
@@ -29,7 +29,8 @@ package
 		private function startSprite(timer:FlxTimer):void {
 			var next:SpriteData = zombies.pop();
 			var zombie:WalkingDead = new WalkingDead(next.x, next.y);
-			PlayState(FlxG.state).addUnit(zombie);
+			add(zombie);
+			//PlayState(FlxG.state).addUnit(zombie);
 		}
 		
 	}

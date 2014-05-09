@@ -5,10 +5,11 @@ package
 	 * ...
 	 * @author Dana Van Aken
 	 */
-	public class SkaterQueue implements SpriteQueue
+	public class SkaterQueue extends FlxGroup implements SpriteQueue
 	{
 		private var skaters:Array;
 		private var initialNumSkaters:uint;
+		private var updateSkatersLeft:Function;
 		
 		public function SkaterQueue() {
 			skaters = new Array();
@@ -32,16 +33,18 @@ package
 			var next:SpriteData = skaters.pop();
 			var p:FlxPoint = ZzUtils.getRandomEntrance();
 			var skater:Skater = new Skater(p.x, p.y, next.iceTime);
-			PlayState(FlxG.state).addUnit(skater);
-		}
-		
-		
-		public function skatersLeft():uint {
-			return skaters.length;
+			add(skater);
+			skater.postConstruct(PlayState(FlxG.state).addDep);
+			updateSkatersLeft(skaters.length);
 		}
 		
 		public function getInitialNumSkaters():uint {
 			return initialNumSkaters;
+		}
+		
+		public function setUpdateSkatersFunction(updateSkatersLeft:Function):uint {
+			this.updateSkatersLeft = updateSkatersLeft;
+			return skaters.length;
 		}
 	}
 

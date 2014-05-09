@@ -27,11 +27,6 @@ package
 		public static const TRAIL_TILE_INDEX:uint = 8;		// Trail skaters leave
 		[Embed(source = "../res/tiles_new.png")] public var TileSheet:Class;
 		
-		/* SPRITE QUEUE INDICES */
-		public static const SKATER_QUEUE_INDEX:uint = 0;
-		public static const POWERUP_QUEUE_INDEX:uint = 1;
-		public static const ZOMBIE_QUEUE_INDEX:uint = 2;
-		
 		//level specific assets
 		[Embed(source = '../res/level1.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
 		[Embed(source = "../res/level1.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;

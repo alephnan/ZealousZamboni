@@ -20,7 +20,7 @@ package
 		
 		private var player:Zamboni;
 		
-		private var skatersLeft:Function;
+		private var skatersLeft:uint;
 		private var skatersLeftTxt:FlxText;
 		/**
 		 * @param   player a reference to the player of the game
@@ -31,16 +31,17 @@ package
 			y = 480;
 			this.state = state;
 			this.player = player;
-			skatersLeft = SkaterQueue(state.queues[LevelLoader.SKATER_QUEUE_INDEX]).skatersLeft;
+			skatersLeft = SkaterQueue(state.activeSprites[PlayState.SKATERS_INDEX])
+					.setUpdateSkatersFunction(setSkatersLeft);
 			playerBar = new PlayerBar(0, y+20, player.health);
 			add(playerBar);
-			//add skatersLeft counter
+			
 			//TODO create real icon instead of string
 			var skaterIcon:FlxText = new FlxText(20, y+20, 96, "Skaters left: ", false);
 			skaterIcon.setFormat(null, 24, 0xffffff, "center");
 			skaterIcon.scale = new FlxPoint(1, 1);
 			add(skaterIcon);
-			skatersLeftTxt = new FlxText(20+96, y + 16, 20, String(skatersLeft()), false);
+			skatersLeftTxt = new FlxText(20+96, y + 16, 20, String(skatersLeft), false);
 			skatersLeftTxt.setFormat(null, 24, 0xffffff, "center");
 			skatersLeftTxt.scale = new FlxPoint(2, 2);
 			add(skatersLeftTxt);
@@ -48,7 +49,11 @@ package
 		
 		override public function update() : void {
 			playerBar.updatePlayerHealth(player.health);
-			skatersLeftTxt.text = String(skatersLeft());
+			skatersLeftTxt.text = String(skatersLeft);
+		}
+		
+		public function setSkatersLeft(skatersLeft:uint):void {
+			this.skatersLeft = skatersLeft;
 		}
 		
 	}

@@ -5,7 +5,7 @@ package
 	 * ...
 	 * @author Dana Van Aken
 	 */
-	public class PowerupQueue implements SpriteQueue
+	public class PowerupQueue extends FlxGroup implements SpriteQueue
 	{
 		private var powerups:Array;
 		
@@ -30,7 +30,8 @@ package
 		private function startSprite(timer:FlxTimer):void {
 			var next:SpriteData = powerups.pop();
 			var powerup:PowerUp = new PowerUp(next.x, next.y, next.type);
-			PlayState(FlxG.state).addUnit(powerup);
+			add(powerup);
+			//PlayState(FlxG.state).addUnit(powerup);
 		}
 		
 	}

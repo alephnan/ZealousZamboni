@@ -11,8 +11,13 @@ package
 	 * Other components can access it via the field FlxG.state when this is the current state
 	 */
 	public class PlayState extends FlxState
-	{
+	{ 
 		public static const DEBUG:Boolean = true;
+		
+		public static const ZAMBONI_INDEX:uint = 0;
+		public static const SKATERS_INDEX:uint = 1;
+		public static const POWERUPS_INDEX:uint = 2;
+		public static const ZOMBIES_INDEX:uint = 3;
 		
 		private var levelLoader:LevelLoader;
 
@@ -23,11 +28,10 @@ package
 		
 		public var finishedSkaters:uint = 0;
 		
-		public var queues:Array;
-		
 		//Set of all sprites active in the level (including the player)
 		//TODO Decide if we should just add sprites directly to this?
-		public var activeSprites:FlxGroup;
+		//public var activeSprites:FlxGroup;
+		public var activeSprites:Array;
 		
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
 		private var player:Zamboni;
@@ -41,31 +45,27 @@ package
 		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
-			activeSprites = new FlxGroup();
+			activeSprites = new Array();
 			levelLoader.loadLevel(levelNum);
 			level = levelLoader.getTilemap();
 			add(level);
 			
-			activeSprites.add(levelLoader.getPlayer());
-			add(activeSprites);
 			player = levelLoader.getPlayer();
-			queues = levelLoader.getSpriteQueues();
+			activeSprites.push(player);
+			add(player);
+			startSprites(levelLoader.getSpriteQueues());
 			hud = new ZzHUD(player, this);
 			add(hud);
 			
-			startQueues();
 			FlxG.mouse.show();
 		}
 		
-		private function startQueues():void {
+		private function startSprites(queues:Array):void {
 			for (var i:uint = 0; i < queues.length; ++i) {
+				activeSprites.push(queues[i]);
 				SpriteQueue(queues[i]).startTimer();
+				add(queues[i]);
 			}
-		}
-		
-		public function addUnit(s:ZzUnit):void {
-			addActiveUnit(s);
-			s.postConstruct(addDep);
 		}
 		
 		/**
@@ -83,7 +83,7 @@ package
 			
 			finishedSkaters++;
 			if (finishedSkaters == SkaterQueue(
-					queues[LevelLoader.SKATER_QUEUE_INDEX]).getInitialNumSkaters()) {
+					activeSprites[SKATERS_INDEX]).getInitialNumSkaters()) {
 				winLevel();
 			}
 		}
@@ -99,15 +99,9 @@ package
 		 * Probably needs to be modified to add sprites to appropriate collision groups later
 		 * @param	o
 		 */
-		private function addDep(o:FlxBasic) : void {
+		public function addDep(o:FlxBasic) : void {
 			//problem: adds before tilemap
 			add(o);
-		}
-		
-		//Adds a unit to the active set of sprites
-		//This is provided as a convenience for any sprites that have "sub sprites" such as skaters that have trails
-		public function addActiveUnit(u:FlxBasic) : void {
-			activeSprites.add(u);
 		}
 		
 		//This is the main function that causes stuff to actually happen in the game
@@ -139,10 +133,17 @@ package
 				player.velocity.x = 0;
 				player.velocity.y = 0;
 			}
-			//Collide all sprites with the level tiles
-			FlxG.collide(level, activeSprites, onCollision);
-			//Collide all sprites with each other
-			FlxG.collide(activeSprites, activeSprites, onCollision);
+			// Collide all sprites with eachother and with the tilemap
+			collideGroups();
+		}
+		
+		private function collideGroups():void {
+			for (var i:uint = 0; i < activeSprites.length; ++i) {
+				FlxG.collide(level, activeSprites[i], onCollision);
+				for (var j:uint = 0; j < activeSprites.length; ++j) {
+					FlxG.collide(activeSprites[i], activeSprites[j], onCollision);
+				}
+			}
 		}
 		
 		//Callback function for when two sprites collide
@@ -169,13 +170,13 @@ package
 		}
 		
 		public function getNearestSkater(p:FlxPoint) : FlxPoint {
-			var skaters:Array = activeSprites.members;
+			var skaters:Array = SkaterQueue(activeSprites[SKATERS_INDEX]).members;
 			var i:int;
 			var minTile:FlxPoint = new FlxPoint(320,280);
 			var minDist:Number = Number.MAX_VALUE;
-			skaters.forEach(function (o:FlxObject, index:int, arr:Array) : void {
-				if (Skater == null || !(o is Skater) || !o.exists) return;
-				var t:FlxPoint = o.getMidpoint();
+			skaters.forEach(function(s:Skater, index:int, arr:Array): void {
+				if (s == null || !s.exists) return;
+				var t:FlxPoint = s.getMidpoint();
 				if (ZzUtils.dist(p, t) < minDist) {
 					minTile = t;
 					minDist = ZzUtils.dist(p, t);

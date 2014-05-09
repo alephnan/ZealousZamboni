@@ -69,7 +69,9 @@ package
 			}
 			//Need to manually call collision on this with skaters & zamboni since collision is turned off
 			this.allowCollisions = FlxObject.ANY;
-			FlxG.overlap(this, PlayState(FlxG.state).activeSprites, collide);
+			//FlxG.overlap(this, PlayState(FlxG.state).activeSprites, collide);
+			FlxG.overlap(this, PlayState(FlxG.state).activeSprites[0], collide);
+			FlxG.overlap(this, PlayState(FlxG.state).activeSprites[1], collide);
 			this.allowCollisions = FlxObject.NONE;
 			
 		}
