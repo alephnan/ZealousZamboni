@@ -217,6 +217,9 @@ package
 				isGoingUp();
 			else if (goingRight) 
 				isGoingRight();
+			if (other is WalkingDead) {
+				skaterDeathHandler();
+			}
 		}
 	
 		public function isGoingLeft(): void {
