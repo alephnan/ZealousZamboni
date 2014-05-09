@@ -41,15 +41,13 @@ package
 		
 		private var name:String;
 		
-		private var skaters:FlxGroup;
+		private var skaters:SpriteQueue;
 		
-		public var numSkaters:uint;
+		private var powerups:SpriteQueue;
 		
 		private var player:Zamboni;
 		
 		private var DEBUG:Boolean;
-		
-		private var fAddUnitDelayed:Function;
 		
 		public function LevelLoader(debugEnabled:Boolean = false) {
 			this.DEBUG = debugEnabled;
@@ -61,14 +59,14 @@ package
 		 * @param fAddUnitDelayed a function for adding units to the PlayState after a certain number of seconds
 		 * 			The function format should be the following: addUnitDelayed(z:ZzUnit, time:Number)
 		 */
-		public function loadLevel(level_num:uint, fAddUnitDelayed:Function) : void {
-			this.fAddUnitDelayed = fAddUnitDelayed;
+		public function loadLevel(level_num:uint) : void {
 			level = new FlxTilemap();
 			level.loadMap(new this["Level"+level_num+"Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
 			//Set entrances as non-collidable
 			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
-			
-			skaters = new FlxGroup();
+			ZamboniUtil.setLevel(level);
+			skaters = new SkaterQueue();
+			powerups = new PowerupQueue();
 			parseXML(this["Level"+level_num+"XML"]);
 		}
 		
@@ -77,23 +75,30 @@ package
 		}
 		
 		//TODO: Figure out what type this should return
-		public function getSkaters() : FlxGroup {
+		public function getSkaters() : SpriteQueue {
 			return skaters;
 		}
 		
 		//TODO: Figure out what type this should return
-		public function getZombies() : FlxGroup {
-			return new FlxGroup();
+		public function getZombies() : SpriteQueue {
+			return null;
+		}
+		
+		public function getPowerups() : SpriteQueue {
+			return powerups;
 		}
 		
 		public function getTilemap() : FlxTilemap {
 			return level;
 		}
 		
+		public function getSpriteQueues():Array {
+			return null;
+		}
+		
 		//Helper function for parsing xml data associated with a level
 		private function parseXML(clazz:Class):void {
 			var xml:XML = new XML(new clazz());
-			numSkaters = 0;
 			// Get assumed framewidth and frameheight
 			var assumedWidth:int = parseInt(xml.@width);
 			var assumedHeight:int = parseInt(xml.@height);
@@ -127,11 +132,9 @@ package
 			//addUnit(player);
 			
 			player.health = lives;
-			
 			// Skaters: coordinates, start time, skate time
 			
 			for each (var s:XML in xml.skater) {
-				numSkaters++;
 				var skaterX:int = s.@x;
 				var skaterY:int = s.@y;
 				if (DEBUG)
@@ -144,9 +147,7 @@ package
 				var startTime:int = s.start;
 				if (DEBUG)
 					trace("Skater time on ice: " + skateTime);
-				var skater:Skater = new Skater(skaterX, skaterY, skateTime);
-				skaters.add(skater);
-				fAddUnitDelayed(skater, startTime);
+				skaters.addSpriteData(new SpriteData(skaterX, skaterY, startTime, skateTime));
 			}
 			
 			// Powerups: coordinates, time, and type
@@ -164,8 +165,7 @@ package
 				if (DEBUG)
 					trace("power up start = " + startTime);
 					trace("Powerup type: " + powerupType);
-				var powerUp:PowerUp = new PowerUp(powerupX, powerupY, powerupType);
-				fAddUnitDelayed(powerUp, startTime);
+				powerups.addSpriteData(new SpriteData(powerupX, powerupY, startTime, 0, powerupType));
 			}
 			
 			// Zombies: coordinates

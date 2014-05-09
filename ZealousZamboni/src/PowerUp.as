@@ -6,7 +6,7 @@ package
 	 * ...
 	 * @author Kenny
 	 */
-	public class PowerUp extends FlxSprite
+	public class PowerUp extends ZzUnit
 	{
 		[Embed(source = '../media/rocket.png')] 
 		private static var boosterPNG:Class;

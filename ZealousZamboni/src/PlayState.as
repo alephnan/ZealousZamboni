@@ -23,6 +23,10 @@ package
 		
 		public var finishedSkaters:uint = 0;
 		
+		public var skaterQueue:SkaterQueue;
+		
+		public var powerupQueue:PowerupQueue;
+		
 		//Set of all sprites active in the level (including the player)
 		//TODO Decide if we should just add sprites directly to this?
 		public var activeSprites:FlxGroup;
@@ -32,67 +36,34 @@ package
 		
 		private var hud:ZzHUD;
 		
-		public function PlayState(levelNum:uint=1) {
+		public function PlayState(levelNum:uint=2) {
 			levelLoader = new LevelLoader(DEBUG);
 			this.levelNum = levelNum;
-		}
-		
-		/**
-		 * Returns the nearest entrance to the given point
-		 * @param	p the point to check near
-		 * @return the coordinates of the upper-left corner of the entrance tile
-		 */
-		public function getNearestEntrance(p:FlxPoint) : FlxPoint {
-			var dist:Function = function(a:FlxPoint) : Number{
-				return Math.sqrt(Math.pow(p.x - a.x, 2) + Math.pow(p.y - a.y, 2));
-			}
-			var tiles:Array = level.getTileCoords(LevelLoader.ENTRANCE_TILE_INDEX, false);
-			var i:int;
-			var minTile:FlxPoint = tiles[0];
-			var minDist:Number = dist(minTile);
-			tiles.forEach(function (t:FlxPoint, index:int, arr:Array) : void{
-				if (dist(t) < minDist) {
-					minTile = t;
-					minDist = dist(t);
-				}
-			});
-			return minTile;
-		}
-		
-		/**
-		 * Queues up the given unit to be added to this after the given number of seconds
-		 * This should be the main way that skaters are added to this, probably called from the LevelLoader
-		 *  This will also invoke the postConstruct method on the unit
-		 * @param	s the unit to add
-		 * @param	time the amount of seconds to wait before adding the unit
-		 */
-		public function addUnitDelayed(s:FlxObject, time:Number) : void {
-			var t:FlxTimer = new FlxTimer();
-			t.start(time, 1, function() : void {
-				addActiveUnit(s);
-				if (s is ZzUnit) {
-					var p:FlxPoint = getNearestEntrance(s.getMidpoint());
-					s.x = p.x;
-					s.y = p.y;
-					ZzUnit(s).postConstruct(addDep);
-				}
-			});
 		}
 		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
 			activeSprites = new FlxGroup();
-			levelLoader.loadLevel(levelNum, addUnitDelayed);
+			levelLoader.loadLevel(levelNum);
 			level = levelLoader.getTilemap();
 			add(level);
 			
 			activeSprites.add(levelLoader.getPlayer());
 			add(activeSprites);
 			player = levelLoader.getPlayer();
-			hud = new ZzHUD(player, function() : int { return levelLoader.numSkaters - finishedSkaters }, this);
-			
+			skaterQueue = SkaterQueue(levelLoader.getSkaters());
+			powerupQueue = PowerupQueue(levelLoader.getPowerups());
+			hud = new ZzHUD(player, skaterQueue.skatersLeft, this);
 			add(hud);
+			skaterQueue.startTimer();
+			powerupQueue.startTimer();
+			
 			FlxG.mouse.show();
+		}
+		
+		public function addUnit(s:ZzUnit):void {
+			addActiveUnit(s);
+			s.postConstruct(addDep);
 		}
 		
 		/**
@@ -108,7 +79,7 @@ package
 				}
 			}
 			finishedSkaters++;
-			if (finishedSkaters == levelLoader.numSkaters) {
+			if (finishedSkaters == skaterQueue.getInitialNumSkaters()) {
 				winLevel();
 			}
 		}

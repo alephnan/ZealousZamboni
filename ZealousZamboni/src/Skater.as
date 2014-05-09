@@ -26,8 +26,6 @@ package
 		private var goingUp:Boolean = false;
 		private var goingDown:Boolean = false;
 		private var isControlled:Boolean = false;
-		private var trail:Trail;
-		private var lastTrailTile:FlxPoint;
 		//The total time that this skater should skate for in seconds
 		private var timeToSkate:int;
 		//The internal timer that tracks how long to skate for
@@ -46,16 +44,14 @@ package
 		public function Skater(X:Number, Y:Number, time:int) {
 			super(X, Y);
 			timeToSkate = time;
+			trace("time = " + time);
 			timer = new FlxTimer();
 			progress = new FlxBar(x, y, 1, 48, 8, this, "progressTime", 0, time);
 			progressTime = 1;
 			progress.trackParent(0, -5);
 			progress.createFilledBar(0xA0112080,0xF060A0FF, true, 0xff000000);
 			progress.update();
-			lastTrailTile = this.getMidpoint();
-			lastTrailTile.x /= LevelLoader.TILE_SIZE;
-			lastTrailTile.y /= LevelLoader.TILE_SIZE;
-			trail = new Trail();
+			
 			//place holder stuff
 			loadGraphic(skaterPNG, true, true, 32, 32, true);
 			deathTimer = new FlxTimer();
@@ -88,16 +84,11 @@ package
 			timer.start(timeToSkate, 1, timerUp);
 			SoundPlayer.skaterStart.play();
 			addDependency(progress);
-			addDependency(trail);
-		}
-		
-		public function getTrail() : Trail {
-			return trail;
 		}
 		
 		override public function preUpdate():void {
 			super.preUpdate();
-			if (!timer.finished) {
+			if (!timer.finished && !skaterStuck) {
 				var mp:FlxPoint = getMidpoint();
 				var tilemap:FlxTilemap = PlayState(FlxG.state).level;
 				var xTile:uint = uint(mp.x / LevelLoader.TILE_SIZE);
@@ -172,7 +163,7 @@ package
 			SoundPlayer.skaterSuccess.play();
 			var p:FlxPath = new FlxPath();
 			p.addPoint(getMidpoint());
-			p.addPoint(PlayState(FlxG.state).getNearestEntrance(getMidpoint()));
+			p.addPoint(ZamboniUtil.getNearestEntrance(getMidpoint()));
 			this.allowCollisions = 0;
 			progress.createFilledBar(0xFFFFFF00,0xFFFFFF00, true, 0xff000000);
 			progress.update();
