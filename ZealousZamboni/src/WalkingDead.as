@@ -8,7 +8,7 @@ package
 	 */
 	public class WalkingDead extends ZzUnit 
 	{
-		[Embed(source = '../media/skater.png')] private static const walkingDeadPNG:Class;
+		[Embed(source = '../media/zombie.png')] private static const walkingDeadPNG:Class;
 		
 		private var speed:Number;
 		
