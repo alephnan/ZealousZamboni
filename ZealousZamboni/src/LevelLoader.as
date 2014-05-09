@@ -171,8 +171,8 @@ package
 					zombieX *= resizeX;
 					zombieY *= resizeY;
 				}
+				zombies.addSpriteData(new SpriteData(zombieX, zombieY, int(z.start)));
 			}
-			zombies.addSpriteData(new SpriteData(50, 50, 10));
 			queues.push(zombies);
 		}
 		

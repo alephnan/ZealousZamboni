@@ -88,7 +88,7 @@ package
 			if (canLunge && ZzUtils.dist(getMidpoint(), p.tail()) < lungeDist) {
 				speed *= 4;
 				canLunge = false;
-				new FlxTimer().start(.3, 1, function (t:*) : void { speed /= 8; } );
+				new FlxTimer().start(.1, 1, function (t:*) : void { speed /= 8; } );
 				new FlxTimer().start(5, 1, function (t:*) : void { speed *= 2; canLunge = true} );
 			}
 			this.followPath(p, speed);
