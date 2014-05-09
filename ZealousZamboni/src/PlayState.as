@@ -43,17 +43,14 @@ package
 		 * @return the coordinates of the upper-left corner of the entrance tile
 		 */
 		public function getNearestEntrance(p:FlxPoint) : FlxPoint {
-			var dist:Function = function(a:FlxPoint) : Number{
-				return Math.sqrt(Math.pow(p.x - a.x, 2) + Math.pow(p.y - a.y, 2));
-			}
 			var tiles:Array = level.getTileCoords(LevelLoader.ENTRANCE_TILE_INDEX, false);
 			var i:int;
 			var minTile:FlxPoint = tiles[0];
-			var minDist:Number = dist(minTile);
+			var minDist:Number = ZzUtils.dist(p, minTile);
 			tiles.forEach(function (t:FlxPoint, index:int, arr:Array) : void{
-				if (dist(t) < minDist) {
+				if (ZzUtils.dist(p,t) < minDist) {
 					minTile = t;
-					minDist = dist(t);
+					minDist = ZzUtils.dist(p, t);
 				}
 			});
 			return minTile;
@@ -92,6 +89,8 @@ package
 			hud = new ZzHUD(player, function() : int { return levelLoader.numSkaters - finishedSkaters }, this);
 			
 			add(hud);
+			
+			activeSprites.add(new WalkingDead(300, 300));
 			FlxG.mouse.show();
 		}
 		
@@ -191,6 +190,22 @@ package
 			this.members = null;
 			levelLoader = null;
 			player = null;
+		}
+		
+		public function getNearestSkater(p:FlxPoint) : FlxPoint {
+			var skaters:Array = activeSprites.members;
+			var i:int;
+			var minTile:FlxPoint = new FlxPoint(320,280);
+			var minDist:Number = Number.MAX_VALUE;
+			skaters.forEach(function (o:FlxObject, index:int, arr:Array) : void {
+				if (Skater == null || !(o is Skater) || !o.exists) return;
+				var t:FlxPoint = o.getMidpoint();
+				if (ZzUtils.dist(p, t) < minDist) {
+					minTile = t;
+					minDist = ZzUtils.dist(p, t);
+				}
+			});
+			return minTile;
 		}
 	}
 	

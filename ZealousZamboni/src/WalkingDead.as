@@ -8,18 +8,23 @@ package
 	 */
 	public class WalkingDead extends ZzUnit 
 	{
-		[Embed(source = '../media/skater_wireframe.png')] private static const walkingDeadPNG:Class;
+		[Embed(source = '../media/skater.png')] private static const walkingDeadPNG:Class;
 		
 		private var speed:Number;
 		
 		//Number of updates until we do a path update
 		private var nextPathUpdate:Number = 0;
 		
+		private var lungeDist:Number = 40;
+		
+		private var canLunge:Boolean = true;
+		
 		public function WalkingDead(X:Number, Y:Number) {
 			super(X, Y);
 			//place holder stuff
 			speed = 100;
 			loadGraphic(walkingDeadPNG, true, true, 32, 32, true);
+			this.color = 0x780090D0;
 			this.allowCollisions = FlxObject.NONE;
 			// Change sprite size to be size of tile (better for trails)
 			this.width = LevelLoader.TILE_SIZE;
@@ -50,26 +55,44 @@ package
 			}else {
 				nextPathUpdate -= 1;
 			}
+			if (pathAngle < 0) pathAngle += 360;
 			if (pathAngle < 45) {
-				play("walkE");
-			}else if (pathAngle < 135) {
 				play("walkN");
-			}else if (pathAngle < 225) {
-				play("walkW");
-			}else if (pathAngle < 315){
-				play("walkS");
-			}else {
+			}else if (pathAngle < 135) {
 				play("walkE");
+			}else if (pathAngle < 225) {
+				play("walkS");
+			}else if (pathAngle < 315){
+				play("walkW");
+			}else {
+				play("walkN");
 			}
+			//Need to manually call collision on this with skaters & zamboni since collision is turned off
+			this.allowCollisions = FlxObject.ANY;
+			FlxG.overlap(this, PlayState(FlxG.state).activeSprites, collide);
+			this.allowCollisions = FlxObject.NONE;
 			
-			
+		}
+		
+		private function collide(e1:FlxObject, e2:FlxObject) : void {
+			if (e2 is Skater || e2 is Zamboni) {
+				ZzUnit(e2).onCollision(this);
+				onCollision(e2);
+			}
 		}
 		
 		private function updatePath() : void {
 			var p:FlxPath = new FlxPath();
 			p.addPoint(getMidpoint());
-			//p.addPoint(PlayState(FlxG.state).getNearestSkater(getMidpoint()));
+			p.addPoint(PlayState(FlxG.state).getNearestSkater(getMidpoint()));
+			if (canLunge && ZzUtils.dist(getMidpoint(), p.tail()) < lungeDist) {
+				speed *= 4;
+				canLunge = false;
+				new FlxTimer().start(.3, 1, function (t:*) : void { speed /= 8; } );
+				new FlxTimer().start(5, 1, function (t:*) : void { speed *= 2; canLunge = true} );
+			}
 			this.followPath(p, speed);
+			
 		}
 		
 		override public function onCollision(other:FlxObject) : void {
