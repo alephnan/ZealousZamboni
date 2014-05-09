@@ -150,7 +150,11 @@ public class Main {
 		int x = readInt(input, "(Example: 160)");
 		System.out.print("Enter the zombie starting Y coordinate [assumes (" + frameWidth + ", " + frameHeight + ")]:");
 		int y = readInt(input, "(Example: 10)");
-		sb.append("\t<zombie x=\"" + x + "\" y=\"" + y + "\"/>\n");
+		sb.append("\t<zombie x=\"" + x + "\" y=\"" + y + "\">\n");
+		System.out.print("Enter zombie start time in seconds: ");
+		x = readInt(input, "(Example: 5)");
+		sb.append("\t\t<start>" + x + "</start>\n");
+		sb.append("\t</zombie>\n");
 	}
 	
 	private static int readInt(Scanner input, String exampleMsg) {
