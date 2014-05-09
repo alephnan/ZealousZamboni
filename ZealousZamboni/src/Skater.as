@@ -17,9 +17,10 @@ package
 	 */
 	public class Skater extends ZzUnit
 	{
-		[Embed(source = '../media/skater.png')] private var skaterPNG:Class;
+		[Embed(source='../media/skater.png')]
+		private var skaterPNG:Class;
 		
-		private static const SKATER_DEATH_SLACK:uint = 5;	// seconds
+		private static const SKATER_DEATH_SLACK:uint = 5; // seconds
 		
 		private var goingLeft:Boolean = false;
 		private var goingRight:Boolean = false;
@@ -41,15 +42,16 @@ package
 		//Sound played when this skater is stuck
 		private var skaterStuckSnd:SoundChannel;
 		
-		public function Skater(X:Number, Y:Number, time:int) {
+		public function Skater(X:Number, Y:Number, time:int)
+		{
 			super(X, Y);
 			timeToSkate = time;
 			trace("time = " + time);
 			timer = new FlxTimer();
 			progress = new FlxBar(x, y, 1, 48, 8, this, "progressTime", 0, time);
 			progressTime = 1;
-			progress.trackParent(0, -5);
-			progress.createFilledBar(0xA0112080,0xF060A0FF, true, 0xff000000);
+			progress.trackParent(-12, -26);
+			progress.createFilledBar(0x60112080, 0xF060A0FF, true, 0xff000000);
 			progress.update();
 			
 			//place holder stuff
@@ -59,9 +61,9 @@ package
 			// Change sprite size to be size of tile (better for trails)
 			this.width = LevelLoader.TILE_SIZE;
 			this.height = LevelLoader.TILE_SIZE;
-			this.offset = new FlxPoint(12, 18);	// used trial and error here
+			this.offset = new FlxPoint(12, 18); // used trial and error here
 			
-			var o:Number = 0;	//offset for specifying animations
+			var o:Number = 0; //offset for specifying animations
 			addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 			o = 16;
 			addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
@@ -75,48 +77,64 @@ package
 			maxVelocity.y = 120;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
-			goingRight = true;
+			goingDown = true;
 			this.play("walkS", true);
 		}
 		
-		
-		override public function postConstruct(addDependency : Function) : void {
+		override public function postConstruct(addDependency:Function):void
+		{
 			timer.start(timeToSkate, 1, timerUp);
 			SoundPlayer.skaterStart.play();
 			addDependency(progress);
 		}
 		
-		override public function preUpdate():void {
+		override public function preUpdate():void
+		{
 			super.preUpdate();
-			if (!timer.finished && !skaterStuck) {
+			if (!timer.finished && !skaterStuck)
+			{
 				var mp:FlxPoint = getMidpoint();
 				var tilemap:FlxTilemap = PlayState(FlxG.state).level;
 				var xTile:uint = uint(mp.x / LevelLoader.TILE_SIZE);
 				var yTile:uint = uint(mp.y / LevelLoader.TILE_SIZE);
 				var currentTile:uint = tilemap.getTile(xTile, yTile);
-				if (currentTile == LevelLoader.ICE_TILE_INDEX) {
+				if (currentTile == LevelLoader.ICE_TILE_INDEX)
+				{
 					// Add skater trail
 					tilemap.setTile(xTile, yTile, LevelLoader.TRAIL_TILE_INDEX, true);
-				} else if (currentTile >= LevelLoader.DOWN_ARROW_BLOCK && currentTile <= LevelLoader.RIGHT_ARROW_BLOCK) {
+				}
+				else if (currentTile >= LevelLoader.DOWN_ARROW_BLOCK && currentTile <= LevelLoader.RIGHT_ARROW_BLOCK)
+				{
 					// We are on top of an arrow block.  We have to check for < 3 obstacles because 
 					// otherwise we will get stuck and not trigger a skater death.
-					if (currentTile == LevelLoader.DOWN_ARROW_BLOCK) {
-						if (!goingDown && !(touching & FlxObject.DOWN)) {
+					if (currentTile == LevelLoader.DOWN_ARROW_BLOCK)
+					{
+						if (!goingDown && !(touching & FlxObject.DOWN))
+						{
 							clearDirection();
 							goingDown = true;
 						}
-					} else if (currentTile == LevelLoader.UP_ARROW_BLOCK) {
-						if (!goingUp && !(touching & FlxObject.UP)) {
+					}
+					else if (currentTile == LevelLoader.UP_ARROW_BLOCK)
+					{
+						if (!goingUp && !(touching & FlxObject.UP))
+						{
 							clearDirection();
 							goingUp = true;
 						}
-					} else if (currentTile == LevelLoader.RIGHT_ARROW_BLOCK) {
-						if (!goingRight && !(touching & FlxObject.RIGHT)) {
+					}
+					else if (currentTile == LevelLoader.RIGHT_ARROW_BLOCK)
+					{
+						if (!goingRight && !(touching & FlxObject.RIGHT))
+						{
 							clearDirection();
 							goingRight = true;
 						}
-					} else if (currentTile == LevelLoader.LEFT_ARROW_BLOCK) {
-						if (!goingLeft && !(touching & FlxObject.LEFT)) {
+					}
+					else if (currentTile == LevelLoader.LEFT_ARROW_BLOCK)
+					{
+						if (!goingLeft && !(touching & FlxObject.LEFT))
+						{
 							clearDirection();
 							goingLeft = true;
 						}
@@ -125,171 +143,231 @@ package
 			}
 		}
 		
-		override public function update() : void {
+		override public function update():void
+		{
 			super.update();
-			if (!timer.finished) {
-				if (skaterStuck) {
+			if (!timer.finished)
+			{
+				if (skaterStuck)
+				{
 					this.play("death", false);
-				} else if (goingLeft) {
+				}
+				else if (goingLeft)
+				{
 					velocity.x = -maxVelocity.x;
 					velocity.y = 0;
 					this.play("walkW", false);
-				} else if (goingRight) {
+				}
+				else if (goingRight)
+				{
 					velocity.x = maxVelocity.x;
 					velocity.y = 0;
 					this.play("walkE", false);
-				} else if (goingDown) {
+				}
+				else if (goingDown)
+				{
 					velocity.x = 0;
 					velocity.y = maxVelocity.y;
 					this.play("walkS", false);
-				} else if (goingUp) {
+				}
+				else if (goingUp)
+				{
 					velocity.x = 0;
 					velocity.y = -maxVelocity.y;
 					this.play("walkN", false);
 				}
-				progressTime = timeToSkate-timer.timeLeft;
-			}else {
+				progressTime = timeToSkate - timer.timeLeft;
+			}
+			else
+			{
 				progressTime = timeToSkate;
-				if (this.pathSpeed == 0) {
+				if (this.pathSpeed == 0)
+				{
 					exists = false;
 					progress.exists = false;
 					PlayState(FlxG.state).skaterComplete(this, false);
 				}
 			}
-			
+		
 		}
 		
-		private function timerUp(t:FlxTimer) : void {
+		private function timerUp(t:FlxTimer):void
+		{
+			endStuck();
 			SoundPlayer.skaterSuccess.play();
 			var p:FlxPath = new FlxPath();
 			p.addPoint(getMidpoint());
 			p.addPoint(ZzUtils.getNearestEntrance(getMidpoint()));
 			this.allowCollisions = 0;
-			progress.createFilledBar(0xFFFFFF00,0xFFFFFF00, true, 0xff000000);
+			progress.createFilledBar(0xFFFFFF00, 0xFFFFFF00, true, 0xff000000);
 			progress.update();
 			this.followPath(p, 100);
 		}
 		
-		
-		override public function setNextMove(level:FlxTilemap, entities:FlxGroup) : void {
+		override public function setNextMove(level:FlxTilemap, entities:FlxGroup):void
+		{
 		}
 		
-		private function skaterDeathHandler(timer:FlxTimer = null):void {
+		private function skaterDeathHandler(timer:FlxTimer = null):void
+		{
 			SoundPlayer.skaterDeath.play();
 			exists = false;
 			progress.exists = false;
 			PlayState(FlxG.state).skaterComplete(this, true);
 		}
 		
-		override public function onCollision(other:FlxObject) : void {
+		override public function onCollision(other:FlxObject):void
+		{
 			var curTile:FlxPoint = getMidpoint();
 			// Check tiles around current tile to see if skater is stuck
-			if (checkNumObstacles(curTile.x / LevelLoader.TILE_SIZE, curTile.y / LevelLoader.TILE_SIZE) == 4) {
-				if (!skaterStuck) {
+			if (checkNumObstacles(curTile.x / LevelLoader.TILE_SIZE, curTile.y / LevelLoader.TILE_SIZE) == 4)
+			{
+				if (!skaterStuck)
+				{
 					skaterStuck = true;
 					this.flicker(SKATER_DEATH_SLACK);
 					deathTimer.start(SKATER_DEATH_SLACK, 1, skaterDeathHandler);
+					skaterStuckSnd = SoundPlayer.skaterStuck.play(0, (int)(SKATER_DEATH_SLACK / (SoundPlayer.skaterStuck.length / 1000)));
 				}
-				skaterStuckSnd = SoundPlayer.skaterStuck.play(0, (int)( SKATER_DEATH_SLACK / (SoundPlayer.skaterStuck.length / 1000)));
-			} else if (skaterStuck) {
-				if (skaterStuckSnd) {
-					skaterStuckSnd.stop();
-				}
-				skaterStuck = false;
-				deathTimer.stop();
-				_flicker = false;
-				_flickerTimer = 0;
 			}
-			if (goingLeft) 
+			else if (skaterStuck)
+			{
+				endStuck();
+			}
+			if (goingLeft)
 				isGoingLeft();
-			else if (goingDown) 
+			else if (goingDown)
 				isGoingDown();
-			else if (goingUp) 
+			else if (goingUp)
 				isGoingUp();
-			else if (goingRight) 
+			else if (goingRight)
 				isGoingRight();
-			if (other is WalkingDead) {
+			if (other is WalkingDead)
+			{
 				skaterDeathHandler();
 			}
 		}
-	
-		public function isGoingLeft(): void {
-			if (goingLeft && (touching & FlxObject.LEFT)) {
-				if (!(touching & FlxObject.DOWN)) {
+		
+		//Function called when skater gets free from being stuck
+		private function endStuck():void
+		{
+			if (skaterStuckSnd)
+			{
+				skaterStuckSnd.stop();
+			}
+			skaterStuck = false;
+			deathTimer.stop();
+			_flicker = false;
+			_flickerTimer = 0;
+		}
+		
+		public function isGoingLeft():void
+		{
+			if (goingLeft && (touching & FlxObject.LEFT))
+			{
+				if (!(touching & FlxObject.DOWN))
+				{
 					goingLeft = false;
 					goingDown = true;
-				} else if (!(touching & FlxObject.RIGHT)) {
+				}
+				else if (!(touching & FlxObject.RIGHT))
+				{
 					goingLeft = false;
 					goingRight = true;
-				} else if (!(touching & FlxObject.UP)) {
+				}
+				else if (!(touching & FlxObject.UP))
+				{
 					goingLeft = false;
 					goingUp = true;
 				}
 			}
 		}
 		
-		private function checkNumObstacles(curPosX:uint, curPosY:uint):uint {
+		private function checkNumObstacles(curPosX:uint, curPosY:uint):uint
+		{
 			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
 			var numObstacles:uint = 0;
-			if (tileMap.getTile(curPosX, curPosY - 1) >= LevelLoader.DOWN_ARROW_BLOCK)
+			if (tileMap.getTile(curPosX, curPosY - 1) >= LevelLoader.DOWN_ARROW_BLOCK || tileMap.getTile(curPosX, curPosY - 1) == LevelLoader.ENTRANCE_TILE_INDEX)
 				numObstacles++;
-			if (tileMap.getTile(curPosX, curPosY + 1) >= LevelLoader.DOWN_ARROW_BLOCK)
+			if (tileMap.getTile(curPosX, curPosY + 1) >= LevelLoader.DOWN_ARROW_BLOCK || tileMap.getTile(curPosX, curPosY + 1) == LevelLoader.ENTRANCE_TILE_INDEX)
 				numObstacles++;
-			if (tileMap.getTile(curPosX - 1, curPosY) >= LevelLoader.DOWN_ARROW_BLOCK)
+			if (tileMap.getTile(curPosX - 1, curPosY) >= LevelLoader.DOWN_ARROW_BLOCK || tileMap.getTile(curPosX - 1, curPosY) == LevelLoader.ENTRANCE_TILE_INDEX)
 				numObstacles++;
-			if (tileMap.getTile(curPosX + 1, curPosY) >= LevelLoader.DOWN_ARROW_BLOCK)
+			if (tileMap.getTile(curPosX + 1, curPosY) >= LevelLoader.DOWN_ARROW_BLOCK || tileMap.getTile(curPosX + 1, curPosY) == LevelLoader.ENTRANCE_TILE_INDEX)
 				numObstacles++;
 			return numObstacles;
 		}
 		
-		public function isGoingRight(): void {
-			if (goingRight && (touching & FlxObject.RIGHT)) {
-				if (!(touching & FlxObject.UP)) {
+		public function isGoingRight():void
+		{
+			if (goingRight && (touching & FlxObject.RIGHT))
+			{
+				if (!(touching & FlxObject.UP))
+				{
 					goingRight = false;
 					goingUp = true;
-				} else if (!(touching & FlxObject.LEFT)) {
+				}
+				else if (!(touching & FlxObject.LEFT))
+				{
 					goingRight = false;
 					goingLeft = true;
-				} else if (!(touching & FlxObject.DOWN)) {
+				}
+				else if (!(touching & FlxObject.DOWN))
+				{
 					goingRight = false;
 					goingDown = true;
 				}
 			}
 		}
 		
-		public function isGoingUp(): void {
-			if (goingUp && (touching & FlxObject.UP)) {
-				if (!(touching & FlxObject.LEFT)) {
+		public function isGoingUp():void
+		{
+			if (goingUp && (touching & FlxObject.UP))
+			{
+				if (!(touching & FlxObject.LEFT))
+				{
 					goingUp = false;
 					goingLeft = true;
-				} else if (!(touching & FlxObject.DOWN)) {
+				}
+				else if (!(touching & FlxObject.DOWN))
+				{
 					goingUp = false;
 					goingDown = true;
-				} else if (!(touching & FlxObject.RIGHT)) {
+				}
+				else if (!(touching & FlxObject.RIGHT))
+				{
 					goingUp = false;
 					goingRight = true;
 				}
 			}
 		}
 		
-		public function isGoingDown(): void {
-			if (goingDown && (touching & FlxObject.DOWN)) {
-				if (!(touching & FlxObject.RIGHT)) {
+		public function isGoingDown():void
+		{
+			if (goingDown && (touching & FlxObject.DOWN))
+			{
+				if (!(touching & FlxObject.RIGHT))
+				{
 					goingDown = false;
 					goingRight = true;
-				} else if (!(touching & FlxObject.UP)) {
+				}
+				else if (!(touching & FlxObject.UP))
+				{
 					goingDown = false;
 					goingUp = true;
-				} else if (!(touching & FlxObject.LEFT)) {
+				}
+				else if (!(touching & FlxObject.LEFT))
+				{
 					goingDown = false;
 					goingLeft = true;
 				}
 			}
 		}
 		
-		private function clearDirection(): void {
+		private function clearDirection():void
+		{
 			goingDown = goingUp = goingLeft = goingRight = false;
 		}
 	}
-	
+
 }
