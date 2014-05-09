@@ -12,12 +12,12 @@ package
 		private var playerLivesTxt:FlxText;
 		private var playerHealth:uint;
 		
-		public function PlayerBar(playerHealth:uint) 
+		public function PlayerBar(x:Number, y:Number, playerHealth:uint) 
 		{
 			// Add heart to player health bar
-			var heart:FlxSprite = new FlxSprite(0, 0, HeartImg);
+			var heart:FlxSprite = new FlxSprite(x, y, HeartImg);
 			heart.x = FlxG.width - FlxG.width / 8;
-			heart.y = heart.height / 2;
+			//heart.y = heart.height / 2;
 			add(heart);
 			this.playerHealth = playerHealth;
 			playerLivesTxt = new FlxText(FlxG.width - FlxG.width / 8 + heart.width, 0, 20, String(playerHealth), false);

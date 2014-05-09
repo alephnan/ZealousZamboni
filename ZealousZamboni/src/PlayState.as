@@ -27,11 +27,10 @@ package
 		//TODO Decide if we should just add sprites directly to this?
 		public var activeSprites:FlxGroup;
 		
-		// A ref to the player health bar group at the top of the level
-		private var playerBar:PlayerBar;
-		
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
 		private var player:Zamboni;
+		
+		private var hud:ZzHUD;
 		
 		public function PlayState(levelNum:uint=1) {
 			levelLoader = new LevelLoader(DEBUG);
@@ -90,9 +89,10 @@ package
 			activeSprites.add(levelLoader.getPlayer());
 			add(activeSprites);
 			player = levelLoader.getPlayer();
+			hud = new ZzHUD(player, function() : int { return levelLoader.numSkaters - finishedSkaters }, this);
+			
+			add(hud);
 			FlxG.mouse.show();
-			playerBar = new PlayerBar(player.health);
-			add(playerBar);
 		}
 		
 		/**
@@ -102,7 +102,6 @@ package
 		public function skaterComplete(s:Skater, killed:Boolean = false) : void {
 			if (killed) {
 				player.hurt(1);
-				playerBar.updatePlayerHealth(player.health);
 				if (player.alive == false) {
 					FlxG.switchState(new LevelFailedState(this));
 					return;
