@@ -23,9 +23,7 @@ package
 		
 		public var finishedSkaters:uint = 0;
 		
-		public var skaterQueue:SkaterQueue;
-		
-		public var powerupQueue:PowerupQueue;
+		public var queues:Array;
 		
 		//Set of all sprites active in the level (including the player)
 		//TODO Decide if we should just add sprites directly to this?
@@ -37,7 +35,7 @@ package
 		private var hud:ZzHUD;
 		
 		public function PlayState(levelNum:uint=2) {
-			levelLoader = new LevelLoader(DEBUG);
+			levelLoader = new LevelLoader();
 			this.levelNum = levelNum;
 		}
 		
@@ -51,14 +49,18 @@ package
 			activeSprites.add(levelLoader.getPlayer());
 			add(activeSprites);
 			player = levelLoader.getPlayer();
-			skaterQueue = SkaterQueue(levelLoader.getSkaters());
-			powerupQueue = PowerupQueue(levelLoader.getPowerups());
-			hud = new ZzHUD(player, skaterQueue.skatersLeft, this);
+			queues = levelLoader.getSpriteQueues();
+			hud = new ZzHUD(player, this);
 			add(hud);
-			skaterQueue.startTimer();
-			powerupQueue.startTimer();
 			
+			startQueues();
 			FlxG.mouse.show();
+		}
+		
+		private function startQueues():void {
+			for (var i:uint = 0; i < queues.length; ++i) {
+				SpriteQueue(queues[i]).startTimer();
+			}
 		}
 		
 		public function addUnit(s:ZzUnit):void {
@@ -78,8 +80,10 @@ package
 					return;
 				}
 			}
+			
 			finishedSkaters++;
-			if (finishedSkaters == skaterQueue.getInitialNumSkaters()) {
+			if (finishedSkaters == SkaterQueue(
+					queues[LevelLoader.SKATER_QUEUE_INDEX]).getInitialNumSkaters()) {
 				winLevel();
 			}
 		}

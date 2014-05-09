@@ -163,7 +163,7 @@ package
 			SoundPlayer.skaterSuccess.play();
 			var p:FlxPath = new FlxPath();
 			p.addPoint(getMidpoint());
-			p.addPoint(ZamboniUtil.getNearestEntrance(getMidpoint()));
+			p.addPoint(ZzUtils.getNearestEntrance(getMidpoint()));
 			this.allowCollisions = 0;
 			progress.createFilledBar(0xFFFFFF00,0xFFFFFF00, true, 0xff000000);
 			progress.update();

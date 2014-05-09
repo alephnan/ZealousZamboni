@@ -27,11 +27,11 @@ package
 		 * @param   skatersLeft a getter for the number of skaters left (that haven't come on yet)
 		 * @param	state The play state to track
 		 */
-		public function ZzHUD(player:Zamboni, skatersLeft:Function, state:PlayState) {
+		public function ZzHUD(player:Zamboni, state:PlayState) {
 			y = 480;
-			this.skatersLeft = skatersLeft;
 			this.state = state;
 			this.player = player;
+			skatersLeft = SkaterQueue(state.queues[LevelLoader.SKATER_QUEUE_INDEX]).skatersLeft;
 			playerBar = new PlayerBar(0, y+20, player.health);
 			add(playerBar);
 			//add skatersLeft counter

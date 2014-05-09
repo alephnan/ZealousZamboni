@@ -27,6 +27,11 @@ package
 		public static const TRAIL_TILE_INDEX:uint = 8;		// Trail skaters leave
 		[Embed(source = "../res/tiles_new.png")] public var TileSheet:Class;
 		
+		/* SPRITE QUEUE INDICES */
+		public static const SKATER_QUEUE_INDEX:uint = 0;
+		public static const POWERUP_QUEUE_INDEX:uint = 1;
+		public static const ZOMBIE_QUEUE_INDEX:uint = 2;
+		
 		//level specific assets
 		[Embed(source = '../res/level1.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
 		[Embed(source = "../res/level1.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
@@ -41,9 +46,7 @@ package
 		
 		private var name:String;
 		
-		private var skaters:SpriteQueue;
-		
-		private var powerups:SpriteQueue;
+		private var queues:Array;
 		
 		private var player:Zamboni;
 		
@@ -64,9 +67,8 @@ package
 			level.loadMap(new this["Level"+level_num+"Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
 			//Set entrances as non-collidable
 			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
-			ZamboniUtil.setLevel(level);
-			skaters = new SkaterQueue();
-			powerups = new PowerupQueue();
+			ZzUtils.setLevel(level);
+			queues = new Array();
 			parseXML(this["Level"+level_num+"XML"]);
 		}
 		
@@ -74,26 +76,12 @@ package
 			return player;
 		}
 		
-		//TODO: Figure out what type this should return
-		public function getSkaters() : SpriteQueue {
-			return skaters;
-		}
-		
-		//TODO: Figure out what type this should return
-		public function getZombies() : SpriteQueue {
-			return null;
-		}
-		
-		public function getPowerups() : SpriteQueue {
-			return powerups;
-		}
-		
 		public function getTilemap() : FlxTilemap {
 			return level;
 		}
 		
 		public function getSpriteQueues():Array {
-			return null;
+			return queues;
 		}
 		
 		//Helper function for parsing xml data associated with a level
@@ -133,7 +121,7 @@ package
 			
 			player.health = lives;
 			// Skaters: coordinates, start time, skate time
-			
+			var skaters:SkaterQueue = new SkaterQueue();
 			for each (var s:XML in xml.skater) {
 				var skaterX:int = s.@x;
 				var skaterY:int = s.@y;
@@ -149,8 +137,10 @@ package
 					trace("Skater time on ice: " + skateTime);
 				skaters.addSpriteData(new SpriteData(skaterX, skaterY, startTime, skateTime));
 			}
+			queues.push(skaters);
 			
 			// Powerups: coordinates, time, and type
+			var powerups:PowerupQueue = new PowerupQueue();
 			for each (var p:XML in xml.powerup) {
 				var powerupX:int = p.@x;
 				var powerupY:int = p.@y;
@@ -167,8 +157,11 @@ package
 					trace("Powerup type: " + powerupType);
 				powerups.addSpriteData(new SpriteData(powerupX, powerupY, startTime, 0, powerupType));
 			}
+			queues.push(powerups);
 			
 			// Zombies: coordinates
+			// TODO: add start time 
+			var zombies:WalkingDeadQueue = new WalkingDeadQueue();
 			for each (var z:XML in xml.zombie) {
 				var zombieX:int = z.@x;
 				var zombieY:int = z.@y;
@@ -179,7 +172,8 @@ package
 					zombieY *= resizeY;
 				}
 			}
-			
+			zombies.addSpriteData(new SpriteData(50, 50, 10));
+			queues.push(zombies);
 		}
 		
 	}

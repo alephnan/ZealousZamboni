@@ -30,7 +30,7 @@ package
 		
 		private function startSprite(timer:FlxTimer):void {
 			var next:SpriteData = skaters.pop();
-			var p:FlxPoint = ZamboniUtil.getRandomEntrance();
+			var p:FlxPoint = ZzUtils.getRandomEntrance();
 			var skater:Skater = new Skater(p.x, p.y, next.iceTime);
 			PlayState(FlxG.state).addUnit(skater);
 		}
