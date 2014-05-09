@@ -24,7 +24,7 @@ package
 			//place holder stuff
 			speed = 100;
 			loadGraphic(walkingDeadPNG, true, true, 32, 32, true);
-			this.color = 0x780090D0;
+			//this.color = 0x780090D0;
 			this.allowCollisions = FlxObject.NONE;
 			// Change sprite size to be size of tile (better for trails)
 			this.width = LevelLoader.TILE_SIZE;
@@ -32,15 +32,15 @@ package
 			this.offset = new FlxPoint(12, 18);	// used trial and error here
 			
 			var o:Number = 0;	//offset for specifying animations
-			addAnimation("walkS", [o + 0, o + 2, o + 6, o + 11], 3, true);
-			o = 16;
-			addAnimation("walkN", [o + 0, o + 2, o + 6, o + 11], 3, true);
-			o = 32;
-			addAnimation("walkW", [o + 0, o + 2, o + 6, o + 11], 3, true);
-			o = 48;
-			addAnimation("walkE", [o + 0, o + 2, o + 6, o + 11], 3, true);
-			addAnimation("death", [6, 22, 38, 54], 8, true);
-			addAnimation("hurt", [16], 1, true);
+			addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3], 5, true);
+			o = 4;
+			addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3], 5, true);
+			o = 8;
+			addAnimation("walkW", [o + 0, o + 1, o + 2, o + 3], 5, true);
+			o = 12;
+			addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3], 5, true);
+			addAnimation("death", [0, 4, 8, 12], 8, true);
+			addAnimation("hurt", [0], 1, true);
 			maxVelocity.x = 100;
 			maxVelocity.y = 100;
 			drag.x = maxVelocity.x * 4;
