@@ -97,7 +97,7 @@ package
 				var xTile:uint = uint(mp.x / LevelLoader.TILE_SIZE);
 				var yTile:uint = uint(mp.y / LevelLoader.TILE_SIZE);
 				var currentTile:uint = tilemap.getTile(xTile, yTile);
-				if (currentTile == LevelLoader.ICE_TILE_INDEX)
+				if (currentTile >= LevelLoader.ICE_TILE_INDEX && currentTile < LevelLoader.ICE_TILE_INDEX_END)
 				{
 					// Add skater trail
 					tilemap.setTile(xTile, yTile, LevelLoader.TRAIL_TILE_INDEX, true);

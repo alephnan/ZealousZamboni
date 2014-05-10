@@ -18,8 +18,11 @@ package
 		
 		private static var QUAD_OFFSET:int = 45;		//angle offset of quadrant selection for specifying sprite anim
 		
-		public function Zamboni(startX:Number, startY:Number) {
+		private var levelCopy:FlxTilemap;
+		//param level is supposed to be a pristine copy of the current tilemap
+		public function Zamboni(startX:Number, startY:Number, level:FlxTilemap) {
 			super(startX, startY);
+			levelCopy = level;
 			//place holder stuff
 			//makeGraphic(10,12,0xffaa1111);
 			loadGraphic(zamboniPNG, true, true, 64, 32, true);
@@ -47,7 +50,10 @@ package
 			this.updateMotion();
 			tileMap.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
 				if (tile.index == LevelLoader.TRAIL_TILE_INDEX) {
-					tileMap.setTile(tile.x / LevelLoader.TILE_SIZE, tile.y / LevelLoader.TILE_SIZE, 0, true);
+					var tx:Number = tile.x / LevelLoader.TILE_SIZE;
+					var ty:Number = tile.y / LevelLoader.TILE_SIZE;
+					tileMap.setTile(tx, ty, 
+						levelCopy.getTile(tx,ty), true);
 				}
 			})
 			y = oldy;

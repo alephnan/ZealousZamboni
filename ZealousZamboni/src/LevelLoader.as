@@ -16,12 +16,13 @@ package
 		public static const TILE_SIZE:int = 8;
 		
 		/* TILE INDICES */
-		public static const ICE_TILE_INDEX:uint = 0;		
+		public static const ICE_TILE_INDEX:uint = 0;
+		public static const ICE_TILE_INDEX_END:uint = 1024; //non-inclusive
 		public static const ENTRANCE_TILE_INDEX:uint = 1052;	// Skater entrance
 		public static const DOWN_ARROW_BLOCK:uint = 1024;		// Arrow block -- DOWN
-		public static const UP_ARROW_BLOCK:uint = 1024;		// Arrow block -- UP
-		public static const LEFT_ARROW_BLOCK:uint = 1024;		// Arrow block -- LEFT
-		public static const RIGHT_ARROW_BLOCK:uint = 1024;		// Arrow block -- RIGHT
+		public static const UP_ARROW_BLOCK:uint = 1025;		// Arrow block -- UP
+		public static const LEFT_ARROW_BLOCK:uint = 1026;		// Arrow block -- LEFT
+		public static const RIGHT_ARROW_BLOCK:uint = 1027;		// Arrow block -- RIGHT
 		public static const SOLID_BLOCK:uint = 1053;
 		public static const WALL_INDEX:uint = 1054;
 		public static const TRAIL_TILE_INDEX:uint = 1055;	// Trail skaters leave
@@ -38,6 +39,9 @@ package
 		public static const NUM_LEVELS:uint = 2;
 		
 		private var level:FlxTilemap;
+		
+		//A copy of the unchanged level for the zamboni to use when reseting tiles
+		private var levelCopy:FlxTilemap;
 		
 		private var name:String;
 		
@@ -61,6 +65,9 @@ package
 			level = new FlxTilemap();
 			level.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
 			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
+			levelCopy = new FlxTilemap();
+			levelCopy.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
+			levelCopy.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
 			//Set entrances as non-collidable
 			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
 			ZzUtils.setLevel(level);
@@ -112,7 +119,7 @@ package
 				zamboniX *= resizeX;
 				zamboniY *= resizeY;
 			}
-			player = new Zamboni(zamboniX, zamboniY);
+			player = new Zamboni(zamboniX, zamboniY, levelCopy);
 			//addUnit(player);
 			
 			player.health = lives;
