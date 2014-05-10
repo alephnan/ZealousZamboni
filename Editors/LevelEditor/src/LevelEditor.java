@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -49,7 +50,7 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 	private int cursorWidth = 1;
 	private int cursorHeight = 1;
 	private File editFile;
-	private GridButton[] buttonArray;
+	private GridButton[][] buttonArray;
 	private JTextField filenameField;
 	//selection index range -- end > start, includes start excludes end
 	private RangeList selectedTileRanges;
@@ -101,13 +102,13 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 			editFile = f;
 		} else if (n == 1) {		// no
 			editFile = null;
-			String width = (String) JOptionPane.showInputDialog(this, "Enter tilemap width: ", "Tilemap Width", 
+			/*String width = (String) JOptionPane.showInputDialog(this, "Enter tilemap width: ", "Tilemap Width", 
 					JOptionPane.PLAIN_MESSAGE, null, null, "80");
 			String height = (String) JOptionPane.showInputDialog(this, "Enter tilemap height: ", "Tilemap Height", 
-					JOptionPane.PLAIN_MESSAGE, null, null, "60");
+					JOptionPane.PLAIN_MESSAGE, null, null, "60");*/
 			try {
-				tileWidth = Integer.parseInt(width);
-				tileHeight = Integer.parseInt(height);
+				tileWidth = Integer.parseInt("80");
+				tileHeight = Integer.parseInt("60");
 			} catch (NumberFormatException e) {
 				tileWidth = Main.TILE_WIDTH;
 				tileHeight = Main.TILE_HEIGHT;
@@ -150,6 +151,7 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 		
 		// button panel to hold all of the buttons
 		buttonPanel = new JPanel();
+		buttonPanel.setBackground(Color.BLACK);
 		
 		
 		if (editFile == null) {
@@ -161,22 +163,22 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 			this.add(donePanel, BorderLayout.SOUTH);
 			filenameField.setText(FILEMSG);
 			
-			int numTiles = tileWidth*tileHeight;
-			buttonArray = new GridButton[numTiles];
+			buttonArray = new GridButton[tileHeight][tileWidth];
 			buttonPanel.setLayout(new GridLayout(tileHeight, tileWidth));
 			buttListener = new GridButtonListener();
-			for (int i = 0; i < numTiles; ++i) {
-				GridButton next = new GridButton(0);
-				next.setPreferredSize(new Dimension(Main.TILE_SIZE, Main.TILE_SIZE));
-				next.addMouseMotionListener(this);
-				next.addActionListener(buttListener);
-				next.setIcon(icons[0]);
-				
-				// add action listener to change color
-				
-				buttonPanel.add(next);
-				buttonArray[i] = next;
-			}
+			for(int i = 0;i<tileHeight;i++)
+				for (int j = 0; j < tileWidth; ++j) {
+					GridButton next = new GridButton(0);
+					next.setPreferredSize(new Dimension(Main.TILE_SIZE, Main.TILE_SIZE));
+					next.addMouseMotionListener(this);
+					next.addActionListener(buttListener);
+					next.setIcon(icons[0]);
+					
+					// add action listener to change color
+					
+					buttonPanel.add(next);
+					buttonArray[i][j] = next;
+				}
 		} else {
 			// done panel (done button only)
 			this.add(doneButton, BorderLayout.SOUTH);
@@ -197,12 +199,12 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 				tileHeight = rows.size();
 				String[] tiles = rows.get(0).split(", ");
 				tileWidth = tiles.length;
-				buttonArray = new GridButton[tileWidth * tileHeight];
+				buttonArray = new GridButton[tileHeight][tileWidth];
 				buttonPanel.setLayout(new GridLayout(tileHeight, tileWidth));
 				int buttonIdx = 0;
 				setButtonRow(tiles, buttonPanel, buttonIdx);
 				for (int i = 1; i < rows.size(); ++i) {
-					buttonIdx = i * tileWidth;
+					buttonIdx = i;
 					tiles = rows.get(i).split(", ");
 					setButtonRow(tiles, buttonPanel, buttonIdx);
 				}
@@ -290,18 +292,20 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 			next.setIcon(icons[index]);
 			next.addActionListener(new GridButtonListener());
 			buttonPanel.add(next);
-			buttonArray[buttonIdx + i] = next;
+			buttonArray[buttonIdx][i] = next;
 		}
 	}
 	
 	private void prepAndWriteFile(File f) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0, numTiles = tileWidth*tileHeight; i < numTiles; ++i) {
-			sb.append(buttonArray[i].index);
-			if ((i + 1) % tileWidth == 0)
-				sb.append("\n");
-			else
-				sb.append(", ");
+		for (int i = 0; i < tileHeight; ++i){
+			for(int j = 0; j < tileWidth; j++){
+				sb.append(buttonArray[i][j].index);
+				if ((j + 1) % tileWidth == 0)
+					sb.append("\n");
+				else
+					sb.append(", ");
+			}
 		}
 		String csv = sb.toString();
 		
@@ -334,7 +338,6 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 				int i = itr.next();
 				clicked.setIcon(icons[i]);
 				clicked.index = i;
-				System.out.println("Setting button to i= "+i);
 			}
 			//GridButton clicked = (GridButton) e.getSource();
 			
@@ -348,6 +351,11 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 			super();
 			this.index = index;
 		}
+		
+		@Override
+		public void paint(Graphics g){
+			g.drawImage(((ImageIcon)this.getIcon()).getImage(), 0, 0, getWidth(), getHeight(), null);
+		}
 	}
 
 	@Override
@@ -357,8 +365,8 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		this.x = ((JButton)arg0.getSource()).getX();
-		this.y = ((JButton)arg0.getSource()).getY();
+		this.x = ((JButton)arg0.getSource()).getX()-buttonArray[0][0].getX();
+		this.y = ((JButton)arg0.getSource()).getY()-buttonArray[0][0].getY();
 		repaint();
 	}
 	
@@ -375,11 +383,13 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 	private List<GridButton> selectedButts = new ArrayList<GridButton>();
 	private List<GridButton> getSelectedButts(){
 		selectedButts.clear();
-		for(GridButton b : this.buttonArray){
-			if(b.getX() >= x && b.getX() < x+cursorWidth*Main.TILE_SIZE)
-				if(b.getY() >= y && b.getY() < y+cursorHeight*Main.TILE_SIZE)
-					selectedButts.add(b);
-		}
+		int x = this.x/(buttonArray[0][0].getWidth());
+		int y = this.y/buttonArray[0][0].getHeight();
+		for(int i = y;i<y+cursorHeight;i++)
+			for(int j = x;j<x+cursorWidth;j++){
+				if(i >= tileHeight || j >= tileWidth) continue;
+				selectedButts.add(buttonArray[i][j]);
+			}
 		return selectedButts;
 	}
 }

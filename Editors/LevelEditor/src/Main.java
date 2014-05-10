@@ -32,8 +32,8 @@ public class Main {
 	
 	public static void main(String[] args) {
 		System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
-		TILE_SIZE = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Tile size: ", 
-				"", JOptionPane.PLAIN_MESSAGE, null, null, "8"));
+		/*TILE_SIZE = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Tile size: ", 
+				"", JOptionPane.PLAIN_MESSAGE, null, null, "8"));*/
 		ImageIcon[] br = getTiles();
 		LevelEditor le = new LevelEditor(br);
 		le.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

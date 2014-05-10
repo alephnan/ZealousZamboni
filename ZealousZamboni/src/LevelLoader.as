@@ -17,15 +17,15 @@ package
 		
 		/* TILE INDICES */
 		public static const ICE_TILE_INDEX:uint = 0;		
-		public static const ENTRANCE_TILE_INDEX:uint = 1;	// Skater entrance
-		public static const DOWN_ARROW_BLOCK:uint = 2;		// Arrow block -- DOWN
-		public static const UP_ARROW_BLOCK:uint = 3;		// Arrow block -- UP
-		public static const LEFT_ARROW_BLOCK:uint = 4;		// Arrow block -- LEFT
-		public static const RIGHT_ARROW_BLOCK:uint = 5;		// Arrow block -- RIGHT
-		public static const SOLID_BLOCK:uint = 6;
-		public static const WALL_INDEX:uint = 7;
-		public static const TRAIL_TILE_INDEX:uint = 8;		// Trail skaters leave
-		[Embed(source = "../res/tiles_new.png")] public var TileSheet:Class;
+		public static const ENTRANCE_TILE_INDEX:uint = 1052;	// Skater entrance
+		public static const DOWN_ARROW_BLOCK:uint = 1024;		// Arrow block -- DOWN
+		public static const UP_ARROW_BLOCK:uint = 1024;		// Arrow block -- UP
+		public static const LEFT_ARROW_BLOCK:uint = 1024;		// Arrow block -- LEFT
+		public static const RIGHT_ARROW_BLOCK:uint = 1024;		// Arrow block -- RIGHT
+		public static const SOLID_BLOCK:uint = 1053;
+		public static const WALL_INDEX:uint = 1054;
+		public static const TRAIL_TILE_INDEX:uint = 1055;	// Trail skaters leave
+		[Embed(source = "../media/rink_tiles2.png")] public var TileSheet:Class;
 		
 		//level specific assets
 		[Embed(source = '../res/level1.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
@@ -59,7 +59,8 @@ package
 		 */
 		public function loadLevel(level_num:uint) : void {
 			level = new FlxTilemap();
-			level.loadMap(new this["Level"+level_num+"Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
+			level.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
+			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
 			//Set entrances as non-collidable
 			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
 			ZzUtils.setLevel(level);
