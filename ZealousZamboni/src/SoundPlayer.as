@@ -35,6 +35,10 @@ package
 		private static var ZombieDeath : Class; 		 
 		public static var zombieDeath : Sound = (new ZombieDeath) as Sound;
 		
+		[Embed(source='../media/zombiehit.mp3')] 		 
+		private static var ZombieHit : Class; 		 
+		public static var zombieHit : Sound = (new ZombieHit) as Sound;
+		
 		
 		/* @author Tuan
 			

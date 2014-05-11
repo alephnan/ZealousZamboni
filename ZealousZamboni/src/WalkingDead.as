@@ -49,6 +49,7 @@ package
 		}
 		
 		override public function update() : void {
+			if (!alive) return;
 			if(nextPathUpdate <= 0){
 				updatePath();
 				nextPathUpdate = 10;
@@ -98,16 +99,26 @@ package
 		}
 		
 		override public function onCollision(other:FlxObject) : void {
+			if (!alive) return;
 			if (other is Zamboni) {
-				this.kill();
+				alive = false;
+				SoundPlayer.zombieDeath.play();
+				SoundPlayer.zombieHit.play();
+				this.stopFollowingPath(true);
+				this.pathSpeed = 0;
+				this.maxVelocity.x = 1000;
+				this.maxVelocity.y = 1000;
+				this.velocity.x = other.velocity.x*3;
+				this.velocity.y = other.velocity.y*3;
+				this.angularVelocity = 900;
+				var tm:FlxTimer = new FlxTimer();
+				tm.start(1, 1, function (t:*) {
+					kill()
+				});
+				
 			}
+			
 		}
-		
-		override public function kill() : void {
-			super.kill();
-			SoundPlayer.zombieDeath.play();
-		}
-		
 	}
 	
 }

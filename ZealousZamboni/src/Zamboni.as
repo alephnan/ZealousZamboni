@@ -4,7 +4,6 @@ package
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.*;
-	import flash.utils.getQualifiedClassName;
 	import org.flixel.system.FlxTile;
 	
 	/**
@@ -102,9 +101,21 @@ package
 					maxVelocity.y *= PowerUp.BOOSTER_SPEED_AMT;
 					maxVelocity.x *= PowerUp.BOOSTER_SPEED_AMT;
 					var t:FlxTimer = new FlxTimer();
-					t.start(PowerUp.BOOSTER_TIME_LENGTH, 1, function(timer:*) : void { 
+					t.start(PowerUp.BOOSTER_TIME_LENGTH/PowerUp.BOOSTER_SPEED_AMT, 1, function(timer:*) : void { 
 						maxVelocity.x /= PowerUp.BOOSTER_SPEED_AMT; 
 						maxVelocity.y /= PowerUp.BOOSTER_SPEED_AMT; 
+					} );
+					other.kill();
+				}else if (PowerUp(other).type == PowerUp.STOP_WATCH) {
+					var tdiff:Number = PowerUp.BOOSTER_SPEED_AMT * 4;
+					maxVelocity.y *= tdiff;
+					maxVelocity.x *= tdiff;
+					FlxG.timeScale /= tdiff;
+					var t:FlxTimer = new FlxTimer();
+					t.start(PowerUp.BOOSTER_TIME_LENGTH/tdiff, 1, function(timer:*) : void { 
+						maxVelocity.x /= tdiff; 
+						maxVelocity.y /= tdiff; 
+						FlxG.timeScale *= tdiff;
 					} );
 					other.kill();
 				}

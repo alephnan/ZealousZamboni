@@ -16,8 +16,14 @@ package
 		 */
 		public static const BOOSTER:* = "booster";
 		
+		/**
+		 * Type for stop watch power up
+		 * This is like a booster but uses bullet time so the zamboni is more easily controlled
+		 */
+		public static const STOP_WATCH:* = "stop-watch";
+		
 		//Amount that booster speeds up zamboni by
-		public static const BOOSTER_SPEED_AMT:Number = 2;
+		public static const BOOSTER_SPEED_AMT:Number = 4;
 		
 		public static const BOOSTER_TIME_LENGTH:Number = 8;
 		
