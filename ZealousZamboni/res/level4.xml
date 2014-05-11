@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="2">
+	<zamboni x="550" y="240"/>
+	<!-- Wave of 4 skaters from all 4 entrances -->
+	<skater x="508" y="480">
+		<start>2</start>
+		<time>20</time>
+	</skater>
+	<skater x="8" y="480">
+		<start>3</start>
+		<time>20</time>
+	</skater>
+	<skater x="8" y="480">
+		<start>4</start>
+		<time>20</time>
+	</skater>
+	<skater x="508" y="80">
+		<start>5</start>
+		<time>20</time>
+	</skater>
+	<powerup x="140" y="228">
+		<type>booster</type>
+		<start>27</start>
+	</powerup>
+	<!-- next wave -->
+	<skater x="112" y="64">
+		<start>25</start>
+		<time>30</time>
+	</skater>
+	<skater x="120" y="64">
+		<start>26</start>
+		<time>29</time>
+	</skater>
+	<skater x="112" y="64">
+		<start>29</start>
+		<time>26</time>
+	</skater>
+	<skater x="428" y="300">
+		<start>30</start>
+		<time>25</time>
+	</skater>
+	<skater x="428" y="300">
+		<start>31</start>
+		<time>23</time>
+	</skater>
+	<skater x="428" y="300">
+		<start>35</start>
+		<time>20</time>
+	</skater>
+</level>

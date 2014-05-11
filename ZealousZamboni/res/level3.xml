@@ -38,13 +38,4 @@
 		<type>booster</type>
 		<start>45</start>
 	</powerup>
-	<zombie x="128" y="64">
-		<start>10</start>
-	</zombie>
-	<zombie x="128" y="64">
-		<start>15</start>
-	</zombie>
-	<zombie x="128" y="64">
-		<start>20</start>
-	</zombie>
 </level>
