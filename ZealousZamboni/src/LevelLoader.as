@@ -68,6 +68,8 @@ package
 			level = new FlxTilemap();
 			level.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
 			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
+			
+			level.setTileProperties(1054, FlxObject.ANY, null, null);
 			levelCopy = new FlxTilemap();
 			levelCopy.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
 			levelCopy.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);

@@ -19,6 +19,8 @@ package
 	{
 		[Embed(source='../media/skater.png')]
 		private var skaterPNG:Class;
+		[Embed(source='../media/skater2.png')]
+		private var skater2PNG:Class;
 		
 		private static const SKATER_DEATH_SLACK:uint = 5; // seconds
 		
@@ -54,7 +56,32 @@ package
 			progress.update();
 			
 			//place holder stuff
-			loadGraphic(skaterPNG, true, true, 32, 32, true);
+			if (Math.random() < .5) {
+				loadGraphic(skaterPNG, true, true, 32, 32, true);
+				var o:Number = 0; //offset for specifying animations
+				addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+				o = 16;
+				addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+				o = 32;
+				addAnimation("walkW", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+				o = 48;
+				addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+				addAnimation("death", [6, 22, 38, 54], 8, true);
+				addAnimation("hurt", [16], 1, true);
+			}else {
+				loadGraphic(skater2PNG, true, true, 32, 32, true);
+				var o:Number = 0; //offset for specifying animations
+				addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+				o = 16;
+				addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+				o = 32;
+				addAnimation("walkW", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+				o = 48;
+				addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+				addAnimation("death", [6, 22, 38, 54], 8, true);
+				addAnimation("hurt", [16], 1, true);
+			}
+			//loadGraphic(skaterPNG, true, true, 32, 32, true);
 			deathTimer = new FlxTimer();
 			
 			// Change sprite size to be size of tile (better for trails)
@@ -62,7 +89,7 @@ package
 			this.height = LevelLoader.TILE_SIZE;
 			this.offset = new FlxPoint(12, 18); // used trial and error here
 			
-			var o:Number = 0; //offset for specifying animations
+			/*var o:Number = 0; //offset for specifying animations
 			addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 			o = 16;
 			addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
@@ -71,7 +98,7 @@ package
 			o = 48;
 			addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 			addAnimation("death", [6, 22, 38, 54], 8, true);
-			addAnimation("hurt", [16], 1, true);
+			addAnimation("hurt", [16], 1, true);*/
 			maxVelocity.x = 120;
 			maxVelocity.y = 120;
 			drag.x = maxVelocity.x * 4;
