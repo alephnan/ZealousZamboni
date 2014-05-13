@@ -106,6 +106,7 @@ package
 			return queues;
 		}
 		
+		// return true if the given tileIndex is a wall, false otherwise
 		public static function isWall(tileIndex:uint) : Boolean {
 
 			if ( tileIndex >= NORTH_WALL_LOW && tileIndex <= NORTH_WALL_HIGH)
@@ -118,6 +119,14 @@ package
 				return true;
 			return false;
 		}
+		
+		// returns true if the given tileIndex is a trail, false otherwise
+		public static function isTrail(tileIndex:uint) : Boolean {
+			return ((tileIndex >= LevelLoader.TRAIL_TILE_INDEX) &&
+				(tileIndex < LevelLoader.TRAIL_TILE_INDEX + LevelLoader.NUM_COLORS));
+		}
+		
+		
 		
 		//Helper function for parsing xml data associated with a level
 		private function parseXML(clazz:Class):void {
