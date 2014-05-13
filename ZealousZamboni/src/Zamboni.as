@@ -26,11 +26,15 @@ package
 		private static const CUSTOM_ACCELERATION = 15;
 		private static const CUSTOM_FRICTION = 2;
 		
+		// how far a trail can be away from zamboni boundary area, and still be considered overlap
+		private static const ZAMBONI_TRAIL_CLEANING_TOLERANCE : uint = 2;
+		
+		// true if zamboni is in horizontal orientation, false for vertical
 		private var horizontal:Boolean;
 		
 		/* Flags to show bounding box */
-		FlxG.debug = true;
-		FlxG.visualDebug = true;
+		// FlxG.debug = true;
+		// FlxG.visualDebug = true;
 		
 		public function Zamboni(startX:Number, startY:Number, level:FlxTilemap) {
 			super(startX, startY);
@@ -52,15 +56,50 @@ package
 			orientboundingBoxHorizontal();
 			play("walkWest");
 		}
-			
+		
 		/*
 		 * Function used to melt ice BEFORE the zamboni collides with it (which would slow it down)
 		 */
 		private function meltIce() : void {
-			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
 			var oldx:Number = x;
 			var oldy:Number = y;
-			this.updateMotion();
+			
+			//this.updateMotion();
+			
+			// Unfortunately, Flixel's default box based collision handling isn't working to well with our tiles.
+			// It would occasionally get stuck and unable to clear a trail in front of it.  This has something to do
+			// with the zamboni's velocity such that the zamboni wont overlap the trails.
+			// The solution is to "teleport" the zamboni a little bit a head, north / west / east / south, in which
+			// case, it'll forcefully overlap the trails to clear. Then we return the zamboni to its prior position.
+			// This is inefficient because it calls trailSweep 4 times, each time iterating through the
+			// FlxTileMap checking for overlap. An optimization would to be to calculate a small grid area 
+			// around the zamboni, and only check tiles in this region for overlap. 
+			
+			// sweeps to east of zamboni
+			x = oldx + ZAMBONI_TRAIL_CLEANING_TOLERANCE;
+			trailSweep();
+			
+			// sweeps to west ofzamboni
+			x = oldx - ZAMBONI_TRAIL_CLEANING_TOLERANCE;
+			trailSweep();
+			
+			// sweep to south of zamboni
+			x = oldx;
+			y = oldy + ZAMBONI_TRAIL_CLEANING_TOLERANCE;
+			trailSweep();
+		
+			// sweep to north of zamboni
+			y = oldy - ZAMBONI_TRAIL_CLEANING_TOLERANCE;
+			trailSweep();
+			
+			y = oldy;
+			x = oldx;
+		}
+		
+		// Clears Ice Tiles surrounding zamboni current position
+		private function trailSweep() {
+			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
+			
 			tileMap.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
 				if ((tile.index >= LevelLoader.TRAIL_TILE_INDEX) &&
 						(tile.index < LevelLoader.TRAIL_TILE_INDEX + LevelLoader.NUM_COLORS) ){
@@ -70,11 +109,9 @@ package
 						levelCopy.getTile(tx,ty), true);
 				}
 			})
-			y = oldy;
-			x = oldx;
 		}
 		
-		
+		// decides orientation of zamboni, based on mouse relative to zamboni
 		private function updateOrientation() : void {
 			// Remembers orientation and position before trying to rotate
 			var oldhorizontal:Boolean = horizontal;
