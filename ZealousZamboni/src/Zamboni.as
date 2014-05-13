@@ -19,6 +19,12 @@ package
 		
 		private var levelCopy:FlxTilemap;
 		//param level is supposed to be a pristine copy of the current tilemap
+		
+		// constants for sliding motion on ice.
+		// variable names "acceleration" and "friction" already inherited used by ZzUnit
+		private static const CUSTOM_ACCELERATION = 15;
+		private static const CUSTOM_FRICTION = 2;
+		
 		public function Zamboni(startX:Number, startY:Number, level:FlxTilemap) {
 			super(startX, startY);
 			levelCopy = level;
@@ -29,10 +35,10 @@ package
 			addAnimation("walkE", [4,5,6,7], 4, true);
 			addAnimation("walkN", [8, 9, 10, 11], 4, true);
 			addAnimation("walkS", [12,13,14,15], 4, true);
-			maxVelocity.x = 120;
-			maxVelocity.y = 120;
-			drag.x = maxVelocity.x * 4;
-			drag.y = maxVelocity.y * 4;
+			maxVelocity.x = 170;
+			maxVelocity.y = 170;
+			velocity.x = 0;
+			velocity.y = 0;
 			
 			// This makes the path erasing a little more realistic
 			width = 60;
@@ -60,36 +66,95 @@ package
 			x = oldx;
 		}
 		
+		private function updateOrientation() : void {
+			//Old code that rotated in 360 degree coords
+			//this.angle = 180 / Math.PI * Math.atan2(FlxG.mouse.x - x, y - FlxG.mouse.y);
+			//new code: update animation as necessary and rotate sprite
+			//angle between zamboni and mouse in degrees
+			var ang:Number = (180 / Math.PI) * Math.atan2(y - FlxG.mouse.y, FlxG.mouse.x - x);
+			if (ang < QUAD_OFFSET)
+				ang += 360;
+				
+			if (0+QUAD_OFFSET <= ang && ang < 90 +QUAD_OFFSET) {
+				play("walkN");
+				this.angle = NS_ANGLE;
+				facing = FlxObject.UP;
+			} else if (90 + QUAD_OFFSET <= ang && ang < 180 + QUAD_OFFSET) {
+				this.angle = 0;
+				play("walkW");
+				facing = FlxObject.RIGHT;
+			} else if (180 + QUAD_OFFSET <= ang && ang < 270 + QUAD_OFFSET) {
+				this.angle = NS_ANGLE;
+				play("walkS");
+				facing = FlxObject.DOWN;
+			} else {
+				this.angle = 0;
+				play("walkE");
+				facing = FlxObject.RIGHT;
+			}
+		}
+		
+		/* accelerate vehicle in direction of cursor relative to zamboni
+			@xDirection, 
+				scalar with value (-1, 0, or 1) to indicate direction 
+				of acceleration to (west, stationary, east) respectively
+			@yDirection:
+				scalar with value (-1, 0, or 1) to indicate direction 
+				of acceleration to (south, stationary, north) respectively
+		*/	
+		private function activeMotion(xDirection:int, yDirection:int) : void {
+			velocity.x += xDirection * CUSTOM_ACCELERATION;
+			velocity.y += yDirection * CUSTOM_ACCELERATION;
+		}
+		
+		/* Passive slow down zamboni by CUSTOM_FRICTION constant in direction zamboni
+			is currently moving */
+		private function passiveMotion() {
+			
+			// first two cases: decelerate in direction zamboni is going
+			if (velocity.x > CUSTOM_FRICTION) {
+				velocity.x -= CUSTOM_FRICTION;
+			} else if (velocity.x < -CUSTOM_FRICTION) {
+				velocity.x += CUSTOM_FRICTION;
+			} else { // vehicle is slow enough, round to 0
+				velocity.x = 0;
+			} 
+			
+			// symmetrical logic, but for Y-axis
+			if (velocity.y > CUSTOM_FRICTION) {
+				velocity.y -= CUSTOM_FRICTION;
+			} else if (velocity.y < -CUSTOM_FRICTION) {
+				velocity.y += CUSTOM_FRICTION;
+			} else {
+				velocity.y = 0;
+			} 
+		}
+		
 		override public function update() : void {
 			meltIce();
 			if (FlxG.mouse.pressed()) {
-				//Old code that rotated in 360 degree coords
-				//this.angle = 180 / Math.PI * Math.atan2(FlxG.mouse.x - x, y - FlxG.mouse.y);
-				//new code: update animation as necessary and rotate sprite
-				//angle between zamboni and mouse in degrees
-				var ang:Number = (180 / Math.PI) * Math.atan2(y - FlxG.mouse.y, FlxG.mouse.x - x);
-				if (ang < QUAD_OFFSET)
-					ang += 360;
-				if (0+QUAD_OFFSET <= ang && ang < 90 +QUAD_OFFSET) {
-					play("walkN");
-					this.angle = NS_ANGLE;
-					facing = FlxObject.UP;
-				}else if (90 + QUAD_OFFSET <= ang && ang < 180 + QUAD_OFFSET) {
-					this.angle = 0;
-					play("walkW");
-					facing = FlxObject.RIGHT;
-				}else if (180 + QUAD_OFFSET <= ang && ang < 270 + QUAD_OFFSET) {
-					this.angle = NS_ANGLE;
-					play("walkS");
-					facing = FlxObject.DOWN;
-				}else {
-					this.angle = 0;
-					play("walkE");
-					facing = FlxObject.RIGHT;
-				}
+				updateOrientation(); 
+				
+				// logic to determine direction of mouse relative to zamboni
+				var mouse:FlxPoint = FlxG.mouse.getWorldPosition(); //mouse coordinates
+				var z:FlxPoint = getMidpoint();
+				var dx:int = mouse.x - z.x;
+				var dy:int = mouse.y - z.y;
+				// maps positive dx to 1, negative to -1, and 0 to 0
+				var xDirection = (dx == 0) ? 0 : 1;
+				xDirection = (dx >= 0) ? xDirection : -1 * xDirection;
+				// maps positive dy to 1, negative to -1, and 0 to 0
+				var yDirection = (dy == 0) ? 0 : 1;
+				yDirection = (dy >= 0) ? yDirection : -1 * yDirection;
+				
+				// accelerate zamboni in direction of mouse
+				activeMotion(xDirection, yDirection);
+				
+			} else {
+				// mouse not pressed, passively slow down zamboni
+				passiveMotion();
 			}
-			
-			
+
 		}
 		
 		override public function onCollision(other:FlxObject) : void {

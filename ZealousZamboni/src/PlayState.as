@@ -106,30 +106,7 @@ package
 		override public function update():void
 		{
 			super.update();
-			var mouse:FlxPoint = FlxG.mouse.getWorldPosition(); //mouse coordinates
 			
-			var z:FlxPoint = player.getMidpoint();	//player coordinates
-			var n:Number = 5;	//tolerance in pixels
-			//Logic for causing player fo follow mouse
-			if(FlxG.mouse.pressed()){
-				if (mouse.x < z.x - n) {
-					player.velocity.x = -player.maxVelocity.x;
-				}else if (mouse.x - n > z.x) {
-					player.velocity.x = player.maxVelocity.x;
-				}else {
-					player.velocity.x = 0;
-				}
-				if (mouse.y < z.y - n) {
-					player.velocity.y = -player.maxVelocity.y;
-				}else if (mouse.y - n > z.y) {
-					player.velocity.y = player.maxVelocity.y;
-				}else {
-					player.velocity.y = 0;
-				}
-			}else {
-				player.velocity.x = 0;
-				player.velocity.y = 0;
-			}
 			// Collide all sprites with eachother and with the tilemap
 			collideGroups();
 		}
