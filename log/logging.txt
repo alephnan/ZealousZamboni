@@ -1,0 +1,9 @@
+game name: zealous_zamboni
+game id: 107
+skey: 1715d3eb78138f878ef005ea285f0087
+valid version ids: 1-3
+valid category ids: any number (usually starts at 1)
+
+db host: dev.db.centerforgamescience.com
+db username: zealous_db_user
+db password: a8e8ba8ae8
