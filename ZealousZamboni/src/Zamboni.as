@@ -307,7 +307,7 @@ package
 		
 		override public function update() : void {
 			meltIce();
-			if (FlxG.mouse.pressed()) {
+			if (FlxG.mouse.pressed() || (FlxG.keys.SPACE && FlxG.mouse != null)) {
 				updateOrientation();
 				 
 				// logic to determine direction of mouse relative to zamboni

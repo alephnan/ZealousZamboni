@@ -25,8 +25,8 @@ package
 		public static const RIGHT_ARROW_BLOCK:uint = 1027;		// Arrow block -- RIGHT
 		public static const SOLID_BLOCK:uint = 1053;
 		public static const WALL_INDEX:uint = 1054;
-		public static const TRAIL_TILE_INDEX:uint = 1083; // starting index of first trail color, that skater leaves
-		public static const NUM_COLORS:uint = 5; // number of different trail colors
+		public static const TRAIL_TILE_INDEX:uint = 1078; // starting index of first trail color, that skater leaves
+		public static const NUM_COLORS:uint = 10; // number of different trail colors
 		
 		// Index range for north / south walls (including corners) (inclusive)
 		public static const NORTH_WALL_LOW:uint = 1089;
