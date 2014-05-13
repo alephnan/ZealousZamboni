@@ -25,6 +25,12 @@ package
 		private static const CUSTOM_ACCELERATION = 15;
 		private static const CUSTOM_FRICTION = 2;
 		
+		private var horizontal:Boolean;
+		
+		/* Flags to show bounding box
+		FlxG.debug = true;
+		FlxG.visualDebug = true; */
+		
 		public function Zamboni(startX:Number, startY:Number, level:FlxTilemap) {
 			super(startX, startY);
 			levelCopy = level;
@@ -40,11 +46,12 @@ package
 			velocity.x = 0;
 			velocity.y = 0;
 			
-			// This makes the path erasing a little more realistic
-			width = 60;
-			height = 28;
+			// initial bounding box of zamboni
+			width = 50;
+			height = 32;
+			horizontal = true;
 		}
-		
+			
 		/*
 		 * Function used to melt ice BEFORE the zamboni collides with it (which would slow it down)
 		 */
@@ -66,7 +73,7 @@ package
 			x = oldx;
 		}
 		
-		private function updateOrientation() : void {
+		private function updateOrientation() : void {	
 			//Old code that rotated in 360 degree coords
 			//this.angle = 180 / Math.PI * Math.atan2(FlxG.mouse.x - x, y - FlxG.mouse.y);
 			//new code: update animation as necessary and rotate sprite
@@ -79,18 +86,76 @@ package
 				play("walkN");
 				this.angle = NS_ANGLE;
 				facing = FlxObject.UP;
+				
+				// offset the rotated bounding box
+				if (horizontal) {
+					x = x + 9;
+					y = y - 9;
+				} 
+				
+				// offset the sprite, with respect to the bounding box
+				offset.x = 15;
+				offset.y = -15;
+				
+				// horizontal bounding box
+				width = 32;
+				height = 50;
+				horizontal = false;
 			} else if (90 + QUAD_OFFSET <= ang && ang < 180 + QUAD_OFFSET) {
 				this.angle = 0;
 				play("walkW");
 				facing = FlxObject.RIGHT;
+				
+				// un-offset the rotated bounding box
+				if (!horizontal) {
+					x = x - 9;
+					y = y + 9;
+				} 
+				
+				// offset the sprite, with respect to the bounding box
+				offset.x = 0;
+				offset.y = 0;
+				
+				// horizontal bounding box
+				width = 50;
+				height = 32;
+				horizontal = true;
 			} else if (180 + QUAD_OFFSET <= ang && ang < 270 + QUAD_OFFSET) {
 				this.angle = NS_ANGLE;
 				play("walkS");
 				facing = FlxObject.DOWN;
+				
+				// offset the rotated bounding box
+				if (horizontal) {
+					x = x + 9;
+					y = y - 9;
+				} 
+				// offset the sprite, with respect to the bounding box
+				offset.x = 15;
+				offset.y = -5;
+				
+				// vertical bounding box
+				width = 32;
+				height = 50;
+				horizontal = false;
 			} else {
 				this.angle = 0;
 				play("walkE");
 				facing = FlxObject.RIGHT;
+				
+				// un-offset the rotated bounding box
+				if (!horizontal) {
+					x = x - 9;
+					y = y + 9;
+				} 
+				
+				// offset the sprite, with respect to bounding box
+				offset.x = 14, offset.y = 0;
+				
+				// horizontal bounding box
+				width = 50;
+				height = 32;
+				horizontal = true;
 			}
 		}
 		
@@ -133,8 +198,8 @@ package
 		override public function update() : void {
 			meltIce();
 			if (FlxG.mouse.pressed()) {
-				updateOrientation(); 
-				
+				 updateOrientation();
+				 
 				// logic to determine direction of mouse relative to zamboni
 				var mouse:FlxPoint = FlxG.mouse.getWorldPosition(); //mouse coordinates
 				var z:FlxPoint = getMidpoint();
@@ -150,6 +215,7 @@ package
 				// accelerate zamboni in direction of mouse
 				activeMotion(xDirection, yDirection);
 				
+
 			} else {
 				// mouse not pressed, passively slow down zamboni
 				passiveMotion();
