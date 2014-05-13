@@ -44,8 +44,14 @@ package
 		//Sound played when this skater is stuck
 		private var skaterStuckSnd:SoundChannel;
 		
+		// color of trail associated with this skater
+		private var trailColor:uint; 
+		
 		public function Skater(X:Number, Y:Number, time:int)
 		{
+			// randomly choose a trail color
+			trailColor = Math.floor(Math.random() * LevelLoader.NUM_COLORS) + LevelLoader.TRAIL_TILE_INDEX;
+			
 			super(X, Y);
 			timeToSkate = time;
 			timer = new FlxTimer();
@@ -127,7 +133,7 @@ package
 				if (currentTile >= LevelLoader.ICE_TILE_INDEX && currentTile < LevelLoader.ICE_TILE_INDEX_END)
 				{
 					// Add skater trail
-					tilemap.setTile(xTile, yTile, LevelLoader.TRAIL_TILE_INDEX, true);
+					tilemap.setTile(xTile, yTile, trailColor, true);
 				}
 				else if (currentTile >= LevelLoader.DOWN_ARROW_BLOCK && currentTile <= LevelLoader.RIGHT_ARROW_BLOCK)
 				{
