@@ -48,7 +48,8 @@ package
 			var oldy:Number = y;
 			this.updateMotion();
 			tileMap.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
-				if (tile.index == LevelLoader.TRAIL_TILE_INDEX) {
+				if ((tile.index >= LevelLoader.TRAIL_TILE_INDEX) &&
+						(tile.index < LevelLoader.TRAIL_TILE_INDEX + LevelLoader.NUM_COLORS) ){
 					var tx:Number = tile.x / LevelLoader.TILE_SIZE;
 					var ty:Number = tile.y / LevelLoader.TILE_SIZE;
 					tileMap.setTile(tx, ty, 
