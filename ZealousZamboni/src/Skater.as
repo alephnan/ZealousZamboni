@@ -60,11 +60,11 @@ package
 			progress.trackParent(-12, -26);
 			progress.createFilledBar(0x60112080, 0xF060A0FF, true, 0xff000000);
 			progress.update();
-			
+			//offset for specifying animations
+			var o:Number = 0;
 			//place holder stuff
 			if (Math.random() < .5) {
 				loadGraphic(skaterPNG, true, true, 32, 32, true);
-				var o:Number = 0; //offset for specifying animations
 				addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 				o = 16;
 				addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
@@ -76,7 +76,6 @@ package
 				addAnimation("hurt", [16], 1, true);
 			}else {
 				loadGraphic(skater2PNG, true, true, 32, 32, true);
-				var o:Number = 0; //offset for specifying animations
 				addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 				o = 16;
 				addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
@@ -87,7 +86,6 @@ package
 				addAnimation("death", [6, 22, 38, 54], 8, true);
 				addAnimation("hurt", [16], 1, true);
 			}
-			//loadGraphic(skaterPNG, true, true, 32, 32, true);
 			deathTimer = new FlxTimer();
 			
 			// Change sprite size to be size of tile (better for trails)
