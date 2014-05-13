@@ -35,7 +35,11 @@ package
 		
 		private function startSprite(timer:FlxTimer):void {
 			var next:SpriteData = skaters.pop();
-			var p:FlxPoint = ZzUtils.getRandomEntrance();
+			var p:FlxPoint;
+			var count:int = 10;
+			while (entranceBlocked(p = ZzUtils.getRandomEntrance()) && count > 0) {
+				count--;
+			}
 			var skater:Skater = new Skater(p.x, p.y, next.iceTime);
 			add(skater);
 			skater.postConstruct(PlayState(FlxG.state).addDep);
@@ -45,6 +49,14 @@ package
 		public function setUpdateSkatersFunction(updateSkatersLeft:Function):uint {
 			this.updateSkatersLeft = updateSkatersLeft;
 			return skaters.length;
+		}
+		
+		private function entranceBlocked(entrance:FlxPoint):Boolean {
+			var map:FlxTilemap = PlayState(FlxG.state).level;
+			return !(map.getTile(entrance.x + 1, entrance.y) < 1024 ||
+			         map.getTile(entrance.x - 1, entrance.y) < 1024 ||
+					 map.getTile(entrance.x, entrance.y + 1) < 1024 ||
+					 map.getTile(entrance.x, entrance.y - 1) < 1024);
 		}
 		
 		/**

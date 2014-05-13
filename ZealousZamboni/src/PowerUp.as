@@ -1,5 +1,6 @@
 package 
 {
+	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	
 	/**
@@ -25,7 +26,7 @@ package
 		//Amount that booster speeds up zamboni by
 		public static const BOOSTER_SPEED_AMT:Number = 4;
 		
-		public static const BOOSTER_TIME_LENGTH:Number = 8;
+		public static const BOOSTER_TIME_LENGTH:Number = 10;
 		
 		/**
 		 * The type of this PowerUp
@@ -38,6 +39,7 @@ package
 			this.width = LevelLoader.TILE_SIZE;
 			this.height = LevelLoader.TILE_SIZE;
 			loadGraphic(boosterPNG, false, true, 16, 16);
+			this.scale = new FlxPoint(2, 2);
 		}
 	}
 	
