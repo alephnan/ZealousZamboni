@@ -27,9 +27,9 @@ package
 		
 		private var horizontal:Boolean;
 		
-		/* Flags to show bounding box
+		/* Flags to show bounding box */
 		FlxG.debug = true;
-		FlxG.visualDebug = true; */
+		FlxG.visualDebug = true;
 		
 		public function Zamboni(startX:Number, startY:Number, level:FlxTilemap) {
 			super(startX, startY);
@@ -84,79 +84,73 @@ package
 				
 			if (0+QUAD_OFFSET <= ang && ang < 90 +QUAD_OFFSET) {
 				play("walkN");
-				this.angle = NS_ANGLE;
 				facing = FlxObject.UP;
 				
-				// offset the rotated bounding box
-				if (horizontal) {
-					x = x + 9;
-					y = y - 9;
-				} 
+				orientBoundingBoxVertical();
 				
-				// offset the sprite, with respect to the bounding box
+				// offset the north sprite, with respect to the bounding box
 				offset.x = 15;
 				offset.y = -15;
-				
-				// horizontal bounding box
-				width = 32;
-				height = 50;
-				horizontal = false;
 			} else if (90 + QUAD_OFFSET <= ang && ang < 180 + QUAD_OFFSET) {
-				this.angle = 0;
 				play("walkW");
 				facing = FlxObject.RIGHT;
 				
-				// un-offset the rotated bounding box
-				if (!horizontal) {
-					x = x - 9;
-					y = y + 9;
-				} 
-				
-				// offset the sprite, with respect to the bounding box
+				orientboundingBoxHorizontal();
+		
+				// offset the west sprite, with respect to the bounding box
 				offset.x = 0;
 				offset.y = 0;
-				
-				// horizontal bounding box
-				width = 50;
-				height = 32;
-				horizontal = true;
 			} else if (180 + QUAD_OFFSET <= ang && ang < 270 + QUAD_OFFSET) {
-				this.angle = NS_ANGLE;
 				play("walkS");
 				facing = FlxObject.DOWN;
 				
-				// offset the rotated bounding box
-				if (horizontal) {
-					x = x + 9;
-					y = y - 9;
-				} 
-				// offset the sprite, with respect to the bounding box
+				orientBoundingBoxVertical();
+				
+				// offset the south sprite, with respect to the bounding box
 				offset.x = 15;
 				offset.y = -5;
-				
-				// vertical bounding box
-				width = 32;
-				height = 50;
-				horizontal = false;
+
 			} else {
-				this.angle = 0;
 				play("walkE");
 				facing = FlxObject.RIGHT;
 				
-				// un-offset the rotated bounding box
-				if (!horizontal) {
-					x = x - 9;
-					y = y + 9;
-				} 
+				orientboundingBoxHorizontal();
 				
-				// offset the sprite, with respect to bounding box
-				offset.x = 14, offset.y = 0;
-				
-				// horizontal bounding box
-				width = 50;
-				height = 32;
-				horizontal = true;
+				// offset the east sprite, with respect to bounding box
+				offset.x = 14;
+				offset.y = 0;
 			}
+		}
+		
+		// rotate bounding box into horizontal orientation
+		private function orientboundingBoxHorizontal() : void {
+			this.angle = 0;
+			
+			// un-offset the rotated bounding box
+			if (!horizontal) {
+				x = x - 9;
+				y = y + 9;
+			} 
+				
+			width = 50;
+			height = 32;
+			horizontal = true;
+				
+		}
+		
+		// rotate bounding box into vertical orientation
+		private function orientBoundingBoxVertical() : void {
+			this.angle = NS_ANGLE;
+			
+			// offset the rotated bounding box
+			if (horizontal) {
+				x = x + 9;
+				y = y - 9;
+			}
+				
+			width = 32;
+			height = 50;
+			horizontal = false;
 		}
 		
 		/* accelerate vehicle in direction of cursor relative to zamboni
