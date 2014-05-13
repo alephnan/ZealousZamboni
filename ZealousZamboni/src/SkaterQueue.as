@@ -51,12 +51,15 @@ package
 			return skaters.length;
 		}
 		
-		private function entranceBlocked(entrance:FlxPoint):Boolean {
+		private function entranceBlocked(p:FlxPoint):Boolean {
 			var map:FlxTilemap = PlayState(FlxG.state).level;
-			return !(map.getTile(entrance.x + 1, entrance.y) < 1024 ||
-			         map.getTile(entrance.x - 1, entrance.y) < 1024 ||
-					 map.getTile(entrance.x, entrance.y + 1) < 1024 ||
-					 map.getTile(entrance.x, entrance.y - 1) < 1024);
+			var entrance:FlxPoint = new FlxPoint(p.x, p.y);
+			entrance.x /= LevelLoader.TILE_SIZE;
+			entrance.y /= LevelLoader.TILE_SIZE;
+			return !(map.getTile(entrance.x + 1, entrance.y) < LevelLoader.ICE_TILE_INDEX_END ||
+			         map.getTile(entrance.x - 1, entrance.y) < LevelLoader.ICE_TILE_INDEX_END ||
+					 map.getTile(entrance.x, entrance.y + 1) < LevelLoader.ICE_TILE_INDEX_END ||
+					 map.getTile(entrance.x, entrance.y - 1) < LevelLoader.ICE_TILE_INDEX_END);
 		}
 		
 		/**
