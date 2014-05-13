@@ -111,6 +111,7 @@ package
 				this.velocity.x = other.velocity.x*3;
 				this.velocity.y = other.velocity.y*3;
 				this.angularVelocity = 900;
+				this.angularAcceleration = -400;
 				var tm:FlxTimer = new FlxTimer();
 				tm.start(1, 1, function (t:*) {
 					kill()
