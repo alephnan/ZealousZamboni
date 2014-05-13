@@ -23,11 +23,11 @@ package
 		
 		// constants for sliding motion on ice.
 		// variable names "acceleration" and "friction" already inherited used by ZzUnit
-		private static const CUSTOM_ACCELERATION = 15;
-		private static const CUSTOM_FRICTION = 2;
-		
+		private var CUSTOM_ACCELERATION:Number = 50;
+		private static const CUSTOM_FRICTION:Number = 5;
+		private var tireChains:Boolean = false;
 		// how far a trail can be away from zamboni boundary area, and still be considered overlap
-		private static const ZAMBONI_TRAIL_CLEANING_TOLERANCE : uint = 2;
+		private static const ZAMBONI_TRAIL_CLEANING_TOLERANCE : uint = 6;
 		
 		// true if zamboni is in horizontal orientation, false for vertical
 		private var horizontal:Boolean;
@@ -97,7 +97,7 @@ package
 		}
 		
 		// Clears Ice Tiles surrounding zamboni current position
-		private function trailSweep() {
+		private function trailSweep() : void {
 			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
 			
 			tileMap.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
@@ -147,7 +147,7 @@ package
 		*/
 		private function wallHug(oldhorizontal:Boolean) : void {
 			// Check for rotation into wall
-			var wallRotation = false;
+			var wallRotation:Boolean = false;
 			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
 			tileMap.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
 				if (LevelLoader.isWall(tile.index)) {
@@ -260,15 +260,32 @@ package
 				scalar with value (-1, 0, or 1) to indicate direction 
 				of acceleration to (south, stationary, north) respectively
 		*/	
-		private function activeMotion(xDirection:int, yDirection:int) : void {
-			velocity.x += xDirection * CUSTOM_ACCELERATION;
-			velocity.y += yDirection * CUSTOM_ACCELERATION;
+		private function activeMotion(xDirection:int, yDirection:int, xDist:Number, yDist:Number) : void {
+			if (tireChains) {
+				if (Math.abs(xDist) > 16) {
+					velocity.x = maxVelocity.x * xDirection;
+				}else {
+					velocity.x = 0;
+				}
+				if (Math.abs(yDist) > 16) {
+					velocity.y = maxVelocity.y * yDirection;
+				}else {
+					velocity.y = 0;
+				}
+				return;
+			}
+			velocity.x += (xDirection * CUSTOM_ACCELERATION) * (Math.abs(xDist) / FlxG.width);
+			velocity.y += (yDirection * CUSTOM_ACCELERATION) * (Math.abs(yDist) / FlxG.height);
 		}
 		
 		/* Passive slow down zamboni by CUSTOM_FRICTION constant in direction zamboni
 			is currently moving */
-		private function passiveMotion() {
-			
+		private function passiveMotion() : void{
+			if (tireChains) {
+				velocity.x = 0;
+				velocity.y = 0;
+				return;
+			}
 			// first two cases: decelerate in direction zamboni is going
 			if (velocity.x > CUSTOM_FRICTION) {
 				velocity.x -= CUSTOM_FRICTION;
@@ -296,8 +313,8 @@ package
 				// logic to determine direction of mouse relative to zamboni
 				var mouse:FlxPoint = FlxG.mouse.getWorldPosition(); //mouse coordinates
 				var z:FlxPoint = getMidpoint();
-				var dx:int = mouse.x - z.x;
-				var dy:int = mouse.y - z.y;
+				var dx:Number = mouse.x - z.x;
+				var dy:Number = mouse.y - z.y;
 				// maps positive dx to 1, negative to -1, and 0 to 0
 				var xDirection = (dx == 0) ? 0 : 1;
 				xDirection = (dx >= 0) ? xDirection : -1 * xDirection;
@@ -306,7 +323,7 @@ package
 				yDirection = (dy >= 0) ? yDirection : -1 * yDirection;
 				
 				// accelerate zamboni in direction of mouse
-				activeMotion(xDirection, yDirection);
+				activeMotion(xDirection, yDirection, dx, dy);
 			} else {
 				// mouse not pressed, passively slow down zamboni
 				passiveMotion();
@@ -323,7 +340,7 @@ package
 				if (PowerUp(other).type == PowerUp.BOOSTER) {
 					maxVelocity.y *= PowerUp.BOOSTER_SPEED_AMT;
 					maxVelocity.x *= PowerUp.BOOSTER_SPEED_AMT;
-					t.start(PowerUp.BOOSTER_TIME_LENGTH/PowerUp.BOOSTER_SPEED_AMT, 1, function(timer:*) : void { 
+					t.start(PowerUp.BOOSTER_TIME_LENGTH, 1, function(timer:*) : void { 
 						maxVelocity.x /= PowerUp.BOOSTER_SPEED_AMT; 
 						maxVelocity.y /= PowerUp.BOOSTER_SPEED_AMT; 
 					} );
@@ -338,6 +355,13 @@ package
 						maxVelocity.x /= tdiff; 
 						maxVelocity.y /= tdiff; 
 						FlxG.timeScale *= tdiff;
+					} );
+					other.kill();
+				}else if (PowerUp(other).type == PowerUp.TIRE_CHAINS) {
+					tireChains = true;
+					var t:FlxTimer = new FlxTimer();
+					t.start(PowerUp.TIRE_CHAINS_TIME_LENGTH, 1, function(timer:*) : void { 
+						tireChains = false;
 					} );
 					other.kill();
 				}

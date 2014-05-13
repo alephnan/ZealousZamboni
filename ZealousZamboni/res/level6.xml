@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level width="640" height="480" lives="2">
 	<zamboni x="550" y="240"/>
-	<!-- introduce zombies for first time... level is two long skaters with zombies -->
+	<!-- One skater and several zombies like prev level ... -->
 	<skater x="112" y="64">
 		<start>3</start>
-		<time>60</time>
+		<time>45</time>
 	</skater>
 	<zombie x="1" y="240">
-		<start>10</start>
+		<start>6</start>
 	</zombie>
 	<zombie x="630" y="240">
-		<start>20</start>
+		<start>9</start>
 	</zombie>
 	<zombie x="1" y="240">
-		<start>24</start>
+		<start>12</start>
 	</zombie>
 	<zombie x="630" y="240">
-		<start>24</start>
+		<start>15</start>
 	</zombie>
 	<zombie x="1" y="240">
-		<start>30</start>
+		<start>18</start>
 	</zombie>
 	<zombie x="630" y="240">
-		<start>30</start>
+		<start>21</start>
 	</zombie>
 	<!-- Second skater comes on half way through level -->
 	<skater x="402" y="64">
-		<start>33</start>
+		<start>23</start>
+		<time>45</time>
+	</skater>
+	<skater x="102" y="64">
+		<start>23</start>
 		<time>45</time>
 	</skater>
 	<!-- Third skater comes on slightly later -->
@@ -47,6 +51,15 @@
 	<zombie x="630" y="360">
 		<start>40</start>
 	</zombie>
+		<!-- Third skater comes on slightly later -->
+	<skater x="10" y="500">
+		<start>52</start>
+		<time>15</time>
+	</skater>
+		<skater x="500" y="500">
+		<start>55</start>
+		<time>15</time>
+	</skater>
 	<!-- a little break and then two more zombies -->
 	<zombie x="1" y="360">
 		<start>50</start>
@@ -57,9 +70,21 @@
 	<zombie x="1" y="360">
 		<start>56</start>
 	</zombie>
-	<powerup x="140" y="228">
+	<powerup x="200" y="328">
 		<type>tirechains</type>
-		<start>20</start>
+		<start>15</start>
+	</powerup>
+	<powerup x="200" y="328">
+		<type>booster</type>
+		<start>30</start>
+	</powerup>
+	<powerup x="300" y="228">
+		<type>tirechains</type>
+		<start>33</start>
+	</powerup>
+	<powerup x="400" y="328">
+		<type>tirechains</type>
+		<start>45</start>
 	</powerup>
 	<!-- end -->
 </level>
