@@ -4,6 +4,7 @@ package
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.*;
+	import org.flixel.system.FlxAnim;
 	import org.flixel.system.FlxTile;
 	
 	/**
@@ -47,9 +48,9 @@ package
 			velocity.y = 0;
 			
 			// initial bounding box of zamboni
-			width = 50;
-			height = 32;
 			horizontal = true;
+			orientboundingBoxHorizontal();
+			play("walkWest");
 		}
 			
 		/*
@@ -73,7 +74,11 @@ package
 			x = oldx;
 		}
 		
-		private function updateOrientation() : void {	
+		
+		private function updateOrientation() : void {
+			// Remembers orientation and position before trying to rotate
+			var oldhorizontal:Boolean = horizontal;
+			
 			//Old code that rotated in 360 degree coords
 			//this.angle = 180 / Math.PI * Math.atan2(FlxG.mouse.x - x, y - FlxG.mouse.y);
 			//new code: update animation as necessary and rotate sprite
@@ -81,48 +86,106 @@ package
 			var ang:Number = (180 / Math.PI) * Math.atan2(y - FlxG.mouse.y, FlxG.mouse.x - x);
 			if (ang < QUAD_OFFSET)
 				ang += 360;
-				
+			
 			if (0+QUAD_OFFSET <= ang && ang < 90 +QUAD_OFFSET) {
-				play("walkN");
-				facing = FlxObject.UP;
-				
-				orientBoundingBoxVertical();
-				
-				// offset the north sprite, with respect to the bounding box
-				offset.x = 15;
-				offset.y = -15;
+				faceNorth();
 			} else if (90 + QUAD_OFFSET <= ang && ang < 180 + QUAD_OFFSET) {
-				play("walkW");
-				facing = FlxObject.RIGHT;
-				
-				orientboundingBoxHorizontal();
-		
-				// offset the west sprite, with respect to the bounding box
-				offset.x = 0;
-				offset.y = 0;
+				faceWest();
 			} else if (180 + QUAD_OFFSET <= ang && ang < 270 + QUAD_OFFSET) {
-				play("walkS");
-				facing = FlxObject.DOWN;
-				
-				orientBoundingBoxVertical();
-				
-				// offset the south sprite, with respect to the bounding box
-				offset.x = 15;
-				offset.y = -5;
-
+				faceSouth();
 			} else {
-				play("walkE");
-				facing = FlxObject.RIGHT;
-				
-				orientboundingBoxHorizontal();
-				
-				// offset the east sprite, with respect to bounding box
-				offset.x = 14;
-				offset.y = 0;
+				faceEast();
+			}
+			
+			// checks for rotation along wall
+			wallHug(oldhorizontal);
+		}
+		
+		/*  Prevents zamboni from rotating when next to wall.  This would cause a glitch where
+			zamboni can "rotate out" of wall, and drive off the rink! 
+			
+			Forces Zamboni to hug wall
+			
+			 @oldhorizontal
+				whether zamboni was in horizontal or vertical orientation, prior to trying to rotation
+		*/
+		private function wallHug(oldhorizontal:Boolean) : void {
+			// Check for rotation into wall
+			var wallRotation = false;
+			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
+			tileMap.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
+				if (LevelLoader.isWall(tile.index)) {
+					wallRotation = true;
+					
+				} 
+			})
+			
+			// hugs wall by undoing rotation
+			if (wallRotation) {
+				// tried rotating from horizontal to vertical along N/S wall. Hug wall in direction of x velocity
+				if (oldhorizontal) {
+					if (velocity.x < 0) {
+						faceWest();
+					} else {
+						faceEast();
+					}
+				} else { // tried rotating from vertical to horizontal along W/E wall. Hug wall in direction of y velocity
+					if (velocity.y < 0) {
+						faceNorth();
+					} else {
+						faceSouth();
+					}
+				}
 			}
 		}
 		
-		// rotate bounding box into horizontal orientation
+		// face boundary box and sprite, West
+		private function faceWest() : void {
+			play("walkW");
+			facing = FlxObject.RIGHT;
+			
+			orientboundingBoxHorizontal();
+	
+			// offset the west sprite, with respect to the bounding box
+			offset.x = 0;
+			offset.y = 0;
+		}
+
+		// face boundary box and sprite, East
+		private function faceEast() : void {
+			play("walkE");
+			facing = FlxObject.RIGHT;
+			orientboundingBoxHorizontal();
+			
+			// offset the east sprite, with respect to bounding box
+			offset.x = 14;
+			offset.y = 0;
+		}
+		
+		// face boundary box and sprite, North
+		private function faceNorth() : void {
+			play("walkN");
+			facing = FlxObject.UP;
+			
+			orientBoundingBoxVertical();
+			
+			// offset the north sprite, with respect to the bounding box
+			offset.x = 15;
+			offset.y = -15;
+		}
+		
+		// face boundary box and sprite, South
+		private function faceSouth() : void {
+			facing = FlxObject.DOWN;
+			play("walkS");
+			orientBoundingBoxVertical();
+			
+			// offset the south sprite, with respect to the bounding box
+			offset.x = 15;
+			offset.y = -5;
+		}
+		
+		// rotate boundary box into horizontal orientation
 		private function orientboundingBoxHorizontal() : void {
 			this.angle = 0;
 			
@@ -192,7 +255,7 @@ package
 		override public function update() : void {
 			meltIce();
 			if (FlxG.mouse.pressed()) {
-				 updateOrientation();
+				updateOrientation();
 				 
 				// logic to determine direction of mouse relative to zamboni
 				var mouse:FlxPoint = FlxG.mouse.getWorldPosition(); //mouse coordinates
@@ -208,13 +271,10 @@ package
 				
 				// accelerate zamboni in direction of mouse
 				activeMotion(xDirection, yDirection);
-				
-
 			} else {
 				// mouse not pressed, passively slow down zamboni
 				passiveMotion();
 			}
-
 		}
 		
 		override public function onCollision(other:FlxObject) : void {
