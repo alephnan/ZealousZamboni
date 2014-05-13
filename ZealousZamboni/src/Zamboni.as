@@ -23,8 +23,8 @@ package
 		
 		// constants for sliding motion on ice.
 		// variable names "acceleration" and "friction" already inherited used by ZzUnit
-		private static const CUSTOM_ACCELERATION = 15;
-		private static const CUSTOM_FRICTION = 2;
+		private static const CUSTOM_ACCELERATION:int= 15;
+		private static const CUSTOM_FRICTION:int= 2;
 		
 		// how far a trail can be away from zamboni boundary area, and still be considered overlap
 		private static const ZAMBONI_TRAIL_CLEANING_TOLERANCE : uint = 2;
@@ -290,7 +290,7 @@ package
 		
 		override public function update() : void {
 			meltIce();
-			if (FlxG.mouse.pressed()) {
+			if (FlxG.mouse.pressed() || (FlxG.keys.SPACE && FlxG.mouse != null)) {
 				updateOrientation();
 				 
 				// logic to determine direction of mouse relative to zamboni
