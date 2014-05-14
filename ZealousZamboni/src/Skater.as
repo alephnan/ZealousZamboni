@@ -2,6 +2,7 @@ package
 {
 	import flash.media.SoundChannel;
 	import org.flixel.FlxObject;
+	import org.flixel.FlxParticle;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTilemap;
@@ -23,7 +24,7 @@ package
 		private var skater2PNG:Class;
 		
 		private static const SKATER_DEATH_SLACK:uint = 5; // seconds
-		
+		private static const START_TIME:Number = 0.5;
 		private var goingLeft:Boolean = false;
 		private var goingRight:Boolean = false;
 		private var goingUp:Boolean = false;
@@ -43,6 +44,8 @@ package
 		private var skaterStuck:Boolean;
 		//Sound played when this skater is stuck
 		private var skaterStuckSnd:SoundChannel;
+		
+		private var isStarted:Boolean = false;
 		
 		// color of trail associated with this skater
 		private var trailColor:uint; 
@@ -91,24 +94,22 @@ package
 			// Change sprite size to be size of tile (better for trails)
 			this.width = LevelLoader.TILE_SIZE;
 			this.height = LevelLoader.TILE_SIZE;
+			this.allowCollisions = 0;
 			this.offset = new FlxPoint(12, 18); // used trial and error here
-			
-			/*var o:Number = 0; //offset for specifying animations
-			addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
-			o = 16;
-			addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
-			o = 32;
-			addAnimation("walkW", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
-			o = 48;
-			addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
-			addAnimation("death", [6, 22, 38, 54], 8, true);
-			addAnimation("hurt", [16], 1, true);*/
-			maxVelocity.x = 120;
-			maxVelocity.y = 120;
+			maxVelocity.x = 500;
+			maxVelocity.y = 500;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			goingDown = true;
 			this.play("walkS", true);
+			var pt:FlxPath = new FlxPath();
+			pt.addPoint(getMidpoint());
+			pt.addPoint(new FlxPoint(FlxG.height / 2, FlxG.width / 2));
+			this.followPath(pt, 120);
+			new FlxTimer().start(START_TIME, 1, function (t:*) : void { 
+				isStarted = true;
+				allowCollisions = FlxObject.ANY; 
+				stopFollowingPath(true); } );
 		}
 		
 		override public function postConstruct(addDependency:Function):void
@@ -121,6 +122,7 @@ package
 		override public function preUpdate():void
 		{
 			super.preUpdate();
+			if (!isStarted) return;
 			if (!timer.finished && !skaterStuck)
 			{
 				var mp:FlxPoint = getMidpoint();
@@ -177,6 +179,7 @@ package
 		override public function update():void
 		{
 			super.update();
+			if (!isStarted) return;
 			if (!timer.finished)
 			{
 				if (skaterStuck)
@@ -319,13 +322,13 @@ package
 		{
 			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
 			var numObstacles:uint = 0;
-			if (tileMap.getTile(curPosX, curPosY - 1) >= LevelLoader.DOWN_ARROW_BLOCK || tileMap.getTile(curPosX, curPosY - 1) == LevelLoader.ENTRANCE_TILE_INDEX)
+			if (tileMap.getTile(curPosX, curPosY - 1) > LevelLoader.RIGHT_ARROW_BLOCK || tileMap.getTile(curPosX, curPosY - 1) == LevelLoader.ENTRANCE_TILE_INDEX)
 				numObstacles++;
-			if (tileMap.getTile(curPosX, curPosY + 1) >= LevelLoader.DOWN_ARROW_BLOCK || tileMap.getTile(curPosX, curPosY + 1) == LevelLoader.ENTRANCE_TILE_INDEX)
+			if (tileMap.getTile(curPosX, curPosY + 1) > LevelLoader.RIGHT_ARROW_BLOCK || tileMap.getTile(curPosX, curPosY + 1) == LevelLoader.ENTRANCE_TILE_INDEX)
 				numObstacles++;
-			if (tileMap.getTile(curPosX - 1, curPosY) >= LevelLoader.DOWN_ARROW_BLOCK || tileMap.getTile(curPosX - 1, curPosY) == LevelLoader.ENTRANCE_TILE_INDEX)
+			if (tileMap.getTile(curPosX - 1, curPosY) > LevelLoader.RIGHT_ARROW_BLOCK || tileMap.getTile(curPosX - 1, curPosY) == LevelLoader.ENTRANCE_TILE_INDEX)
 				numObstacles++;
-			if (tileMap.getTile(curPosX + 1, curPosY) >= LevelLoader.DOWN_ARROW_BLOCK || tileMap.getTile(curPosX + 1, curPosY) == LevelLoader.ENTRANCE_TILE_INDEX)
+			if (tileMap.getTile(curPosX + 1, curPosY) > LevelLoader.RIGHT_ARROW_BLOCK || tileMap.getTile(curPosX + 1, curPosY) == LevelLoader.ENTRANCE_TILE_INDEX)
 				numObstacles++;
 			return numObstacles;
 		}

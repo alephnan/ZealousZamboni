@@ -15,6 +15,9 @@ package
 			add(new FlxText(FlxG.width / 2 - 50, 50, 100, "Zealous Zamboni!"));
 			add(new FlxText(FlxG.width / 2 - 50, 70, 100, "Controls"));
 			add(new FlxText(FlxG.width / 2, 90, 100, "Click where you want to go"));
+			var objt:FlxText = new FlxText(FlxG.width / 2 - 50, 250, 100, "Don't let skaters get stuck!");
+			objt.scale = new FlxPoint(2, 2);
+			add(objt);
 			add(new FlxText(FlxG.width / 2 - 50, 190, 100, "Press S to start"));
 		}
 		
