@@ -10,7 +10,9 @@ package
 	public class PowerUp extends ZzUnit
 	{
 		[Embed(source = '../media/rocket.png')] 
-		private static var boosterPNG:Class;
+		private var boosterPNG:Class;
+		[Embed(source = '../media/tirechains.png')] 
+		private var tirechainsPNG:Class;
 		
 		/**
 		 * Type for Speed boost power up
@@ -23,10 +25,14 @@ package
 		 */
 		public static const STOP_WATCH:* = "stop-watch";
 		
+		public static const TIRE_CHAINS:* = "tirechains";
+		
 		//Amount that booster speeds up zamboni by
 		public static const BOOSTER_SPEED_AMT:Number = 4;
 		
 		public static const BOOSTER_TIME_LENGTH:Number = 10;
+		
+		public static const TIRE_CHAINS_TIME_LENGTH:Number = 10;
 		
 		/**
 		 * The type of this PowerUp
@@ -38,7 +44,7 @@ package
 			this.type = type;
 			this.width = LevelLoader.TILE_SIZE;
 			this.height = LevelLoader.TILE_SIZE;
-			loadGraphic(boosterPNG, false, true, 16, 16);
+			loadGraphic(this[String(type)+"PNG"], false, true, 16, 16);
 			this.scale = new FlxPoint(2, 2);
 		}
 	}

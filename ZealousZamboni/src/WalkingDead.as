@@ -15,9 +15,12 @@ package
 		//Number of updates until we do a path update
 		private var nextPathUpdate:Number = 0;
 		
+		private static const START_TIME:Number = 3; //number of seconds to wait before starting
 		private var lungeDist:Number = 40;
 		
 		private var canLunge:Boolean = true;
+		
+		private var isStarted:Boolean = false;
 		
 		public function WalkingDead(X:Number, Y:Number) {
 			super(X, Y);
@@ -46,10 +49,11 @@ package
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			this.play("walkS", true);
+			new FlxTimer().start(START_TIME, 1, function (t:*) : void { isStarted = true } );
 		}
 		
 		override public function update() : void {
-			if (!alive) return;
+			if (!alive || !isStarted) return;
 			if(nextPathUpdate <= 0){
 				updatePath();
 				nextPathUpdate = 10;

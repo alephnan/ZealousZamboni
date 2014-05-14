@@ -25,9 +25,21 @@ package
 		public static const RIGHT_ARROW_BLOCK:uint = 1027;		// Arrow block -- RIGHT
 		public static const SOLID_BLOCK:uint = 1053;
 		public static const WALL_INDEX:uint = 1054;
-		public static const TRAIL_TILE_INDEX:uint = 1083; // starting index of first trail color, that skater leaves
-		public static const NUM_COLORS:uint = 5; // number of different trail colors
+		public static const TRAIL_TILE_INDEX:uint = 1078; // starting index of first trail color, that skater leaves
+		public static const NUM_COLORS:uint = 10; // number of different trail colors
 		
+		// Index range for north / south walls (including corners) (inclusive)
+		public static const NORTH_WALL_LOW:uint = 1089;
+		public static const NORTH_WALL_HIGH:uint = 1100;
+		public static const SOUTH_WALL_LOW :uint = 1057;
+		public static const SOUTH_WALL_HIGH	:uint = 1068;
+		// East and west walls only have 2 pieces each
+		public static const	WEST_WALL_A:uint = 1103;
+		public static const WEST_WALL_B:uint = 1103 + 32;
+		public static const EAST_WALL_A:uint = 1106;
+		public static const EAST_WALL_B:uint = 1106 + 32;
+			
+			
 		[Embed(source = "../media/rink_tiles2.png")] public var TileSheet:Class;
 		
 		//level specific assets
@@ -41,7 +53,11 @@ package
 		[Embed(source = "../res/level4.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;
 		[Embed(source = '../res/level5.txt', mimeType = "application/octet-stream")] public var Level5Csv:Class;
 		[Embed(source = "../res/level5.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
-		public static const NUM_LEVELS:uint = 5;
+		[Embed(source = '../res/level6.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
+		[Embed(source = "../res/level6.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
+		//[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
+		//[Embed(source = "../res/level7.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
+		public static const NUM_LEVELS:uint = 7;
 		
 		private var level:FlxTilemap;
 		
@@ -93,6 +109,28 @@ package
 		public function getSpriteQueues():Array {
 			return queues;
 		}
+		
+		// return true if the given tileIndex is a wall, false otherwise
+		public static function isWall(tileIndex:uint) : Boolean {
+
+			if ( tileIndex >= NORTH_WALL_LOW && tileIndex <= NORTH_WALL_HIGH)
+				return true;
+			if ( tileIndex >= SOUTH_WALL_LOW && tileIndex <= SOUTH_WALL_HIGH)
+				return true;
+			if (tileIndex == EAST_WALL_A || tileIndex == EAST_WALL_B)
+				return true;
+			if (tileIndex == WEST_WALL_A || tileIndex == WEST_WALL_B)
+				return true;
+			return false;
+		}
+		
+		// returns true if the given tileIndex is a trail, false otherwise
+		public static function isTrail(tileIndex:uint) : Boolean {
+			return ((tileIndex >= LevelLoader.TRAIL_TILE_INDEX) &&
+				(tileIndex < LevelLoader.TRAIL_TILE_INDEX + LevelLoader.NUM_COLORS));
+		}
+		
+		
 		
 		//Helper function for parsing xml data associated with a level
 		private function parseXML(clazz:Class):void {
