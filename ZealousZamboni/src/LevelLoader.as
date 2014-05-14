@@ -38,9 +38,8 @@ package
 		public static const WEST_WALL_B:uint = 1103 + 32;
 		public static const EAST_WALL_A:uint = 1106;
 		public static const EAST_WALL_B:uint = 1106 + 32;
-			
-			
-		[Embed(source = "../media/rink_tiles2.png")] public var TileSheet:Class;
+		
+		public static const NUM_TILES:uint = 1184;
 		
 		[Embed(source = "../res/level2_ruts.txt", mimeType = "application/octet-stream")] public var TestRuts:Class;
 		
@@ -86,7 +85,7 @@ package
 		 */
 		public function loadLevel(level_num:uint) : void {
 			level = new FlxTilemap();
-			level.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
+			level.loadMap(new this["Level" + level_num + "Csv"](), Media.TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
 			ZzUtils.setLevel(level);
 			queues = new Array();
 			// parseXML MUST be called before addRutsToMap

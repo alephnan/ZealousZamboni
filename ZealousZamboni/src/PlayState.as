@@ -20,7 +20,7 @@ package
 		public static const ZOMBIES_INDEX:uint = 3;
 		
 		private var levelLoader:LevelLoader;
-
+   
 		//Set of all blocks in the level
 		public var level:FlxTilemap;
 		
@@ -38,7 +38,7 @@ package
 		
 		private var hud:ZzHUD;
 		
-		public function PlayState(levelNum:uint=2) {
+		public function PlayState(levelNum:uint=1) {
 			levelLoader = new LevelLoader();
 			this.levelNum = levelNum;
 		}
