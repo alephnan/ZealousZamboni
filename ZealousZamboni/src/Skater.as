@@ -103,8 +103,10 @@ package
 			addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 			addAnimation("death", [6, 22, 38, 54], 8, true);
 			addAnimation("hurt", [16], 1, true);*/
-			maxVelocity.x = 120;
-			maxVelocity.y = 120;
+			//maxVelocity.x = 120;
+			//maxVelocity.y = 120;
+			maxVelocity.x = 250;
+			maxVelocity.y = 250;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			goingDown = true;

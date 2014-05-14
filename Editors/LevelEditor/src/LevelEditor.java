@@ -33,6 +33,7 @@ import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 class LevelEditor extends JFrame implements MouseMotionListener{
+	private enum EditChoice { EDIT, ADD_RUTS, NEW }
 	
 	// This is the path to the resources directory in our zamboni code
 	public static final String PATH = "../../ZealousZamboni/res/";
@@ -45,6 +46,7 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 	private static final String FILE_DNE = "This file does not exist: ";
 	private static final String TRY_AGAIN = "\nPlease try again.";
 	
+	private EditChoice choice;
 	private int tileWidth;
 	private int tileHeight;
 	private int cursorWidth = 1;
@@ -73,39 +75,21 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 		// yes = 0, no = 1
 		int n = JOptionPane.showConfirmDialog(this, "Would you like to edit an existing tilemap?", "", JOptionPane.YES_NO_CANCEL_OPTION);
 		if (n == 0) {	// yes
-			File f = null;
-			while (f == null) {
-				String s = (String) JOptionPane.showInputDialog(this, 
-						"Enter the filename of the file you want to edit "
-						+ "(do not include the path to the resources folder)", 
-						"Open file", JOptionPane.PLAIN_MESSAGE, null, null, "");
-				if (s != null && s != "") {
-					s = PATH + s;
-					f = new File(s);
-					if (!f.exists()) {
-						f = null;
-						if (!s.endsWith(".txt")) {
-							s += ".txt";
-							f = new File(s);
-							if (!f.exists()) {
-								String message = FILE_DNE + "\"" + s + "\"" + TRY_AGAIN;
-								JOptionPane.showMessageDialog(LevelEditor.this, message, FILE_ERR, JOptionPane.ERROR_MESSAGE);
-								f = null;
-							}
-						}
-					}
-				} else {
-					String message = FILENAME_INVALID + "\"" + s + "\"" + TRY_AGAIN;
-					JOptionPane.showMessageDialog(LevelEditor.this, message, FILE_ERR, JOptionPane.ERROR_MESSAGE);
-				}
-			}
-			editFile = f;
+			choice = EditChoice.EDIT;
+			editFile = openExistingFile();
 		} else if (n == 1) {		// no
-			editFile = null;
 			/*String width = (String) JOptionPane.showInputDialog(this, "Enter tilemap width: ", "Tilemap Width", 
 					JOptionPane.PLAIN_MESSAGE, null, null, "80");
 			String height = (String) JOptionPane.showInputDialog(this, "Enter tilemap height: ", "Tilemap Height", 
 					JOptionPane.PLAIN_MESSAGE, null, null, "60");*/
+			n = JOptionPane.showConfirmDialog(this, "Would you like to create ruts over an existing tilemap?", "", JOptionPane.YES_NO_CANCEL_OPTION);
+			if (n == 0) {
+				choice = EditChoice.ADD_RUTS;
+				editFile = openExistingFile();
+			} else {
+				choice = EditChoice.NEW;
+				editFile = null;
+			}
 			try {
 				tileWidth = Integer.parseInt("80");
 				tileHeight = Integer.parseInt("60");
@@ -296,7 +280,7 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 		}
 	}
 	
-	private void prepAndWriteFile(File f) {
+	private String prepTileMap() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < tileHeight; ++i){
 			for(int j = 0; j < tileWidth; j++){
@@ -307,8 +291,37 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 					sb.append(", ");
 			}
 		}
-		String csv = sb.toString();
-		
+		return sb.toString();
+	}
+	
+	private String prepRutMap() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < tileHeight; ++i){
+			for(int j = 0; j < tileWidth; j++){
+				int index = buttonArray[i][j].index;
+				if (!isRutTile(index))
+					index = 0;
+				sb.append(index);
+				if ((j + 1) % tileWidth == 0)
+					sb.append("\n");
+				else
+					sb.append(", ");
+			}
+		}
+		return sb.toString();
+	}
+	
+	private void prepAndWriteFile(File f) {
+		String csv = null;
+		if (choice == EditChoice.EDIT || choice == EditChoice.NEW) {
+			csv = prepTileMap();
+		} else {
+			csv = prepRutMap();
+			String filename = f.getAbsolutePath();
+			filename = filename.substring(0, filename.length() - 4);	// remove .txt
+			filename += "_ruts.txt";
+			f = new File(filename);
+		}
 		Writer w = null;
 		try {
 			w = new BufferedWriter(new OutputStreamWriter(
@@ -339,8 +352,6 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 				clicked.setIcon(icons[i]);
 				clicked.index = i;
 			}
-			//GridButton clicked = (GridButton) e.getSource();
-			
 		}
 	}
 	
@@ -378,6 +389,42 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 			//Need strange offsets to get cursor to line up with actual buttons, not sure why
 			g.drawRect(b.getX()+Main.TILE_SIZE,b.getY()+9*Main.TILE_SIZE,b.getWidth(),b.getHeight());
 		}
+	}
+	
+	private boolean isRutTile(int index) {
+		return (index >= 1078 && index < 1088);
+	}
+	
+	private File openExistingFile() {
+		File f = null;
+		while (f == null) {
+			String s = (String) JOptionPane.showInputDialog(this, 
+					"Enter the filename of the file you want to edit "
+					+ "(do not include the path to the resources folder)", 
+					"Open file", JOptionPane.PLAIN_MESSAGE, null, null, "");
+			if (s == null)		// cancel 
+				System.exit(0);
+			if (s != "") {
+				s = PATH + s;
+				f = new File(s);
+				if (!f.exists()) {
+					f = null;
+					if (!s.endsWith(".txt")) {
+						s += ".txt";
+						f = new File(s);
+						if (!f.exists()) {
+							String message = FILE_DNE + "\"" + s + "\"" + TRY_AGAIN;
+							JOptionPane.showMessageDialog(LevelEditor.this, message, FILE_ERR, JOptionPane.ERROR_MESSAGE);
+							f = null;
+						}
+					}
+				}
+			} else {
+				String message = FILENAME_INVALID + "\"" + s + "\"" + TRY_AGAIN;
+				JOptionPane.showMessageDialog(LevelEditor.this, message, FILE_ERR, JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		return f;
 	}
 	
 	private List<GridButton> selectedButts = new ArrayList<GridButton>();

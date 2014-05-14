@@ -73,6 +73,14 @@ package
 				   level.getTile(entrance.x, entrance.y + 1) < LevelLoader.ICE_TILE_INDEX_END ||
 				   level.getTile(entrance.x, entrance.y - 1) < LevelLoader.ICE_TILE_INDEX_END;
 		}
+		
+		public static function copyArray(orig:Array):Array {
+			var copy:Array = new Array(orig.length);
+			for (var i:uint = 0; i < orig.length; ++i) {
+				copy[i] = orig[i];
+			}
+			return copy;
+		}
 	}
 	
 }

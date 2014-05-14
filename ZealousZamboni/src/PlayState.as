@@ -38,7 +38,7 @@ package
 		
 		private var hud:ZzHUD;
 		
-		public function PlayState(levelNum:uint=1) {
+		public function PlayState(levelNum:uint=2) {
 			levelLoader = new LevelLoader();
 			this.levelNum = levelNum;
 		}
