@@ -49,7 +49,30 @@ package
 			level = curlevel;
 		}
 		
+		// There should be 2 entrance tile blocks to make up each entrance
+		public static function entranceBlocked(p:FlxPoint):Boolean {
+			var entrance1:FlxPoint = new FlxPoint(p.x, p.y);
+			entrance1.x /= LevelLoader.TILE_SIZE;
+			entrance1.y /= LevelLoader.TILE_SIZE;
+			var entrance2:FlxPoint;
+			if (level.getTile(entrance1.x + 1, entrance1.y) == LevelLoader.ENTRANCE_TILE_INDEX) {
+				entrance2 = new FlxPoint(entrance1.x + 1, entrance1.y);
+			} else if (level.getTile(entrance1.x - 1, entrance1.y) == LevelLoader.ENTRANCE_TILE_INDEX) {
+				entrance2 = new FlxPoint(entrance1.x - 1, entrance1.y);
+			} else if (level.getTile(entrance1.x, entrance1.y + 1) == LevelLoader.ENTRANCE_TILE_INDEX) {
+				entrance2 = new FlxPoint(entrance1.x, entrance1.y + 1);
+			} else {
+				entrance2 = new FlxPoint(entrance1.x, entrance1.y - 1);
+			}
+			return entranceTileNotBlocked(entrance1) || entranceTileNotBlocked(entrance2);
+		}
 		
+		private static function entranceTileNotBlocked(entrance:FlxPoint): Boolean {
+			return level.getTile(entrance.x + 1, entrance.y) < LevelLoader.ICE_TILE_INDEX_END ||
+			       level.getTile(entrance.x - 1, entrance.y) < LevelLoader.ICE_TILE_INDEX_END ||
+				   level.getTile(entrance.x, entrance.y + 1) < LevelLoader.ICE_TILE_INDEX_END ||
+				   level.getTile(entrance.x, entrance.y - 1) < LevelLoader.ICE_TILE_INDEX_END;
+		}
 	}
 	
 }

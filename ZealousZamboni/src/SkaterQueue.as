@@ -37,7 +37,7 @@ package
 			var next:SpriteData = skaters.pop();
 			var p:FlxPoint;
 			var count:int = 10;
-			while (entranceBlocked(p = ZzUtils.getRandomEntrance()) && count > 0) {
+			while (ZzUtils.entranceBlocked(p = ZzUtils.getRandomEntrance()) && count > 0) {
 				count--;
 			}
 			var skater:Skater = new Skater(p.x, p.y, next.iceTime);
@@ -49,17 +49,6 @@ package
 		public function setUpdateSkatersFunction(updateSkatersLeft:Function):uint {
 			this.updateSkatersLeft = updateSkatersLeft;
 			return skaters.length;
-		}
-		
-		private function entranceBlocked(p:FlxPoint):Boolean {
-			var map:FlxTilemap = PlayState(FlxG.state).level;
-			var entrance:FlxPoint = new FlxPoint(p.x, p.y);
-			entrance.x /= LevelLoader.TILE_SIZE;
-			entrance.y /= LevelLoader.TILE_SIZE;
-			return !(map.getTile(entrance.x + 1, entrance.y) < LevelLoader.ICE_TILE_INDEX_END ||
-			         map.getTile(entrance.x - 1, entrance.y) < LevelLoader.ICE_TILE_INDEX_END ||
-					 map.getTile(entrance.x, entrance.y + 1) < LevelLoader.ICE_TILE_INDEX_END ||
-					 map.getTile(entrance.x, entrance.y - 1) < LevelLoader.ICE_TILE_INDEX_END);
 		}
 		
 		/**

@@ -112,7 +112,7 @@ package
 					maxVelocity.y *= tdiff;
 					maxVelocity.x *= tdiff;
 					FlxG.timeScale /= tdiff;
-					var t:FlxTimer = new FlxTimer();
+					t = new FlxTimer();
 					t.start(PowerUp.BOOSTER_TIME_LENGTH/tdiff, 1, function(timer:*) : void { 
 						maxVelocity.x /= tdiff; 
 						maxVelocity.y /= tdiff; 

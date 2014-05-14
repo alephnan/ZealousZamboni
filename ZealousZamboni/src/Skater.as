@@ -169,6 +169,7 @@ package
 							goingLeft = true;
 						}
 					}
+					tilemap.setTile(xTile, yTile, trailColor, true);
 				}
 			}
 		}
@@ -250,7 +251,8 @@ package
 		{
 			var curTile:FlxPoint = getMidpoint();
 			// Check tiles around current tile to see if skater is stuck
-			if (checkNumObstacles(curTile.x / LevelLoader.TILE_SIZE, curTile.y / LevelLoader.TILE_SIZE) == 4)
+			//if (checkNumObstacles(curTile.x / LevelLoader.TILE_SIZE, curTile.y / LevelLoader.TILE_SIZE) == 4)
+			if (isStuck(curTile.x / LevelLoader.TILE_SIZE, curTile.y / LevelLoader.TILE_SIZE))
 			{
 				if (!skaterStuck)
 				{
@@ -326,6 +328,24 @@ package
 			if (tileMap.getTile(curPosX + 1, curPosY) >= LevelLoader.DOWN_ARROW_BLOCK || tileMap.getTile(curPosX + 1, curPosY) == LevelLoader.ENTRANCE_TILE_INDEX)
 				numObstacles++;
 			return numObstacles;
+		}
+		
+		/**
+		 * Returns true if the skater is currently stuck
+		 * @param	curPosX
+		 * @param	curPosY
+		 */
+		public function isStuck(curPosX:uint, curPosY:uint):Boolean {
+			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
+			if (tileMap.getTile(curPosX, curPosX) == LevelLoader.ENTRANCE_TILE_INDEX) {
+				//trace("skater on entrance tile: " + curPosX + ", " + curPosY);
+				return ZzUtils.entranceBlocked(new FlxPoint(curPosX, curPosY));
+			}
+			//trace("skater on entrance tile: " + curPosX + ", " + curPosY);
+			return !(tileMap.getTile(curPosX + 1, curPosY) <= LevelLoader.RIGHT_ARROW_BLOCK ||
+			         tileMap.getTile(curPosX - 1, curPosY) <= LevelLoader.RIGHT_ARROW_BLOCK ||
+					 tileMap.getTile(curPosX, curPosY + 1) <= LevelLoader.RIGHT_ARROW_BLOCK ||
+					 tileMap.getTile(curPosX, curPosY - 1) <= LevelLoader.RIGHT_ARROW_BLOCK);
 		}
 		
 		public function isGoingRight():void
