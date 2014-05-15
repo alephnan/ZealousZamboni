@@ -33,6 +33,11 @@ package
 			//PlayState(FlxG.state).addUnit(powerup);
 		}
 		
+		override public function destroy():void {
+			super.destroy();
+			powerups = null;
+		}
+		
 	}
 
 }

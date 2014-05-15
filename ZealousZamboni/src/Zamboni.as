@@ -13,12 +13,12 @@ package
 	 */
 	public class Zamboni extends ZzUnit 
 	{	
-		[Embed(source = '../media/zamboni_4way.png')] private var zamboniPNG:Class;
 		private static var NS_ANGLE:int = 90;	//angle to rotate North, south sprites to correct their rotation
 		
 		private static var QUAD_OFFSET:int = 45;		//angle offset of quadrant selection for specifying sprite anim
 		
-		private var levelCopy:FlxTilemap;
+		private var level:FlxTilemap;
+		private var levelCopy:Array;
 		//param level is supposed to be a pristine copy of the current tilemap
 		
 		// constants for sliding motion on ice.
@@ -38,10 +38,11 @@ package
 		
 		public function Zamboni(startX:Number, startY:Number, level:FlxTilemap) {
 			super(startX, startY);
-			levelCopy = level;
+			levelCopy = ZzUtils.copyArray(level.getData(false));
+			this.level = level;
 			//place holder stuff
 			//makeGraphic(10,12,0xffaa1111);
-			loadGraphic(zamboniPNG, true, true, 64, 32, true);
+			loadGraphic(Media.zamboniPNG, true, true, 64, 32, true);
 			addAnimation("walkW", [0, 1, 2, 3], 4, true);
 			addAnimation("walkE", [4,5,6,7], 4, true);
 			addAnimation("walkN", [8, 9, 10, 11], 4, true);
@@ -98,14 +99,18 @@ package
 		
 		// Clears Ice Tiles surrounding zamboni current position
 		private function trailSweep() : void {
-			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
 			
-			tileMap.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
+			level.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
 				if (LevelLoader.isTrail(tile.index)) {
 					var tx:Number = tile.x / LevelLoader.TILE_SIZE;
 					var ty:Number = tile.y / LevelLoader.TILE_SIZE;
-					tileMap.setTile(tx, ty, 
-						levelCopy.getTile(tx,ty), true);
+					//tileMap.setTile(tx, ty, 
+						//levelCopy.getTile(tx,ty), true);
+					var tileIndex:uint = ty * level.widthInTiles + tx;
+					if (tileIndex < levelCopy.length) {
+						var origTile:uint = levelCopy[ty * level.widthInTiles + tx];
+						level.setTileByIndex(tileIndex, origTile, true);
+					}
 				}
 			})
 		}
@@ -148,8 +153,7 @@ package
 		private function wallHug(oldhorizontal:Boolean) : void {
 			// Check for rotation into wall
 			var wallRotation:Boolean = false;
-			var tileMap:FlxTilemap = PlayState(FlxG.state).level;
-			tileMap.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
+			level.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
 				if (LevelLoader.isWall(tile.index)) {
 					wallRotation = true;
 					
@@ -316,10 +320,10 @@ package
 				var dx:Number = mouse.x - z.x;
 				var dy:Number = mouse.y - z.y;
 				// maps positive dx to 1, negative to -1, and 0 to 0
-				var xDirection = (dx == 0) ? 0 : 1;
+				var xDirection:Number = (dx == 0) ? 0 : 1;
 				xDirection = (dx >= 0) ? xDirection : -1 * xDirection;
 				// maps positive dy to 1, negative to -1, and 0 to 0
-				var yDirection = (dy == 0) ? 0 : 1;
+				var yDirection:Number = (dy == 0) ? 0 : 1;
 				yDirection = (dy >= 0) ? yDirection : -1 * yDirection;
 				
 				// accelerate zamboni in direction of mouse
@@ -332,11 +336,12 @@ package
 		
 		override public function onCollision(other:FlxObject) : void {
 			var t:FlxTimer = new FlxTimer();
-			if (other is FlxTile && FlxTile(other).index == LevelLoader.TRAIL_TILE_INDEX) {
-				PlayState(FlxG.state).level.setTile(other.x / LevelLoader.TILE_SIZE, other.y / LevelLoader.TILE_SIZE, 0, true);
-			} else if (other is Skater) {
+			//if (other is FlxTile && FlxTile(other).index == LevelLoader.TRAIL_TILE_INDEX) {
+				//PlayState(FlxG.state).level.setTile(other.x / LevelLoader.TILE_SIZE, other.y / LevelLoader.TILE_SIZE, 0, true);
+			//} else if (other is Skater) {
 				
-			} else if (other is PowerUp) {
+			//} else if (other is PowerUp) {
+			if (other is PowerUp) {
 				if (PowerUp(other).type == PowerUp.BOOSTER) {
 					maxVelocity.y *= PowerUp.BOOSTER_SPEED_AMT;
 					maxVelocity.x *= PowerUp.BOOSTER_SPEED_AMT;
@@ -366,6 +371,12 @@ package
 					other.kill();
 				}
 			}
+		}
+		
+		override public function destroy():void {
+			super.destroy();
+			level = null;
+			levelCopy = null;
 		}
 	}
 	

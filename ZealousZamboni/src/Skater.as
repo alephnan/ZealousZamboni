@@ -9,7 +9,8 @@ package
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxG;
 	import org.flixel.FlxTimer;
-	import org.flixel.FlxPath;
+	import org.flixel.FlxPath
+	import org.flixel.*;
 	import org.flixel.plugin.photonstorm.FlxBar;
 	
 	/**
@@ -44,6 +45,8 @@ package
 		private var skaterStuck:Boolean;
 		//Sound played when this skater is stuck
 		private var skaterStuckSnd:SoundChannel;
+		//Handles skater death explosion
+		private var explosion:FlxEmitter;
 		
 		private var isStarted:Boolean = false;
 		
@@ -90,14 +93,27 @@ package
 				addAnimation("hurt", [16], 1, true);
 			}
 			deathTimer = new FlxTimer();
+			setupSkaterDeath()
 			
 			// Change sprite size to be size of tile (better for trails)
 			this.width = LevelLoader.TILE_SIZE;
 			this.height = LevelLoader.TILE_SIZE;
 			this.allowCollisions = 0;
 			this.offset = new FlxPoint(12, 18); // used trial and error here
-			maxVelocity.x = 500;
-			maxVelocity.y = 500;
+			/*var o:Number = 0; //offset for specifying animations
+			addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+			o = 16;
+			addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+			o = 32;
+			addAnimation("walkW", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+			o = 48;
+			addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
+			addAnimation("death", [6, 22, 38, 54], 8, true);
+			addAnimation("hurt", [16], 1, true);*/
+			//maxVelocity.x = 120;
+			//maxVelocity.y = 120;
+			maxVelocity.x = 250;
+			maxVelocity.y = 250;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			goingDown = true;
@@ -117,6 +133,7 @@ package
 			timer.start(timeToSkate, 1, timerUp);
 			SoundPlayer.skaterStart.play();
 			addDependency(progress);
+			addDependency(explosion);
 		}
 		
 		override public function preUpdate():void
@@ -179,7 +196,11 @@ package
 		override public function update():void
 		{
 			super.update();
+			var curTile:FlxPoint = getMidpoint();
 			if (!isStarted) return;
+			if (skaterStuck && !isStuck(curTile.x / LevelLoader.TILE_SIZE, curTile.y / LevelLoader.TILE_SIZE)) {
+				endStuck();
+			}
 			if (!timer.finished)
 			{
 				if (skaterStuck)
@@ -242,11 +263,21 @@ package
 		{
 		}
 		
-		private function skaterDeathHandler(timer:FlxTimer = null):void
+		private function skaterDeathHandler(timer:FlxTimer=null):void
 		{
 			SoundPlayer.skaterDeath.play();
 			exists = false;
 			progress.exists = false;
+			if (timer != null) {
+				startSkaterDeath();
+				timer.start(2, 1, skaterDeathCleanup);
+			} else {
+				skaterDeathCleanup();
+			}
+		}
+		
+		private function skaterDeathCleanup(timer:FlxTimer = null):void {
+			explosion.kill();
 			PlayState(FlxG.state).skaterComplete(this, true);
 		}
 		
@@ -420,6 +451,31 @@ package
 		private function clearDirection():void
 		{
 			goingDown = goingUp = goingLeft = goingRight = false;
+		}
+		
+		private function setupSkaterDeath():void {
+			explosion = new FlxEmitter(4, 4, 100);
+			var color:Array = new Array( 0xff000000, 0xffff0000, 0xff0101df );
+			for (var i:uint = 0; i < 100; ++i) {
+				var particle:FlxParticle = new FlxParticle();
+				particle.makeGraphic(4, 4, color[i%3]);
+				particle.exists = false;
+				explosion.add(particle);
+			}
+		}
+		
+		private function startSkaterDeath():void {
+			explosion.at(this);
+			explosion.gravity = 100;
+			explosion.start(true, 2);
+		}
+		
+		override public function destroy():void {
+			super.destroy();
+			timer = null;
+			progress.destroy();
+			deathTimer = null;
+			explosion.destroy();
 		}
 	}
 

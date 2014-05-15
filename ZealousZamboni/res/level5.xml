@@ -27,30 +27,21 @@
 	<!-- Second skater comes on half way through level -->
 	<skater x="402" y="64">
 		<start>33</start>
-		<time>45</time>
+		<time>40</time>
 	</skater>
 	<!-- Third skater comes on slightly later -->
 	<skater x="10" y="500">
 		<start>42</start>
-		<time>35</time>
+		<time>30</time>
 	</skater>
-	<!-- a little time and then 4 zombies appear -->
+	<!-- a little time and then 2 zombies appear -->
 	<zombie x="1" y="120">
 		<start>37</start>
 	</zombie>
 	<zombie x="630" y="120">
-		<start>38</start>
+		<start>30</start>
 	</zombie>
-	<zombie x="1" y="360">
-		<start>39</start>
-	</zombie>
-	<zombie x="630" y="360">
-		<start>40</start>
-	</zombie>
-	<!-- a little break and then two more zombies -->
-	<zombie x="1" y="360">
-		<start>50</start>
-	</zombie>
+	<!-- a little break and then one more zombie -->
 	<zombie x="630" y="360">
 		<start>50</start>
 	</zombie>

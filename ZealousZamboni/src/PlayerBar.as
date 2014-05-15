@@ -7,7 +7,7 @@ package
 	 */
 	public class PlayerBar extends FlxGroup
 	{
-		[Embed(source = "../media/heart.png")] public var HeartImg:Class;
+		
 		
 		private var playerLivesTxt:FlxText;
 		private var playerHealth:uint;
@@ -15,7 +15,7 @@ package
 		public function PlayerBar(x:Number, y:Number, playerHealth:uint) 
 		{
 			// Add heart to player health bar
-			var heart:FlxSprite = new FlxSprite(x, y, HeartImg);
+			var heart:FlxSprite = new FlxSprite(x, y, Media.HeartImg);
 			heart.x = FlxG.width - FlxG.width / 8;
 			//heart.y = heart.height / 2;
 			add(heart);
@@ -29,6 +29,11 @@ package
 		
 		public function updatePlayerHealth(healthLeft:uint):void {
 			playerLivesTxt.text = String(healthLeft);
+		}
+		
+		override public function destroy():void {
+			playerLivesTxt = null;
+			super.destroy();
 		}
 		
 	}

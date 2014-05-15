@@ -22,6 +22,7 @@ package
 		
 		private var skatersLeft:uint;
 		private var skatersLeftTxt:FlxText;
+		
 		/**
 		 * @param   player a reference to the player of the game
 		 * @param   skatersLeft a getter for the number of skaters left (that haven't come on yet)
@@ -54,6 +55,14 @@ package
 		
 		public function setSkatersLeft(skatersLeft:uint):void {
 			this.skatersLeft = skatersLeft;
+		}
+		
+		override public function destroy():void {
+			super.destroy();
+			state = null;
+			playerBar = null;
+			player = null;
+			skatersLeftTxt = null;
 		}
 		
 	}

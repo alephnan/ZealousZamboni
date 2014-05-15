@@ -33,6 +33,11 @@ package
 			//PlayState(FlxG.state).addUnit(zombie);
 		}
 		
+		override public function destroy():void {
+			super.destroy();
+			zombies = null;
+		}
+		
 	}
 
 }

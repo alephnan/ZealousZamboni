@@ -44,15 +44,7 @@
 		<time>26</time>
 	</skater>
 	<skater x="428" y="300">
-		<start>30</start>
-		<time>25</time>
-	</skater>
-	<skater x="428" y="300">
-		<start>31</start>
-		<time>23</time>
-	</skater>
-	<skater x="428" y="300">
 		<start>35</start>
-		<time>20</time>
+		<time>15</time>
 	</skater>
 </level>

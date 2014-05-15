@@ -20,17 +20,15 @@ package
 		public static const ZOMBIES_INDEX:uint = 3;
 		
 		private var levelLoader:LevelLoader;
-
+   
 		//Set of all blocks in the level
 		public var level:FlxTilemap;
 		
-		public var levelNum:uint = 1;
+		//public var levelNum:uint = 1;
 		
 		public var finishedSkaters:uint = 0;
 		
 		//Set of all sprites active in the level (including the player)
-		//TODO Decide if we should just add sprites directly to this?
-		//public var activeSprites:FlxGroup;
 		public var activeSprites:Array;
 		
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
@@ -38,15 +36,20 @@ package
 		
 		private var hud:ZzHUD;
 		
-		public function PlayState(levelNum:uint=1) {
+		private var startTxt:FlxText;
+		
+		//public function PlayState(levelNum:uint = 1) {
+		/*public function PlayState() {
+			super();
 			levelLoader = new LevelLoader();
 			this.levelNum = levelNum;
-		}
+		}*/
 		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
+			levelLoader = new LevelLoader();
 			activeSprites = new Array();
-			levelLoader.loadLevel(levelNum);
+			levelLoader.loadLevel(FlxG.level);
 			level = levelLoader.getTilemap();
 			add(level);
 			
@@ -56,9 +59,33 @@ package
 			startSprites(levelLoader.getSpriteQueues());
 			hud = new ZzHUD(player, this);
 			add(hud);
-			
 			FlxG.mouse.show();
+			
+			/*if (FlxG.level == 1) {
+				startTxt = new FlxText(FlxG.width / 2 + 25, FlxG.height / 2 - 200, FlxG.width, "Don't let skaters\n     get stuck!");
+				startTxt.size = 30;
+				startTxt.scale = new FlxPoint(2, 2);
+				startTxt.color = 0x0101DF;
+				startTxt.shadow = 0xA4A4A4;
+				startTxt.alpha = 1;
+				var timer:FlxTimer = new FlxTimer();
+				add(startTxt);
+				timer.start(.5, 7, onStart);
+			}*/
 		}
+		
+		/*public function onStart(timer:FlxTimer):void {
+			
+			if (timer.finished) {
+				startTxt.kill();
+			} else {
+				if (timer.loopsLeft % 2 == 0) {
+					startTxt.alpha = 0;
+				} else {
+					startTxt.alpha = 1;
+				}
+			}
+		}*/
 		
 		private function startSprites(queues:Array):void {
 			for (var i:uint = 0; i < queues.length; ++i) {
@@ -76,12 +103,16 @@ package
 			if (killed) {
 				player.hurt(1);
 				if (player.alive == false) {
-					FlxG.switchState(new LevelFailedState(this));
+					FlxG.switchState(new LevelFailedState());
 					return;
 				}
 			}
 			if (SkaterQueue(activeSprites[SKATERS_INDEX]).skatersFinished()) {
-				winLevel();
+				if (FlxG.level + 1 > LevelLoader.NUM_LEVELS) {
+					winGame();
+				} else {
+					winLevel();
+				}
 			}
 		}
 		
@@ -89,8 +120,17 @@ package
 		 * Function invoked when the player wins the level
 		 */
 		public function winLevel() : void {
-			FlxG.switchState(new LevelWinState(this));
+			FlxG.switchState(new LevelWinState());
 		}
+		
+		/**
+		 * Function invoked when the player wins the level and
+		 * there are no more levels (they win the game)
+		 */
+		public function winGame() : void {
+			FlxG.switchState(new EndState());
+		}
+		
 		/**
 		 * Function for adding a sprite to be displayed
 		 * Probably needs to be modified to add sprites to appropriate collision groups later
@@ -136,13 +176,6 @@ package
 			return new FlxPoint(obj.getMidpoint().x / LevelLoader.TILE_SIZE, obj.getMidpoint().y / LevelLoader.TILE_SIZE);
 		}
 		
-		override public function destroy() : void {
-			super.destroy();
-			this.members = null;
-			levelLoader = null;
-			player = null;
-		}
-		
 		public function getNearestSkater(p:FlxPoint) : FlxPoint {
 			var skaters:Array = SkaterQueue(activeSprites[SKATERS_INDEX]).members;
 			var i:int;
@@ -157,6 +190,18 @@ package
 				}
 			});
 			return minTile;
+		}
+		
+		override public function destroy():void {
+			levelLoader.destroy();
+			levelLoader = null;
+			super.destroy();
+			this.members = null;
+			activeSprites = null;
+			level = null;
+			player = null;
+			hud = null;
+			startTxt = null;
 		}
 	}
 	

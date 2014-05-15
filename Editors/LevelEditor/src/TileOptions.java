@@ -84,8 +84,10 @@ class TileOptions extends JFrame {
 		TileButton b = (TileButton) butts.nextElement();
 		for(;butts.hasMoreElements();b = (TileButton) butts.nextElement()){
 			if(b.getX() >= x && b.getX() < x+cursorWidth*Main.TILE_SIZE)
-				if(b.getY() >= y && b.getY() < y+cursorHeight*Main.TILE_SIZE)
+				if(b.getY() >= y && b.getY() < y+cursorHeight*Main.TILE_SIZE) {
+					System.out.println(b.index);
 					selectedButts.add(b);
+				}
 		}
 		return selectedButts;
 	}

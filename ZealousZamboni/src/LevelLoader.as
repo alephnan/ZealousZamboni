@@ -38,15 +38,17 @@ package
 		public static const WEST_WALL_B:uint = 1103 + 32;
 		public static const EAST_WALL_A:uint = 1106;
 		public static const EAST_WALL_B:uint = 1106 + 32;
-			
-			
-		[Embed(source = "../media/rink_tiles2.png")] public var TileSheet:Class;
+		
+		public static const NUM_TILES:uint = 1184;
+		
 		
 		//level specific assets
 		[Embed(source = '../res/level1.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
 		[Embed(source = "../res/level1.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
+		[Embed(source = "../res/level1_ruts.txt", mimeType = "application/octet-stream")] public var Level1Ruts:Class;
 		[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
 		[Embed(source = "../res/level2.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
+		[Embed(source = "../res/level2_ruts.txt", mimeType = "application/octet-stream")] public var Level2Ruts:Class;
 		[Embed(source = '../res/level3.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
 		[Embed(source = "../res/level3.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
 		[Embed(source = '../res/level4.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
@@ -57,12 +59,12 @@ package
 		[Embed(source = "../res/level6.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
 		//[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
 		//[Embed(source = "../res/level7.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
-		public static const NUM_LEVELS:uint = 7;
+		public static const NUM_LEVELS:uint = 6;
 		
 		private var level:FlxTilemap;
 		
 		//A copy of the unchanged level for the zamboni to use when reseting tiles
-		private var levelCopy:FlxTilemap;
+		//private var levelCopy:FlxTilemap;
 		
 		private var name:String;
 		
@@ -84,18 +86,24 @@ package
 		 */
 		public function loadLevel(level_num:uint) : void {
 			level = new FlxTilemap();
-			level.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
+			level.loadMap(new this["Level" + level_num + "Csv"](), Media.TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
+			ZzUtils.setLevel(level);
+			queues = new Array();
+			// parseXML MUST be called before addRutsToMap
+			parseXML(this["Level" + level_num + "XML"]);
+			if (level_num < 3)
+				addRutsToMap(new this["Level"+level_num+"Ruts"]());
+			
 			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
 			
 			level.setTileProperties(1054, FlxObject.ANY, null, null);
-			levelCopy = new FlxTilemap();
-			levelCopy.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
-			levelCopy.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
+			//levelCopy = new FlxTilemap();
+			//levelCopy.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
+			//levelCopy.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
 			//Set entrances as non-collidable
 			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
-			ZzUtils.setLevel(level);
-			queues = new Array();
-			parseXML(this["Level"+level_num+"XML"]);
+			
+			
 		}
 		
 		public function getPlayer() : Zamboni {
@@ -128,6 +136,34 @@ package
 		public static function isTrail(tileIndex:uint) : Boolean {
 			return ((tileIndex >= LevelLoader.TRAIL_TILE_INDEX) &&
 				(tileIndex < LevelLoader.TRAIL_TILE_INDEX + LevelLoader.NUM_COLORS));
+		}
+		
+		public function addRutsToMap(csv:String):void {
+			var columns:Array;
+			var rows:Array = csv.split("\n");
+			level.heightInTiles = rows.length;
+			var data:Array = new Array();
+			var row:uint = 0;
+			var column:uint;
+			while(row < level.heightInTiles)
+			{
+				columns = rows[row++].split(",");
+				if(columns.length <= 1)
+				{
+					level.heightInTiles = level.heightInTiles - 1;
+					continue;
+				}
+				if(level.widthInTiles == 0)
+					level.widthInTiles = columns.length;
+				column = 0;
+				while(column < level.widthInTiles)
+					data.push(uint(columns[column++]));
+			}
+			for (var i:uint = 0; i < data.length; ++i) {
+				if (data[i] != 0) {
+					level.setTileByIndex(i, data[i], true);
+				}
+			}
 		}
 		
 		
@@ -164,7 +200,7 @@ package
 				zamboniX *= resizeX;
 				zamboniY *= resizeY;
 			}
-			player = new Zamboni(zamboniX, zamboniY, levelCopy);
+			player = new Zamboni(zamboniX, zamboniY, level);
 			//addUnit(player);
 			
 			player.health = lives;
@@ -223,6 +259,12 @@ package
 				zombies.addSpriteData(new SpriteData(zombieX, zombieY, int(z.start)));
 			}
 			queues.push(zombies);
+		}
+		
+		public function destroy():void {
+			level = null;
+			player = null;
+			queues = null;
 		}
 		
 	}
