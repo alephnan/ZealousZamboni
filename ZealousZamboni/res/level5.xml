@@ -1,56 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level width="640" height="480" lives="2">
 	<zamboni x="550" y="240"/>
-	<!-- introduce zombies for first time... level is two long skaters with zombies -->
-	<skater x="112" y="64">
+	<!-- Wave of 4 skaters from all 4 entrances -->
+	<skater x="508" y="480">
+		<start>2</start>
+		<time>20</time>
+	</skater>
+	<skater x="8" y="480">
 		<start>3</start>
-		<time>60</time>
+		<time>20</time>
 	</skater>
-	<zombie x="1" y="240">
-		<start>10</start>
-	</zombie>
-	<zombie x="630" y="240">
-		<start>20</start>
-	</zombie>
-	<zombie x="1" y="240">
-		<start>24</start>
-	</zombie>
-	<zombie x="630" y="240">
-		<start>24</start>
-	</zombie>
-	<zombie x="1" y="240">
-		<start>30</start>
-	</zombie>
-	<zombie x="630" y="240">
-		<start>30</start>
-	</zombie>
-	<!-- Second skater comes on half way through level -->
-	<skater x="402" y="64">
-		<start>33</start>
-		<time>40</time>
+	<skater x="8" y="480">
+		<start>4</start>
+		<time>20</time>
 	</skater>
-	<!-- Third skater comes on slightly later -->
-	<skater x="10" y="500">
-		<start>42</start>
-		<time>30</time>
+	<skater x="508" y="80">
+		<start>5</start>
+		<time>20</time>
 	</skater>
-	<!-- a little time and then 2 zombies appear -->
-	<zombie x="1" y="120">
-		<start>37</start>
-	</zombie>
-	<zombie x="630" y="120">
-		<start>30</start>
-	</zombie>
-	<!-- a little break and then one more zombie -->
-	<zombie x="630" y="360">
-		<start>50</start>
-	</zombie>
-	<zombie x="1" y="360">
-		<start>56</start>
-	</zombie>
 	<powerup x="140" y="228">
-		<type>tirechains</type>
+		<type>booster</type>
 		<start>20</start>
 	</powerup>
-	<!-- end -->
+	<powerup x="140" y="228">
+		<type>tirechains</type>
+		<start>36</start>
+	</powerup>
+	<powerup x="240" y="228">
+		<type>booster</type>
+		<start>55</start>
+	</powerup>
+	<!-- next wave -->
+	<skater x="112" y="64">
+		<start>25</start>
+		<time>30</time>
+	</skater>
+	<skater x="120" y="64">
+		<start>26</start>
+		<time>29</time>
+	</skater>
+	<skater x="112" y="64">
+		<start>29</start>
+		<time>26</time>
+	</skater>
+	<skater x="428" y="300">
+		<start>35</start>
+		<time>15</time>
+	</skater>
 </level>

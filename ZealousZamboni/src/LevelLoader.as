@@ -57,9 +57,11 @@ package
 		[Embed(source = "../res/level5.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
 		[Embed(source = '../res/level6.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
 		[Embed(source = "../res/level6.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
+		[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
+		[Embed(source = "../res/level7.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
 		//[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
 		//[Embed(source = "../res/level7.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
-		public static const NUM_LEVELS:uint = 6;
+		public static const NUM_LEVELS:uint = 7;
 		
 		private var level:FlxTilemap;
 		
@@ -91,7 +93,7 @@ package
 			queues = new Array();
 			// parseXML MUST be called before addRutsToMap
 			parseXML(this["Level" + level_num + "XML"]);
-			if (level_num < 3)
+			if (level_num < 2)
 				addRutsToMap(new this["Level"+level_num+"Ruts"]());
 			
 			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);

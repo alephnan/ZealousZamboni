@@ -9,13 +9,9 @@
 		<start>6</start>
 		<time>15</time>
 	</skater>
-	<skater x="112" y="64">
-		<start>9</start>
-		<time>15</time>
-	</skater>
 	<skater x="428" y="300">
 		<start>15</start>
-		<time>30</time>
+		<time>25</time>
 	</skater>
 	<skater x="112" y="64">
 		<start>15</start>
