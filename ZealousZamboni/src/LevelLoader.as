@@ -58,7 +58,7 @@ package
 		[Embed(source = "../res/level6.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
 		//[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
 		//[Embed(source = "../res/level7.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
-		public static const NUM_LEVELS:uint = 7;
+		public static const NUM_LEVELS:uint = 6;
 		
 		private var level:FlxTilemap;
 		

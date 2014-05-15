@@ -19,13 +19,9 @@ package
 		private var start:FlxSprite;
 		
 		override public function create() : void {
-			
-			//add(new FlxText(FlxG.width / 2 - 50, 70, 100, "Controls"));
-			//add(new FlxText(FlxG.width / 2, 90, 100, "Click where you want to go"));
-			//add(new FlxText(FlxG.width / 2 - 50, 190, 100, "Press S to start"));
+			FlxG.level = 1;
 			map = new FlxTilemap();
 			map.loadMap(new StartCsv(), Media.StartTilesheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
-			trace(map.getData.length);
 			map.setTileProperties(LevelLoader.WALL_INDEX, FlxObject.ANY, tileCollision, null, LevelLoader.NUM_TILES - LevelLoader.WALL_INDEX);
 			add(map);
 			player = new Zamboni(255, 340, map);
@@ -52,14 +48,6 @@ package
 		}
 		
 		override public function update():void {
-			if (FlxG.mouse.justPressed()) {
-				trace(FlxG.mouse.screenX);
-				trace(FlxG.mouse.screenY);
-			}
-			if (FlxG.keys.pressed("S")) {
-				FlxG.flash(0xffffffff, 0.75);
-				FlxG.fade(0xff000000, 1, onFade);
-			}
 			super.update();
 			FlxG.collide(map, player, tileCollision);
 			FlxG.collide(player, start, startCollision);

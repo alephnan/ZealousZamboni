@@ -24,7 +24,7 @@ package
 		//Set of all blocks in the level
 		public var level:FlxTilemap;
 		
-		public var levelNum:uint = 1;
+		//public var levelNum:uint = 1;
 		
 		public var finishedSkaters:uint = 0;
 		
@@ -38,15 +38,18 @@ package
 		
 		private var hud:ZzHUD;
 		
-		public function PlayState(levelNum:uint=1) {
+		//public function PlayState(levelNum:uint = 1) {
+		/*public function PlayState() {
+			super();
 			levelLoader = new LevelLoader();
 			this.levelNum = levelNum;
-		}
+		}*/
 		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
+			levelLoader = new LevelLoader();
 			activeSprites = new Array();
-			levelLoader.loadLevel(levelNum);
+			levelLoader.loadLevel(FlxG.level);
 			level = levelLoader.getTilemap();
 			add(level);
 			
@@ -76,12 +79,16 @@ package
 			if (killed) {
 				player.hurt(1);
 				if (player.alive == false) {
-					FlxG.switchState(new LevelFailedState(this));
+					FlxG.switchState(new LevelFailedState());
 					return;
 				}
 			}
 			if (SkaterQueue(activeSprites[SKATERS_INDEX]).skatersFinished()) {
-				winLevel();
+				if (FlxG.level + 1 > LevelLoader.NUM_LEVELS) {
+					winGame();
+				} else {
+					winLevel();
+				}
 			}
 		}
 		
@@ -89,8 +96,17 @@ package
 		 * Function invoked when the player wins the level
 		 */
 		public function winLevel() : void {
-			FlxG.switchState(new LevelWinState(this));
+			FlxG.switchState(new LevelWinState());
 		}
+		
+		/**
+		 * Function invoked when the player wins the level and
+		 * there are no more levels (they win the game)
+		 */
+		public function winGame() : void {
+			FlxG.switchState(new EndState());
+		}
+		
 		/**
 		 * Function for adding a sprite to be displayed
 		 * Probably needs to be modified to add sprites to appropriate collision groups later
