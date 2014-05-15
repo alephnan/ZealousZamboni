@@ -17,9 +17,12 @@ package
 		private var map:FlxTilemap;
 		private var player:Zamboni;
 		private var start:FlxSprite;
+		private var firstClick:Boolean = true;
 		
 		override public function create() : void {
-			FlxG.level = 1;
+			FlxG.level = 999;
+			ZzLog.logLevelStart();
+			
 			map = new FlxTilemap();
 			map.loadMap(new StartCsv(), Media.StartTilesheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
 			map.setTileProperties(LevelLoader.WALL_INDEX, FlxObject.ANY, tileCollision, null, LevelLoader.NUM_TILES - LevelLoader.WALL_INDEX);
@@ -43,11 +46,15 @@ package
 			add(txt2);
 			
 			add(new FlxSprite(400, 250, Media.MouseImg));
-			
 			FlxG.mouse.show();
 		}
 		
 		override public function update():void {
+			if (firstClick && FlxG.mouse.justPressed()) {
+				firstClick = false;
+				var data:Object = {"mouseX":FlxG.mouse.x, "mouseY":FlxG.mouse.y };
+				ZzLog.getLogger().logAction(ZzLog.FIRST_MOUSE_CLICK, data);
+			}
 			super.update();
 			FlxG.collide(map, player, tileCollision);
 			FlxG.collide(player, start, startCollision);
@@ -55,6 +62,9 @@ package
 		
 		private function onFade() : void {
 			player.kill();
+			ZzLog.logLevelEnd();
+			FlxG.level = 1;
+			ZzLog.logLevelStart();
 			FlxG.switchState(new PlayState());
 		}
 		
