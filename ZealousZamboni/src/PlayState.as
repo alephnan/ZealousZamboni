@@ -29,14 +29,14 @@ package
 		public var finishedSkaters:uint = 0;
 		
 		//Set of all sprites active in the level (including the player)
-		//TODO Decide if we should just add sprites directly to this?
-		//public var activeSprites:FlxGroup;
 		public var activeSprites:Array;
 		
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
 		public var player:Zamboni;
 		
 		private var hud:ZzHUD;
+		
+		private var startTxt:FlxText;
 		
 		//public function PlayState(levelNum:uint = 1) {
 		/*public function PlayState() {
@@ -59,9 +59,33 @@ package
 			startSprites(levelLoader.getSpriteQueues());
 			hud = new ZzHUD(player, this);
 			add(hud);
-			
 			FlxG.mouse.show();
+			
+			/*if (FlxG.level == 1) {
+				startTxt = new FlxText(FlxG.width / 2 + 25, FlxG.height / 2 - 200, FlxG.width, "Don't let skaters\n     get stuck!");
+				startTxt.size = 30;
+				startTxt.scale = new FlxPoint(2, 2);
+				startTxt.color = 0x0101DF;
+				startTxt.shadow = 0xA4A4A4;
+				startTxt.alpha = 1;
+				var timer:FlxTimer = new FlxTimer();
+				add(startTxt);
+				timer.start(.5, 7, onStart);
+			}*/
 		}
+		
+		/*public function onStart(timer:FlxTimer):void {
+			
+			if (timer.finished) {
+				startTxt.kill();
+			} else {
+				if (timer.loopsLeft % 2 == 0) {
+					startTxt.alpha = 0;
+				} else {
+					startTxt.alpha = 1;
+				}
+			}
+		}*/
 		
 		private function startSprites(queues:Array):void {
 			for (var i:uint = 0; i < queues.length; ++i) {
@@ -152,13 +176,6 @@ package
 			return new FlxPoint(obj.getMidpoint().x / LevelLoader.TILE_SIZE, obj.getMidpoint().y / LevelLoader.TILE_SIZE);
 		}
 		
-		override public function destroy() : void {
-			super.destroy();
-			this.members = null;
-			levelLoader = null;
-			player = null;
-		}
-		
 		public function getNearestSkater(p:FlxPoint) : FlxPoint {
 			var skaters:Array = SkaterQueue(activeSprites[SKATERS_INDEX]).members;
 			var i:int;
@@ -173,6 +190,18 @@ package
 				}
 			});
 			return minTile;
+		}
+		
+		override public function destroy():void {
+			levelLoader.destroy();
+			levelLoader = null;
+			super.destroy();
+			this.members = null;
+			activeSprites = null;
+			level = null;
+			player = null;
+			hud = null;
+			startTxt = null;
 		}
 	}
 	

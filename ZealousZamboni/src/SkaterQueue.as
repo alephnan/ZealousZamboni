@@ -51,28 +51,10 @@ package
 			return skaters.length;
 		}
 		
-		/**
-		 * Call this function to find out how many members of the group are dead.
-		 * 
-		 * @return	The number of <code>FlxBasic</code>s flagged as dead.  Returns -1 if group is empty.
-		 */
-		public function countNotExists():int
-		{
-			var count:int = -1;
-			var basic:FlxBasic;
-			var i:uint = 0;
-			while(i < length)
-			{
-				basic = members[i++] as FlxBasic;
-				if(basic != null)
-				{
-					if(count < 0)
-						count = 0;
-					if(!basic.exists)
-						count++;
-				}
-			}
-			return count;
+		override public function destroy():void {
+			super.destroy();
+			skaters = null;
+			updateSkatersLeft = null;
 		}
 	}
 

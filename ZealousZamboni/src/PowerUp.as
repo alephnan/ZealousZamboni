@@ -9,10 +9,6 @@ package
 	 */
 	public class PowerUp extends ZzUnit
 	{
-		[Embed(source = '../media/rocket.png')] 
-		private var boosterPNG:Class;
-		[Embed(source = '../media/tirechains.png')] 
-		private var tirechainsPNG:Class;
 		
 		/**
 		 * Type for Speed boost power up
@@ -44,7 +40,7 @@ package
 			this.type = type;
 			this.width = LevelLoader.TILE_SIZE;
 			this.height = LevelLoader.TILE_SIZE;
-			loadGraphic(this[String(type)+"PNG"], false, true, 16, 16);
+			loadGraphic(Media[String(type)+"PNG"], false, true, 16, 16);
 			this.scale = new FlxPoint(2, 2);
 		}
 	}

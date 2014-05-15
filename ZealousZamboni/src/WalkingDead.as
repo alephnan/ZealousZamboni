@@ -8,7 +8,6 @@ package
 	 */
 	public class WalkingDead extends ZzUnit 
 	{
-		[Embed(source = '../media/zombie.png')] private static const walkingDeadPNG:Class;
 		
 		private var speed:Number;
 		
@@ -26,7 +25,7 @@ package
 			super(X, Y);
 			//place holder stuff
 			speed = 100;
-			loadGraphic(walkingDeadPNG, true, true, 32, 32, true);
+			loadGraphic(Media.walkingDeadPNG, true, true, 32, 32, true);
 			//this.color = 0x780090D0;
 			this.allowCollisions = FlxObject.NONE;
 			// Change sprite size to be size of tile (better for trails)

@@ -260,6 +260,12 @@ package
 			queues.push(zombies);
 		}
 		
+		public function destroy():void {
+			level = null;
+			player = null;
+			queues = null;
+		}
+		
 	}
 	
 }

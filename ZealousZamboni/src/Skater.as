@@ -1,14 +1,7 @@
 package
 {
 	import flash.media.SoundChannel;
-	import org.flixel.FlxObject;
-	import org.flixel.FlxPoint;
-	import org.flixel.FlxSprite;
-	import org.flixel.FlxTilemap;
-	import org.flixel.FlxGroup;
-	import org.flixel.FlxG;
-	import org.flixel.FlxTimer;
-	import org.flixel.FlxPath;
+	import org.flixel.*;
 	import org.flixel.plugin.photonstorm.FlxBar;
 	
 	/**
@@ -43,6 +36,8 @@ package
 		private var skaterStuck:Boolean;
 		//Sound played when this skater is stuck
 		private var skaterStuckSnd:SoundChannel;
+		//Handles skater death explosion
+		private var explosion:FlxEmitter;
 		
 		// color of trail associated with this skater
 		private var trailColor:uint; 
@@ -87,6 +82,7 @@ package
 				addAnimation("hurt", [16], 1, true);
 			}
 			deathTimer = new FlxTimer();
+			setupSkaterDeath()
 			
 			// Change sprite size to be size of tile (better for trails)
 			this.width = LevelLoader.TILE_SIZE;
@@ -118,6 +114,7 @@ package
 			timer.start(timeToSkate, 1, timerUp);
 			SoundPlayer.skaterStart.play();
 			addDependency(progress);
+			addDependency(explosion);
 		}
 		
 		override public function preUpdate():void
@@ -241,11 +238,21 @@ package
 		{
 		}
 		
-		private function skaterDeathHandler(timer:FlxTimer = null):void
+		private function skaterDeathHandler(timer:FlxTimer=null):void
 		{
 			SoundPlayer.skaterDeath.play();
 			exists = false;
 			progress.exists = false;
+			if (timer != null) {
+				startSkaterDeath();
+				timer.start(2, 1, skaterDeathCleanup);
+			} else {
+				skaterDeathCleanup();
+			}
+		}
+		
+		private function skaterDeathCleanup(timer:FlxTimer = null):void {
+			explosion.kill();
 			PlayState(FlxG.state).skaterComplete(this, true);
 		}
 		
@@ -419,6 +426,31 @@ package
 		private function clearDirection():void
 		{
 			goingDown = goingUp = goingLeft = goingRight = false;
+		}
+		
+		private function setupSkaterDeath():void {
+			explosion = new FlxEmitter(4, 4, 100);
+			var color:Array = new Array( 0xff000000, 0xffff0000, 0xff0101df );
+			for (var i:uint = 0; i < 100; ++i) {
+				var particle:FlxParticle = new FlxParticle();
+				particle.makeGraphic(4, 4, color[i%3]);
+				particle.exists = false;
+				explosion.add(particle);
+			}
+		}
+		
+		private function startSkaterDeath():void {
+			explosion.at(this);
+			explosion.gravity = 100;
+			explosion.start(true, 2);
+		}
+		
+		override public function destroy():void {
+			super.destroy();
+			timer = null;
+			progress.destroy();
+			deathTimer = null;
+			explosion.destroy();
 		}
 	}
 

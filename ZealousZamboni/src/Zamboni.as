@@ -13,7 +13,6 @@ package
 	 */
 	public class Zamboni extends ZzUnit 
 	{	
-		[Embed(source = '../media/zamboni_4way.png')] private var zamboniPNG:Class;
 		private static var NS_ANGLE:int = 90;	//angle to rotate North, south sprites to correct their rotation
 		
 		private static var QUAD_OFFSET:int = 45;		//angle offset of quadrant selection for specifying sprite anim
@@ -43,7 +42,7 @@ package
 			this.level = level;
 			//place holder stuff
 			//makeGraphic(10,12,0xffaa1111);
-			loadGraphic(zamboniPNG, true, true, 64, 32, true);
+			loadGraphic(Media.zamboniPNG, true, true, 64, 32, true);
 			addAnimation("walkW", [0, 1, 2, 3], 4, true);
 			addAnimation("walkE", [4,5,6,7], 4, true);
 			addAnimation("walkN", [8, 9, 10, 11], 4, true);
@@ -372,6 +371,12 @@ package
 					other.kill();
 				}
 			}
+		}
+		
+		override public function destroy():void {
+			super.destroy();
+			level = null;
+			levelCopy = null;
 		}
 	}
 	

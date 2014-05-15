@@ -55,7 +55,6 @@ package
 		
 		private function onFade() : void {
 			player.kill();
-			player = null;
 			FlxG.switchState(new PlayState());
 		}
 		
@@ -65,6 +64,13 @@ package
 		}
 		
 		public function tileCollision(object1:FlxObject, object2:FlxObject):void {
+		}
+		
+		override public function destroy():void {
+			super.destroy();
+			map = null;
+			player = null;
+			start = null;
 		}
 	}
 	
