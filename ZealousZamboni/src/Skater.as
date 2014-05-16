@@ -125,7 +125,7 @@ package
 		override public function postConstruct(addDependency:Function):void
 		{
 			timer.start(timeToSkate, 1, timerUp);
-			SoundPlayer.skaterStart.play();
+			LevelLoader.SOUND_PLAYER.play("skaterStart");
 			addDependency(progress);
 			addDependency(explosion);
 		}
@@ -244,7 +244,7 @@ package
 		private function timerUp(t:FlxTimer):void
 		{
 			endStuck();
-			SoundPlayer.skaterSuccess.play();
+			LevelLoader.SOUND_PLAYER.play("skaterSuccess");
 			var p:FlxPath = new FlxPath();
 			p.addPoint(getMidpoint());
 			p.addPoint(ZzUtils.getNearestEntrance(getMidpoint()));
@@ -261,7 +261,7 @@ package
 		private function skaterDeathHandler(timer:FlxTimer=null):void
 		{
 			ZzLog.logAction(ZzLog.ACTION_SKATER_DIE, getLoggableObject() );
-			SoundPlayer.skaterDeath.play();
+			LevelLoader.SOUND_PLAYER.play("skaterDeath");
 			exists = false;
 			progress.exists = false;
 			if (timer != null) {
@@ -290,7 +290,8 @@ package
 					skaterStuck = true;
 					this.flicker(SKATER_DEATH_SLACK);
 					deathTimer.start(SKATER_DEATH_SLACK, 1, skaterDeathHandler);
-					skaterStuckSnd = SoundPlayer.skaterStuck.play(0, (int)(SKATER_DEATH_SLACK / (SoundPlayer.skaterStuck.length / 1000)));
+	
+					skaterStuckSnd =  LevelLoader.SOUND_PLAYER.play("skaterStuck", 0, (int)(SKATER_DEATH_SLACK / (LevelLoader.SOUND_PLAYER.length("skaterStuck"))));
 				}
 			}
 			else if (skaterStuck)
