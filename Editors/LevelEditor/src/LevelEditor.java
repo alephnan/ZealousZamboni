@@ -55,6 +55,7 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 	private int cursorWidth = 1;
 	private int cursorHeight = 1;
 	private File editFile;
+	private JLabel cursorCoords;
 	private GridButton[][] buttonArray;
 	private JTextField filenameField;
 	//selection index range -- end > start, includes start excludes end
@@ -103,6 +104,7 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 		} else {
 			System.exit(0);
 		}
+		cursorCoords = new JLabel("(x,y)");
 		this.setLocation(new Point(256,0));
 		this.addKeyListener(this);
 		JPanel translatePanel = new JPanel();
@@ -175,7 +177,7 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 		buttonPanel = new JPanel();
 		buttonPanel.setBackground(Color.BLACK);
 		
-		
+		donePanel.add(cursorCoords, BorderLayout.WEST);
 		if (editFile == null) {
 			
 			// done panel
@@ -192,6 +194,7 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 			for(int i = 0;i<tileHeight;i++)
 				for (int j = 0; j < tileWidth; ++j) {
 					GridButton next = new GridButton(0);
+					next.setTileCoords(j*Main.TILE_SIZE, i*Main.TILE_SIZE);
 					next.setPreferredSize(new Dimension(Main.TILE_SIZE, Main.TILE_SIZE));
 					next.addMouseMotionListener(this);
 					next.addActionListener(buttListener);
@@ -205,7 +208,8 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 				}
 		} else {
 			// done panel (done button only)
-			this.add(doneButton, BorderLayout.SOUTH);
+			donePanel.add(doneButton, BorderLayout.LINE_END);
+			this.add(donePanel, BorderLayout.SOUTH);
 			BufferedReader r = null;
 			try {
 				r = new BufferedReader(new InputStreamReader(
@@ -398,7 +402,12 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 	
 	class GridButton extends JButton {
 		int index;
-		
+		int tileX;
+		int tileY;
+		public void setTileCoords(int x, int y){
+			tileX = x;
+			tileY = y;
+		}
 		public GridButton(int index) {
 			super();
 			this.index = index;
@@ -419,6 +428,9 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 	public void mouseMoved(MouseEvent arg0) {
 		this.x = ((JButton)arg0.getSource()).getX()-buttonArray[0][0].getX();
 		this.y = ((JButton)arg0.getSource()).getY()-buttonArray[0][0].getY();
+		int tx = ((GridButton)arg0.getSource()).tileX;
+		int ty = ((GridButton)arg0.getSource()).tileY;
+		cursorCoords.setText("("+tx+","+ty+")");
 		repaint();
 	}
 	
