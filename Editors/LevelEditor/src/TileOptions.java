@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ class TileOptions extends JFrame {
 	public TileOptions(ImageIcon[] icons, final LevelEditor le) {
 		this.le = le;
 		this.setLayout(new BorderLayout());
+		this.setLocation(new Point(0,256));
 		JPanel cursorOpts = new JPanel();
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(Main.IMG_TILE_HEIGHT, Main.IMG_TILE_WIDTH));

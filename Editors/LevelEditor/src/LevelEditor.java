@@ -4,8 +4,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
@@ -32,7 +35,7 @@ import javax.swing.SwingConstants;
 
 
 @SuppressWarnings("serial")
-class LevelEditor extends JFrame implements MouseMotionListener{
+class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 	private enum EditChoice { EDIT, ADD_RUTS, NEW }
 	
 	// This is the path to the resources directory in our zamboni code
@@ -100,12 +103,47 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 		} else {
 			System.exit(0);
 		}
+		this.setLocation(new Point(256,0));
+		this.addKeyListener(this);
+		JPanel translatePanel = new JPanel();
+		translatePanel.setLayout(new BorderLayout());
+		JButton translate = new JButton("Left");
+		translate.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				translateLeft();
+			}
+		});
+		translatePanel.add(translate, BorderLayout.WEST);
+		translate = new JButton("Up");
+		translate.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				translateUp();
+			}
+		});
+		translatePanel.add(translate, BorderLayout.NORTH);
+		translate = new JButton("Right");
+		translate.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				translateRight();
+			}
+		});
+		translatePanel.add(translate, BorderLayout.EAST);
+		translate = new JButton("Down");
+		translate.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				translateDown();
+			}
+		});
+		translatePanel.add(translate, BorderLayout.SOUTH);
+		JFrame tFrame = new JFrame();
+		tFrame.add(translatePanel);
+		tFrame.setVisible(true);
+		tFrame.pack();
 		
 		// add "done" button and filename text field
 		JPanel donePanel = new JPanel();
 		JButton doneButton = new JButton("Done!");
 		doneButton.addActionListener(new ActionListener() {
-			
 			/* When the user is done, a CSV file is generated with the
 			 * tilemap info specified on the GUI
 			 */
@@ -149,6 +187,7 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 			
 			buttonArray = new GridButton[tileHeight][tileWidth];
 			buttonPanel.setLayout(new GridLayout(tileHeight, tileWidth));
+			buttonPanel.addKeyListener(this);
 			buttListener = new GridButtonListener();
 			for(int i = 0;i<tileHeight;i++)
 				for (int j = 0; j < tileWidth; ++j) {
@@ -156,6 +195,7 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 					next.setPreferredSize(new Dimension(Main.TILE_SIZE, Main.TILE_SIZE));
 					next.addMouseMotionListener(this);
 					next.addActionListener(buttListener);
+					next.addKeyListener(this);
 					next.setIcon(icons[0]);
 					
 					// add action listener to change color
@@ -203,38 +243,39 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 		
 		this.add(buttonPanel, BorderLayout.CENTER);
 		// add range panel to fill in many tiles at a time
-				JPanel rangePanel = new JPanel();
-				rangePanel.setLayout(new GridLayout(1, 4));
-				JPanel from = new JPanel();
-				from.setLayout(new GridLayout(2, 2));
-				JLabel jl = new JLabel("width ");
-				jl.setHorizontalTextPosition(SwingConstants.RIGHT);
-				from.add(jl);
-				from.add(rangeArray[0]);
-				
-				jl = new JLabel("height ");
-				jl.setHorizontalTextPosition(SwingConstants.RIGHT);
-				from.add(jl);
-				from.add(rangeArray[2]);
-				rangePanel.add(from);
-				JButton rangeButton = new JButton("Set");
-				rangeButton.addActionListener(new ActionListener() {
+		JPanel rangePanel = new JPanel();
+		rangePanel.setLayout(new GridLayout(1, 4));
+		JPanel from = new JPanel();
+		from.setLayout(new GridLayout(2, 2));
+		JLabel jl = new JLabel("width ");
+		jl.setHorizontalTextPosition(SwingConstants.RIGHT);
+		from.add(jl);
+		from.add(rangeArray[0]);
 
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						int width = Integer.parseInt(rangeArray[0].getText());
-						int height = Integer.parseInt(rangeArray[2].getText());
-						cursorWidth = width;
-						cursorHeight = height;
-					}
-					
-				});
-				rangePanel.add(rangeButton);
-				jl = new JLabel(tileWidth + "x" + tileHeight);
-				jl.setHorizontalTextPosition(SwingConstants.CENTER);
-				
-				rangePanel.add(jl);
-				this.add(rangePanel, BorderLayout.NORTH);
+		jl = new JLabel("height ");
+		jl.setHorizontalTextPosition(SwingConstants.RIGHT);
+		from.add(jl);
+		from.add(rangeArray[2]);
+		rangePanel.add(from);
+		JButton rangeButton = new JButton("Set");
+		rangeButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int width = Integer.parseInt(rangeArray[0].getText());
+				int height = Integer.parseInt(rangeArray[2].getText());
+				cursorWidth = width;
+				cursorHeight = height;
+			}
+
+		});
+		rangePanel.add(rangeButton);
+		//rangePanel.add(translatePanel);
+		jl = new JLabel(tileWidth + "x" + tileHeight);
+		jl.setHorizontalTextPosition(SwingConstants.CENTER);
+
+		rangePanel.add(jl);
+		this.add(rangePanel, BorderLayout.NORTH);
 	}
 	
 	/**
@@ -438,5 +479,86 @@ class LevelEditor extends JFrame implements MouseMotionListener{
 				selectedButts.add(buttonArray[i][j]);
 			}
 		return selectedButts;
+	}
+	
+	//Translates all tile values by the given x, y amount
+	private void translateRight(){
+		for(int i = tileHeight-1;i>=0;i--){
+			for(int j = tileWidth-1;j>=0;j--){
+				if(j-1 < 0){
+					buttonArray[i][j].setIcon(icons[1121]);
+					buttonArray[i][j].index = 1121;
+				}else{
+					buttonArray[i][j].setIcon(buttonArray[i][j-1].getIcon());
+					buttonArray[i][j].index = buttonArray[i][j-1].index;
+				}
+			}
+		}
+	}
+	
+	//Translates all tile values by the given x, y amount
+		private void translateDown(){
+			for(int i = tileHeight-1;i>=0;i--){
+				for(int j = tileWidth-1;j>=0;j--){
+					if(i-1 < 0){
+						buttonArray[i][j].setIcon(icons[1121]);
+						buttonArray[i][j].index = 1121;
+					}else{
+						buttonArray[i][j].setIcon(buttonArray[i-1][j].getIcon());
+						buttonArray[i][j].index = buttonArray[i-1][j].index;
+					}
+				}
+			}
+		}
+	
+	// Translates all tile values by the given x, y amount
+	private void translateLeft() {
+		for (int i = tileHeight-1; i >= 0; i--) {
+			for (int j = 0; j<tileWidth ; j++) {
+				if (j+1 > tileWidth-1) {
+					buttonArray[i][j].setIcon(icons[1121]);
+					buttonArray[i][j].index = 1121;
+				} else {
+					buttonArray[i][j].setIcon(buttonArray[i][j + 1].getIcon());
+					buttonArray[i][j].index = buttonArray[i][j + 1].index;
+				}
+			}
+		}
+	}
+	
+	// Translates all tile values by the given x, y amount
+		private void translateUp() {
+			for (int i = 0; i <tileHeight; i++) {
+				for (int j = 0; j<tileWidth ; j++) {
+					if (i+1 >= tileHeight) {
+						buttonArray[i][j].setIcon(icons[1121]);
+						buttonArray[i][j].index = 1121;
+					} else {
+						buttonArray[i][j].setIcon(buttonArray[i+1][j].getIcon());
+						buttonArray[i][j].index = buttonArray[i+1][j].index;
+					}
+				}
+			}
+		}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if(arg0.getKeyCode() == KeyEvent.VK_RIGHT){
+			translateRight();
+		}
+		System.out.println("key pressed");
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
