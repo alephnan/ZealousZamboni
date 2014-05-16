@@ -11,3 +11,9 @@ ZealousZamboni/obj/
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
+ZealousZamboni/src/PlayState.as
+ZealousZamboni/bin/ZealousZamboni.swf
+ZealousZamboni/res/tuanlevels/one.txt
+ZealousZamboni/res/tuanlevels/two.txt
+ZealousZamboni/res/tuanlevels/two.xml
+ZealousZamboni/res/tuanlevels/one.xml
