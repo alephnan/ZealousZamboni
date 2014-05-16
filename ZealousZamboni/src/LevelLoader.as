@@ -41,6 +41,9 @@ package
 		
 		public static const NUM_TILES:uint = 1184;
 		
+		public static const DEFAULT_GOAL_POINTS:uint = 50;
+	
+		public static const DEFAULT_LEVEL_TIME:Number = 30;
 		//level specific assets
 		
 		// music player
@@ -75,13 +78,13 @@ package
 		[Embed(source = '../res/tuanlevels/three.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
 		[Embed(source = "../res/tuanlevels/three.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
 		/**/
-		public const Level4QId:uint = 4;
-		[Embed(source = '../res/level4.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
-		[Embed(source = "../res/level4.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;
+		public const Level4QId:uint = 201;
+		[Embed(source = '../res/level201.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
+		[Embed(source = "../res/level201.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;
 		
-		public const Level5QId:uint = 5;
-		[Embed(source = '../res/level5.txt', mimeType = "application/octet-stream")] public var Level5Csv:Class;
-		[Embed(source = "../res/level5.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
+		public const Level5QId:uint = 202;
+		[Embed(source = '../res/level202.txt', mimeType = "application/octet-stream")] public var Level5Csv:Class;
+		[Embed(source = "../res/level202.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
 		
 		public const Level6QId:uint = 6;
 		[Embed(source = '../res/level6.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
@@ -106,10 +109,13 @@ package
 		
 		private var DEBUG:Boolean;
 		
+		public var goalPoints:uint;
 		/**
 		 * The qId for the current level.
 		 */
 		public var levelQId:uint;
+		
+		public var levelTime:Number;
 		
 		public function LevelLoader(debugEnabled:Boolean = false) {
 			this.DEBUG = debugEnabled;
@@ -213,6 +219,9 @@ package
 			// Get assumed framewidth and frameheight
 			var assumedWidth:int = parseInt(xml.@width);
 			var assumedHeight:int = parseInt(xml.@height);
+			
+			levelTime = parseInt(xml.@time);
+			if (levelTime < 1 || isNaN(levelTime)) levelTime = DEFAULT_LEVEL_TIME;
 			if (DEBUG)
 				trace("assumed framewidth = " + assumedWidth + ", assumed frameheight = " + assumedHeight);
 			
@@ -229,6 +238,9 @@ package
 			var lives:int = parseInt(xml.@lives, 10);
 			if (DEBUG)
 				trace("Number of player lives: " + lives);
+				
+			goalPoints = parseInt(xml.goal.@points);
+			if (goalPoints == 0) goalPoints = DEFAULT_GOAL_POINTS;
 
 			// Zamboni starting coordinates
 			var zamboniX:int = parseInt(xml.zamboni.@x);

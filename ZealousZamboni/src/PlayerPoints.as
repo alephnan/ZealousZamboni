@@ -7,7 +7,7 @@ package
 	 */
 	public class PlayerPoints extends FlxGroup
 	{
-		public static const PLAYER_MAX_HEALTH:Number = 100;
+		public static const PLAYER_MAX_HEALTH:Number = 120;
 		public static const CLEAR_TRAIL_REWARD:Number = 0.05;
 		public static const PICKUP_POWERUP_REWARD:Number = 10;
 		public static const SKATER_REWARD_PENALTY:Number = 60;

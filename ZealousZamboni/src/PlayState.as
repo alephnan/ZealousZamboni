@@ -66,6 +66,8 @@ package
 			activeSprites = new Array();
 			levelLoader.loadLevel(FlxG.level);
 			level = levelLoader.getTilemap();
+			levelTime = levelLoader.levelTime;
+			playerGoalPoints = levelLoader.goalPoints;
 			add(level);
 			player = levelLoader.getPlayer();
 			activeSprites.push(player);
