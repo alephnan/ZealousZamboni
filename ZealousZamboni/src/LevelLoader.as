@@ -54,16 +54,18 @@ package
 		
 		public const Level2QId:uint = 2;
 		[Embed(source = '../res/tuanlevels/two.txt', mimeType = "application/octet-stream")] public const Level2Csv:Class;
-		[Embed(source = "../res/tuanlevels/two.xml", mimeType = "application/octet-stream")] public const Level2XML:Class;*/
+		[Embed(source = "../res/tuanlevels/two.xml", mimeType = "application/octet-stream")] public const Level2XML:Class;
 		
-		/**/
-		
+		public const Level1QId:uint = 1;
+		[Embed(source = '../res/tuanlevels/three.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
+		[Embed(source = "../res/tuanlevels/three.xml", mimeType = "application/octet-stream")] public const Level1XML:Class; */
+
 		
 		public const Level1QId:uint = 1;
 		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		[Embed(source = "../res/level0.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
 		[Embed(source = "../res/level0_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class; 
-		
+	
 		public const Level2QId:uint = 2;
 		[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
 		[Embed(source = "../res/level2.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
@@ -72,7 +74,7 @@ package
 		public const Level3QId:uint = 3;
 		[Embed(source = '../res/level3.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
 		[Embed(source = "../res/level3.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
-		
+		/**/
 		public const Level4QId:uint = 4;
 		[Embed(source = '../res/level4.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
 		[Embed(source = "../res/level4.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;
