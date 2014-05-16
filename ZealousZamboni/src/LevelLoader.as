@@ -78,27 +78,35 @@ package
 		[Embed(source = '../res/level103.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
 		[Embed(source = "../res/level103.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
 		/**/
-		public const Level4QId:uint = 201;
-		[Embed(source = '../res/level201.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
-		[Embed(source = "../res/level201.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;
+		public const Level4QId:uint = 104;
+		[Embed(source = '../res/level104.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
+		[Embed(source = "../res/level104.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;
 		
-		public const Level5QId:uint = 202;
-		[Embed(source = '../res/level202.txt', mimeType = "application/octet-stream")] public var Level5Csv:Class;
-		[Embed(source = "../res/level202.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
+		public const Level5QId:uint = 105;
+		[Embed(source = '../res/level105.txt', mimeType = "application/octet-stream")] public var Level5Csv:Class;
+		[Embed(source = "../res/level105.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
 		
-		public const Level6QId:uint = 6;
-		[Embed(source = '../res/level104.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
-		[Embed(source = "../res/level104.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
+		public const Level6QId:uint = 201;
+		[Embed(source = '../res/level201.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
+		[Embed(source = "../res/level201.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
 		
-		public const Level7QId:uint = 105;
-		[Embed(source = '../res/level105.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
-		[Embed(source = "../res/level105.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
+		public const Level7QId:uint = 202;
+		[Embed(source = '../res/level202.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
+		[Embed(source = "../res/level202.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
 		
-		public const Level8QId:uint = 8;
-		[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level8Csv:Class;
-		[Embed(source = "../res/level7.xml", mimeType = "application/octet-stream")] public var Level8XML:Class;
+		public const Level8QId:uint = 203;
+		[Embed(source = '../res/level203.txt', mimeType = "application/octet-stream")] public var Level8Csv:Class;
+		[Embed(source = "../res/level203.xml", mimeType = "application/octet-stream")] public var Level8XML:Class;
 		
-		public static const NUM_LEVELS:uint = 8;
+		public const Level9QId:uint = 204;
+		[Embed(source = '../res/level204.txt', mimeType = "application/octet-stream")] public var Level9Csv:Class;
+		[Embed(source = "../res/level204.xml", mimeType = "application/octet-stream")] public var Level9XML:Class;
+		
+		public const Level10QId:uint = 205;
+		[Embed(source = '../res/level205.txt', mimeType = "application/octet-stream")] public var Level10Csv:Class;
+		[Embed(source = "../res/level205.xml", mimeType = "application/octet-stream")] public var Level10XML:Class;
+		
+		public static const NUM_LEVELS:uint = 10;
 		
 		private var level:FlxTilemap;
 		
@@ -240,10 +248,11 @@ package
 			
 			// Player lives
 			var lives:int = parseInt(xml.@lives, 10);
+			if (isNaN(lives) || lives == 0) lives = 1;
 			if (DEBUG)
 				trace("Number of player lives: " + lives);
 				
-			goalPoints = parseInt(xml.goal.@points);
+			goalPoints = parseInt(xml.@goal);
 			if (goalPoints == 0) goalPoints = DEFAULT_GOAL_POINTS;
 
 			// Zamboni starting coordinates

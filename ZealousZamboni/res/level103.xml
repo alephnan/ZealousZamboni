@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level width="640" height="480" lives="0">
+<level width="640" height="480" lives="1" goal="100">
 	<motivation>
 		A zig-zag pattern, and how redirection arrows are required to achieve this pattern,
 		since skaters only turn left. 
@@ -20,11 +20,11 @@
 		Zamboni will need to immediately start heading to the spiral, and they only have about 3 seconds timeframe to be slow.
 	</solution>
 	<zamboni x="504" y="352" />
-	<skater>
+	<skater toX="88" toY="120">
 		<start>2</start>
 		<time>20</time>
 	</skater>
-	<skater>
+	<skater toX="492" toY="120">
 		<start>2</start>
 		<time>20</time>
 	</skater>

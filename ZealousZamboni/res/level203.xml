@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level width="640" height="480" lives="2" time="40">
+<level width="640" height="480" lives="2" time="40" goal="100">
 	<zamboni x="250" y="80"/>
 	<motivation>
 		Use of zamboni and/or skater trails to effect the paths of skaters
@@ -12,7 +12,6 @@
 		Zamboni must direct the first skater out of the enclosed area to create a path which
 		blocks the second skater
 	</solution>
-	<goal points="100"/>
 	<skater x="616" y="280" toX="624" toY="280">
 		<start>20</start>
 		<time>8</time>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="2" time="35" goal="100">
+	<zamboni x="250" y="80"/>
+	<motivation>
+		Sheep tag inspired level where skaters can fit through places that zamboni cannot
+		Zombies mix it up
+	</motivation>
+	<problem>
+		Cannot follow skaters everywhere
+	</problem>
+	<skater toX="296" toY="96">
+		<start>2</start>
+		<time>28</time>
+	</skater>
+	<skater toX="328" toY="432">
+		<start>16</start>
+		<time>14</time>
+	</skater>
+	<zombie x="168" y="248">
+		<start>8</start>
+	</zombie>
+	<zombie x="464" y="104">
+		<start>16</start>
+	</zombie>
+	<zombie x="168" y="104">
+		<start>24</start>
+	</zombie>
+</level>

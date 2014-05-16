@@ -241,7 +241,7 @@ package
 				}
 				progressTime = timeToSkate - timer.timeLeft;
 			}
-			else
+			else if(alive)
 			{
 				progressTime = timeToSkate;
 				if (this.pathSpeed == 0)
@@ -257,6 +257,7 @@ package
 		
 		private function timerUp(t:FlxTimer):void
 		{
+			if (!alive) return;
 			endStuck();
 			LevelLoader.SOUND_PLAYER.play("skaterSuccess");
 			var p:FlxPath = new FlxPath();
@@ -276,6 +277,7 @@ package
 		{
 			ZzLog.logAction(ZzLog.ACTION_SKATER_DIE, getLoggableObject() );
 			LevelLoader.SOUND_PLAYER.play("skaterDeath");
+			alive = false;
 			exists = false;
 			progress.exists = false;
 			if (timer != null) {
@@ -323,7 +325,7 @@ package
 			if (other is WalkingDead)
 			{
 				ZzLog.logAction(ZzLog.ACTION_SKATER_EATEN_BY_ZOMBIE, getLoggableObject());
-				skaterDeathHandler();
+				skaterDeathHandler(new FlxTimer());
 			}
 		}
 		

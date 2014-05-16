@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="2" time="35" goal="50">
+	<zamboni x="250" y="80"/>
+	<motivation>
+		Introduce zombies
+	</motivation>
+	<problem>
+		Zombies will easily kill skaters if player lets them get out of the caged area
+	</problem>
+	<solution>
+		Zamboni keep skater in cage while killing zombies
+	</solution>
+	<skater toX="296" toY="96">
+		<start>2</start>
+		<time>28</time>
+	</skater>
+	<zombie x="168" y="248">
+		<start>8</start>
+	</zombie>
+	<zombie x="464" y="104">
+		<start>16</start>
+	</zombie>
+	<zombie x="168" y="104">
+		<start>24</start>
+	</zombie>
+</level>

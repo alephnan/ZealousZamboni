@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level width="640" height="480" lives="2" time="40">
+<level width="640" height="480" goal="100" time="40">
 	<zamboni x="250" y="240"/>
-	<goal points="100"/>
 	<skater x="6" y="480">
 		<start>4</start>
 		<time>20</time>
