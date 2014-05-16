@@ -20,7 +20,6 @@ package
 		private var firstClick:Boolean = true;
 		
 		override public function create() : void {
-			FlxG.level = 999;
 			ZzLog.logLevelStart(ZzLog.PREGAME_QID);
 			
 			map = new FlxTilemap();

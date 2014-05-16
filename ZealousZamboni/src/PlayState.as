@@ -38,6 +38,8 @@ package
 		
 		private var startTxt:FlxText;
 		
+		public var playerPoints:PlayerPoints;
+		
 		private static const MOUSE_CURRENTLY_PRESSED:int = 0;
 		private static const MOUSE_NOT_PRESSED:int = 1;
 		private static const MOUSE_JUST_CLICKED:int = 2;
@@ -64,6 +66,7 @@ package
 			hud = new ZzHUD(player, 30, 50);
 			add(hud);
 			ZzLog.logLevelStart(levelLoader.levelQId);
+			playerPoints = new PlayerPoints();
 			FlxG.mouse.show();
 			//First element in mouseHistory is a header containing metadata
 			mouseHistory.push( { "interval" : MOUSE_LOG_INTERVAL, "start" : new Date().time} );
@@ -97,9 +100,11 @@ package
 		 */
 		public function skaterComplete(s:Skater, killed:Boolean = false) : void {
 			if (killed) {
-				player.updatePlayerHealth(Zamboni.SKATER_REWARD_PENALTY);
+				player.updatePlayerHealth(PlayerPoints.SKATER_REWARD_PENALTY);
+				playerPoints.generateRewardOrPenalty(s.getMidpoint(), PlayerPoints.SKATER_REWARD_PENALTY, true);
 			} else {
-				player.updatePlayerHealth(Zamboni.SKATER_REWARD_PENALTY, false);
+				player.updatePlayerHealth(PlayerPoints.SKATER_REWARD_PENALTY, false);
+				playerPoints.generateRewardOrPenalty(s.getMidpoint(), PlayerPoints.SKATER_REWARD_PENALTY, false);
 			}
 			if (SkaterQueue(activeSprites[SKATERS_INDEX]).skatersFinished()) {
 				winLevel();
@@ -111,7 +116,7 @@ package
 		 */
 		public function winLevel() : void {
 			mouseTimer.stop();
-			ZzLog.logLevelEnd(false, mouseHistory, player.health);
+			ZzLog.logLevelEnd(false, mouseHistory, 0);
 			if (FlxG.level + 1 > LevelLoader.NUM_LEVELS) {
 				FlxG.switchState(new EndState());
 			} else {
@@ -122,13 +127,13 @@ package
 		public function loseLevel():void {
 			mouseTimer.stop();
 			//TODO: Set final score
-			ZzLog.logLevelEnd(true, mouseHistory, player.health);
+			ZzLog.logLevelEnd(true, mouseHistory, 0);
 			FlxG.switchState(new LevelFailedState());
 		}
 		
 		public function restartLevel():void {
 			mouseTimer.stop();
-			ZzLog.logLevelEnd(true, mouseHistory, player.health);
+			ZzLog.logLevelEnd(true, mouseHistory, 0);
 			FlxG.resetState();
 		}
 		

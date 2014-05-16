@@ -21,7 +21,7 @@ package
 		
 		public function PlayerBar(x:uint, y:uint, playerGoal:uint, player:Zamboni) 
 		{
-			super(x, y, FILL_LEFT_TO_RIGHT, 150, 30, player, "health", 0, Zamboni.PLAYER_MAX_HEALTH, true);
+			super(x, y, FILL_LEFT_TO_RIGHT, 150, 30, player, "health", 0, PlayerPoints.PLAYER_MAX_HEALTH, true);
 			
 			goalPoint = new Point(barWidth / 100 * playerGoal + 1, 1);
 			goalData = new BitmapData(2, barHeight, true, border);
