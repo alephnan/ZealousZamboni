@@ -54,7 +54,6 @@ package
 			// mute button
 			muteButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 100, null, toggleMute);
 			muteButton.loadGraphic(Media.mutePng);
-			trace("muteButton");
 			add(muteButton);
 		}
 		

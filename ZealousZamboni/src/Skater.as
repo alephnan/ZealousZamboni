@@ -83,7 +83,8 @@ package
 				addAnimation("walkW", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 				o = 48;
 				addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
-				addAnimation("death", [6, 22, 38, 54], 8, true);
+				o = 64;
+				addAnimation("death", [o + 0, o + 1, o + 2, o + 3, o + 4], 8, true);
 				addAnimation("hurt", [16], 1, true);
 			}else {
 				loadGraphic(skater2PNG, true, true, 32, 32, true);
@@ -288,7 +289,7 @@ package
 				{
 					ZzLog.logAction(ZzLog.ACTION_SKATER_STUCK, getLoggableObject() );
 					skaterStuck = true;
-					this.flicker(SKATER_DEATH_SLACK);
+					//this.flicker(SKATER_DEATH_SLACK);
 					deathTimer.start(SKATER_DEATH_SLACK, 1, skaterDeathHandler);
 	
 					skaterStuckSnd =  LevelLoader.SOUND_PLAYER.play("skaterStuck", 0, (int)(SKATER_DEATH_SLACK / (LevelLoader.SOUND_PLAYER.length("skaterStuck"))));

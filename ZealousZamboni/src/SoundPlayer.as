@@ -174,11 +174,8 @@ package
 			e.currentTarget.removeEventListener(Event.SOUND_COMPLETE, nextSong);
 			currentSong.stop();
 			
-			//trace("inside nextSong");
-			//trace(playlistIndex + " " + playlist.length);
 			// loop back to beginning song
 			playlistIndex = playlistIndex + 1 == playlist.length ? 0 : playlistIndex + 1;
-			//trace(playlistIndex);
 			var currSong : SoundChannel = playlist[playlistIndex].play( 0, 0, playlistSoundSetting);
 			currentSong = currSong;
 			
