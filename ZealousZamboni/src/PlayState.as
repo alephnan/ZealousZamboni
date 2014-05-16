@@ -52,7 +52,13 @@ package
 		//Track mouse every .25 seconds
 		private static const MOUSE_LOG_INTERVAL:Number = .25;
 		
-		private var levelWon : Boolean;
+		private var levelEnded : Boolean;
+		
+		//Minimum number of points player must achieve by time limit to win level
+		private var playerGoalPoints:uint = 50;
+		
+		//Time that the level lasts for
+		private var levelTime:Number = 30;
 		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
@@ -65,7 +71,7 @@ package
 			activeSprites.push(player);
 			add(player);
 			startSprites(levelLoader.getSpriteQueues());
-			hud = new ZzHUD(player, 30, 50);
+			hud = new ZzHUD(player, levelTime, playerGoalPoints);
 			add(hud);
 			ZzLog.logLevelStart(levelLoader.levelQId);
 			
@@ -77,7 +83,7 @@ package
 			mouseTimer = new FlxTimer();
 			mouseTimer.start(MOUSE_LOG_INTERVAL, 0, logMouse);
 			
-			levelWon = false;
+			levelEnded = false;
 		}
 		
 		private function logMouse(t:FlxTimer) : void {
@@ -119,15 +125,25 @@ package
 				// winLevel more than once, which will inturn call logger to indicate the
 				// level ends more than once. but we can only have one level end log, per 
 				// every level start log. 
-				if (!levelWon) {
-					levelWon = true;
-					winLevel();
-				} else {
-					// skaterComplete already called winlevel
-				}
+				endLevel();
 			}
 		}
 		
+		/**
+		 * Ends the level, checking for victory/loss conditions
+		 */
+		public function endLevel() : void {
+			if (!levelEnded) {
+				levelEnded = true;
+			}else {
+				return;
+			}
+			if (player.health > playerGoalPoints) {
+				winLevel();
+			}else {
+				loseLevel();
+			}
+		}
 		
 		
 		/**

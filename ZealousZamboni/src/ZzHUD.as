@@ -80,11 +80,7 @@ package
 		}
 		
 		public function endLevel(timer:FlxTimer):void {
-			if (playerBar.currentValue >= playerGoal) {
-				PlayState(FlxG.state).winLevel();
-			} else {
-				PlayState(FlxG.state).loseLevel();
-			}
+			PlayState(FlxG.state).endLevel();
 		}
 		
 		public function onRestart():void {
