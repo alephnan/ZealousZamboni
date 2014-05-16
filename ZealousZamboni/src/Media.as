@@ -23,7 +23,7 @@ package
 		[Embed(source = '../media/redo2.png')] public static const restartPNG:Class;
 		// [Embed(source = '../media/redo.png')] public static const restartPNG:Class;
 		[Embed(source = '../media/SplashScreen.jpg')] public static const splashPNG:Class;
-		
+		[Embed(source = '../media/mouse_plain.png')] public static const MousePlainImg:Class;
 		
 		[Embed(source = '../media/notmute.png')] public static const mutePng:Class;
 		[Embed(source = '../media/mute.png')] public static const unmutePng:Class;

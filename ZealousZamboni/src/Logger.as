@@ -32,7 +32,8 @@ package
 			}
 			
 			var skeyHash:int = GameServerData.UUID_SKEY_HASH;
-			var serverTag:String = CGSServerProps.DEVELOPMENT_SERVER;			
+			//var serverTag:String = CGSServerProps.DEVELOPMENT_SERVER;
+			var serverTag:String = CGSServerProps.PRODUCTION_SERVER;
 			var userProps:CgsUserProperties = new CgsUserProperties(skey, skeyHash, gameName, gameId, versionId, categoryId, serverTag);			
 			var cgsApi:CgsApi = new CgsApi();
 			cgsUser = cgsApi.initializeUser(userProps);

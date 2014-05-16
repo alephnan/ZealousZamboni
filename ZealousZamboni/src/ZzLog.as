@@ -13,6 +13,8 @@ package
 		private static const VID:int = 1;	// This should always be 1
 		private static const CID:int = 1;   // This can change (acts like an actual version ID)
 		public static const PREGAME_QID:int = 31337;
+		
+		// CID = 1	5pm release on 5/16
 	
 		
 		/**
@@ -23,8 +25,7 @@ package
 		private static const logger:Logger = new Logger(GAME_NAME, GAME_ID, SKEY, VID, CID);
 		
 		/******************************* Action IDs *******************************************/
-		
-		/////// Action Ids for StartState ////////
+
 		// DONT CHANGE THESE WITHOUT A REALLY GOOD REASON
 		
 		// Tells us how long it took the user to figure out to use the mouse
