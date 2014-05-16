@@ -155,6 +155,10 @@ package
 			startPlaylist();
 		}
 		
+		public function isMute () : Boolean {
+			return this.isMuted;
+		}
+		
 		public function startPlaylist() : void { 
 			if (playlist.length > 0) {
 				if (!isMuted) {
@@ -165,8 +169,8 @@ package
 				}
 			}
 		}
-
-		public function nextSong(e:Event) : void {
+	
+		private function nextSong(e:Event) : void {
 			e.currentTarget.removeEventListener(Event.SOUND_COMPLETE, nextSong);
 			currentSong.stop();
 			
@@ -202,5 +206,7 @@ package
 				return -1;
 			}
 		}
+		
+		
 	}
 }

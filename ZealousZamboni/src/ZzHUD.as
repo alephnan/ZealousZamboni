@@ -15,17 +15,20 @@ package
 		private var playerBar:PlayerBar;
 		
 		private var restartButton:FlxButton;
+		private var muteButton:FlxButton;
 		
 		private var player:Zamboni;
 		private var playerGoal:uint;
 		private var timerTxt:FlxText;
 		private var timer:FlxTimer;
 		
+		
 		/**
 		 * @param   player 		a reference to the player of the game
 		 * @param   levelTime	the length of the level in seconds
 		 */
 		public function ZzHUD(player:Zamboni, levelTime:uint, playerGoal:uint) {
+			
 			this.player = player;
 			this.playerGoal = playerGoal;
 			
@@ -46,6 +49,26 @@ package
 			
 			timer = new FlxTimer();
 			timer.start(levelTime, 1, endLevel);
+			
+			
+			// mute button
+			muteButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 100, null, toggleMute);
+			muteButton.loadGraphic(Media.mutePng);
+			trace("muteButton");
+			add(muteButton);
+		}
+		
+		
+		public function toggleMute() : void {
+			var s : SoundPlayer = LevelLoader.SOUND_PLAYER;
+			if (s.isMute()) {
+				s.unmute();
+				muteButton.loadGraphic(Media.mutePng);
+			} else {
+				muteButton.loadGraphic(Media.unmutePng);
+				s.mute();
+			} 
+			
 		}
 		
 		override public function update() : void {
