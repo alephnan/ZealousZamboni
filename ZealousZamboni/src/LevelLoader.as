@@ -90,11 +90,15 @@ package
 		[Embed(source = '../res/tuanlevels/four.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
 		[Embed(source = "../res/tuanlevels/four.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
 		
-		public const Level7QId:uint = 203;
-		[Embed(source = '../res/level203.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
-		[Embed(source = "../res/level203.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
+		public const Level7QId:uint = 105;
+		[Embed(source = '../res/tuanlevels/five.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
+		[Embed(source = "../res/tuanlevels/five.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
 		
-		public static const NUM_LEVELS:uint = 7;
+		public const Level8QId:uint = 8;
+		[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level8Csv:Class;
+		[Embed(source = "../res/level7.xml", mimeType = "application/octet-stream")] public var Level8XML:Class;
+		
+		public static const NUM_LEVELS:uint = 8;
 		
 		private var level:FlxTilemap;
 		
