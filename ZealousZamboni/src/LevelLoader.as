@@ -90,8 +90,8 @@ package
 			queues = new Array();
 			// parseXML MUST be called before addRutsToMap
 			parseXML(this["Level" + level_num + "XML"]);
-			if (level_num == 2)
-				addRutsToMap(new TestRuts());
+			//if (level_num == 2)
+				//addRutsToMap(new TestRuts());
 			
 			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
 			

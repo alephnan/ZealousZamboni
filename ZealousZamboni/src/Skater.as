@@ -101,8 +101,8 @@ package
 			addAnimation("hurt", [16], 1, true);*/
 			//maxVelocity.x = 120;
 			//maxVelocity.y = 120;
-			maxVelocity.x = 250;
-			maxVelocity.y = 250;
+			maxVelocity.x = 150;
+			maxVelocity.y = 150;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			goingDown = true;
