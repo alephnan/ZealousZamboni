@@ -188,6 +188,9 @@ package
 		{
 			super.update();
 			
+			if (FlxG.keys.C && FlxG.keys.H && FlxG.keys.E && FlxG.keys.A && FlxG.keys.T) {
+				winLevel();
+			}
 			// Collide all sprites with eachother and with the tilemap
 			collideGroups();
 		}
