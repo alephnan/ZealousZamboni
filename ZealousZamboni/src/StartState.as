@@ -46,6 +46,8 @@ package
 			
 			add(new FlxSprite(400, 250, Media.MouseImg));
 			FlxG.mouse.show();
+			
+			LevelLoader.SOUND_PLAYER.startPlaylist();
 		}
 		
 		override public function update():void {

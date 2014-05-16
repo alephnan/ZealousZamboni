@@ -1,7 +1,11 @@
 package 
 {
+	import adobe.utils.ProductManager;
+	import flash.events.Event;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
+	import flash.media.SoundTransform;
+	import org.as3commons.collections.utils.ArrayUtils;
 	/**
 	 * ...
 	 * @author Kenny
@@ -90,7 +94,22 @@ package
 		[Embed(source='../media/soundeffects/five.mp3')] 		 
 		private static var SkaterDeath : Class; 		 
 		public static var skaterDeath : Sound = (new SkaterDeath) as Sound;
-	
+		
+		[Embed(source='../media/soundtracks/soundtrack_1.mp3')] 		 
+		private static var SoundtrackOne : Class; 		 
+		public static var soundtrackOne : Sound = (new SoundtrackOne) as Sound;
+		
+		[Embed(source='../media/soundtracks/soundtrack_2.mp3')] 		 
+		private static var SoundtrackTwo : Class; 		 
+		public static var soundtrackTwo : Sound = (new SoundtrackTwo) as Sound;
+		
+		[Embed(source='../media/soundtracks/soundtrack_3.mp3')] 		 
+		private static var SoundtrackThree : Class; 		 
+		public static var soundtrackThree : Sound = (new SoundtrackThree) as Sound;
+		
+		private var soundSettings: SoundTransform;
+		private var playlistSoundSetting : SoundTransform;
+		
 		// Map name of sound to embedded asset
 		private static var sounds : Object = {
 			"skaterDeath" : skaterDeath,
@@ -100,21 +119,74 @@ package
 			"zombieDeath" : zombieDeath,
 			"zombieHit" : zombieHit
 		};
-
+		
+		private static var playlist : Array = new Array(
+			soundtrackOne,
+			soundtrackTwo,
+			soundtrackThree
+		);
+		
+		private var playlistIndex:int;
+		private var currentSong:SoundChannel;
+		
 		private var isMuted:Boolean;
 		
 		public function SoundPlayer() {
 			isMuted = false;
+			soundSettings = new SoundTransform();
+			soundSettings.volume = 1;
+			playlistSoundSetting = new SoundTransform();
+			playlistSoundSetting.volume = .25;
+			
+			playlistIndex = 0;
 		}
 		
-		public function mute() : void { isMuted = true; }
+		public function mute() : void {
+			isMuted = true;
+			
+			currentSong.stop();
+			playlist[playlistIndex].removeEventListener(Event.SOUND_COMPLETE, nextSong);
+			playlistIndex = 0;
+		}
 		
-		public function unmute() : void { isMuted = false; }
+		public function unmute() : void {
+			isMuted = false;
 		
+			startPlaylist();
+		}
+		
+		public function startPlaylist() : void { 
+			if (playlist.length > 0) {
+				if (!isMuted) {
+					var currSong : SoundChannel = playlist[0].play( 0, 0, playlistSoundSetting);
+					currSong.addEventListener(Event.SOUND_COMPLETE, nextSong);
+					
+					currentSong = currSong;
+				}
+			}
+		}
+
+		public function nextSong(e:Event) : void {
+			e.currentTarget.removeEventListener(Event.SOUND_COMPLETE, nextSong);
+			currentSong.stop();
+			
+			//trace("inside nextSong");
+			//trace(playlistIndex + " " + playlist.length);
+			// loop back to beginning song
+			playlistIndex = playlistIndex + 1 == playlist.length ? 0 : playlistIndex + 1;
+			//trace(playlistIndex);
+			var currSong : SoundChannel = playlist[playlistIndex].play( 0, 0, playlistSoundSetting);
+			currentSong = currSong;
+			
+			currSong.addEventListener(Event.SOUND_COMPLETE, nextSong);
+			
+		}
+
 		// play sound iff SoundPlayer is not muted
 		public function play(soundName:String = null, startTime:Number = 0, loops:int = 0) : SoundChannel {
+
 			if (!isMuted) {
-				return sounds[soundName].play(startTime, loops);
+				return sounds[soundName].play(startTime, loops , soundSettings);
 			}
 			
 			return null;
