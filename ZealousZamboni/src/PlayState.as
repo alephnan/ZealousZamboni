@@ -52,6 +52,8 @@ package
 		//Track mouse every .25 seconds
 		private static const MOUSE_LOG_INTERVAL:Number = .25;
 		
+		private var levelWon : Boolean;
+		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
 			levelLoader = new LevelLoader();
@@ -66,12 +68,16 @@ package
 			hud = new ZzHUD(player, 30, 50);
 			add(hud);
 			ZzLog.logLevelStart(levelLoader.levelQId);
+			
+		
 			playerPoints = new PlayerPoints();
 			FlxG.mouse.show();
 			//First element in mouseHistory is a header containing metadata
 			mouseHistory.push( { "interval" : MOUSE_LOG_INTERVAL, "start" : new Date().time} );
 			mouseTimer = new FlxTimer();
 			mouseTimer.start(MOUSE_LOG_INTERVAL, 0, logMouse);
+			
+			levelWon = false;
 		}
 		
 		private function logMouse(t:FlxTimer) : void {
@@ -107,9 +113,22 @@ package
 				playerPoints.generateRewardOrPenalty(s.getMidpoint(), PlayerPoints.SKATER_REWARD_PENALTY, false);
 			}
 			if (SkaterQueue(activeSprites[SKATERS_INDEX]).skatersFinished()) {
-				winLevel();
+				
+				// If more than one skater finishes at the same time, skaterComplete will be
+				// called more than once. without a concurrency check, we'll call 
+				// winLevel more than once, which will inturn call logger to indicate the
+				// level ends more than once. but we can only have one level end log, per 
+				// every level start log. 
+				if (!levelWon) {
+					levelWon = true;
+					winLevel();
+				} else {
+					// skaterComplete already called winlevel
+				}
 			}
 		}
+		
+		
 		
 		/**
 		 * Function invoked when the player wins the level

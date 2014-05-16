@@ -41,6 +41,10 @@ package
 			return minTile;
 		}
 		
+		public static function getAllEntrances() : Array {
+				return level.getTileCoords(LevelLoader.ENTRANCE_TILE_INDEX, false);
+		}
+		
 		public static function dist(p:FlxPoint, a:FlxPoint) : Number{
 			return Math.sqrt(Math.pow(p.x - a.x, 2) + Math.pow(p.y - a.y, 2));
 		}
