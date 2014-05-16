@@ -43,6 +43,10 @@ package
 		
 		//level specific assets
 		
+		// music player
+		public static const SOUND_PLAYER:SoundPlayer = new SoundPlayer();
+		
+		
 		public const Level1QId:uint = 1;
 		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		[Embed(source = "../res/level0.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;

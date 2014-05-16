@@ -1,28 +1,30 @@
 package 
 {
 	import flash.media.Sound;
+	import flash.media.SoundChannel;
 	/**
 	 * ...
 	 * @author Kenny
 	 */
 	public class SoundPlayer 
 	{
-
+		/* 
 		[Embed(source='../media/skaterdeath.mp3')] 		 
 		private static var SkaterDeath : Class; 		 
-		public static var skaterDeath : Sound = (new SkaterDeath) as Sound;	 
+		public static var skaterDeath : Sound = (new SkaterDeath) as Sound;	 */
 		
-		[Embed(source='../media/skaterstuck.mp3')] 		 
+		/* [Embed(source='../media/skaterstuck.mp3')] 		 
 		private static var SkaterStuck : Class; 		 
-		public static var skaterStuck : Sound = (new SkaterStuck) as Sound;	
+		public static var skaterStuck : Sound = (new SkaterStuck) as Sound; */
 		
+		/*
 		[Embed(source='../media/skaterstart.mp3')] 		 
 		private static var SkaterStart : Class; 		 
-		public static var skaterStart : Sound = (new SkaterStart) as Sound;	
+		public static var skaterStart : Sound = (new SkaterStart) as Sound;	*/
 		
-		[Embed(source='../media/skatersuccess.mp3')] 		 
+		/*[Embed(source='../media/skatersuccess.mp3')] 		 
 		private static var SkaterSuccess : Class; 		 
-		public static var skaterSuccess : Sound = (new SkaterSuccess) as Sound;
+		public static var skaterSuccess : Sound = (new SkaterSuccess) as Sound;*/
 		
 		/* [Embed(source='../media/zombiedeath.mp3')] 		 
 		private static var ZombieDeath : Class; 		 
@@ -72,7 +74,23 @@ package
 			in MainGame.as or some other global location. Since the start menu (StartState.as) might have sounds
 			and option to mute sound, and not just during the play state
 		*/
+		
+		[Embed(source='../media/soundeffects/two.mp3')] 		 
+		private static var SkaterStuck : Class; 		 
+		public static var skaterStuck : Sound = (new SkaterStuck) as Sound;	
 				
+		[Embed(source='../media/soundeffects/three.mp3')] 		 
+		private static var SkaterStart : Class; 		 
+		public static var skaterStart : Sound = (new SkaterStart) as Sound;
+
+		[Embed(source='../media/soundeffects/ten.mp3')] 		 
+		private static var SkaterSuccess : Class; 		 
+		public static var skaterSuccess : Sound = (new SkaterSuccess) as Sound;
+
+		[Embed(source='../media/soundeffects/five.mp3')] 		 
+		private static var SkaterDeath : Class; 		 
+		public static var skaterDeath : Sound = (new SkaterDeath) as Sound;
+	
 		// Map name of sound to embedded asset
 		private static var sounds : Object = {
 			"skaterDeath" : skaterDeath,
@@ -93,13 +111,23 @@ package
 		public function unmute() : void { isMuted = false; }
 		
 		// play sound iff SoundPlayer is not muted
-		public function play(soundName:String) : void {
+		public function play(soundName:String = null, startTime:Number = 0, loops:int = 0) : SoundChannel {
 			if (!isMuted) {
-				sounds[soundName].play();
+				return sounds[soundName].play(startTime, loops);
+			}
+			
+			return null;
+			
+			//skaterSuccess.pla
+		}	
+		
+		// returns length of soundName
+		public function length(soundName:String ) : Number {
+			if (sounds[soundName] != null) {
+				return sounds[soundName].length;
+			} else {
+				return -1;
 			}
 		}
-		
-	
 	}
-	
 }
