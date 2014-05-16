@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level width="640" height="480" lives="1">
+<level width="640" height="480" lives="0">
 	<motivation>
 		A zig-zag pattern, and how redirection arrows are required to achieve this pattern,
 		since skaters only turn left. 
@@ -10,17 +10,21 @@
 		will block them, redirect them south. 
 	</motivation>
 	<problem>
-		Left unchecked, the left and right skater will quickly spiral into each other and both die
+		Left unchecked, the left and right skater will quickly spiral into each other and both die.
+
+		This will happen fast, so on the first time, the player might be too slow to react to win.
 	</problem>
 	<solution>
-		Observe the zig-zag, and prevent the spiral from occuring. 
+		Observe the zig-zag, (learned through a retry) and prevent the spiral from occuring. 
+
+		Zamboni will need to immediately start heading to the spiral, and they only have about 3 seconds timeframe to be slow.
 	</solution>
-	<zamboni x="504" y="312" />
+	<zamboni x="504" y="352" />
 	<skater x="40" y="40">
 		<start>2</start>
 		<time>20</time>
 	</skater>
-	<skater x="500" y="40">
+	<skater x="500" y="80">
 		<start>2</start>
 		<time>20</time>
 	</skater>
