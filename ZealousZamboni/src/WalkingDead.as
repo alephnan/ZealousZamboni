@@ -109,8 +109,8 @@ package
 			if (other is Zamboni) {
 				ZzLog.logAction(ZzLog.ACTION_ZOMBIE_DIE, getLoggableObject());
 				alive = false;
-				SoundPlayer.zombieDeath.play();
-				SoundPlayer.zombieHit.play();
+				LevelLoader.SOUND_PLAYER.play("zombieDeath");
+				LevelLoader.SOUND_PLAYER.play("zombieHit");
 				this.stopFollowingPath(true);
 				this.pathSpeed = 0;
 				this.maxVelocity.x = 1000;

@@ -97,7 +97,8 @@ package
 			"skaterStuck" : skaterStuck,
 			"skaterStart" : skaterStart,
 			"skaterSuccess" : skaterSuccess,
-			"zombieDeath" : zombieDeath
+			"zombieDeath" : zombieDeath,
+			"zombieHit" : zombieHit
 		};
 
 		private var isMuted:Boolean;
