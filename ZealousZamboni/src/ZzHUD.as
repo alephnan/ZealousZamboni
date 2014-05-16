@@ -73,7 +73,11 @@ package
 		}
 		
 		private function getTimeString(timeLeft:uint):String {
-			return uint(timeLeft / 60) + ":" + uint(timeLeft % 60);
+			var seconds:String = String(uint(timeLeft % 60));
+			if (seconds.length == 1) {
+				seconds = "0" + seconds;
+			}
+			return uint(timeLeft / 60) + ":" + seconds;
 		}
 		
 		public function endLevel(timer:FlxTimer):void {

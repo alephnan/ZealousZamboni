@@ -48,24 +48,37 @@ package
 		public static const ACTION_POWER_UP_APPEAR:int = 16;
 		
 		public static function logAction(aid:int, data:Object = null):void {
-			if (!DEBUG)
-				logger.logAction(aid, data);
+			if (!DEBUG) {
+				try {
+					logger.logAction(aid, data);
+				} catch (e:Error) {
+					trace(e.message);
+				}
+			}
 		}
 		
 		public static function logLevelStart(qId:int, data:Object = null):void 
 		{
-			if(!DEBUG){
-				logger.logLevelStart(qId, data);
+			if (!DEBUG) {
+				try {
+					logger.logLevelStart(qId, data);
+				} catch (e:Error) {
+					trace(e.message);
+				}
 			}
 		}
 		
 		public static function logLevelEnd(isLoss:Boolean,mouseHistory:Array, finalScore:Number):void 
 		{	if (!DEBUG) {
-				if (isLoss)
-					logger.logAction(ACTION_LOSE, "lose");
-				else
-					logger.logAction(ACTION_WIN, "win");
-				logger.logLevelEnd(new LevelHistory(isLoss,mouseHistory, finalScore));
+				try {
+					if (isLoss)
+						logger.logAction(ACTION_LOSE, "lose");
+					else
+						logger.logAction(ACTION_WIN, "win");
+					logger.logLevelEnd(new LevelHistory(isLoss, mouseHistory, finalScore));
+				} catch (e:Error) {
+					trace(e.message);
+				}
 			}
 		}
 		

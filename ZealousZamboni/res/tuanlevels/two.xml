@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level width="640" height="480" lives="1">
+	<motivation>
+		Left turn, left turn, left turn, left turn, left turn. In otherwords: Nascar. 
+
+		The player will observe that the skater keeps turning left, despite the stone blocks
+		seeming to be direction neutral. In fact, there are 7 such stones for the skater
+		to turn at, but they turn left everytime.... 
+
+		Maybe not necessarily the idea that EVERY skater turns left, but atleast the idea
+		that there are skaters that only turn LEFT. This doesn't present the case where a left turn is not possible 
+	</motivation>
+	<problem>
+		The spiral gets smaller and smaller, and the skater will die. 
+	</problem>
+	<solution>
+		The zamboni needs to get to the spiral and clear it fast, and they have
+		approximately a 3-5 second timeframe.
+	</solution>
+
 	<zamboni x="504" y="312" />
 	<skater x="160" y="96 ">
 		<start>2</start>
