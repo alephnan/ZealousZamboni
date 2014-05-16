@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1">
+	<motivation>
+		This was for the "orientation challenged".
+		This is based on level tuanlevel_four, where the two skaters
+		are seemingly parallel. But the orientationally challenged will think
+		that skaters are going east by default, and not necessarily that going east
+		is really a function of the skaters behavior to go left (oriented with respect to 
+		direction skater is chasing).
+
+		So, rather than having a level mirrored across the y-axis, y=0, we have one
+		mirrored across the the line y=x. This is the inverse. Players should now observe
+		that both skaters are going in the same spiral, and that this spiral is really
+		the same spiral as the other skater, just rotated 180 degrees (but not flipped!)
+	</motivation>
+	<problem>
+		Again, both skaters will simultaneously spiral and get stuck. 
+
+		Since the player already experienced a similar map, the time on this map has been increased
+		for each skater. Plus, its easier to traverse back and forth between the two
+		skaters by design of the map.
+
+		But it's fine the level got easier. The players will feel they got much better, 
+		and think they are so good for solving it so fast. Indeed, they are learning along the way, though.
+	</problem>
+	<solution>
+		Same strategies as level four
+	</solution>
+	<progression>
+		1) Level can be preceded by level that introduces player to strategy of using
+		zamboni to "block" the skaters movement, forcing them to go in a certain direction.
+		posibly, skater head to pitfall, and the only way to save them is by blocking them and 
+		redirect them
+		2) I toned the level to 17 seconds per skater. If this was increased to 20 seconds,
+		the difficulty is a significantly harder
+	</progression>
+	<zamboni x="504" y="160" />
+	<skater x="40" y="40">
+		<start>1</start>
+		<time>21</time>
+	</skater>
+	<skater x="500" y="40">
+		<start>1</start>
+		<time>21</time>
+	</skater>
+</level>
