@@ -146,13 +146,13 @@ package
 		public function loseLevel():void {
 			mouseTimer.stop();
 			//TODO: Set final score
-			ZzLog.logLevelEnd(true, mouseHistory, 0);
+			ZzLog.logLevelEnd(true, mouseHistory, player.health);
 			FlxG.switchState(new LevelFailedState());
 		}
 		
 		public function restartLevel():void {
 			mouseTimer.stop();
-			ZzLog.logLevelEnd(true, mouseHistory, 0);
+			ZzLog.logLevelEnd(true, mouseHistory, player.health);
 			FlxG.resetState();
 		}
 		

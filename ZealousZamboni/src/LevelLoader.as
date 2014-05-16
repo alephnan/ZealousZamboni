@@ -61,19 +61,19 @@ package
 		[Embed(source = "../res/tuanlevels/three.xml", mimeType = "application/octet-stream")] public const Level1XML:Class; */
 
 		
-		public const Level1QId:uint = 1;
-		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
-		[Embed(source = "../res/level0.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
-		[Embed(source = "../res/level0_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class; 
+		public const Level1QId:uint = 101;
+		[Embed(source = '../res/tuanlevels/one.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
+		[Embed(source = "../res/tuanlevels/one.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
+		//[Embed(source = "../res/level0_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class; 
 	
-		public const Level2QId:uint = 2;
-		[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
-		[Embed(source = "../res/level2.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
-		[Embed(source = "../res/level2_ruts.txt", mimeType = "application/octet-stream")] public var Level2Ruts:Class; 
+		public const Level2QId:uint = 102;
+		[Embed(source = '../res/tuanlevels/two.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
+		[Embed(source = "../res/tuanlevels/two.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
+		//[Embed(source = "../res/level2_ruts.txt", mimeType = "application/octet-stream")] public var Level2Ruts:Class; 
 		
-		public const Level3QId:uint = 3;
-		[Embed(source = '../res/level3.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
-		[Embed(source = "../res/level3.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
+		public const Level3QId:uint = 103;
+		[Embed(source = '../res/tuanlevels/three.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
+		[Embed(source = "../res/tuanlevels/three.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
 		/**/
 		public const Level4QId:uint = 4;
 		[Embed(source = '../res/level4.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
@@ -130,7 +130,7 @@ package
 			// parseXML MUST be called before addRutsToMap
 			parseXML(this["Level" + level_num + "XML"]);
 			/* For tuan's levels, comment this condition out */
-			if (level_num < 2)
+			if (level_num < 1)
 				addRutsToMap(new this["Level"+level_num+"Ruts"]());
 			
 			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
