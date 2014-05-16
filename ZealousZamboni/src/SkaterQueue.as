@@ -61,8 +61,6 @@ package
 			// Goes through entrance, and assign skaters to an entrance, in clock-arithmetic style
 			var allEntrances :Array = ZzUtils.getAllEntrances();
 			if (allEntrances.length > 0) {
-				
-				
 				while (allEntrances[currEntrance] != null && ZzUtils.entranceBlocked(p = allEntrances[currEntrance]) && count > 0) {
 					count--;
 					currEntrance++;
@@ -70,9 +68,12 @@ package
 					if (currEntrance == allEntrances.length) {
 						currEntrance = 0;
 					} 
-				} 
-				
-				var skater:Skater = new Skater(p.x, p.y, next.iceTime);
+				}
+				if (next.x != 0 && next.y != 0) {
+					//if we have skater x,y use the nearest entrance to that instead of round robin
+					p = ZzUtils.getNearestEntrance(new FlxPoint(next.x, next.y));
+				}
+				var skater:Skater = new Skater(p.x, p.y, next.iceTime,null,next.toX,next.toY);
 				add(skater);
 				skater.postConstruct(PlayState(FlxG.state).addDep);
 			} 

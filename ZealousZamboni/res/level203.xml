@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="2" time="40">
+	<zamboni x="250" y="80"/>
+	<goal points="100"/>
+	<skater x="616" y="280" toX="624" toY="280">
+		<start>20</start>
+		<time>8</time>
+	</skater>
+	<skater x="30" y="72" toY="96">
+		<start>2</start>
+		<time>22</time>
+	</skater>
+</level>

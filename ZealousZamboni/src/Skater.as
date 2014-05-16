@@ -57,7 +57,7 @@ package
 		// Type of skater for later use
 		private var type:String;
 		
-		public function Skater(X:Number, Y:Number, time:int, type:String = TYPE_SIMPLE )
+		public function Skater(X:Number, Y:Number, time:int, type:String = TYPE_SIMPLE, toX:Number = 0, toY:Number = 0)
 		{
 			// randomly choose a trail color
 			trailColor = Math.floor(Math.random() * LevelLoader.NUM_COLORS) + LevelLoader.TRAIL_TILE_INDEX;
@@ -113,9 +113,21 @@ package
 			drag.y = maxVelocity.y * 4;
 			goingDown = true;
 			this.play("walkS", true);
+			// Set up initial path that jumps over entrance ruts
 			var pt:FlxPath = new FlxPath();
 			pt.addPoint(getMidpoint());
-			pt.addPoint(new FlxPoint(FlxG.height / 2, FlxG.width / 2));
+			var endPoint:FlxPoint = new FlxPoint(getMidpoint().x, getMidpoint().y);
+			if (toX == 0 && toY == 0) {
+				endPoint = new FlxPoint(FlxG.height / 2, FlxG.width / 2);
+			}else {
+				if (toX != 0) {
+					endPoint.x = toX;
+				}
+				if (toY != 0) {
+					endPoint.y = toY;
+				}
+			}
+			pt.addPoint(endPoint);
 			this.followPath(pt, 120);
 			new FlxTimer().start(START_TIME, 1, function (t:*) : void { 
 				isStarted = true;

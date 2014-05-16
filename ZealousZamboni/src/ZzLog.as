@@ -18,7 +18,7 @@ package
 		/**
 		 * If set to true, calls to log will not have any effect
 		 */
-		public static var DEBUG:Boolean = false;
+		public static var DEBUG:Boolean = true;
 		
 		private static const logger:Logger = new Logger(GAME_NAME, GAME_ID, SKEY, VID, CID);
 		

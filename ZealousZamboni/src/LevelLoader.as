@@ -90,9 +90,9 @@ package
 		[Embed(source = '../res/tuanlevels/four.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
 		[Embed(source = "../res/tuanlevels/four.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
 		
-		public const Level7QId:uint = 7;
-		[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
-		[Embed(source = "../res/level7.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
+		public const Level7QId:uint = 203;
+		[Embed(source = '../res/level203.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
+		[Embed(source = "../res/level203.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
 		
 		public static const NUM_LEVELS:uint = 7;
 		
@@ -260,6 +260,8 @@ package
 			for each (var s:XML in xml.skater) {
 				var skaterX:int = s.@x;
 				var skaterY:int = s.@y;
+				var skaterTX:int = s.@toX;
+				var skaterTY:int = s.@toY;
 				if (DEBUG)
 					trace("skater x = " + skaterX + ", skater y = " + skaterY);
 				if (resize) {
@@ -270,7 +272,7 @@ package
 				var startTime:int = s.start;
 				if (DEBUG)
 					trace("Skater time on ice: " + skateTime);
-				skaters.addSpriteData(new SpriteData(skaterX, skaterY, startTime, skateTime));
+				skaters.addSpriteData(new SpriteData(skaterX, skaterY, startTime, skateTime, null, skaterTX, skaterTY));
 			}
 			queues.push(skaters);
 			

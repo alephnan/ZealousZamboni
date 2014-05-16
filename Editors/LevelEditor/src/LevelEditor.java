@@ -318,7 +318,9 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 			GridButton next = new GridButton(index);
 			next.addMouseMotionListener(this);
 			next.addActionListener(buttListener);
+			next.addMouseMotionListener(this);
 			next.setIcon(icons[index]);
+			next.setTileCoords(i*Main.TILE_SIZE,buttonIdx*Main.TILE_SIZE);
 			next.addActionListener(new GridButtonListener());
 			buttonPanel.add(next);
 			buttonArray[buttonIdx][i] = next;
