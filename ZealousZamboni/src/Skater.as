@@ -95,7 +95,8 @@ package
 				addAnimation("walkW", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 				o = 48;
 				addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
-				addAnimation("death", [6, 22, 38, 54], 8, true);
+				o = 64;
+				addAnimation("death", [o + 0, o + 1, o + 2, o + 3, o + 4], 8, true);
 				addAnimation("hurt", [16], 1, true);
 			}
 			deathTimer = new FlxTimer();
