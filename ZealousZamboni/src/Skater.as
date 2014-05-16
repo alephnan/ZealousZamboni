@@ -24,7 +24,7 @@ package
 		[Embed(source='../media/skater2.png')]
 		private var skater2PNG:Class;
 		
-		private static const SKATER_DEATH_SLACK:uint = 5; // seconds
+		private static const SKATER_DEATH_SLACK:Number = 1; // seconds
 		private static const START_TIME:Number = 0.5;
 		private var goingLeft:Boolean = false;
 		private var goingRight:Boolean = false;

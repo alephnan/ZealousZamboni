@@ -63,7 +63,7 @@ package
 		private function onFade() : void {
 			player.kill();
 			ZzLog.logLevelEnd();
-			FlxG.level = 7;
+			FlxG.level = 1;
 			ZzLog.logLevelStart();
 			FlxG.switchState(new PlayState());
 		}

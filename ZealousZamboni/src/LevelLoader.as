@@ -41,26 +41,38 @@ package
 		
 		public static const NUM_TILES:uint = 1184;
 		
-		
 		//level specific assets
-		[Embed(source = '../res/level1.txt', mimeType = "application/octet-stream")] public var Level1Csv:Class;
-		[Embed(source = "../res/level1.xml", mimeType = "application/octet-stream")] public var Level1XML:Class;
-		[Embed(source = "../res/level1_ruts.txt", mimeType = "application/octet-stream")] public var Level1Ruts:Class;
+		
+		public const Level1QId:String = "zz1z";
+		[Embed(source = '../res/levelzz1z.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
+		[Embed(source = "../res/levelzz1z.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
+		[Embed(source = "../res/levelzz1z_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class;
+		
+		public const Level2QId:String = "2";
 		[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
 		[Embed(source = "../res/level2.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
 		[Embed(source = "../res/level2_ruts.txt", mimeType = "application/octet-stream")] public var Level2Ruts:Class;
+		
+		public const Level3QId:String = "3";
 		[Embed(source = '../res/level3.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
 		[Embed(source = "../res/level3.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
+		
+		public const Level4QId:String = "4";
 		[Embed(source = '../res/level4.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
 		[Embed(source = "../res/level4.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;
+		
+		public const Level5QId:String = "5";
 		[Embed(source = '../res/level5.txt', mimeType = "application/octet-stream")] public var Level5Csv:Class;
 		[Embed(source = "../res/level5.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
+		
+		public const Level6QId:String = "6";
 		[Embed(source = '../res/level6.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
 		[Embed(source = "../res/level6.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
+		
+		public const Level7QId:String = "7";
 		[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
 		[Embed(source = "../res/level7.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
-		//[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
-		//[Embed(source = "../res/level7.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
+		
 		public static const NUM_LEVELS:uint = 7;
 		
 		private var level:FlxTilemap;
