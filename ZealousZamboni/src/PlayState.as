@@ -61,7 +61,7 @@ package
 			activeSprites.push(player);
 			add(player);
 			startSprites(levelLoader.getSpriteQueues());
-			hud = new ZzHUD(player, this);
+			hud = new ZzHUD(player, 30, 50);
 			add(hud);
 			ZzLog.logLevelStart(levelLoader.levelQId);
 			FlxG.mouse.show();
@@ -73,9 +73,9 @@ package
 		
 		private function logMouse(t:FlxTimer) : void {
 			var state:int;
-			if (FlxG.mouse.justPressed) {
+			if (FlxG.mouse.justPressed()) {
 				state = MOUSE_JUST_CLICKED;
-			}else if (FlxG.mouse.pressed) {
+			}else if (FlxG.mouse.pressed()) {
 				state = MOUSE_CURRENTLY_PRESSED;
 			}else {
 				state = MOUSE_NOT_PRESSED;
@@ -91,27 +91,18 @@ package
 			}
 		}
 		
-		/**
+/**
 		 * Function called when a skater successfully comes back
 		 * @param	s
 		 */
 		public function skaterComplete(s:Skater, killed:Boolean = false) : void {
 			if (killed) {
-				player.hurt(1);
-				if (player.alive == false) {
-					mouseTimer.stop();
-					//TODO: Set final score
-					ZzLog.logLevelEnd(true, mouseHistory, 0);
-					FlxG.switchState(new LevelFailedState());
-					return;
-				}
+				player.updatePlayerHealth(Zamboni.SKATER_REWARD_PENALTY);
+			} else {
+				player.updatePlayerHealth(Zamboni.SKATER_REWARD_PENALTY, false);
 			}
 			if (SkaterQueue(activeSprites[SKATERS_INDEX]).skatersFinished()) {
-				if (FlxG.level + 1 > LevelLoader.NUM_LEVELS) {
-					winGame();
-				} else {
-					winLevel();
-				}
+				winLevel();
 			}
 		}
 		
@@ -120,20 +111,25 @@ package
 		 */
 		public function winLevel() : void {
 			mouseTimer.stop();
-			//TODO: Set final score
 			ZzLog.logLevelEnd(false, mouseHistory, 0);
-			FlxG.switchState(new LevelWinState());
+			if (FlxG.level + 1 > LevelLoader.NUM_LEVELS) {
+				FlxG.switchState(new EndState());
+			} else {
+				FlxG.switchState(new LevelWinState());
+			}
 		}
 		
-		/**
-		 * Function invoked when the player wins the level and
-		 * there are no more levels (they win the game)
-		 */
-		public function winGame() : void {
+		public function loseLevel():void {
 			mouseTimer.stop();
 			//TODO: Set final score
-			ZzLog.logLevelEnd(false, mouseHistory, 0);
-			FlxG.switchState(new EndState());
+			ZzLog.logLevelEnd(true, mouseHistory, 0);
+			FlxG.switchState(new LevelFailedState());
+		}
+		
+		public function restartLevel():void {
+			mouseTimer.stop();
+			ZzLog.logLevelEnd(true, mouseHistory, 0);
+			FlxG.resetState();
 		}
 		
 		/**

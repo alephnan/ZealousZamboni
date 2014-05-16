@@ -47,7 +47,7 @@ package
 		public static const ACTION_MOUSE_HISTORY:int = 15;
 		public static const ACTION_POWER_UP_APPEAR:int = 16;
 		
-		public static function logAction(aid:int, data:Object = null) {
+		public static function logAction(aid:int, data:Object = null):void {
 			if (!DEBUG)
 				logger.logAction(aid, data);
 		}

@@ -29,6 +29,11 @@ package
 		// how far a trail can be away from zamboni boundary area, and still be considered overlap
 		private static const ZAMBONI_TRAIL_CLEANING_TOLERANCE : uint = 6;
 		
+		public static const PLAYER_MAX_HEALTH:Number = 100;
+		public static const CLEAR_TRAIL_REWARD:Number = 0.05;
+		public static const PICKUP_POWERUP_REWARD:Number = 10;
+		public static const SKATER_REWARD_PENALTY:Number = 60;
+		
 		// true if zamboni is in horizontal orientation, false for vertical
 		private var horizontal:Boolean;
 		
@@ -104,13 +109,13 @@ package
 				if (LevelLoader.isTrail(tile.index)) {
 					var tx:Number = tile.x / LevelLoader.TILE_SIZE;
 					var ty:Number = tile.y / LevelLoader.TILE_SIZE;
-					//tileMap.setTile(tx, ty, 
-						//levelCopy.getTile(tx,ty), true);
 					var tileIndex:uint = ty * level.widthInTiles + tx;
 					if (tileIndex < levelCopy.length) {
 						var origTile:uint = levelCopy[ty * level.widthInTiles + tx];
 						level.setTileByIndex(tileIndex, origTile, true);
 					}
+					// add point to player health
+					updatePlayerHealth(CLEAR_TRAIL_REWARD, false);
 				}
 			})
 		}
@@ -140,6 +145,28 @@ package
 			
 			// checks for rotation along wall
 			wallHug(oldhorizontal);
+		}
+		
+		public function updatePlayerHealth(updateAmount:Number, penalty:Boolean = true):void {
+			if (updateAmount <= 0)
+				return;
+			if (penalty) {
+				hurt(updateAmount);
+			} else {
+				if (health + updateAmount > PLAYER_MAX_HEALTH) {
+					health = PLAYER_MAX_HEALTH;
+				} else {
+					health += updateAmount;
+				}
+			}
+		}
+		
+		override public function hurt(damage:Number):void {
+			if (health - damage < 0) {
+				health = 0;
+			} else {
+				health -= damage;
+			}
 		}
 		
 		/*  Prevents zamboni from rotating when next to wall.  This would cause a glitch where
@@ -336,12 +363,8 @@ package
 		
 		override public function onCollision(other:FlxObject) : void {
 			var t:FlxTimer = new FlxTimer();
-			//if (other is FlxTile && FlxTile(other).index == LevelLoader.TRAIL_TILE_INDEX) {
-				//PlayState(FlxG.state).level.setTile(other.x / LevelLoader.TILE_SIZE, other.y / LevelLoader.TILE_SIZE, 0, true);
-			//} else if (other is Skater) {
-				
-			//} else if (other is PowerUp) {
 			if (other is PowerUp) {
+				updatePlayerHealth(PICKUP_POWERUP_REWARD, false);
 				ZzLog.logAction(ZzLog.ACTION_GAIN_POWER_UP,
 					{ "type" : PowerUp(other).type, "x" : other.x, "y" : other.y, "id" : other.ID});
 				if (PowerUp(other).type == PowerUp.BOOSTER) {

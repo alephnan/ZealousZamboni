@@ -11,58 +11,68 @@ package
 	 */
 	public class ZzHUD extends FlxGroup 
 	{
-		
-		private var y:Number;
-		private var state:PlayState;
-		
 		// A ref to the player health bar group at the top of the level
 		private var playerBar:PlayerBar;
 		
-		private var player:Zamboni;
+		private var restartButton:FlxButton;
 		
-		private var skatersLeft:uint;
-		private var skatersLeftTxt:FlxText;
+		private var player:Zamboni;
+		private var playerGoal:uint;
+		private var timerTxt:FlxText;
+		private var timer:FlxTimer;
 		
 		/**
-		 * @param   player a reference to the player of the game
-		 * @param   skatersLeft a getter for the number of skaters left (that haven't come on yet)
-		 * @param	state The play state to track
+		 * @param   player 		a reference to the player of the game
+		 * @param   levelTime	the length of the level in seconds
 		 */
-		public function ZzHUD(player:Zamboni, state:PlayState) {
-			y = 480;
-			this.state = state;
+		public function ZzHUD(player:Zamboni, levelTime:uint, playerGoal:uint) {
 			this.player = player;
-			skatersLeft = SkaterQueue(state.activeSprites[PlayState.SKATERS_INDEX])
-					.setUpdateSkatersFunction(setSkatersLeft);
-			playerBar = new PlayerBar(0, y+20, player.health);
+			this.playerGoal = playerGoal;
+			
+			restartButton = new FlxButton(FlxG.width - FlxG.width / 4 + 80, 0, null, onRestart);
+			restartButton.loadGraphic(Media.restartPNG);
+			restartButton.scale = new FlxPoint(.6, .6);
+			restartButton.width = .6*88;
+			restartButton.height = .6*79;
+			add(restartButton);
+			
+			playerBar = new PlayerBar(restartButton.x - 150, 20, playerGoal, player);
 			add(playerBar);
 			
-			//TODO create real icon instead of string
-			var skaterIcon:FlxText = new FlxText(20, y+20, 96, "Skaters left: ", false);
-			skaterIcon.setFormat(null, 24, 0xffffff, "center");
-			skaterIcon.scale = new FlxPoint(1, 1);
-			add(skaterIcon);
-			skatersLeftTxt = new FlxText(20+96, y + 16, 20, String(skatersLeft), false);
-			skatersLeftTxt.setFormat(null, 24, 0xffffff, "center");
-			skatersLeftTxt.scale = new FlxPoint(2, 2);
-			add(skatersLeftTxt);
+			timerTxt = new FlxText(playerBar.x - 50, 20, 50, getTimeString(levelTime), false);
+			timerTxt.size = 14;
+			timerTxt.scale = new FlxPoint(2, 2);
+			add(timerTxt);
+			
+			timer = new FlxTimer();
+			timer.start(levelTime, 1, endLevel);
 		}
 		
 		override public function update() : void {
-			playerBar.updatePlayerHealth(player.health);
-			skatersLeftTxt.text = String(skatersLeft);
+			timerTxt.text = getTimeString(timer.timeLeft);
+			super.update();
 		}
 		
-		public function setSkatersLeft(skatersLeft:uint):void {
-			this.skatersLeft = skatersLeft;
+		private function getTimeString(timeLeft:uint):String {
+			return uint(timeLeft / 60) + ":" + uint(timeLeft % 60);
+		}
+		
+		public function endLevel(timer:FlxTimer):void {
+			if (playerBar.currentValue >= playerGoal) {
+				PlayState(FlxG.state).winLevel();
+			} else {
+				PlayState(FlxG.state).loseLevel();
+			}
+		}
+		
+		public function onRestart():void {
+			PlayState(FlxG.state).restartLevel();
 		}
 		
 		override public function destroy():void {
 			super.destroy();
-			state = null;
 			playerBar = null;
 			player = null;
-			skatersLeftTxt = null;
 		}
 		
 	}

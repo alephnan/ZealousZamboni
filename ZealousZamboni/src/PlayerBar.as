@@ -1,41 +1,38 @@
 package  
 {
 	import org.flixel.*;
+	import org.flixel.plugin.photonstorm.*;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	/**
 	 * ...
 	 * @author Dana Van Aken
 	 */
-	public class PlayerBar extends FlxGroup
+	public class PlayerBar extends FlxBar
 	{
+		private static const gradient:Array = new Array(0xfffe0101, 0xfffe8401, 0xfffefe01, 0xff27fe01, 0xff4d9540);
+		private static const background:uint = 0xff0b0b61;
+		private static const border:uint = 0xff848484;
 		
+		private var goalPoint:Point;
+		private var goalData:BitmapData;
 		
-		private var playerLivesTxt:FlxText;
-		private var playerHealth:uint;
-		
-		public function PlayerBar(x:Number, y:Number, playerHealth:uint) 
+		public function PlayerBar(x:uint, y:uint, playerGoal:uint, player:Zamboni) 
 		{
-			// Add heart to player health bar
-			var heart:FlxSprite = new FlxSprite(x, y, Media.HeartImg);
-			heart.x = FlxG.width - FlxG.width / 8;
-			//heart.y = heart.height / 2;
-			add(heart);
-			this.playerHealth = playerHealth;
-			playerLivesTxt = new FlxText(FlxG.width - FlxG.width / 8 + heart.width, 0, 20, String(playerHealth), false);
-			playerLivesTxt.setFormat(null, 24, 0xffffff, "center");
-			playerLivesTxt.scale = new FlxPoint(2, 2);
-			playerLivesTxt.y = heart.getMidpoint().y - playerLivesTxt.height / 2 - 6;
-			add(playerLivesTxt);
+			super(x, y, FILL_LEFT_TO_RIGHT, 150, 30, player, "health", 0, Zamboni.PLAYER_MAX_HEALTH, true);
+			
+			goalPoint = new Point(barWidth / 100 * playerGoal + 1, 1);
+			goalData = new BitmapData(2, barHeight, true, border);
+			createGradientBar(new Array(background, background), gradient, 1, 0, true, border);
 		}
 		
-		public function updatePlayerHealth(healthLeft:uint):void {
-			playerLivesTxt.text = String(healthLeft);
+		override public function update():void {
+			super.update();
+			canvas.copyPixels(goalData, new Rectangle(0, 0, 2, barHeight), goalPoint);
+		    pixels = canvas;
 		}
-		
-		override public function destroy():void {
-			playerLivesTxt = null;
-			super.destroy();
-		}
-		
 	}
 
 }

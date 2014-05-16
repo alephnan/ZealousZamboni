@@ -29,11 +29,11 @@ package org.flixel.plugin.photonstorm
 	 */
 	public class FlxBar extends FlxSprite
 	{
-		private var canvas:BitmapData;
+		protected var canvas:BitmapData;
 		
-		private var barType:uint;
-		private var barWidth:uint;
-		private var barHeight:uint;
+		protected var barType:uint;
+		protected var barWidth:uint;
+		protected var barHeight:uint;
 		
 		private var parent:*;
 		private var parentVariable:String;
@@ -51,47 +51,47 @@ package org.flixel.plugin.photonstorm
 		/**
 		 * The minimum value the bar can be (can never be >= max)
 		 */
-		private var min:Number;
+		protected var min:Number;
 		
 		/**
 		 * The maximum value the bar can be (can never be <= min)
 		 */
-		private var max:Number;
+		protected var max:Number;
 		
 		/**
 		 * How wide is the range of this bar? (max - min)
 		 */
-		private var range:Number;
+		protected var range:Number;
 		
 		/**
 		 * What 1% of the bar is equal to in terms of value (range / 100)
 		 */
-		private var pct:Number;
+		protected var pct:Number;
 		
 		/**
 		 * The current value - must always be between min and max
 		 */
-		private var value:Number;
+		protected var value:Number;
 		
 		/**
 		 * How many pixels = 1% of the bar (barWidth (or height) / 100)
 		 */
 		public var pxPerPercent:Number;
 		
-		private var emptyCallback:Function;
-		private var emptyBar:BitmapData;
-		private var emptyBarRect:Rectangle;
-		private var emptyBarPoint:Point;
-		private var emptyKill:Boolean;
-		private var zeroOffset:Point = new Point;
+		protected var emptyCallback:Function;
+		protected var emptyBar:BitmapData;
+		protected var emptyBarRect:Rectangle;
+		protected var emptyBarPoint:Point;
+		protected var emptyKill:Boolean;
+		protected var zeroOffset:Point = new Point;
 		
-		private var filledCallback:Function;
-		private var filledBar:BitmapData;
-		private var filledBarRect:Rectangle;
-		private var filledBarPoint:Point;
+		protected var filledCallback:Function;
+		protected var filledBar:BitmapData;
+		protected var filledBarRect:Rectangle;
+		protected var filledBarPoint:Point;
 		
-		private var fillDirection:uint;
-		private var fillHorizontal:Boolean;
+		protected var fillDirection:uint;
+		protected var fillHorizontal:Boolean;
 		
 		public static const FILL_LEFT_TO_RIGHT:uint = 1;
 		public static const FILL_RIGHT_TO_LEFT:uint = 2;
@@ -102,9 +102,9 @@ package org.flixel.plugin.photonstorm
 		public static const FILL_VERTICAL_INSIDE_OUT:uint = 7;
 		public static const FILL_VERTICAL_OUTSIDE_IN:uint = 8;
 		
-		private static const BAR_FILLED:uint = 1;
-		private static const BAR_GRADIENT:uint = 2;
-		private static const BAR_IMAGE:uint = 3;
+		protected static const BAR_FILLED:uint = 1;
+		protected static const BAR_GRADIENT:uint = 2;
+		protected static const BAR_IMAGE:uint = 3;
 		
 		/**
 		 * Create a new FlxBar Object

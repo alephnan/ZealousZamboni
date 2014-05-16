@@ -43,7 +43,7 @@ package
 		
 		//level specific assets
 		
-		public const Level1QId:uint = 0;
+		public const Level1QId:uint = 1;
 		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		[Embed(source = "../res/level0.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
 		[Embed(source = "../res/level0_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class;
