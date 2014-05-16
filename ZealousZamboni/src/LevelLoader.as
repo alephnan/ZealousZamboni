@@ -87,8 +87,8 @@ package
 		[Embed(source = "../res/level202.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
 		
 		public const Level6QId:uint = 6;
-		[Embed(source = '../res/level6.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
-		[Embed(source = "../res/level6.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
+		[Embed(source = '../res/tuanlevels/four.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
+		[Embed(source = "../res/tuanlevels/four.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
 		
 		public const Level7QId:uint = 7;
 		[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;

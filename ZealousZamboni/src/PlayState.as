@@ -151,7 +151,7 @@ package
 		/**
 		 * Function invoked when the player wins the level
 		 */
-		public function winLevel() : void {
+		private function winLevel() : void {
 			mouseTimer.stop();
 			ZzLog.logLevelEnd(false, mouseHistory, 0);
 			if (FlxG.level + 1 > LevelLoader.NUM_LEVELS) {
@@ -161,7 +161,7 @@ package
 			}
 		}
 		
-		public function loseLevel():void {
+		private function loseLevel():void {
 			mouseTimer.stop();
 			//TODO: Set final score
 			ZzLog.logLevelEnd(true, mouseHistory, player.health);
