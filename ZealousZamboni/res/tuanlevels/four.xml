@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1">
+	<motivation>
+		Illustrate the idea that two skaters, heading in same direction,
+		facing the same obstacles, will have the same determistic path / decision making.
+	</motivation>
+	<problem>
+		Both skaters will approximately die at same time, but it takes significant 
+		amount of time to go back and forth
+	</problem>
+	<solution>
+		1) Be very fast and go back and forth between both skaters
+		2) For the skater on the right, "block" their path on the first time they head west,
+		forcing them to go south into the wide open area. Then quickly go to the left skater and babysit them
+	</solution>
+	<progression>
+		1) Level can be preceded by level that introduces player to strategy of using
+		zamboni to "block" the skaters movement, forcing them to go in a certain direction.
+		posibly, skater head to pitfall, and the only way to save them is by blocking them and 
+		redirect them
+		2) I toned the level to 17 seconds per skater. If this was increased to 20 seconds,
+		the difficulty is a significantly harder
+	</progression>
+	<zamboni x="504" y="312" />
+	<skater x="40" y="40">
+		<start>1</start>
+		<time>17</time>
+	</skater>
+	<skater x="500" y="40">
+		<start>1</start>
+		<time>17</time>
+	</skater>
+</level>
