@@ -32,11 +32,8 @@ package
 			this.player = player;
 			this.playerGoal = playerGoal;
 			
-			restartButton = new FlxButton(FlxG.width - FlxG.width / 4 + 80, 0, null, onRestart);
+			restartButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 30, null, onRestart);
 			restartButton.loadGraphic(Media.restartPNG);
-			restartButton.scale = new FlxPoint(.6, .6);
-			restartButton.width = .6*88;
-			restartButton.height = .6*79;
 			add(restartButton);
 			
 			playerBar = new PlayerBar(restartButton.x - 150, 20, playerGoal, player);
@@ -52,7 +49,7 @@ package
 			
 			
 			// mute button
-			muteButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 100, null, toggleMute);
+			muteButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 80, null, toggleMute);
 			muteButton.loadGraphic(Media.mutePng);
 			add(muteButton);
 		}
