@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1">
+	<zamboni x="504" y="312" />
+	<skater x="160" y="96 ">
+		<start>2</start>
+		<time>20</time>
+	</skater>
+</level>
