@@ -20,11 +20,11 @@
 		Zamboni will need to immediately start heading to the spiral, and they only have about 3 seconds timeframe to be slow.
 	</solution>
 	<zamboni x="504" y="352" />
-	<skater x="40" y="40">
+	<skater>
 		<start>2</start>
 		<time>20</time>
 	</skater>
-	<skater x="500" y="80">
+	<skater>
 		<start>2</start>
 		<time>20</time>
 	</skater>
