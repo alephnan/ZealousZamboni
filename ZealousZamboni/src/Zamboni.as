@@ -342,6 +342,8 @@ package
 				
 			//} else if (other is PowerUp) {
 			if (other is PowerUp) {
+				ZzLog.logAction(ZzLog.ACTION_GAIN_POWER_UP,
+					{ "type" : PowerUp(other).type, "x" : other.x, "y" : other.y, "id" : other.ID});
 				if (PowerUp(other).type == PowerUp.BOOSTER) {
 					maxVelocity.y *= PowerUp.BOOSTER_SPEED_AMT;
 					maxVelocity.x *= PowerUp.BOOSTER_SPEED_AMT;
@@ -364,8 +366,8 @@ package
 					other.kill();
 				}else if (PowerUp(other).type == PowerUp.TIRE_CHAINS) {
 					tireChains = true;
-					var t:FlxTimer = new FlxTimer();
-					t.start(PowerUp.TIRE_CHAINS_TIME_LENGTH, 1, function(timer:*) : void { 
+					var tm:FlxTimer = new FlxTimer();
+					tm.start(PowerUp.TIRE_CHAINS_TIME_LENGTH, 1, function(timer:*) : void { 
 						tireChains = false;
 					} );
 					other.kill();

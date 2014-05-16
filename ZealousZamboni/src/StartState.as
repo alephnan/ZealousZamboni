@@ -21,7 +21,7 @@ package
 		
 		override public function create() : void {
 			FlxG.level = 999;
-			ZzLog.logLevelStart();
+			ZzLog.logLevelStart(ZzLog.PREGAME_QID);
 			
 			map = new FlxTilemap();
 			map.loadMap(new StartCsv(), Media.StartTilesheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
@@ -53,7 +53,7 @@ package
 			if (firstClick && FlxG.mouse.justPressed()) {
 				firstClick = false;
 				var data:Object = {"mouseX":FlxG.mouse.x, "mouseY":FlxG.mouse.y };
-				ZzLog.getLogger().logAction(ZzLog.FIRST_MOUSE_CLICK, data);
+				ZzLog.logAction(ZzLog.ACTION_FIRST_MOUSE_CLICK, data);
 			}
 			super.update();
 			FlxG.collide(map, player, tileCollision);
@@ -62,9 +62,8 @@ package
 		
 		private function onFade() : void {
 			player.kill();
-			ZzLog.logLevelEnd();
+			ZzLog.logLevelEnd(false, null, 0);
 			FlxG.level = 1;
-			ZzLog.logLevelStart();
 			FlxG.switchState(new PlayState());
 		}
 		

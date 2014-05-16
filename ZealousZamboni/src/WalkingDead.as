@@ -49,6 +49,8 @@ package
 			drag.y = maxVelocity.y * 4;
 			this.play("walkS", true);
 			new FlxTimer().start(START_TIME, 1, function (t:*) : void { isStarted = true } );
+			
+			ZzLog.logAction(ZzLog.ACTION_ZOMBIE_ENTER, getLoggableObject());
 		}
 		
 		override public function update() : void {
@@ -92,6 +94,7 @@ package
 			p.addPoint(getMidpoint());
 			p.addPoint(PlayState(FlxG.state).getNearestSkater(getMidpoint()));
 			if (canLunge && ZzUtils.dist(getMidpoint(), p.tail()) < lungeDist) {
+				ZzLog.logAction(ZzLog.ACTION_ZOMBIE_LUNGE, getLoggableObject());
 				speed *= 4;
 				canLunge = false;
 				new FlxTimer().start(.1, 1, function (t:*) : void { speed /= 8; } );
@@ -104,6 +107,7 @@ package
 		override public function onCollision(other:FlxObject) : void {
 			if (!alive) return;
 			if (other is Zamboni) {
+				ZzLog.logAction(ZzLog.ACTION_ZOMBIE_DIE, getLoggableObject());
 				alive = false;
 				SoundPlayer.zombieDeath.play();
 				SoundPlayer.zombieHit.play();
@@ -122,6 +126,18 @@ package
 				
 			}
 			
+		}
+		
+		/**
+		 * Returns a loggable summary of this object's state
+		 * @return
+		 */
+		private function getLoggableObject() : Object {
+			return { 
+					"x" : x, 
+					"y" : y, 
+					"id" : this.ID 
+					};
 		}
 	}
 	

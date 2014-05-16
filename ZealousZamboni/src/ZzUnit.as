@@ -13,8 +13,12 @@ package
 	 */
 	public class ZzUnit extends FlxSprite implements ICollidable
 	{
+		
+		private static var nextZId:int = 0;
+		
 		public function ZzUnit(X:Number, Y:Number) {
 			super(X, Y);
+			ID = nextZId++;
 		}
 		
 		/**

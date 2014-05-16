@@ -42,6 +42,7 @@ package
 			this.height = LevelLoader.TILE_SIZE;
 			loadGraphic(Media[String(type)+"PNG"], false, true, 16, 16);
 			this.scale = new FlxPoint(2, 2);
+			ZzLog.logAction(ZzLog.ACTION_POWER_UP_APPEAR, { "type" : type, "x" : x, "y" : y, "id" : this.ID} );
 		}
 	}
 	

@@ -19,6 +19,7 @@ package
 	 */
 	public class Skater extends ZzUnit
 	{
+		public static const TYPE_SIMPLE:String = "simple";
 		[Embed(source='../media/skater.png')]
 		private var skaterPNG:Class;
 		[Embed(source='../media/skater2.png')]
@@ -53,12 +54,16 @@ package
 		// color of trail associated with this skater
 		private var trailColor:uint; 
 		
-		public function Skater(X:Number, Y:Number, time:int)
+		// Type of skater for later use
+		private var type:String;
+		
+		public function Skater(X:Number, Y:Number, time:int, type:String = TYPE_SIMPLE )
 		{
 			// randomly choose a trail color
 			trailColor = Math.floor(Math.random() * LevelLoader.NUM_COLORS) + LevelLoader.TRAIL_TILE_INDEX;
 			
 			super(X, Y);
+			this.type = type;
 			timeToSkate = time;
 			timer = new FlxTimer();
 			progress = new FlxBar(x, y, 1, 48, 8, this, "progressTime", 0, time);
@@ -100,18 +105,6 @@ package
 			this.height = LevelLoader.TILE_SIZE;
 			this.allowCollisions = 0;
 			this.offset = new FlxPoint(12, 18); // used trial and error here
-			/*var o:Number = 0; //offset for specifying animations
-			addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
-			o = 16;
-			addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
-			o = 32;
-			addAnimation("walkW", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
-			o = 48;
-			addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
-			addAnimation("death", [6, 22, 38, 54], 8, true);
-			addAnimation("hurt", [16], 1, true);*/
-			//maxVelocity.x = 120;
-			//maxVelocity.y = 120;
 			maxVelocity.x = 150;
 			maxVelocity.y = 150;
 			drag.x = maxVelocity.x * 4;
@@ -126,6 +119,7 @@ package
 				isStarted = true;
 				allowCollisions = FlxObject.ANY; 
 				stopFollowingPath(true); } );
+			ZzLog.logAction(ZzLog.ACTION_SKATER_ENTER, getLoggableObject() );
 		}
 		
 		override public function postConstruct(addDependency:Function):void
@@ -238,6 +232,7 @@ package
 				progressTime = timeToSkate;
 				if (this.pathSpeed == 0)
 				{
+					ZzLog.logAction(ZzLog.ACTION_SKATER_EXIT, getLoggableObject());
 					exists = false;
 					progress.exists = false;
 					PlayState(FlxG.state).skaterComplete(this, false);
@@ -265,6 +260,7 @@ package
 		
 		private function skaterDeathHandler(timer:FlxTimer=null):void
 		{
+			ZzLog.logAction(ZzLog.ACTION_SKATER_DIE, getLoggableObject() );
 			SoundPlayer.skaterDeath.play();
 			exists = false;
 			progress.exists = false;
@@ -290,6 +286,7 @@ package
 			{
 				if (!skaterStuck)
 				{
+					ZzLog.logAction(ZzLog.ACTION_SKATER_STUCK, getLoggableObject() );
 					skaterStuck = true;
 					this.flicker(SKATER_DEATH_SLACK);
 					deathTimer.start(SKATER_DEATH_SLACK, 1, skaterDeathHandler);
@@ -310,6 +307,7 @@ package
 				isGoingRight();
 			if (other is WalkingDead)
 			{
+				ZzLog.logAction(ZzLog.ACTION_SKATER_EATEN_BY_ZOMBIE, getLoggableObject());
 				skaterDeathHandler();
 			}
 		}
@@ -317,6 +315,8 @@ package
 		//Function called when skater gets free from being stuck
 		private function endStuck():void
 		{
+			
+			ZzLog.logAction(ZzLog.ACTION_SKATER_UNSTUCK, getLoggableObject() );
 			if (skaterStuckSnd)
 			{
 				skaterStuckSnd.stop();
@@ -476,6 +476,19 @@ package
 			progress.destroy();
 			deathTimer = null;
 			explosion.destroy();
+		}
+		
+		/**
+		 * Returns a loggable summary of this object's state
+		 * @return
+		 */
+		private function getLoggableObject() : Object {
+			return { 
+					"type" : type, 
+					"x" : x, 
+					"y" : y, 
+					"id" : this.ID 
+					};
 		}
 	}
 

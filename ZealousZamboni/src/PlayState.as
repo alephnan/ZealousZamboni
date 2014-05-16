@@ -38,12 +38,17 @@ package
 		
 		private var startTxt:FlxText;
 		
-		//public function PlayState(levelNum:uint = 1) {
-		/*public function PlayState() {
-			super();
-			levelLoader = new LevelLoader();
-			this.levelNum = levelNum;
-		}*/
+		private static const MOUSE_CURRENTLY_PRESSED:int = 0;
+		private static const MOUSE_NOT_PRESSED:int = 1;
+		private static const MOUSE_JUST_CLICKED:int = 2;
+		
+		//A hetrogenous array consisting of (Timestamp, Coordinate, Int) tuples
+		private var mouseHistory:Array = new Array();
+		
+		private var mouseTimer:FlxTimer;
+		
+		//Track mouse every .25 seconds
+		private static const MOUSE_LOG_INTERVAL:Number = .25;
 		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
@@ -52,40 +57,31 @@ package
 			levelLoader.loadLevel(FlxG.level);
 			level = levelLoader.getTilemap();
 			add(level);
-			
 			player = levelLoader.getPlayer();
 			activeSprites.push(player);
 			add(player);
 			startSprites(levelLoader.getSpriteQueues());
 			hud = new ZzHUD(player, this);
 			add(hud);
+			ZzLog.logLevelStart(levelLoader.levelQId);
 			FlxG.mouse.show();
-			
-			/*if (FlxG.level == 1) {
-				startTxt = new FlxText(FlxG.width / 2 + 25, FlxG.height / 2 - 200, FlxG.width, "Don't let skaters\n     get stuck!");
-				startTxt.size = 30;
-				startTxt.scale = new FlxPoint(2, 2);
-				startTxt.color = 0x0101DF;
-				startTxt.shadow = 0xA4A4A4;
-				startTxt.alpha = 1;
-				var timer:FlxTimer = new FlxTimer();
-				add(startTxt);
-				timer.start(.5, 7, onStart);
-			}*/
+			//First element in mouseHistory is a header containing metadata
+			mouseHistory.push( { "interval" : MOUSE_LOG_INTERVAL, "start" : new Date().time} );
+			mouseTimer = new FlxTimer();
+			mouseTimer.start(MOUSE_LOG_INTERVAL, 0, logMouse);
 		}
 		
-		/*public function onStart(timer:FlxTimer):void {
-			
-			if (timer.finished) {
-				startTxt.kill();
-			} else {
-				if (timer.loopsLeft % 2 == 0) {
-					startTxt.alpha = 0;
-				} else {
-					startTxt.alpha = 1;
-				}
+		private function logMouse(t:FlxTimer) : void {
+			var state:int;
+			if (FlxG.mouse.justPressed) {
+				state = MOUSE_JUST_CLICKED;
+			}else if (FlxG.mouse.pressed) {
+				state = MOUSE_CURRENTLY_PRESSED;
+			}else {
+				state = MOUSE_NOT_PRESSED;
 			}
-		}*/
+			mouseHistory.push( { "x":FlxG.mouse.screenX, "y":FlxG.mouse.screenY, "state" :state} );
+		}
 		
 		private function startSprites(queues:Array):void {
 			for (var i:uint = 0; i < queues.length; ++i) {
@@ -103,6 +99,9 @@ package
 			if (killed) {
 				player.hurt(1);
 				if (player.alive == false) {
+					mouseTimer.stop();
+					//TODO: Set final score
+					ZzLog.logLevelEnd(true, mouseHistory, 0);
 					FlxG.switchState(new LevelFailedState());
 					return;
 				}
@@ -120,6 +119,9 @@ package
 		 * Function invoked when the player wins the level
 		 */
 		public function winLevel() : void {
+			mouseTimer.stop();
+			//TODO: Set final score
+			ZzLog.logLevelEnd(false, mouseHistory, 0);
 			FlxG.switchState(new LevelWinState());
 		}
 		
@@ -128,6 +130,9 @@ package
 		 * there are no more levels (they win the game)
 		 */
 		public function winGame() : void {
+			mouseTimer.stop();
+			//TODO: Set final score
+			ZzLog.logLevelEnd(false, mouseHistory, 0);
 			FlxG.switchState(new EndState());
 		}
 		

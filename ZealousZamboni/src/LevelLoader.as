@@ -43,33 +43,33 @@ package
 		
 		//level specific assets
 		
-		public const Level1QId:String = "zz1z";
-		[Embed(source = '../res/levelzz1z.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
-		[Embed(source = "../res/levelzz1z.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
-		[Embed(source = "../res/levelzz1z_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class;
+		public const Level1QId:uint = 0;
+		[Embed(source = '../res/level0.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
+		[Embed(source = "../res/level0.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
+		[Embed(source = "../res/level0_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class;
 		
-		public const Level2QId:String = "2";
+		public const Level2QId:uint = 2;
 		[Embed(source = '../res/level2.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
 		[Embed(source = "../res/level2.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
 		[Embed(source = "../res/level2_ruts.txt", mimeType = "application/octet-stream")] public var Level2Ruts:Class;
 		
-		public const Level3QId:String = "3";
+		public const Level3QId:uint = 3;
 		[Embed(source = '../res/level3.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
 		[Embed(source = "../res/level3.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
 		
-		public const Level4QId:String = "4";
+		public const Level4QId:uint = 4;
 		[Embed(source = '../res/level4.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
 		[Embed(source = "../res/level4.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;
 		
-		public const Level5QId:String = "5";
+		public const Level5QId:uint = 5;
 		[Embed(source = '../res/level5.txt', mimeType = "application/octet-stream")] public var Level5Csv:Class;
 		[Embed(source = "../res/level5.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
 		
-		public const Level6QId:String = "6";
+		public const Level6QId:uint = 6;
 		[Embed(source = '../res/level6.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
 		[Embed(source = "../res/level6.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
 		
-		public const Level7QId:String = "7";
+		public const Level7QId:uint = 7;
 		[Embed(source = '../res/level7.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
 		[Embed(source = "../res/level7.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
 		
@@ -88,6 +88,11 @@ package
 		
 		private var DEBUG:Boolean;
 		
+		/**
+		 * The qId for the current level.
+		 */
+		public var levelQId:uint;
+		
 		public function LevelLoader(debugEnabled:Boolean = false) {
 			this.DEBUG = debugEnabled;
 		}
@@ -101,6 +106,7 @@ package
 		public function loadLevel(level_num:uint) : void {
 			level = new FlxTilemap();
 			level.loadMap(new this["Level" + level_num + "Csv"](), Media.TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
+			levelQId = this["Level" + level_num + "QId"];
 			ZzUtils.setLevel(level);
 			queues = new Array();
 			// parseXML MUST be called before addRutsToMap
