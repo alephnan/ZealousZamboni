@@ -18,7 +18,8 @@ package
 		[Embed(source = '../media/skater2.png')] public static const skater2PNG:Class;
 		[Embed(source = '../media/zombie.png')] public static const walkingDeadPNG:Class;
 		[Embed(source = '../media/zamboni_4way.png')] public static const zamboniPNG:Class;
-		[Embed(source = '../media/redo.png')] public static const restartPNG:Class;
+		[Embed(source = '../media/redo2.png')] public static const restartPNG:Class;
+		// [Embed(source = '../media/redo.png')] public static const restartPNG:Class;
 		[Embed(source = '../media/SplashScreen.jpg')] public static const splashPNG:Class;
 		
 		
