@@ -10,9 +10,9 @@ package
 	{
 		public var mouseHistory:Array;
 		public var isLoss:Boolean;
-		public var finalScore:int;
+		public var finalScore:Number;
 		
-		public function LevelHistory(isLoss:Boolean, mHistory:Array, finalScore:int) {
+		public function LevelHistory(isLoss:Boolean, mHistory:Array, finalScore:Number) {
 			this.mouseHistory = mHistory;
 			this.isLoss = isLoss;
 			this.finalScore = finalScore;

@@ -111,7 +111,7 @@ package
 		 */
 		public function winLevel() : void {
 			mouseTimer.stop();
-			ZzLog.logLevelEnd(false, mouseHistory, 0);
+			ZzLog.logLevelEnd(false, mouseHistory, player.health);
 			if (FlxG.level + 1 > LevelLoader.NUM_LEVELS) {
 				FlxG.switchState(new EndState());
 			} else {
@@ -122,13 +122,13 @@ package
 		public function loseLevel():void {
 			mouseTimer.stop();
 			//TODO: Set final score
-			ZzLog.logLevelEnd(true, mouseHistory, 0);
+			ZzLog.logLevelEnd(true, mouseHistory, player.health);
 			FlxG.switchState(new LevelFailedState());
 		}
 		
 		public function restartLevel():void {
 			mouseTimer.stop();
-			ZzLog.logLevelEnd(true, mouseHistory, 0);
+			ZzLog.logLevelEnd(true, mouseHistory, player.health);
 			FlxG.resetState();
 		}
 		

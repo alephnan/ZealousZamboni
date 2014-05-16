@@ -30,7 +30,7 @@ package
 		// Tells us how long it took the user to figure out to use the mouse
 		//  and the coordinates that they first clicked (logging test)
 		public static const ACTION_FIRST_MOUSE_CLICK:int = 1;
-		public static const ACTION_LOSE:int = 0;
+		public static const ACTION_LOSE:int = 17;
 		public static const ACTION_WIN:int = 13;
 		public static const ACTION_SKATER_ENTER:int = 2;
 		public static const ACTION_SKATER_EXIT:int = 3;
@@ -59,7 +59,7 @@ package
 			}
 		}
 		
-		public static function logLevelEnd(isLoss:Boolean,mouseHistory:Array, finalScore:int):void 
+		public static function logLevelEnd(isLoss:Boolean,mouseHistory:Array, finalScore:Number):void 
 		{	if (!DEBUG) {
 				if (isLoss)
 					logger.logAction(ACTION_LOSE, "lose");
