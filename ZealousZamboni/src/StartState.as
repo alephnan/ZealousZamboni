@@ -32,7 +32,7 @@ package
 			start.immovable = true;
 			add(start);
 			
-			var txt1:FlxText = new FlxText(FlxG.width / 2 + 70, 50, FlxG.width, "Zealous Zamboni");
+			var txt1:FlxText = new FlxText(FlxG.width / 2 + 215, 50, FlxG.width, "Level 1");
 			txt1.size = 24;
 			txt1.scale = new FlxPoint(2, 2);
 			txt1.color = 0xE8E8E8;

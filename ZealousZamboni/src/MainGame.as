@@ -10,7 +10,7 @@ package
 	{
 		public function MainGame()
 		{
-			super(640,540,StartState,1);
+			super(640,540,SplashState,1);
 		}
 	}
 	
