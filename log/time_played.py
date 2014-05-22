@@ -29,8 +29,11 @@ INACTIVITY_LIMIT = 30000 #time in milliseconds that we consider inactve (i.e. 30
 
 def activeTimePlayed(levels):
 	totalActiveTime = 0
+	maxLevel = 0;
 	for level in levels:
 		if level["dqid"] is not None:
+			if level['qid'] > maxLevel and level['qid'] != 31337:
+				maxLevel = level['qid']
 			actions = level["actions"]
 			activeTime = 0
 			lastTimeStamp = 0
@@ -44,5 +47,6 @@ def activeTimePlayed(levels):
 				lastTimeStamp = currentTimeStamp
 				print "level: ",level["qid"]," activeTime: ",activeTime 		
 				totalActiveTime = totalActiveTime + activeTime
+	print "max level reached: %d" % maxLevel
 	return totalActiveTime/1000
 mainloop()
