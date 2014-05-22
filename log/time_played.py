@@ -16,7 +16,7 @@ def mainloop():
 		print "\tNumber of page loads (visits): %d" % len(player['pageloads'])
 		print "\tNumber of levels played: %d" % len(player['levels'])
 		levels = player['levels']
-		print "Active play time(ms): %d" % activeTimePlayed(levels)
+		print "Active play time(seconds): %d" % activeTimePlayed(levels)
 
 # Calculates the amount of active time played in seconds. Players sometimes space out or walk away from the
 # computer for long periods of time, so it's useful to just look at the amount of time that they spent actively
