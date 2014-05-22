@@ -130,6 +130,7 @@ package
 			if (ang < QUAD_OFFSET)
 				ang += 360;
 			
+			
 			if (0+QUAD_OFFSET <= ang && ang < 90 +QUAD_OFFSET) {
 				faceNorth();
 			} else if (90 + QUAD_OFFSET <= ang && ang < 180 + QUAD_OFFSET) {
@@ -178,7 +179,7 @@ package
 			// Check for rotation into wall
 			var wallRotation:Boolean = false;
 			level.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
-				if (LevelLoader.isWall(tile.index)) {
+				if (LevelLoader.isSolid(tile.index)) {
 					wallRotation = true;
 					
 				} 

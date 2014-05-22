@@ -67,8 +67,8 @@ package
 		public const Level1QId:uint = 101;
 		[Embed(source = '../res/level101.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		[Embed(source = "../res/level101.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
-		//[Embed(source = "../res/level0_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class; 
-	
+		//[Embed(source = "../res/level0_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class;
+		
 		public const Level2QId:uint = 102;
 		[Embed(source = '../res/level102.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
 		[Embed(source = "../res/level102.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
@@ -175,9 +175,19 @@ package
 			return queues;
 		}
 		
+		
+		public static function isSolid(tileIndex:uint) : Boolean {
+			if (isWall(tileIndex))
+				return true;
+			if (tileIndex >= SOLID_BLOCK && ICE_TILE_INDEX < + SOUTH_WALL_LOW)
+				return true;
+				
+			return false;
+			
+		};
+		
 		// return true if the given tileIndex is a wall, false otherwise
 		public static function isWall(tileIndex:uint) : Boolean {
-
 			if ( tileIndex >= NORTH_WALL_LOW && tileIndex <= NORTH_WALL_HIGH)
 				return true;
 			if ( tileIndex >= SOUTH_WALL_LOW && tileIndex <= SOUTH_WALL_HIGH)
