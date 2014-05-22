@@ -64,6 +64,7 @@ package
 			FlxG.bgColor = 0xffaaaaaa;
 			levelLoader = new LevelLoader();
 			activeSprites = new Array();
+			
 			levelLoader.loadLevel(FlxG.level);
 			level = levelLoader.getTilemap();
 			levelTime = levelLoader.levelTime;
@@ -190,12 +191,19 @@ package
 		{
 			super.update();
 			
-			if (FlxG.keys.C && FlxG.keys.H && FlxG.keys.E && FlxG.keys.A && FlxG.keys.T) {
-				winLevel();
-			}
+			cheatCode();
+			
 			// Collide all sprites with eachother and with the tilemap
 			collideGroups();
 		}
+		
+		
+		public function cheatCode() : void {
+			if (FlxG.keys.Q && FlxG.keys.P) {
+				winLevel();
+			}
+		}
+		
 		
 		private function collideGroups():void {
 			for (var i:uint = 0; i < activeSprites.length; ++i) {
