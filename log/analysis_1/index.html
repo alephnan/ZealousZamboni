@@ -1,0 +1,236 @@
+<html>
+	<head>
+		<title>Zealous Zamboni Data Analysis</title>
+		
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: auto;
+  position: absolute;
+  bottom: 0px;
+  width: 1500x;
+}
+
+text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+form {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+</style>
+
+
+		<script src="d3.js" charset="utf-8"></script>
+	
+		<script>
+		
+
+			var maxlevel = 10;
+			var n = maxlevel + 1;
+			var m = 45;
+			var stacks = new Array(m);
+			for (var i = 0 ; i < m; i++) {
+				stacks[i] = new Array(n);
+				stacks[i][0] = i + 1;
+				for(var j = 1 ; j < n ; j++) {
+					stacks[i][j] = 0;
+				}
+			}
+
+			var allPlays = new Array(m);
+
+			d3.json("../dump_prd_107-1.json", function(error, data) {
+				if(error)
+					return console.warn(error);
+
+				var levelTotalTime;
+				var i = 0;
+				data.forEach(function(d) {
+
+					var levels = d.levels;
+					// for keeping track of level number
+					var j = -1;
+					var uniqueLevels = {};
+
+					var totalTimePlayed = 0;
+					levelTotalTime = new Array(n);
+					for(var z = 0 ; z < n ; z++) {
+						levelTotalTime[z] = 0;
+					}
+					
+			
+					levels.forEach(function(g) {
+						// keeps track of level number
+						var levelId = g.qid;
+						if (!(levelId in uniqueLevels)) {
+
+							j++;
+							uniqueLevels[levelId] = true;
+						}
+						
+						// ignore last level, if player left, leaving g.quest_end object nul
+						if (g.quest_end && j!=n) {
+							var levelStart = +g.log_q_ts;
+							var levelEnd = +g.quest_end.log_q_ts;
+							var levelTime = levelEnd - levelStart;
+
+							levelTotalTime[j] += levelTime;
+
+							totalTimePlayed += levelTime;
+
+
+							if (!stacks[i][j])
+								stacks[i][j + 1] =  levelTime;
+							else
+								stacks[i][j + 1] += levelTime;
+						}
+					});
+
+			
+					var currentPlayer = new Object();
+					currentPlayer.totalTimePlayed = totalTimePlayed;
+					currentPlayer.levelTimes = levelTotalTime;
+					allPlays[i] = currentPlayer;
+					i++;
+
+				});
+
+				
+				allPlays.sort(function(a, b) {
+					if (a.totalTimePlayed < b.totalTimePlayed )
+						return -1;
+					else if (a.totalTimePlayed == b.totalTimePlayed)
+						return 0;
+					else
+						return 1;
+				});
+
+				for(var i = 0 ;  i < m ; i++) {
+					var currPlay = allPlays[i];
+					var levelTotals = currPlay.levelTimes;
+					for(var j = 0 ; j < n; j++) {
+						
+						stacks[i][j + 1] = levelTotals[j];
+					}
+				}
+
+				var scale = new Array(n);
+				for(var i = 0 ; i < n; i++) {
+					scale[i] = 60;
+				}
+				stacks.unshift(scale);
+
+			var barwidth = 30;
+		    var w = barwidth * m ,
+            h = 800;
+ 
+            // create canvas
+            var svg = d3.select("#viz").append("svg:svg")
+            .attr("class", "chart")
+            .attr("width", w)
+            .attr("height", h )
+            .append("svg:g")
+            .attr("transform", "translate(10,470)");
+ 
+            x = d3.scale.ordinal().rangeRoundBands([0, w-50])
+            y = d3.scale.linear().range([0, h-50])
+            z = d3.scale.ordinal().range(["darkblue", "blue", "lightblue", "red", "green", "yellow"])
+
+           
+            var color = function(i) {
+            	var lower = "0x87BCD6";
+            	var upper = "0x1F546E";
+
+            	var lower_n = parseInt(lower, 16);
+            	var upper_n = parseInt(upper, 16);
+
+            	var color = parseInt((((upper_n - lower_n ) * i / maxlevel)) + lower_n);
+            	var hex = "#" + color.toString(16);
+            	return hex;
+            };
+
+            var color2 = function(i) {
+            	var colors = ["#00ABE5", "#139ECE", "#2692B7", "#3986A0",
+            		"#4C7989", "#5F6D72", "#72615B", "#855444", "#98482D",
+            		"#AB3C16"
+            		];
+
+            	return colors[i%colors.length];
+            };
+
+ 
+            console.log("RAW MATRIX---------------------------");
+	    // 4 columns: ID,c1,c2,c3
+             var matrix = stacks;
+            console.log(matrix);
+ 
+            console.log("REMAP---------------------------");
+
+            var columns = new Array(maxlevel);
+            for (var i = 0 ; i < columns.length; i++)
+            	columns[i] = "c" + i;
+            var remapped = columns.map(function(dat,i){
+                return matrix.map(function(d,ii){
+                    return {x: ii, y: d[i+1] };
+                })
+            });
+            console.log(remapped);
+ 
+            console.log("LAYOUT---------------------------");
+            var stacked = d3.layout.stack()(remapped)
+            console.log(stacked)
+ 
+            x.domain(stacked[0].map(function(d) { return d.x; }));
+            y.domain([0, d3.max(stacked[stacked.length - 1], function(d) { return d.y0 + d.y; })]);
+ 
+            // show the domains of the scales              
+            console.log("x.domain(): " + x.domain())
+            console.log("y.domain(): " + y.domain())
+            console.log("------------------------------------------------------------------");
+ 
+            // Add a group for each column.
+            var valgroup = svg.selectAll("g.valgroup")
+            .data(stacked)
+            .enter().append("svg:g")
+            .attr("class", "valgroup")
+            .style("fill", function(d, i) { return color(i); })
+            .style("stroke", function(d, i) { return function() {return "white"}; });
+ 
+            // Add a rect for each date.
+            var rect = valgroup.selectAll("rect")
+            .data(function(d){return d;})
+            .enter().append("svg:rect")
+            .attr("x", function(d) { return x(d.x); })
+            .attr("y", function(d) { return -y(d.y0) - y(d.y); })
+            .attr("height", function(d) { return y(d.y); })
+            .attr("width", x.rangeBand());
+
+
+				
+			});
+
+
+		</script>
+
+  </head>
+  <body>
+
+        <div id="viz"></div>
+ 
+
+		
+
+	</body>
+</html>
