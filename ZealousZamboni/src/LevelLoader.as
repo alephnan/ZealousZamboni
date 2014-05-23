@@ -179,7 +179,7 @@ package
 		public static function isSolid(tileIndex:uint) : Boolean {
 			if (isWall(tileIndex))
 				return true;
-			if (tileIndex >= SOLID_BLOCK && ICE_TILE_INDEX < + SOUTH_WALL_LOW)
+			if (tileIndex >= SOLID_BLOCK && tileIndex <  SOUTH_WALL_LOW)
 				return true;
 				
 			return false;
