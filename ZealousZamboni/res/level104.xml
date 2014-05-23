@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level width="640" height="528" lives="1" goal="100">
+<level width="640" height="528" lives="1" goal="2">
 	<motivation>
 		Illustrate the idea that two skaters, heading in same direction,
 		facing the same obstacles, will have the same determistic path / decision making.
@@ -22,11 +22,11 @@
 		the difficulty is a significantly harder
 	</progression>
 	<zamboni x="504" y="312" />
-	<skater x="40" y="88">
+	<skater x="40" y="88" dir="DOWN">
 		<start>1</start>
 		<time>17</time>
 	</skater>
-	<skater x="500" y="88">
+	<skater x="500" y="88" toX="360" toY="104" dir="DOWN">
 		<start>1</start>
 		<time>17</time>
 	</skater>
