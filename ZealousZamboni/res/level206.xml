@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="60" goal="1">
+	<description>
+		This level is intended to teach the player how to drive the zamboni and collect trail tiles
+		My hope is that by the end of this level they will know that:
+			Collecting trails yields points
+			How to drive
+	</description>
+	<zamboni x="184" y="96"/>
+</level>

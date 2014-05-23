@@ -55,7 +55,7 @@ package
 		private var levelEnded : Boolean;
 		
 		//Minimum number of points player must achieve by time limit to win level
-		private var playerGoalPoints:uint = 50;
+		//private var playerGoalPoints:uint = 50;
 		
 		//Time that the level lasts for
 		private var levelTime:Number = 30;
@@ -68,13 +68,14 @@ package
 			levelLoader.loadLevel(FlxG.level);
 			level = levelLoader.getTilemap();
 			levelTime = levelLoader.levelTime;
-			playerGoalPoints = levelLoader.goalPoints;
+			//playerGoalPoints = levelLoader.goalPoints;
+			playerPoints = new PlayerPoints(14, levelLoader.goalPoints);
 			add(level);
 			player = levelLoader.getPlayer();
 			activeSprites.push(player);
 			add(player);
 			startSprites(levelLoader.getSpriteQueues());
-			hud = new ZzHUD(player, levelTime, playerGoalPoints);
+			hud = new ZzHUD(player, levelTime, playerPoints);
 			add(hud);
 			ZzLog.logLevelStart(levelLoader.levelQId);
 			
@@ -115,11 +116,11 @@ package
 		 */
 		public function skaterComplete(s:Skater, killed:Boolean = false) : void {
 			if (killed) {
-				player.updatePlayerHealth(PlayerPoints.SKATER_REWARD_PENALTY);
-				playerPoints.generateRewardOrPenalty(s.getMidpoint(), PlayerPoints.SKATER_REWARD_PENALTY, true);
+				//player.updatePlayerHealth(PlayerPoints.SKATER_REWARD_PENALTY);
+				//playerPoints.generateRewardOrPenalty(s.getMidpoint(), PlayerPoints.SKATER_REWARD_PENALTY, true);
 			} else {
-				player.updatePlayerHealth(PlayerPoints.SKATER_REWARD_PENALTY, false);
-				playerPoints.generateRewardOrPenalty(s.getMidpoint(), PlayerPoints.SKATER_REWARD_PENALTY, false);
+				//player.updatePlayerHealth(PlayerPoints.SKATER_REWARD_PENALTY, false);
+				playerPoints.generateReward(s.getMidpoint(), 1, true);
 			}
 			if (SkaterQueue(activeSprites[SKATERS_INDEX]).skatersFinished()) {
 				
@@ -141,7 +142,7 @@ package
 			}else {
 				return;
 			}
-			if (player.health > playerGoalPoints) {
+			if (playerPoints.checkWin()) {
 				winLevel();
 			}else {
 				loseLevel();
