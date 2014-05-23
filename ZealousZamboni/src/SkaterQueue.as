@@ -73,7 +73,7 @@ package
 					//if we have skater x,y use the nearest entrance to that instead of round robin
 					p = ZzUtils.getNearestEntrance(new FlxPoint(next.x, next.y));
 				}
-				var skater:Skater = new Skater(p.x, p.y, next.iceTime,null,next.toX,next.toY);
+				var skater:Skater = new Skater(p.x, p.y, next.iceTime,null,next.toX,next.toY, next.dir);
 				add(skater);
 				skater.postConstruct(PlayState(FlxG.state).addDep);
 			} 

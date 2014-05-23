@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="20" goal="1">
+	<description>
+		This level is just like the previous level except it introduces the player
+		to the timer. So it should help to reinforce driving and trail collection, but
+		also challenge the player to go as fast as possible
+	</description>
+	<zamboni x="168" y="224"/>
+</level>

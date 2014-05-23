@@ -57,7 +57,7 @@ package
 		// Type of skater for later use
 		private var type:String;
 		
-		public function Skater(X:Number, Y:Number, time:int, type:String = TYPE_SIMPLE, toX:Number = 0, toY:Number = 0)
+		public function Skater(X:Number, Y:Number, time:int, type:String = TYPE_SIMPLE, toX:Number = 0, toY:Number = 0, dir:String = "DOWN")
 		{
 			// randomly choose a trail color
 			trailColor = Math.floor(Math.random() * LevelLoader.NUM_COLORS) + LevelLoader.TRAIL_TILE_INDEX;
@@ -111,14 +111,23 @@ package
 			maxVelocity.y = 150;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
-			goingDown = true;
+			if (dir == "DOWN") {
+				goingDown = true;
+			}else if (dir == "LEFT") {
+				goingLeft = true;
+			}else if (dir == "RIGHT") {
+				goingRight = true;
+			}else {
+				goingUp = true;
+			}
 			this.play("walkS", true);
 			// Set up initial path that jumps over entrance ruts
 			var pt:FlxPath = new FlxPath();
 			pt.addPoint(getMidpoint());
 			var endPoint:FlxPoint = new FlxPoint(getMidpoint().x, getMidpoint().y);
 			if (toX == 0 && toY == 0) {
-				endPoint = new FlxPoint(FlxG.height / 2, FlxG.width / 2);
+				isStarted = true;
+				allowCollisions = FlxObject.ANY; 
 			}else {
 				if (toX != 0) {
 					endPoint.x = toX;
@@ -126,13 +135,14 @@ package
 				if (toY != 0) {
 					endPoint.y = toY;
 				}
+				pt.addPoint(endPoint);
+				this.followPath(pt, 120);
+				new FlxTimer().start(START_TIME, 1, function (t:*) : void { 
+					isStarted = true;
+					allowCollisions = FlxObject.ANY; 
+					stopFollowingPath(true); } );
 			}
-			pt.addPoint(endPoint);
-			this.followPath(pt, 120);
-			new FlxTimer().start(START_TIME, 1, function (t:*) : void { 
-				isStarted = true;
-				allowCollisions = FlxObject.ANY; 
-				stopFollowingPath(true); } );
+			
 			ZzLog.logAction(ZzLog.ACTION_SKATER_ENTER, getLoggableObject() );
 		}
 		
