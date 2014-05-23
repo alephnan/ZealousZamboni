@@ -110,9 +110,9 @@ package
 						level.setTileByIndex(tileIndex, origTile, true);
 					}
 					// add point to player health
-					updatePlayerHealth(PlayerPoints.CLEAR_TRAIL_REWARD, false);
+					//updatePlayerHealth(PlayerPoints.CLEAR_TRAIL_REWARD, false);
 					//PlayerPoints.getRef().generateRewardOrPenalty(tile.getMidpoint(), PlayerPoints.CLEAR_TRAIL_REWARD, false);
-					PlayState(FlxG.state).playerPoints.generateRewardOrPenalty(getMidpoint(), PlayerPoints.CLEAR_TRAIL_REWARD, false);
+					PlayState(FlxG.state).playerPoints.generateReward(getMidpoint(), PlayerPoints.CLEAR_TRAIL_REWARD, false);
 				}
 			})
 		}
@@ -145,7 +145,7 @@ package
 			wallHug(oldhorizontal);
 		}
 		
-		public function updatePlayerHealth(updateAmount:Number, penalty:Boolean = true):void {
+		/*public function updatePlayerHealth(updateAmount:Number, penalty:Boolean = true):void {
 			if (updateAmount <= 0)
 				return;
 			if (penalty) {
@@ -165,7 +165,7 @@ package
 			} else {
 				health -= damage;
 			}
-		}
+		}*/
 		
 		/*  Prevents zamboni from rotating when next to wall.  This would cause a glitch where
 			zamboni can "rotate out" of wall, and drive off the rink! 
@@ -362,7 +362,8 @@ package
 		override public function onCollision(other:FlxObject) : void {
 			var t:FlxTimer = new FlxTimer();
 			if (other is PowerUp) {
-				updatePlayerHealth(PlayerPoints.PICKUP_POWERUP_REWARD, false);
+				//updatePlayerHealth(PlayerPoints.PICKUP_POWERUP_REWARD, false);
+				PlayState(FlxG.state).playerPoints.generateReward(other.getMidpoint(), PlayerPoints.PICKUP_POWERUP_REWARD, false);
 				ZzLog.logAction(ZzLog.ACTION_GAIN_POWER_UP,
 					{ "type" : PowerUp(other).type, "x" : other.x, "y" : other.y, "id" : other.ID});
 				if (PowerUp(other).type == PowerUp.BOOSTER) {

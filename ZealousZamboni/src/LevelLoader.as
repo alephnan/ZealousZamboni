@@ -41,7 +41,7 @@ package
 		
 		public static const NUM_TILES:uint = 1184;
 		
-		public static const DEFAULT_GOAL_POINTS:uint = 50;
+		public static const DEFAULT_GOAL_POINTS:uint = 1;
 	
 		public static const DEFAULT_LEVEL_TIME:Number = 30;
 		//level specific assets
