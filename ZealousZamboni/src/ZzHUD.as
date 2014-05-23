@@ -35,7 +35,7 @@ package
 			restartButton.loadGraphic(Media.restartPNG);
 			add(restartButton);
 			
-			playerGoal = new PlayerGoal(restartButton.x - 60, 20, playerPoints);
+			playerGoal = new PlayerGoal(restartButton.x - 60, 5, playerPoints);
 			add(playerGoal);
 			
 			//playerBar = new PlayerBar(restartButton.x - 150, 20, playerGoal, player);

@@ -27,6 +27,10 @@ package
 		
 		[Embed(source = '../media/notmute.png')] public static const mutePng:Class;
 		[Embed(source = '../media/mute.png')] public static const unmutePng:Class;
+		[Embed(source = '../media/star_big_small.png')] public static const bigStarPng:Class;
+		[Embed(source = '../media/star_big_outline_small.png')] public static const bigStarOutlinePng:Class;
+		[Embed(source = '../media/star_small_small.png')] public static const smallStarPng:Class;
+		[Embed(source = '../media/star_small_icon_small.png')] public static const smallStarIconPng:Class;
 	}
 
 }

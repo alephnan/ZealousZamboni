@@ -27,16 +27,15 @@ package
 			trace(bigStarGoal);
 			for (var i:uint = 0; i < bigStarGoal; ++i) {
 				var goalStar:FlxSprite = new FlxSprite(X + (i + 1) * 20, Y);
-				goalStar.makeGraphic(30, 30, GRAY, false);
+				goalStar.loadGraphic(Media.bigStarOutlinePng);
 				add(goalStar);
 				goalStars.push(goalStar);
 			}
 			subGoalStar = new FlxSprite(X - 60, Y + 10);
-			subGoalStar.makeGraphic(20, 20, BLUE, false);
+			subGoalStar.loadGraphic(Media.smallStarPng);
 			add(subGoalStar);
 			subGoalText = new FlxText(X - 10, Y, 50, "0", false);
 			subGoalText.size = 12;
-			subGoalText.scale = new FlxPoint(2, 2);
 			add(subGoalText);
 		}
 		
@@ -48,7 +47,8 @@ package
 			//trace("numBigStars = " + numBigStars + ", filled big stars = " + numFilledBigStars);
 			// redraw any new gold stars
 			while (numFilledBigStars < numBigStars) {
-				FlxSprite(goalStars[numFilledBigStars]).makeGraphic(10, 10, GOLD, false);
+				var sprite:FlxSprite = FlxSprite(goalStars[numFilledBigStars]);
+				sprite.loadGraphic(Media.bigStarPng);
 				numFilledBigStars++;
 			}
 			
