@@ -10,7 +10,7 @@ package
 		
 		private static var level:FlxTilemap;
 		
-		public static var STARTING_LEVEL:uint = 1;
+		public static var STARTING_LEVEL:uint = 8;
 		
 		/**
 		 * Returns a point on a random entrance.

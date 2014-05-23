@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="25" goal="1">
+	<description>
+		This level introduces obstacles which make it harder to drive around
+		The timer is slightly longer than the previous level to compensate, but
+		it is still supposed to be somewhat difficult so that more skilled players do not
+		immiedetly lose interest
+	</description>
+	<zamboni x="176" y="88"/>
+</level>
