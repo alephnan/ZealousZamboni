@@ -63,8 +63,6 @@ package
 		[Embed(source = '../res/tuanlevels/three.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		[Embed(source = "../res/tuanlevels/three.xml", mimeType = "application/octet-stream")] public const Level1XML:Class; */
 
-		
-<<<<<<< HEAD
 		public const Level1QId:uint = 206;
 		[Embed(source = '../res/level206.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		[Embed(source = "../res/level206.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
