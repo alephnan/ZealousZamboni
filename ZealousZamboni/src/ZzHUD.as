@@ -12,13 +12,13 @@ package
 	public class ZzHUD extends FlxGroup 
 	{
 		// A ref to the player health bar group at the top of the level
-		private var playerBar:PlayerBar;
+		//private var playerBar:PlayerBar;
+		private var playerGoal:PlayerGoal;
 		
 		private var restartButton:FlxButton;
 		private var muteButton:FlxButton;
 		
 		private var player:Zamboni;
-		private var playerGoal:uint;
 		private var timerTxt:FlxText;
 		private var timer:FlxTimer;
 		
@@ -27,19 +27,22 @@ package
 		 * @param   player 		a reference to the player of the game
 		 * @param   levelTime	the length of the level in seconds
 		 */
-		public function ZzHUD(player:Zamboni, levelTime:uint, playerGoal:uint) {
+		public function ZzHUD(player:Zamboni, levelTime:uint, playerPoints:PlayerPoints) {
 			
 			this.player = player;
-			this.playerGoal = playerGoal;
 			
 			restartButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 30, null, onRestart);
 			restartButton.loadGraphic(Media.restartPNG);
 			add(restartButton);
 			
-			playerBar = new PlayerBar(restartButton.x - 150, 20, playerGoal, player);
-			add(playerBar);
+			playerGoal = new PlayerGoal(restartButton.x - 60, 20, playerPoints);
+			add(playerGoal);
 			
-			timerTxt = new FlxText(playerBar.x - 50, 20, 50, getTimeString(levelTime), false);
+			//playerBar = new PlayerBar(restartButton.x - 150, 20, playerGoal, player);
+			//add(playerBar);
+			var playerStarGoal:uint = 1; //playerPoints.getBigStarGoal();
+			
+			timerTxt = new FlxText(restartButton.x - playerStarGoal * 15 - playerStarGoal * 20 - 140, 20, 50, getTimeString(levelTime), false);
 			timerTxt.size = 14;
 			timerTxt.scale = new FlxPoint(2, 2);
 			add(timerTxt);
@@ -90,8 +93,11 @@ package
 		
 		override public function destroy():void {
 			super.destroy();
-			playerBar = null;
 			player = null;
+		}
+		
+		public function updateStars():void {
+			
 		}
 		
 	}
