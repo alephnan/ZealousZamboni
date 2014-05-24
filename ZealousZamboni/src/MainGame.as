@@ -5,12 +5,12 @@ package
 	 * ...
 	 * @author Kenny
 	 */
-	[SWF(width="640", height="540", backgroundColor="#000000")]
+	[SWF(width="640", height="480", backgroundColor="#000000")]
 	public class MainGame extends FlxGame
 	{
 		public function MainGame()
 		{
-			super(640,540,SplashState,1);
+			super(640,480,SplashState,1);
 		}
 	}
 	
