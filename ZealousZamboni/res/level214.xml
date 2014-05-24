@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="37" goal="2">
+	<description>
+		Similar to 213 but with less predictable path
+		Also requires player to collect the trails to win the level
+		
+	</description>
+	
+	<zamboni x="440" y="408" />
+	<skater x="336" y="80" dir="DOWN">
+		<start>1</start>
+		<time>26</time>
+	</skater>
+</level>

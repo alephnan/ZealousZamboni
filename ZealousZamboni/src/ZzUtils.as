@@ -10,6 +10,8 @@ package
 		
 		private static var level:FlxTilemap;
 		
+		//The one and only place the starting level should be defined
+		//This in general is 1, but can be set to others for debugging porpoises (they have a lot of bugs in them, I guess)
 		public static var STARTING_LEVEL:uint = 1;
 		
 		/**

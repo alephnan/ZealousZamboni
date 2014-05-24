@@ -33,8 +33,8 @@ package
 		private var horizontal:Boolean;
 		
 		/* Flags to show bounding box */
-		FlxG.debug = true;
-		FlxG.visualDebug = true;
+		//FlxG.debug = true;
+		//FlxG.visualDebug = true;
 		
 		public function Zamboni(startX:Number, startY:Number, level:FlxTilemap) {
 			super(startX, startY);

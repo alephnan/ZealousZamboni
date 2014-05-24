@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="26" goal="1">
+	<description>
+		This level will show that skaters will get themselves stuck in wall corner
+		It is also the part that ensures the player knows they can redirect skaters with
+		the zamboni, if they haven't learned it already. The level requires little movement
+		if you are able to predict the path of the skater, but it is not expected
+		that players can do that at this point
+	</description>
+	
+	<zamboni x="440" y="408" />
+	<skater dir="LEFT">
+		<start>2</start>
+		<time>18</time>
+	</skater>
+</level>

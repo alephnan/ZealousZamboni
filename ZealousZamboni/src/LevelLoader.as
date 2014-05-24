@@ -105,11 +105,19 @@ package
 		[Embed(source = '../res/level105.txt', mimeType = "application/octet-stream")] public var Level9Csv:Class;
 		[Embed(source = "../res/level105.xml", mimeType = "application/octet-stream")] public var Level9XML:Class;
 		
-		public const Level10QId:uint = 205;
-		[Embed(source = '../res/level205.txt', mimeType = "application/octet-stream")] public var Level10Csv:Class;
-		[Embed(source = "../res/level205.xml", mimeType = "application/octet-stream")] public var Level10XML:Class;
+		public const Level10QId:uint = 212;
+		[Embed(source = '../res/level212.txt', mimeType = "application/octet-stream")] public var Level10Csv:Class;
+		[Embed(source = "../res/level212.xml", mimeType = "application/octet-stream")] public var Level10XML:Class;
 		
-		public static const NUM_LEVELS:uint = 10;
+		public const Level11QId:uint = 213;
+		[Embed(source = '../res/level213.txt', mimeType = "application/octet-stream")] public var Level11Csv:Class;
+		[Embed(source = "../res/level213.xml", mimeType = "application/octet-stream")] public var Level11XML:Class;
+		
+		public const Level12QId:uint = 214;
+		[Embed(source = '../res/level214.txt', mimeType = "application/octet-stream")] public var Level12Csv:Class;
+		[Embed(source = "../res/level214.xml", mimeType = "application/octet-stream")] public var Level12XML:Class;
+		
+		public static const NUM_LEVELS:uint = 12;
 		
 		private var level:FlxTilemap;
 		
