@@ -9,7 +9,7 @@ package
 	{
 		public static const CLEAR_TRAIL_REWARD:uint = 1;
 		public static const PICKUP_POWERUP_REWARD:uint = 10;
-		public static const STAR_CONVERSION:uint = 550;
+		public static const STAR_CONVERSION:uint = 500;
 		public static const KILL_ZOMBIE_REWARD:uint = 20;
 		private var playerBigStarGoal:uint;
 		private var numSmallStars:uint;
@@ -19,17 +19,19 @@ package
 			super(maxSize);
 			numSmallStars = 0;
 			numBigStars = 0;
-			this.playerBigStarGoal = playerBigStarGoal;
-			trace(playerBigStarGoal);
+			if (playerBigStarGoal > 5)
+				this.playerBigStarGoal = 1;
+			else
+				this.playerBigStarGoal = playerBigStarGoal;
 			PlayState(FlxG.state).addDep(this);
 		}
 		
-		public function generateReward(location:FlxPoint, points:Number, bigStar:Boolean):void {
-			//trace("points = " + points + " x = " + location.x + " y = " + location.y);
-			if (bigStar)
+		public function generateReward(location:FlxPoint, points:uint, bigStar:Boolean):void {
+			if (bigStar) {
 				numBigStars++;
-			else
+			} else {
 				numSmallStars += points;
+			}
 			var pointStr:String = "+" + points;
 			var size:uint = 14;
 			var color:uint = 0xff4ddc34;

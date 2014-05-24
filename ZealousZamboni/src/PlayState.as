@@ -68,7 +68,6 @@ package
 			levelLoader.loadLevel(FlxG.level);
 			level = levelLoader.getTilemap();
 			levelTime = levelLoader.levelTime;
-			//playerGoalPoints = levelLoader.goalPoints;
 			playerPoints = new PlayerPoints(14, levelLoader.goalPoints);
 			add(level);
 			player = levelLoader.getPlayer();
@@ -79,8 +78,6 @@ package
 			add(hud);
 			ZzLog.logLevelStart(levelLoader.levelQId);
 			
-		
-			playerPoints = new PlayerPoints();
 			FlxG.mouse.show();
 			//First element in mouseHistory is a header containing metadata
 			mouseHistory.push( { "interval" : MOUSE_LOG_INTERVAL, "start" : new Date().time} );
@@ -119,7 +116,6 @@ package
 				//player.updatePlayerHealth(PlayerPoints.SKATER_REWARD_PENALTY);
 				//playerPoints.generateRewardOrPenalty(s.getMidpoint(), PlayerPoints.SKATER_REWARD_PENALTY, true);
 			} else {
-				//player.updatePlayerHealth(PlayerPoints.SKATER_REWARD_PENALTY, false);
 				playerPoints.generateReward(s.getMidpoint(), 1, true);
 			}
 			if (SkaterQueue(activeSprites[SKATERS_INDEX]).skatersFinished()) {
