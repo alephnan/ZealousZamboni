@@ -27,14 +27,14 @@ package
 			add(new FlxText(FlxG.width / 2 - 50, 190, 100, "Press S to start"));*/
 			
 			FlxG.bgColor = 0xFFFFFF;
-			var txt1:FlxText = new FlxText(FlxG.width / 2 + 5, 50, FlxG.width, "Too many skaters\n      got hurt :-(");
+			var txt1:FlxText = new FlxText(FlxG.width / 2 + 5, 50, FlxG.width, "You didn't collect enough stars");
 			txt1.size = 28;
 			txt1.scale = new FlxPoint(2, 2);
 			txt1.color = 0xE8E8E8;
 			txt1.shadow = 0x808080;
 			add(txt1);
 			
-			var button:FlxButton = new FlxButton(FlxG.width / 2 - 40, 350, "Restart level " + FlxG.level, onClick);
+			var button:FlxButton = new FlxButton(FlxG.width / 2 - 40, 350, "Retry Level " + FlxG.level, onClick);
 			button.color = 0x33CCFF;
 			button.width *= 5;
 			button.height *= 5;
