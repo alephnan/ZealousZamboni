@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="26" goal="2">
+	<description>
+		This level is a continuation on the previous level, but slightly more complicated
+		due to having two skaters
+		The trick is to immedietly sit at the center point of the level and let the skaters collide
+		with you. After that, rush to the top to block the skater on the top from getting stuck
+		the bottom one should take care of itself
+	</description>
+	
+	<zamboni x="440" y="408" />
+	<skater x="336" y="80" dir="DOWN">
+		<start>2</start>
+		<time>12</time>
+	</skater>
+	<skater x="336" y="464" dir="UP">
+		<start>2</start>
+		<time>12</time>
+	</skater>
+</level>

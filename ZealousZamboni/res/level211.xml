@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level width="640" height="480" lives="1" time="20" goal="4">
+<level width="640" height="480" lives="1" time="20" goal="2">
 	<description>
 		This level will illustrate that skaters will get themselves stuck in their own trails
 		it does so by tempting the player with lots of trail tiles at the opposite end of the map
