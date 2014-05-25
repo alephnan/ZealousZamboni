@@ -179,7 +179,7 @@ package
 			// Check for rotation into wall
 			var wallRotation:Boolean = false;
 			level.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
-				if (LevelLoader.isWall(tile.index)) {
+				if (LevelLoader.isSolid(tile.index)) {
 					wallRotation = true;
 					
 				} 
@@ -220,26 +220,8 @@ package
 		private function faceEast() : void {
 			play("walkE");
 			facing = FlxObject.RIGHT;
-			//orientboundingBoxHorizontal();
+			orientboundingBoxHorizontal();
 			
-			this.angle = 0;
-			
-			var oldHorizontal : Boolean = horizontal; 
-			// un-offset the rotated bounding box
-			// overshots on the x, so that box can expand without collision, then attempts to push new box right
-			if (!horizontal) {
-			    x -= 18; // the hack. we'll compensate 9 pixels after we expand the width. 
-				y = y + 9;
-			} 
-				
-			width = 50;
-			height = 32;
-			horizontal = true;
-			
-			// undo the extra overshooting on the x
-			if (!oldHorizontal) {
-				x += 9;
-			}
 			// offset the east sprite, with respect to bounding box
 			offset.x = 14;
 			offset.y = 0;
@@ -261,22 +243,7 @@ package
 		private function faceSouth() : void {
 			facing = FlxObject.DOWN;
 			play("walkS");
-			this.angle = NS_ANGLE;
-			
-			var oldHorizontal : Boolean = horizontal;
-			// offset the rotated bounding box
-			// "overshoots 9 pixels north", then undos it
-			if (horizontal) {
-				x = x + 9;
-				y = y - 18; // hack, should be -=9, but we overshoot, and compensate after we increase the height
-			}
-				
-			width = 32;
-			height = 50;
-			horizontal = false;
-			if (oldHorizontal) {
-				y += 9;
-			}
+			orientBoundingBoxVertical();
 			
 			// offset the south sprite, with respect to the bounding box
 			offset.x = 15;
@@ -368,16 +335,8 @@ package
 		}
 		
 		override public function update() : void {
-			if (!alive) return;
-			checkPit(kill);
 			meltIce();
 			if (FlxG.mouse.pressed() || (FlxG.keys.SPACE && FlxG.mouse != null)) {
-				
-				var oldVelocityX = velocity.x;
-				var oldVelocityY = velocity.y;
-				
-				velocity.x = 0;
-				velocity.y = 0;
 				updateOrientation();
 				 
 				// logic to determine direction of mouse relative to zamboni
@@ -392,8 +351,6 @@ package
 				var yDirection:Number = (dy == 0) ? 0 : 1;
 				yDirection = (dy >= 0) ? yDirection : -1 * yDirection;
 				
-				velocity.x = oldVelocityX;
-				velocity.y = oldVelocityY;
 				// accelerate zamboni in direction of mouse
 				activeMotion(xDirection, yDirection, dx, dy);
 			} else {
