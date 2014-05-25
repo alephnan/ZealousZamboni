@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="30" goal="2">
+	<description>
+		Introduces zombies. Level completion should require that player cleared most
+		trails, zombie was killed, and skater survived
+	</description>
+	<zamboni x="386" y="336" />
+	<skater x="336" y="80" dir="DOWN">
+		<start>1</start>
+		<time>20</time>
+	</skater>
+	<zombie x="152" y="256">
+		<start>8</start>
+	</zombie>
+</level>
