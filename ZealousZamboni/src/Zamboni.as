@@ -33,8 +33,8 @@ package
 		private var horizontal:Boolean;
 		
 		/* Flags to show bounding box */
-		FlxG.debug = true;
-		FlxG.visualDebug = true;
+		//FlxG.debug = true;
+		//FlxG.visualDebug = true;
 		
 		public function Zamboni(startX:Number, startY:Number, level:FlxTilemap) {
 			super(startX, startY);
@@ -228,7 +228,7 @@ package
 			// un-offset the rotated bounding box
 			// overshots on the x, so that box can expand without collision, then attempts to push new box right
 			if (!horizontal) {
-			    x -= 18;
+			    x -= 18; // the hack. we'll compensate 9 pixels after we expand the width. 
 				y = y + 9;
 			} 
 				
@@ -268,7 +268,7 @@ package
 			// "overshoots 9 pixels north", then undos it
 			if (horizontal) {
 				x = x + 9;
-				y = y - 18;
+				y = y - 18; // hack, should be -=9, but we overshoot, and compensate after we increase the height
 			}
 				
 			width = 32;
