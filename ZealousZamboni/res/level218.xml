@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="528" lives="1" goal="2">
+	<description> 
+		rehash of earlier two-skater level but with pitfall
+	</description>
+	<zamboni x="376" y="248" />
+	<skater x="40" y="88" dir="DOWN">
+		<start>1</start>
+		<time>17</time>
+	</skater>
+	<skater x="500" y="88" toX="360" toY="104" dir="DOWN">
+		<start>1</start>
+		<time>17</time>
+	</skater>
+</level>
