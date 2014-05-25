@@ -11,6 +11,10 @@ package
 	 */
 	public class ZzHUD extends FlxGroup 
 	{
+		
+		public static var smallStarXY:FlxPoint = new FlxPoint(0, 0);
+		public static var bigStarXY:FlxPoint = new FlxPoint(0, 0);
+		
 		private var restartButton:FlxButton;
 		private var muteButton:FlxButton;
 		
@@ -20,6 +24,7 @@ package
 		
 		private var playerPoints:PlayerPoints;
 		private var goalStars:Array;
+		private var goalText:FlxText;
 		private var numFilledBigStars:uint;
 		private var subGoalStar:FlxSprite;
 		private var subGoalText:FlxText;
@@ -33,6 +38,7 @@ package
 			super();
 			this.player = player;
 			this.playerPoints = playerPoints;
+			add(playerPoints);
 			numFilledBigStars = 0;
 
 			// restart button
@@ -45,32 +51,40 @@ package
 			muteButton.loadGraphic(Media.mutePng);
 			add(muteButton);
 			
-			// big stars
+			// big star text ("0/1")
 			var bigStarGoal:uint = playerPoints.getBigStarGoal();
+			trace("goal = " + bigStarGoal);
+			/*goalText = new FlxText(restartButton.x - 70, 22, 40, "0/" + bigStarGoal, false);
+			goalText.size = 12;
+			goalText.scale = new FlxPoint(2, 2);
+			add(goalText);*/
+			
+			// big stars
 			goalStars = new Array();
 			for (var i:uint = 0; i < bigStarGoal; ++i) {
-				var goalStar:FlxSprite = new FlxSprite(restartButton.x - (i+1)*50, 5);
+				var goalStar:FlxSprite = new FlxSprite(restartButton.x - (i+1)*50 - 100, 5);
 				goalStar.loadGraphic(Media.bigStarOutlinePng);
 				add(goalStar);
 				goalStars.push(goalStar);
 			}
-			
-			// number of small stars
-			subGoalText = new FlxText(FlxSprite(goalStars[0]).x - 100, 22, 40, "0", false);
-			subGoalText.size = 12;
-			subGoalText.scale = new FlxPoint(2, 2);
+			var lastStar:FlxPoint = FlxSprite(goalStars[goalStars.length - 1]).getMidpoint();
+			bigStarXY.x = lastStar.x;
+			bigStarXY.y = lastStar.y;
+			subGoalText = new FlxText(FlxSprite(goalStars[goalStars.length - 1]).x - 100, 12, 70, "0", true);
+			subGoalText.setFormat("coolvetica", 40, 0xffffff);
 			add(subGoalText);
 			
 			// small star
-			subGoalStar = new FlxSprite(subGoalText.x - 70, 5);
+			subGoalStar = new FlxSprite(subGoalText.x - 50, 5);
 			subGoalStar.loadGraphic(Media.smallStarIconPng);
+			smallStarXY.x = subGoalStar.getMidpoint().x;
+			smallStarXY.y = subGoalStar.getMidpoint().y;
 			add(subGoalStar);
 			
 			
 			// level timer
-			timerTxt = new FlxText(100, 7, 50, getTimeString(levelTime), false);
-			timerTxt.size = 12;
-			timerTxt.scale = new FlxPoint(3, 3);
+			timerTxt = new FlxText(40, 10, 100, getTimeString(levelTime), true);
+			timerTxt.setFormat("coolvetica", 50, 0xffffff);
 			add(timerTxt);
 			timer = new FlxTimer();
 			timer.start(levelTime, 1, endLevel);
@@ -89,21 +103,24 @@ package
 		}
 		
 		override public function update() : void {
-			var numBigStars:uint = playerPoints.getBigStars();
-			//trace("numBigStars = " + numBigStars + ", filled big stars = " + numFilledBigStars);
-			// redraw any new gold stars
-			while (numFilledBigStars < numBigStars) {
-				var sprite:FlxSprite = FlxSprite(goalStars[numFilledBigStars]);
-				sprite.loadGraphic(Media.bigStarPng);
-				numFilledBigStars++;
-			}
 			// reset small star text
 			subGoalText.text = String(playerPoints.getSmallStars());
 			timerTxt.text = getTimeString(timer.timeLeft);
 			super.update();
 			
-			if (playerPoints.checkWin()) {
-				PlayState(FlxG.state).endLevel();
+			if ((playerPoints.checkWin() || PlayState(FlxG.state).skatersFinished) && timer.timeLeft > 3) {
+				timer.stop();
+				timer.start(3, 1, endLevel);
+				timerTxt.exists = false;
+			}
+		}
+		
+		public function fillStar():void {
+			var numBigStars:uint = playerPoints.getBigStars();
+			while (numFilledBigStars < numBigStars) {
+				var sprite:FlxSprite = FlxSprite(goalStars[goalStars.length - 1 - numFilledBigStars]);
+				sprite.loadGraphic(Media.bigStarPng);
+				numFilledBigStars++;
 			}
 		}
 		
