@@ -7,8 +7,8 @@ package
 	public class Media 
 	{
 		// Art
-		[Embed(source = "../media/rink_tiles4.png")] public static const TileSheet:Class;
-		[Embed(source = "../media/rink_tiles4.png")] public static const StartTilesheet:Class;
+		[Embed(source = "../media/rink_tiles5.png")] public static const TileSheet:Class;
+		[Embed(source = "../media/rink_tiles5.png")] public static const StartTilesheet:Class;
 		[Embed(source = "../media/start.png")] public static const StartImg:Class;
 		[Embed(source = "../media/mouse.png")] public static const MouseImg:Class;
 		[Embed(source = "../media/heart.png")] public static const HeartImg:Class;
