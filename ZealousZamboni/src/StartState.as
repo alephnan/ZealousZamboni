@@ -18,11 +18,13 @@ package
 		private var player:Zamboni;
 		private var start:FlxSprite;
 		private var firstClick:Boolean = true;
+		public var level:FlxTilemap;
 		
 		override public function create() : void {
 			ZzLog.logLevelStart(ZzLog.PREGAME_QID);
 			
 			map = new FlxTilemap();
+			level = map;
 			map.loadMap(new StartCsv(), Media.StartTilesheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
 			map.setTileProperties(LevelLoader.WALL_INDEX, FlxObject.ANY, tileCollision, null, LevelLoader.NUM_TILES - LevelLoader.WALL_INDEX);
 			add(map);

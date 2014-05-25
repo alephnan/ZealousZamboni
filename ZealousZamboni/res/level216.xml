@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="40" goal="3">
+	<description>
+		Zombies + lots of obstacles make this level challenging
+	</description>
+	<zamboni x="386" y="336" />
+	<skater x="336" y="80" dir="LEFT">
+		<start>1</start>
+		<time>20</time>
+	</skater>
+	<skater x="336" y="80" dir="RIGHT">
+		<start>12</start>
+		<time>20</time>
+	</skater>
+	<zombie x="216" y="128">
+		<start>8</start>
+	</zombie>
+	<zombie x="216" y="128">
+		<start>16</start>
+	</zombie>
+	<zombie x="216" y="128">
+		<start>24</start>
+	</zombie>
+	<zombie x="416" y="360">
+		<start>12</start>
+	</zombie>
+	<zombie x="416" y="360">
+		<start>20</start>
+	</zombie>
+	<zombie x="416" y="360">
+		<start>28</start>
+	</zombie>
+</level>

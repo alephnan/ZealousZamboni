@@ -214,6 +214,10 @@ package
 		override public function update():void
 		{
 			super.update();
+			if (!alive) return;
+			if(pathSpeed ==0){
+				checkPit(skaterDeathHandler);
+			}
 			var curTile:FlxPoint = getMidpoint();
 			if (!isStarted) return;
 			if (skaterStuck && !isStuck(curTile.x / LevelLoader.TILE_SIZE, curTile.y / LevelLoader.TILE_SIZE)) {

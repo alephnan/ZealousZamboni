@@ -27,6 +27,7 @@ package
 		public static const WALL_INDEX:uint = 1054;
 		public static const TRAIL_TILE_INDEX:uint = 1078; // starting index of first trail color, that skater leaves
 		public static const NUM_COLORS:uint = 10; // number of different trail colors
+		public static const PIT_INDEX:uint = 1028;
 		
 		// Index range for north / south walls (including corners) (inclusive)
 		public static const NORTH_WALL_LOW:uint = 1089;
@@ -121,7 +122,11 @@ package
 		[Embed(source = '../res/level215.txt', mimeType = "application/octet-stream")] public var Level13Csv:Class;
 		[Embed(source = "../res/level215.xml", mimeType = "application/octet-stream")] public var Level13XML:Class;
 		
-		public static const NUM_LEVELS:uint = 13;
+		public const Level14QId:uint = 216;
+		[Embed(source = '../res/level216.txt', mimeType = "application/octet-stream")] public var Level14Csv:Class;
+		[Embed(source = "../res/level216.xml", mimeType = "application/octet-stream")] public var Level14XML:Class;
+		
+		public static const NUM_LEVELS:uint = 14;
 		
 		private var level:FlxTilemap;
 		

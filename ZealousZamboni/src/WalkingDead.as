@@ -55,6 +55,7 @@ package
 		
 		override public function update() : void {
 			if (!alive || !isStarted) return;
+			checkPit(kill);
 			if(nextPathUpdate <= 0){
 				updatePath();
 				nextPathUpdate = 10;
@@ -120,7 +121,7 @@ package
 				this.angularVelocity = 900;
 				this.angularAcceleration = -400;
 				var tm:FlxTimer = new FlxTimer();
-				tm.start(1, 1, function (t:*) {
+				tm.start(1, 1, function (t:*) : void {
 					kill()
 				});
 				

@@ -335,6 +335,8 @@ package
 		}
 		
 		override public function update() : void {
+			if (!alive) return;
+			checkPit(kill);
 			meltIce();
 			if (FlxG.mouse.pressed() || (FlxG.keys.SPACE && FlxG.mouse != null)) {
 				updateOrientation();

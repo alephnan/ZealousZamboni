@@ -949,7 +949,7 @@ package org.flixel
 				{
 					overlapFound = false;
 					tile = _tileObjects[_data[rowStart+column]] as FlxTile;
-					if(tile.allowCollisions)
+					if(true) //Changed by Kenny so that overlapsWithCallback works even for non-collidable tiles
 					{
 						tile.x = X+column*_tileWidth;
 						tile.y = Y+row*_tileHeight;

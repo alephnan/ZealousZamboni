@@ -107,6 +107,10 @@ package
 		private static var SoundtrackThree : Class; 		 
 		public static var soundtrackThree : Sound = (new SoundtrackThree) as Sound;
 		
+		[Embed(source='../media/soundeffects/fall.mp3')] 		 
+		private static var Fall : Class; 		 
+		public static var fall : Sound = (new Fall) as Sound;
+		
 		private var soundSettings: SoundTransform;
 		private var playlistSoundSetting : SoundTransform;
 		
@@ -117,7 +121,8 @@ package
 			"skaterStart" : skaterStart,
 			"skaterSuccess" : skaterSuccess,
 			"zombieDeath" : zombieDeath,
-			"zombieHit" : zombieHit
+			"zombieHit" : zombieHit,
+			"fall" : fall
 		};
 		
 		private static var playlist : Array = new Array(
