@@ -65,7 +65,7 @@ package
 			//This calculation looks super weird. What we're doing is basically
 			//considering how many pixels are overlapping pits vs how many aren't
 			//The exact numbers are totally arbitrary, and this should probably be done in a different way
-			if (pitCounter*Math.pow(LevelLoader.TILE_SIZE,2) >= ((width)*(height)) ) {
+			if (pitCounter*Math.pow(LevelLoader.TILE_SIZE,2) > ((width+8)*(height)) ) {
 				LevelLoader.SOUND_PLAYER.play("fall");
 				alive = false;
 				new FlxTimer().start(.2, fallCounter, function(t:FlxTimer) : void {

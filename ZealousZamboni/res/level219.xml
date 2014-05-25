@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="40" goal="1">
+	<description>
+		Grid of zamboni-sized pits and one skater to save
+		Hardest part is not falling in while cleaning up
+	</description>
+	<zamboni x="128" y="344" />
+	<skater x="391" y="80" dir="LEFT">
+		<start>4</start>
+		<time>20</time>
+	</skater>
+</level>
