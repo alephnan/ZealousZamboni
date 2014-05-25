@@ -117,10 +117,14 @@ package
 		
 		public function fillStar():void {
 			var numBigStars:uint = playerPoints.getBigStars();
-			while (numFilledBigStars < numBigStars) {
-				var sprite:FlxSprite = FlxSprite(goalStars[goalStars.length - 1 - numFilledBigStars]);
-				sprite.loadGraphic(Media.bigStarPng);
-				numFilledBigStars++;
+			// prevents null pointer exception on goalStars array, when
+			// player achieves more than required stars for a level
+			if (goalStars.length - numFilledBigStars >= 1) {
+				while (numFilledBigStars < numBigStars) {
+					var sprite:FlxSprite = FlxSprite(goalStars[goalStars.length - 1 - numFilledBigStars]);
+					sprite.loadGraphic(Media.bigStarPng);
+					numFilledBigStars++;
+				}
 			}
 		}
 		
