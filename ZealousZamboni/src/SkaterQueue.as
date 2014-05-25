@@ -73,10 +73,22 @@ package
 					//if we have skater x,y use the nearest entrance to that instead of round robin
 					p = ZzUtils.getNearestEntrance(new FlxPoint(next.x, next.y));
 				}
-				var skater:Skater = new Skater(p.x, p.y, next.iceTime,null,next.toX,next.toY, next.dir);
+				var skater:Skater = new Skater(p.x, p.y, next.iceTime, null, next.toX, next.toY, next.dir);
+				skater.setSkaterCompleteFn(skaterComplete);
 				add(skater);
 				skater.postConstruct(PlayState(FlxG.state).addDep);
 			} 
+		}
+		
+		public function skaterComplete(object:FlxObject, killed:Boolean = false):void {
+			var finished:Boolean = skaters.length == 0 && countLiving() == 0;
+			if (!killed) {
+				PlayState(FlxG.state).playerPoints.generateReward(object.getMidpoint(), 1, true, finished);
+			}
+			
+			if (finished) {
+				PlayState(FlxG.state).skatersFinished = true;
+			}
 		}
 		
 		override public function destroy():void {

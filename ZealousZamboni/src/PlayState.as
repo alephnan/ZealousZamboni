@@ -26,7 +26,7 @@ package
 		
 		//public var levelNum:uint = 1;
 		
-		public var finishedSkaters:uint = 0;
+		public var skatersFinished:Boolean = false;
 		
 		//Set of all sprites active in the level (including the player)
 		public var activeSprites:Array;
@@ -34,7 +34,7 @@ package
 		//The player sprite. This is ALSO contained in activeSprites but we maintain a handle here too
 		public var player:Zamboni;
 		
-		private var hud:ZzHUD;
+		public var hud:ZzHUD;
 		
 		private var startTxt:FlxText;
 		
@@ -59,6 +59,8 @@ package
 		
 		//Time that the level lasts for
 		private var levelTime:Number = 30;
+		
+		private var paused:Boolean = false;
 		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
@@ -107,11 +109,23 @@ package
 			}
 		}
 		
+		public function pause():void {
+			if (!paused) {
+				paused = true;
+			}
+		}
+		
+		public function unpause():void {
+			if (paused) {
+				paused = false;
+			}
+		}
+		
 /**
 		 * Function called when a skater successfully comes back
 		 * @param	s
 		 */
-		public function skaterComplete(s:Skater, killed:Boolean = false) : void {
+		/*public function skaterComplete(s:Skater, killed:Boolean = false) : void {
 			if (killed) {
 				//player.updatePlayerHealth(PlayerPoints.SKATER_REWARD_PENALTY);
 				//playerPoints.generateRewardOrPenalty(s.getMidpoint(), PlayerPoints.SKATER_REWARD_PENALTY, true);
@@ -127,7 +141,7 @@ package
 				// every level start log. 
 				endLevel();
 			}
-		}
+		}*/
 		
 		/**
 		 * Ends the level, checking for victory/loss conditions
@@ -186,12 +200,14 @@ package
 		//It is called periodically by some higher power
 		override public function update():void
 		{
-			super.update();
+			if (!paused) {
+				super.update();
 			
-			cheatCode();
+				cheatCode();
 			
-			// Collide all sprites with eachother and with the tilemap
-			collideGroups();
+				// Collide all sprites with eachother and with the tilemap
+				collideGroups();
+			}
 		}
 		
 		

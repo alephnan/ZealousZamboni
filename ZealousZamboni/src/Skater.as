@@ -57,6 +57,8 @@ package
 		// Type of skater for later use
 		private var type:String;
 		
+		private var skaterComplete:Function;
+		
 		public function Skater(X:Number, Y:Number, time:int, type:String = TYPE_SIMPLE, toX:Number = 0, toY:Number = 0, dir:String = "DOWN")
 		{
 			// randomly choose a trail color
@@ -263,7 +265,8 @@ package
 					ZzLog.logAction(ZzLog.ACTION_SKATER_EXIT, getLoggableObject());
 					exists = false;
 					progress.exists = false;
-					PlayState(FlxG.state).skaterComplete(this, false);
+					//PlayState(FlxG.state).skaterComplete(this, false);
+					skaterComplete(this, false);
 				}
 			}
 		
@@ -304,21 +307,20 @@ package
 		
 		private function skaterDeathCleanup(timer:FlxTimer = null):void {
 			explosion.kill();
-			PlayState(FlxG.state).skaterComplete(this, true);
+			//PlayState(FlxG.state).skaterComplete(this, true);
+			skaterComplete(this, true);
 		}
 		
 		override public function onCollision(other:FlxObject):void
 		{
 			var curTile:FlxPoint = getMidpoint();
 			// Check tiles around current tile to see if skater is stuck
-			//if (checkNumObstacles(curTile.x / LevelLoader.TILE_SIZE, curTile.y / LevelLoader.TILE_SIZE) == 4)
 			if (isStuck(curTile.x / LevelLoader.TILE_SIZE, curTile.y / LevelLoader.TILE_SIZE))
 			{
 				if (!skaterStuck)
 				{
 					ZzLog.logAction(ZzLog.ACTION_SKATER_STUCK, getLoggableObject() );
 					skaterStuck = true;
-					//this.flicker(SKATER_DEATH_SLACK);
 					deathTimer.start(SKATER_DEATH_SLACK, 1, skaterDeathHandler);
 	
 					skaterStuckSnd =  LevelLoader.SOUND_PLAYER.play("skaterStuck", 0, (int)(SKATER_DEATH_SLACK / (LevelLoader.SOUND_PLAYER.length("skaterStuck"))));
@@ -493,6 +495,10 @@ package
 				particle.exists = false;
 				explosion.add(particle);
 			}
+		}
+		
+		public function setSkaterCompleteFn(complete:Function):void {
+			this.skaterComplete = complete;
 		}
 		
 		private function startSkaterDeath():void {

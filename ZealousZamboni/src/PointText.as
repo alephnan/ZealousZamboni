@@ -16,10 +16,12 @@ package
 			this.size = size;
 			this.color = color;
 			originalY = y;
-			this.scale = scale;
+			//this.scale = scale;
+			this.setFormat("coolverica", size, color);
 		}
 		
 		override public function update():void {
+			trace("here2");
 			if (size == 60) {
 				if (originalY - (--y) > 100) {
 					exists = false;
@@ -42,9 +44,10 @@ package
 			super.reset(x, y);
 			originalY = y;
 			this.text = text;
-			this.size = size;
-			this.color = color;
-			this.scale = scale;
+			//this.size = size;
+			//this.color = color;
+			//this.scale = scale;
+			this.setFormat("coolverica", size, color);
 		}
 		
 	}
