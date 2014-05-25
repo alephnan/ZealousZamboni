@@ -335,6 +335,8 @@ package
 		}
 		
 		override public function update() : void {
+			if (!alive) return;
+			checkPit(kill);
 			meltIce();
 			if (FlxG.mouse.pressed() || (FlxG.keys.SPACE && FlxG.mouse != null)) {
 				updateOrientation();
@@ -352,6 +354,38 @@ package
 				yDirection = (dy >= 0) ? yDirection : -1 * yDirection;
 				
 				// accelerate zamboni in direction of mouse
+				activeMotion(xDirection, yDirection, dx, dy);
+			} else if (FlxG.keys.pressed("W") || FlxG.keys.pressed("S") || FlxG.keys.pressed("A") ||
+						FlxG.keys.pressed("D") ) {
+				//Logic for using keyboard instead of arrow keys
+				//We essentially approximate mouse movement
+				xDirection = 0;
+				yDirection = 0;
+				dx = 0;
+				dy = 0;
+				//Normal zamboni acceleration depends on distance mouse is from zamboni, so here we hardcode it
+				//to 320-- which is almost max distance
+				var dm:Number = 320;
+				if (FlxG.keys.pressed("W")) {
+					yDirection -= 1;
+					dy += dm;
+					faceNorth();
+				}
+				if (FlxG.keys.pressed("S")) {
+					yDirection += 1;
+					dy += dm;
+					faceSouth();
+				}
+				if (FlxG.keys.pressed("A")) {
+					xDirection -= 1;
+					dx -= dm;
+					faceWest();
+				}
+				if (FlxG.keys.pressed("D")) {
+					xDirection += 1;
+					dx += dm;
+					faceEast();
+				}
 				activeMotion(xDirection, yDirection, dx, dy);
 			} else {
 				// mouse not pressed, passively slow down zamboni
