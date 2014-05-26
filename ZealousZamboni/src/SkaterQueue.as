@@ -31,7 +31,7 @@ package
 			initialNumSkaters = skaters.length;
 			this.skaters.sortOn("startTime", Array.NUMERIC | Array.DESCENDING);
 			for each (var skater:SpriteData in skaters) {
-				var timer:FlxTimer = new FlxTimer();
+				var timer:ZzTimer = new ZzTimer();
 				timer.start(skater.startTime, 1, startSprite);
 			}
 			
@@ -39,7 +39,7 @@ package
 		
 			
 			
-		private function startSprite(timer:FlxTimer):void {
+		private function startSprite(timer:ZzTimer):void {
 			var next:SpriteData = skaters.pop();
 			var p:FlxPoint;
 			var count:int = 10;

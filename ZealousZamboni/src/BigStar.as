@@ -28,6 +28,8 @@ package
 		}
 		
 		override public function postUpdate():void {
+			if (FlxG.paused)
+				return;
 			super.postUpdate();
 			if (overlapsPoint(ZzHUD.bigStarXY)) {
 				stopFollowingPath(false);

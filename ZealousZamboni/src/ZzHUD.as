@@ -20,7 +20,7 @@ package
 		
 		private var player:Zamboni;
 		private var timerTxt:FlxText;
-		private var timer:FlxTimer;
+		private var timer:ZzTimer;
 		
 		private var playerPoints:PlayerPoints;
 		private var goalStars:Array;
@@ -86,7 +86,7 @@ package
 			timerTxt = new FlxText(40, 10, 100, getTimeString(levelTime), true);
 			timerTxt.setFormat("coolvetica", 50, 0xffffff);
 			add(timerTxt);
-			timer = new FlxTimer();
+			timer = new ZzTimer();
 			timer.start(levelTime, 1, endLevel);
 		}
 		
@@ -136,7 +136,7 @@ package
 			return uint(timeLeft / 60) + ":" + seconds;
 		}
 		
-		public function endLevel(timer:FlxTimer):void {
+		public function endLevel(timer:ZzTimer):void {
 			PlayState(FlxG.state).endLevel();
 		}
 		

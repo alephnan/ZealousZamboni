@@ -68,7 +68,7 @@ package
 			if (pitCounter*Math.pow(LevelLoader.TILE_SIZE,2) > ((width+8)*(height)) ) {
 				LevelLoader.SOUND_PLAYER.play("fall");
 				alive = false;
-				new FlxTimer().start(.2, fallCounter, function(t:FlxTimer) : void {
+				new ZzTimer().start(.2, fallCounter, function(t:ZzTimer) : void {
 					if (t.finished) {
 						finalDeath();
 					}else {

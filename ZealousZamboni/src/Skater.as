@@ -8,7 +8,6 @@ package
 	import org.flixel.FlxTilemap;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxG;
-	import org.flixel.FlxTimer;
 	import org.flixel.FlxPath
 	import org.flixel.*;
 	import org.flixel.plugin.photonstorm.FlxBar;
@@ -35,13 +34,13 @@ package
 		//The total time that this skater should skate for in seconds
 		private var timeToSkate:int;
 		//The internal timer that tracks how long to skate for
-		public var timer:FlxTimer;
+		public var timer:ZzTimer;
 		//The progress bar for displaying how much time is left
 		private var progress:FlxBar;
 		//A value counting up to timeToSkate
 		public var progressTime:Number;
 		//The skater death timer
-		private var deathTimer:FlxTimer;
+		private var deathTimer:ZzTimer;
 		//This is set when a skater is stuck
 		private var skaterStuck:Boolean;
 		//Sound played when this skater is stuck
@@ -67,7 +66,7 @@ package
 			super(X, Y);
 			this.type = type;
 			timeToSkate = time;
-			timer = new FlxTimer();
+			timer = new ZzTimer();
 			progress = new FlxBar(x, y, 1, 48, 8, this, "progressTime", 0, time);
 			progressTime = 1;
 			progress.trackParent(-12, -26);
@@ -101,7 +100,7 @@ package
 				addAnimation("death", [o + 0, o + 1, o + 2, o + 3, o + 4], 8, true);
 				addAnimation("hurt", [16], 1, true);
 			}
-			deathTimer = new FlxTimer();
+			deathTimer = new ZzTimer();
 			setupSkaterDeath()
 			
 			// Change sprite size to be size of tile (better for trails)
@@ -139,7 +138,7 @@ package
 				}
 				pt.addPoint(endPoint);
 				this.followPath(pt, 120);
-				new FlxTimer().start(START_TIME, 1, function (t:*) : void { 
+				new ZzTimer().start(START_TIME, 1, function (t:*) : void { 
 					isStarted = true;
 					allowCollisions = FlxObject.ANY; 
 					stopFollowingPath(true); } );
@@ -272,7 +271,7 @@ package
 		
 		}
 		
-		private function timerUp(t:FlxTimer):void
+		private function timerUp(t:ZzTimer):void
 		{
 			if (!alive) return;
 			endStuck();
@@ -290,7 +289,7 @@ package
 		{
 		}
 		
-		private function skaterDeathHandler(timer:FlxTimer=null):void
+		private function skaterDeathHandler(timer:ZzTimer=null):void
 		{
 			ZzLog.logAction(ZzLog.ACTION_SKATER_DIE, getLoggableObject() );
 			LevelLoader.SOUND_PLAYER.play("skaterDeath");
@@ -305,7 +304,7 @@ package
 			}
 		}
 		
-		private function skaterDeathCleanup(timer:FlxTimer = null):void {
+		private function skaterDeathCleanup(timer:ZzTimer = null):void {
 			explosion.kill();
 			//PlayState(FlxG.state).skaterComplete(this, true);
 			skaterComplete(this, true);
@@ -341,7 +340,7 @@ package
 			if (other is WalkingDead)
 			{
 				ZzLog.logAction(ZzLog.ACTION_SKATER_EATEN_BY_ZOMBIE, getLoggableObject());
-				skaterDeathHandler(new FlxTimer());
+				skaterDeathHandler(new ZzTimer());
 			}
 		}
 		

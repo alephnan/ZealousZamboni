@@ -29,6 +29,7 @@ package
 		[Embed(source = '../media/star_small_small.png')] public static const smallStarPng:Class;
 		[Embed(source = '../media/star_small_icon_small.png')] public static const smallStarIconPng:Class;
 		[Embed(source = '../media/baby_star.png')] public static const babyStarPng:Class;
+		[Embed(source = '../media/border.jpg')] public static const borderPNG:Class;
 		
 		// Fonts
 		[Embed(source = '../media/fonts/Playtime.ttf', fontName = "playtime", embedAsCFF = "false")] public static const playtimeFont:Class;

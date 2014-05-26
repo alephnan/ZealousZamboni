@@ -14,6 +14,8 @@ package
 		//This in general is 1, but can be set to others for debugging porpoises (they have a lot of bugs in them, I guess)
 		public static var STARTING_LEVEL:uint = 17;
 		
+		private static var TIMERS:Array = new Array();
+		
 		/**
 		 * Returns a point on a random entrance.
 		 * @param	level
@@ -90,6 +92,39 @@ package
 			return copy;
 		}
 		
+		public static function registerTimer(timer:ZzTimer):void {
+			TIMERS.push(timer);
+		}
+		
+		public static function destroy():void {
+			TIMERS.forEach(destroyTimers, null);
+			TIMERS = null;
+			level = null;
+		}
+		
+		private static function destroyTimers(timer:ZzTimer, index:Number, arr:Array):void {
+			timer = null;
+		}
+		
+		public static function pause():void {
+			TIMERS.forEach(pauseTimers, null);
+		}
+		
+		private static function pauseTimers(timer:ZzTimer, index:Number, arr:Array):void {
+			if (timer != null) {
+				timer.paused = true;
+			}
+		}
+		
+		public static function unpause():void {
+			TIMERS.forEach(unpauseTimers, null);
+		}
+		
+		private static function unpauseTimers(timer:ZzTimer, index:Number, arr:Array):void {
+			if (timer != null) {
+				timer.paused = false;
+			}
+		}
 	}
 	
 }

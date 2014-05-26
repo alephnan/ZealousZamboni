@@ -48,7 +48,7 @@ package
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			this.play("walkS", true);
-			new FlxTimer().start(START_TIME, 1, function (t:*) : void { isStarted = true } );
+			new ZzTimer().start(START_TIME, 1, function (t:*) : void { isStarted = true } );
 			
 			ZzLog.logAction(ZzLog.ACTION_ZOMBIE_ENTER, getLoggableObject());
 		}
@@ -98,8 +98,8 @@ package
 				ZzLog.logAction(ZzLog.ACTION_ZOMBIE_LUNGE, getLoggableObject());
 				speed *= 4;
 				canLunge = false;
-				new FlxTimer().start(.1, 1, function (t:*) : void { speed /= 8; } );
-				new FlxTimer().start(5, 1, function (t:*) : void { speed *= 2; canLunge = true} );
+				new ZzTimer().start(.1, 1, function (t:*) : void { speed /= 8; } );
+				new ZzTimer().start(5, 1, function (t:*) : void { speed *= 2; canLunge = true} );
 			}
 			this.followPath(p, speed);
 			
@@ -121,7 +121,7 @@ package
 				this.velocity.y = other.velocity.y*3;
 				this.angularVelocity = 900;
 				this.angularAcceleration = -400;
-				var tm:FlxTimer = new FlxTimer();
+				var tm:ZzTimer = new ZzTimer();
 				tm.start(1, 1, function (t:*) : void {
 					kill()
 				});

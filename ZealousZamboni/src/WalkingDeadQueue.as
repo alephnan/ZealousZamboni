@@ -21,12 +21,12 @@ package
 		public function startTimer():void {
 			this.zombies.sortOn("startTime", Array.NUMERIC | Array.DESCENDING);
 			for each (var zombie:SpriteData in zombies) {
-				var timer:FlxTimer = new FlxTimer();
+				var timer:ZzTimer = new ZzTimer();
 				timer.start(zombie.startTime, 1, startSprite);
 			}
 		}
 		
-		private function startSprite(timer:FlxTimer):void {
+		private function startSprite(timer:ZzTimer):void {
 			var next:SpriteData = zombies.pop();
 			var zombie:WalkingDead = new WalkingDead(next.x, next.y);
 			add(zombie);

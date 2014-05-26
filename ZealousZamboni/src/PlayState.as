@@ -60,8 +60,6 @@ package
 		//Time that the level lasts for
 		private var levelTime:Number = 30;
 		
-		private var paused:Boolean = false;
-		
 		override public function create() : void {
 			FlxG.bgColor = 0xffaaaaaa;
 			levelLoader = new LevelLoader();
@@ -110,14 +108,16 @@ package
 		}
 		
 		public function pause():void {
-			if (!paused) {
-				paused = true;
+			if (!FlxG.paused) {
+				FlxG.paused = true;
+				ZzUtils.pause();
 			}
 		}
 		
 		public function unpause():void {
-			if (paused) {
-				paused = false;
+			if (FlxG.paused) {
+				FlxG.paused = false;
+				ZzUtils.unpause();
 			}
 		}
 		
@@ -200,7 +200,7 @@ package
 		//It is called periodically by some higher power
 		override public function update():void
 		{
-			if (!paused) {
+			if (!FlxG.paused) {
 				super.update();
 			
 				cheatCode();
@@ -269,6 +269,7 @@ package
 			player = null;
 			hud = null;
 			startTxt = null;
+			ZzUtils.destroy();
 		}
 	}
 	

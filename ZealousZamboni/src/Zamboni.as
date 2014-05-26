@@ -393,7 +393,7 @@ package
 		}
 		
 		override public function onCollision(other:FlxObject) : void {
-			var t:FlxTimer = new FlxTimer();
+			var t:ZzTimer = new ZzTimer();
 			if (other is PowerUp) {
 				//updatePlayerHealth(PlayerPoints.PICKUP_POWERUP_REWARD, false);
 				PlayState(FlxG.state).playerPoints.generateReward(other.getMidpoint(), PlayerPoints.PICKUP_POWERUP_REWARD, false);
@@ -412,7 +412,7 @@ package
 					maxVelocity.y *= tdiff;
 					maxVelocity.x *= tdiff;
 					FlxG.timeScale /= tdiff;
-					t = new FlxTimer();
+					t = new ZzTimer();
 					t.start(PowerUp.BOOSTER_TIME_LENGTH/tdiff, 1, function(timer:*) : void { 
 						maxVelocity.x /= tdiff; 
 						maxVelocity.y /= tdiff; 
@@ -421,7 +421,7 @@ package
 					other.kill();
 				}else if (PowerUp(other).type == PowerUp.TIRE_CHAINS) {
 					tireChains = true;
-					var tm:FlxTimer = new FlxTimer();
+					var tm:ZzTimer = new ZzTimer();
 					tm.start(PowerUp.TIRE_CHAINS_TIME_LENGTH, 1, function(timer:*) : void { 
 						tireChains = false;
 					} );
