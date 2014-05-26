@@ -109,6 +109,7 @@ package
 			if (!alive) return;
 			if (other is Zamboni) {
 				ZzLog.logAction(ZzLog.ACTION_ZOMBIE_DIE, getLoggableObject());
+				PlayState(FlxG.state).playerPoints.generateReward(other.getMidpoint(), PlayerPoints.KILL_ZOMBIE_REWARD, false);
 				alive = false;
 				LevelLoader.SOUND_PLAYER.play("zombieDeath");
 				LevelLoader.SOUND_PLAYER.play("zombieHit");

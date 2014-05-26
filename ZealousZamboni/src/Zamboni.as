@@ -111,8 +111,7 @@ package
 					}
 					// add point to player health
 					//updatePlayerHealth(PlayerPoints.CLEAR_TRAIL_REWARD, false);
-					//PlayerPoints.getRef().generateRewardOrPenalty(tile.getMidpoint(), PlayerPoints.CLEAR_TRAIL_REWARD, false);
-					PlayState(FlxG.state).playerPoints.generateReward(getMidpoint(), PlayerPoints.CLEAR_TRAIL_REWARD, false, false);
+					PlayState(FlxG.state).playerPoints.generateReward(getMidpoint(), PlayerPoints.CLEAR_TRAIL_REWARD, false);
 				}
 			})
 		}
@@ -397,7 +396,7 @@ package
 			var t:FlxTimer = new FlxTimer();
 			if (other is PowerUp) {
 				//updatePlayerHealth(PlayerPoints.PICKUP_POWERUP_REWARD, false);
-				PlayState(FlxG.state).playerPoints.generateReward(other.getMidpoint(), PlayerPoints.PICKUP_POWERUP_REWARD, false, false);
+				PlayState(FlxG.state).playerPoints.generateReward(other.getMidpoint(), PlayerPoints.PICKUP_POWERUP_REWARD, false);
 				ZzLog.logAction(ZzLog.ACTION_GAIN_POWER_UP,
 					{ "type" : PowerUp(other).type, "x" : other.x, "y" : other.y, "id" : other.ID});
 				if (PowerUp(other).type == PowerUp.BOOSTER) {

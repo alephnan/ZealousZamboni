@@ -81,13 +81,9 @@ package
 		}
 		
 		public function skaterComplete(object:FlxObject, killed:Boolean = false):void {
-			var finished:Boolean = skaters.length == 0 && countLiving() == 0;
+			//var finished:Boolean = skaters.length == 0 && countLiving() == 0;
 			if (!killed) {
-				PlayState(FlxG.state).playerPoints.generateReward(object.getMidpoint(), 1, true, finished);
-			}
-			
-			if (finished) {
-				PlayState(FlxG.state).skatersFinished = true;
+				PlayState(FlxG.state).playerPoints.generateReward(object.getMidpoint(), 1, true);
 			}
 		}
 		

@@ -26,7 +26,7 @@ package
 		
 		//public var levelNum:uint = 1;
 		
-		public var skatersFinished:Boolean = false;
+		//public var skatersFinished:Boolean = false;
 		
 		//Set of all sprites active in the level (including the player)
 		public var activeSprites:Array;

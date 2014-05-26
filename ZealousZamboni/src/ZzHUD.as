@@ -108,7 +108,7 @@ package
 			timerTxt.text = getTimeString(timer.timeLeft);
 			super.update();
 			
-			if ((playerPoints.checkWin() || PlayState(FlxG.state).skatersFinished) && timer.timeLeft > 3) {
+			if (playerPoints.checkWin() && timer.timeLeft > 3) {
 				timer.stop();
 				timer.start(3, 1, endLevel);
 				timerTxt.exists = false;

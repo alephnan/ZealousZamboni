@@ -10,7 +10,9 @@ package
 		public static const CLEAR_TRAIL_REWARD:uint = 1;
 		public static const PICKUP_POWERUP_REWARD:uint = 10;
 		public static const STAR_CONVERSION:uint = 500;
-		public static const KILL_ZOMBIE_REWARD:uint = 20;
+		public static const KILL_ZOMBIE_REWARD:uint = 100;
+		
+		
 		public static const NUM_STAR_PARTICLES:uint = 400;
 		private static const BIG_STAR_START:FlxPoint = new FlxPoint(FlxG.width / 2, FlxG.height / 2);
 		private static const PATH_VELOCITY:uint = 900;
@@ -36,7 +38,7 @@ package
 			setupBigStarPath();
 		}
 		
-		public function generateReward(location:FlxPoint, points:uint, isBigStar:Boolean, finished:Boolean):void {
+		public function generateReward(location:FlxPoint, points:uint, isBigStar:Boolean):void {
 			if (isBigStar) {
 				bigStarAnimation();
 				numBigStars++;
