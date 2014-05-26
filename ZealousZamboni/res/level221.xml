@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level width="640" height="480" lives="1" time="30" goal="2">
+<level width="640" height="480" lives="1" time="30" goal="3">
 	<disco>
 		<start>2</start>
 		<time>20</time>
