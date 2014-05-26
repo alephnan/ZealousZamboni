@@ -20,6 +20,8 @@ package
 		{
 			
 			tipScreen = false;
+			enterPressCount = 0;
+			
 			super();
 			if (imagePopup == null)
 				imagePopup = Media.cleanIcePop;
