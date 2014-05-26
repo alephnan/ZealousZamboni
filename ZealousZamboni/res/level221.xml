@@ -7,6 +7,7 @@
 	<description>
 		Disco pit zombies
 	</description>
+	<popup mainImg="blankPop" tip="INTERMEDIATE_TIPS_INDEX"/>
 	<zamboni x="400" y="352" />
 	<skater dir="LEFT">
 		<start>2</start>

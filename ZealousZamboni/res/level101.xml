@@ -23,7 +23,7 @@
 		Gets used to going down the ice, without bumping into the walls and obstacles set in place to slow player down. Also, not every path is possible, as the zamboni won't fit through. The player will learn there is a single path to get to the zamboni, and that they have to get there in a reasonable amount of time.
 	</solution>
 
-
+	<popup mainImg="skatersStuckPop" tip="BEGINNER_TIPS_INDEX"/>
 	<zamboni x="320" y="280"/>
 	<skater x="160" y="96 ">
 		<start>2</start>

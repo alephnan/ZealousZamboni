@@ -6,6 +6,7 @@
 		In reality, these tiles are unnecessary for beating the level, and instead the player
 		should focus on clearing the horse-shoe shaped traps in front of each entrance
 	</description>
+	<popup mainImg="skatersStuckPop" tip="BEGINNER_TIPS_INDEX"/>
 	<zamboni x="120" y="224" />
 	<skater x="1" y="1" dir="DOWN">
 		<start>6</start>

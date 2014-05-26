@@ -70,7 +70,8 @@ package
 			progress = new FlxBar(x, y, 1, 48, 8, this, "progressTime", 0, time);
 			progressTime = 1;
 			progress.trackParent(-12, -26);
-			progress.createFilledBar(0x60112080, 0xF060A0FF, true, 0xff000000);
+			//progress.createFilledBar(0x60112080, 0xF060A0FF, true, 0xff000000);
+			progress.createFilledBar(0xF060A0FF, 0x60112080, true, 0xff000000);
 			progress.update();
 			//offset for specifying animations
 			var o:Number = 0;

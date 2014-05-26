@@ -40,6 +40,8 @@ package
 		
 		public var playerPoints:PlayerPoints;
 		
+		public var pauseGroup:FlxGroup;
+		
 		private static const MOUSE_CURRENTLY_PRESSED:int = 0;
 		private static const MOUSE_NOT_PRESSED:int = 1;
 		private static const MOUSE_JUST_CLICKED:int = 2;
@@ -78,6 +80,9 @@ package
 			add(hud);
 			ZzLog.logLevelStart(levelLoader.levelQId);
 			
+			pauseGroup = new FlxGroup();
+			add(pauseGroup);
+			
 			FlxG.mouse.show();
 			//First element in mouseHistory is a header containing metadata
 			mouseHistory.push( { "interval" : MOUSE_LOG_INTERVAL, "start" : new Date().time} );
@@ -86,8 +91,15 @@ package
 			
 			levelEnded = false;
 			
-			//var popup:Popup = new Popup();
-			//add(popup);
+			onStart();
+		}
+		
+		public function onStart():void {
+			var images:Array = levelLoader.getPopupImages();
+			if (images.length != 2)
+				var popup:LevelStartPopup = new LevelStartPopup(Media.cleanIcePop, Media.tipStarConversionPNG);
+			var popup:LevelStartPopup = new LevelStartPopup(images[0], images[1]);
+			pauseGroup.add(popup);
 		}
 		
 		private function logMouse(t:FlxTimer) : void {
@@ -124,28 +136,6 @@ package
 			}
 		}
 		
-/**
-		 * Function called when a skater successfully comes back
-		 * @param	s
-		 */
-		/*public function skaterComplete(s:Skater, killed:Boolean = false) : void {
-			if (killed) {
-				//player.updatePlayerHealth(PlayerPoints.SKATER_REWARD_PENALTY);
-				//playerPoints.generateRewardOrPenalty(s.getMidpoint(), PlayerPoints.SKATER_REWARD_PENALTY, true);
-			} else {
-				playerPoints.generateReward(s.getMidpoint(), 1, true);
-			}
-			if (SkaterQueue(activeSprites[SKATERS_INDEX]).skatersFinished()) {
-				
-				// If more than one skater finishes at the same time, skaterComplete will be
-				// called more than once. without a concurrency check, we'll call 
-				// winLevel more than once, which will inturn call logger to indicate the
-				// level ends more than once. but we can only have one level end log, per 
-				// every level start log. 
-				endLevel();
-			}
-		}*/
-		
 		/**
 		 * Ends the level, checking for victory/loss conditions
 		 */
@@ -172,7 +162,8 @@ package
 			if (FlxG.level + 1 > LevelLoader.NUM_LEVELS) {
 				FlxG.switchState(new EndState());
 			} else {
-				FlxG.switchState(new LevelWinState());
+				//FlxG.switchState(new LevelWinState());
+				pauseGroup.add(new LevelCompletePopup());
 			}
 		}
 		
@@ -180,12 +171,13 @@ package
 			mouseTimer.stop();
 			//TODO: Set final score
 			ZzLog.logLevelEnd(true, mouseHistory, player.health);
-			FlxG.switchState(new LevelFailedState());
+			//FlxG.switchState(new LevelFailedState());
+			pauseGroup.add(new LevelIncompletePopup());
 		}
 		
 		public function restartLevel():void {
 			mouseTimer.stop();
-			ZzLog.logLevelEnd(true, mouseHistory, player.health);
+			ZzLog.logLevelEnd(true, mouseHistory, playerPoints.getBigStars());
 			FlxG.resetState();
 		}
 		
@@ -210,6 +202,8 @@ package
 			
 				// Collide all sprites with eachother and with the tilemap
 				collideGroups();
+			} else {
+				pauseGroup.update();
 			}
 		}
 		

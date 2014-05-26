@@ -34,19 +34,22 @@ package
 			start.immovable = true;
 			add(start);
 			
-			var txt1:FlxText = new FlxText(FlxG.width / 2 + 215, 50, FlxG.width, "Level 1");
-			txt1.size = 24;
-			txt1.scale = new FlxPoint(2, 2);
-			txt1.color = 0xE8E8E8;
-			txt1.shadow = 0x808080;
+			var txt1:FlxText = new FlxText(FlxG.width / 2 - 330, 40, FlxG.width, "Controls");
+			//txt1.scale = new FlxPoint(2, 2);
+			txt1.setFormat("poster", 64, 0xE8E8E8, "center", 0x808080);
+			//txt1.setFormat(null, 44, 0xE8E8E8, "center");
 			add(txt1);
 			
-			var txt2:FlxText = new FlxText(FlxG.width / 2 - 200, 150, FlxG.width, "Drive to the START banner to begin!");
-			txt2.size = 18;
-			txt2.color = 0x33CCFF;
+			var txt2:FlxText = new FlxText(FlxG.width / 2 - 330, 140, FlxG.width, "Drive to START to begin!");
+			txt2.setFormat("coolvetica", 40, 0x33CCFF, "center");
 			add(txt2);
 			
-			add(new FlxSprite(400, 250, Media.MouseImg));
+			var txt3:FlxText = new FlxText(410, 350, 100, "OR", true);
+			txt3.setFormat("coolvetica", 40, 0xb8b8b8, "center");
+			add(txt3);
+			
+			add(new FlxSprite(280, 240, Media.MouseImg));
+			add(new FlxSprite(500, 310, Media.wasdPNG));
 			FlxG.mouse.show();
 			
 			LevelLoader.SOUND_PLAYER.startPlaylist();

@@ -35,7 +35,8 @@ package
 			starEmitter = new FlxEmitter();
 			setupEmitter();
 			add(starEmitter);
-			setupBigStarPath();
+			bigStar = new BigStar();
+			add(bigStar);
 		}
 		
 		public function generateReward(location:FlxPoint, points:uint, isBigStar:Boolean):void {
@@ -62,7 +63,7 @@ package
 			shoutout = null;
 		}*/
 		
-		private function bigStarAnimation():void {
+		/*private function bigStarAnimation():void {
 			bigStar.x = BIG_STAR_START.x;
 			bigStar.y = BIG_STAR_START.y;
 			if (numBigStars > 1) {
@@ -72,9 +73,13 @@ package
 			bigStar.exists = true;
 			bigStar.visible = true;
 			bigStar.followPath(bigStarPath, PATH_VELOCITY);
-		}
+		}*/
 		
-		private function setupBigStarPath():void {
+			private function bigStarAnimation():void {
+				bigStar.animate(numBigStars);
+			}
+		
+		/*private function setupBigStarPath():void {
 			bigStar = new BigStar(BIG_STAR_START.x, BIG_STAR_START.y);
 			add(bigStar);
 			bigStarPath = new FlxPath();
@@ -82,7 +87,7 @@ package
 			bigStarPath.add(30, FlxG.height / 4 + 20);
 			bigStarPath.add(FlxG.width, FlxG.height / 4);
 			bigStarPath.addPoint(ZzHUD.bigStarXY, true);
-		}
+		}*/
 		
 		private function setupEmitter():void {
 			for (var i:uint = 0; i < NUM_STAR_PARTICLES; ++i) {

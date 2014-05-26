@@ -5,7 +5,7 @@
 		Also requires player to collect the trails to win the level
 		
 	</description>
-	
+	<popup mainImg="skatersStuckPop" tip="BEGINNER_TIPS_INDEX"/>
 	<zamboni x="440" y="408" />
 	<skater x="336" y="80" dir="DOWN">
 		<start>1</start>

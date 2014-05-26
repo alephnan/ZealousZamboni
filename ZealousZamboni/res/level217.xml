@@ -3,6 +3,7 @@
 	<description>
 		Introduce pits which kill zamboni
 	</description>
+	<popup mainImg="blankPop" tip="INTERMEDIATE_TIPS_INDEX"/>
 	<zamboni x="392" y="386" />
 	<skater x="391" y="80" dir="LEFT">
 		<start>4</start>

@@ -11,7 +11,7 @@ package
 		private static const GAME_ID:int = 107;
 		private static const SKEY:String = "1715d3eb78138f878ef005ea285f0087";
 		private static const VID:int = 1;	// This should always be 1
-		private static const CID:int = 1;   // This can change (acts like an actual version ID)
+		private static const CID:int = 2;   // This can change (acts like an actual version ID)
 		public static const PREGAME_QID:int = 31337;
 		
 		// CID = 1	5pm release on 5/16

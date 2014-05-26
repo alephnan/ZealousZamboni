@@ -6,5 +6,6 @@
 		it is still supposed to be somewhat difficult so that more skilled players do not
 		immiedetly lose interest
 	</description>
+	<popup mainImg="cleanIcePop" tip="TUTORIAL_TIPS_INDEX"/>
 	<zamboni x="176" y="88"/>
 </level>

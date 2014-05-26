@@ -1,0 +1,13 @@
+﻿Some levels can be beaten by clearing enough trails instead of saving a skater; 
+Clear trails to collect mini-stars;
+Skaters always try to turn to their left;
+500 mini stars earns 1 big star;
+When skaters cannot go anywhere, they blow up;
+the bar above the skater indicates its progress on the ice;
+Use the reset button if you think you cannot win;
+Watch out for tight spots where skaters get stuck easily;
+You win if you have earn enough big stars before the timer runs out;
+You can redirect skaters by blocking them with your zamboni
+You can kill zombies by running into them;
+Killing a zombie earns you 100 mini stars;
+Mouse hand getting tired? Try using 'W' 'S' 'A' 'D' on the keyboard!;

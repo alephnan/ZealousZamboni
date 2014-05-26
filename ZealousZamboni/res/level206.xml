@@ -6,5 +6,6 @@
 			Collecting trails yields points
 			How to drive
 	</description>
+	<popup mainImg="cleanIcePop" tip="TUTORIAL_TIPS_INDEX"/>
 	<zamboni x="184" y="96"/>
 </level>

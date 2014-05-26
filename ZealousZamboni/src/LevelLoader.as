@@ -50,6 +50,15 @@ package
 		// music player
 		public static const SOUND_PLAYER:SoundPlayer = new SoundPlayer();
 		
+		// start popup stuff
+		public static const tips:Array = new Array("tipStarConversionPng", "tipHowToWinPNG", "tipCollectMinistarsPNG", 
+				"tipResetButtonPNG", "tipControlWasdPNG", "tipSkaterBarPNG", "tipSkatersTurnLeftPNG", "tipSkatersTrappedExplodePNG",
+				"tipSkatersTightAreasPNG", "tipRedirectSkatersPNG", "tipZombiesMinistarsPNG", "tipKillZombiesPNG");
+				
+		private static const TUTORIAL_TIPS_INDEX:uint = 3;
+		private static const BEGINNER_TIPS_INDEX:uint = 10;
+		private static const INTERMEDIATE_TIPS_INDEX:uint = 12;
+		
 		
 		// Tuan's Level testing
 		/*public const Level1QId:uint = 1;
@@ -154,6 +163,8 @@ package
 		
 		private var player:Zamboni;
 		
+		private var popupImages:Array;
+		
 		private var DEBUG:Boolean;
 		
 		public var goalPoints:uint;
@@ -208,6 +219,10 @@ package
 		
 		public function getSpriteQueues():Array {
 			return queues;
+		}
+		
+		public function getPopupImages():Array {
+			return popupImages;
 		}
 		
 		
@@ -374,6 +389,24 @@ package
 				zombies.addSpriteData(new SpriteData(zombieX, zombieY, int(z.start)));
 			}
 			queues.push(zombies);
+			
+			// Popup stuff
+			var popupStr:String = xml.popup.@mainImg;
+			var tipType:String = xml.popup.@tip;
+			var popupImg:Class = null;
+			if (popupStr != null)
+				popupImg = Media[popupStr];
+				
+			var tipIndex:String = null;
+			if (tipType == null)
+				tipIndex = getTip(BEGINNER_TIPS_INDEX);
+			else
+				tipIndex = getTip(LevelLoader[tipType]);
+			popupImages = new Array(popupImg, Media[tipIndex]);
+		}
+		
+		public static function getTip(tipTypeIndex:uint):String {
+			return tips[uint(FlxG.random() * 100) % tipTypeIndex];
 		}
 		
 		public function destroy():void {

@@ -3,6 +3,7 @@
 	<description>
 		Introduces pits with a big pit right in the center
 	</description>
+	<popup mainImg="blankPop" tip="INTERMEDIATE_TIPS_INDEX"/>
 	<zamboni x="400" y="352" />
 	<skater dir="LEFT">
 		<start>2</start>

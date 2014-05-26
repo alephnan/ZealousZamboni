@@ -50,17 +50,10 @@ package
 			muteButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 80, null, toggleMute);
 			muteButton.loadGraphic(Media.mutePng);
 			add(muteButton);
-			
-			// big star text ("0/1")
-			var bigStarGoal:uint = playerPoints.getBigStarGoal();
-			trace("goal = " + bigStarGoal);
-			/*goalText = new FlxText(restartButton.x - 70, 22, 40, "0/" + bigStarGoal, false);
-			goalText.size = 12;
-			goalText.scale = new FlxPoint(2, 2);
-			add(goalText);*/
-			
+
 			// big stars
 			goalStars = new Array();
+			var bigStarGoal:uint = playerPoints.getBigStarGoal();
 			for (var i:uint = 0; i < bigStarGoal; ++i) {
 				var goalStar:FlxSprite = new FlxSprite(restartButton.x - (i+1)*50 - 100, 5);
 				goalStar.loadGraphic(Media.bigStarOutlinePng);

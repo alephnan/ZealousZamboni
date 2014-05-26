@@ -7,7 +7,7 @@
 		if you are able to predict the path of the skater, but it is not expected
 		that players can do that at this point
 	</description>
-	
+	<popup mainImg="skatersStuckPop" tip="BEGINNER_TIPS_INDEX"/>
 	<zamboni x="440" y="408" />
 	<skater dir="LEFT">
 		<start>2</start>

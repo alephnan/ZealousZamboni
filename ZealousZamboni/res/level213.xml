@@ -7,7 +7,7 @@
 		with you. After that, rush to the top to block the skater on the top from getting stuck
 		the bottom one should take care of itself
 	</description>
-	
+	<popup mainImg="skatersStuckPop" tip="BEGINNER_TIPS_INDEX"/>
 	<zamboni x="440" y="408" />
 	<skater x="336" y="80" dir="DOWN">
 		<start>2</start>

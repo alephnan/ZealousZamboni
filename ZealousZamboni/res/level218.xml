@@ -3,6 +3,7 @@
 	<description> 
 		rehash of earlier two-skater level but with pitfall
 	</description>
+	<popup mainImg="blankPop" tip="INTERMEDIATE_TIPS_INDEX"/>
 	<zamboni x="376" y="248" />
 	<skater x="40" y="88" dir="DOWN">
 		<start>1</start>

@@ -3,6 +3,7 @@
 	<description>
 		Zombies + lots of obstacles make this level challenging
 	</description>
+	<popup mainImg="zombiesPop" tip="INTERMEDIATE_TIPS_INDEX"/>
 	<zamboni x="386" y="336" />
 	<skater x="336" y="80" dir="LEFT">
 		<start>1</start>

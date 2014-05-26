@@ -34,6 +34,7 @@
 		2) I toned the level to 17 seconds per skater. If this was increased to 20 seconds,
 		the difficulty is a significantly harder
 	</progression>
+	<popup mainImg="skatersStuckPop" tip="BEGINNER_TIPS_INDEX"/>
 	<zamboni x="504" y="160" />
 	<skater x="40" y="40" toX="144" toY="120">
 		<start>1</start>
