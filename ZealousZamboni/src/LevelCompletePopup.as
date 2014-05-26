@@ -44,6 +44,11 @@ package
 			starPath.drawDebug(FlxG.camera);
 			timer = new FlxTimer().start(3, starGoal + 1, onTimer);
 			
+			
+			var skipTxt:FlxText = new FlxText(FlxG.width / 2 - 150, FlxG.height - 35, 300, "Press Enter to Continue", true);
+			skipTxt.setFormat("coolvetica", 20, 0xFFFFFF, "center");
+			
+			add(skipTxt);
 			add(popGraphic);
 			add(goalTxt);
 			add(star);

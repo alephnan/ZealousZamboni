@@ -21,6 +21,11 @@ package
 			button = new FlxButton(FlxG.width / 2 - 20, FlxG.height / 2 + 40, null, onClick);
 			button.loadGraphic(Media.retryPNG);
 			
+
+			var skipTxt:FlxText = new FlxText(FlxG.width / 2 - 150, FlxG.height - 35, 300, "Press Enter to Continue", true);
+			skipTxt.setFormat("coolvetica", 20, 0xFFFFFF, "center");
+			
+			add(skipTxt);
 			add(popGraphic);
 			add(button)
 			

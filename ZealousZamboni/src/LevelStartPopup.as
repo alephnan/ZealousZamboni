@@ -15,7 +15,7 @@ package
 		// reference to timer, so we can stop it if we skip end screen
 		private var timer : FlxTimer;
 		private var enterPressCount : int;
-		
+		private var skipTxt:FlxText;
 		public function LevelStartPopup(imagePopup:Class=null, imageMessage:Class=null) 
 		{
 			
@@ -54,13 +54,18 @@ package
 			var heightOffset:uint = goalTxt.y - 38;
 			popGraphic.stamp(stamp, widthOffset, heightOffset);
 			
-			var numTxt:FlxText = new FlxText(widthOffset + stamp.width - 25, heightOffset + stamp.height - 2, 100, "x " + goal, true);
+			var numTxt:FlxText = new FlxText(widthOffset + stamp.width - 25, heightOffset + stamp.height - 2, 300, "x " + goal, true);
 			numTxt.setFormat("coolvetica", 44, 0x000000, "center");
+			
+	
+			skipTxt = new FlxText(FlxG.width / 2 - 150, FlxG.height - 35, 300, "Press Enter to Continue", true);
+			skipTxt.setFormat("coolvetica", 20, 0xFFFFFF, "center");
 			
 			add(popGraphic);
 			add(button);
 			add(lvlTxt);
 			add(goalTxt);
+			add(skipTxt);
 			add(numTxt);
 			PlayState(FlxG.state).pause();
 		}
@@ -91,8 +96,10 @@ package
 			if (imageMessage == null) {
 				onComplete(null);
 			} else {
-				if(tipScreen == false) {
+				if (tipScreen == false) {
+					
 					setAll("exists", false, false);
+					skipTxt.exists = true;
 					timer = new FlxTimer().start(2, 1, onComplete);
 					popGraphic.loadGraphic(imageMessage);
 					popGraphic.exists = true;
