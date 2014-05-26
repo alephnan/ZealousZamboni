@@ -178,7 +178,7 @@ package
 			// Check for rotation into wall
 			var wallRotation:Boolean = false;
 			level.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
-				if (LevelLoader.isSolid(tile.index)) {
+				if (LevelLoader.isWall(tile.index)) {
 					wallRotation = true;
 					
 				} 
