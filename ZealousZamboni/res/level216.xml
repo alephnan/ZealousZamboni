@@ -11,7 +11,7 @@
 	</skater>
 	<skater x="336" y="80" dir="RIGHT">
 		<start>12</start>
-		<time>20</time>
+		<time>23</time>
 	</skater>
 	<zombie x="216" y="128">
 		<start>8</start>

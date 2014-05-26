@@ -13,4 +13,7 @@
 	<zombie x="152" y="256">
 		<start>8</start>
 	</zombie>
+	<zombie x="152" y="256">
+		<start>15</start>
+	</zombie>
 </level>

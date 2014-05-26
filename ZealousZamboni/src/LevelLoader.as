@@ -138,6 +138,7 @@ package
 		public const Level15QId:uint = 217;
 		[Embed(source = '../res/level217.txt', mimeType = "application/octet-stream")] public var Level15Csv:Class;
 		[Embed(source = "../res/level217.xml", mimeType = "application/octet-stream")] public var Level15XML:Class;
+		[Embed(source = "../res/level217_ruts.txt", mimeType = "application/octet-stream")] public var Level15Ruts:Class;
 		
 		public const Level16QId:uint = 218;
 		[Embed(source = '../res/level218.txt', mimeType = "application/octet-stream")] public var Level16Csv:Class;

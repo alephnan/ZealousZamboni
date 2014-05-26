@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level width="640" height="480" lives="1" goal="100">
+<level width="640" height="480" lives="1" goal="2">
 	<motivation>
 		This was for the "orientation challenged".
 		This is based on level tuanlevel_four, where the two skaters

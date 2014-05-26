@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level width="640" height="480" lives="1" time="40" goal="3">
+<level width="640" height="480" lives="1" time="25" goal="1">
 	<description>
 		Introduce pits which kill zamboni
 	</description>
@@ -7,6 +7,6 @@
 	<zamboni x="392" y="386" />
 	<skater x="391" y="80" dir="LEFT">
 		<start>4</start>
-		<time>20</time>
+		<time>15</time>
 	</skater>
 </level>
