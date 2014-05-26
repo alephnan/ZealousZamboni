@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="30" goal="1">
+	<description>
+		Introduces pits with a big pit right in the center
+	</description>
+	<zamboni x="400" y="352" />
+	<skater dir="LEFT">
+		<start>2</start>
+		<time>20</time>
+	</skater>
+</level>

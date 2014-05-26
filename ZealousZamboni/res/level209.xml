@@ -8,6 +8,6 @@
 	<zamboni x="360" y="360" />
 	<skater toX="296" toY="84" dir="LEFT">
 		<start>2</start>
-		<time>20</time>
+		<time>21</time>
 	</skater>
 </level>
