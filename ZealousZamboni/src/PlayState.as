@@ -86,8 +86,8 @@ package
 			
 			levelEnded = false;
 			
-			var popup:Popup = new Popup();
-			add(popup);
+			//var popup:Popup = new Popup();
+			//add(popup);
 		}
 		
 		private function logMouse(t:FlxTimer) : void {
