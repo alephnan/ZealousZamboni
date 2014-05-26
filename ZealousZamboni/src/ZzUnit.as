@@ -65,7 +65,8 @@ package
 			//This calculation looks super weird. What we're doing is basically
 			//considering how many pixels are overlapping pits vs how many aren't
 			//The exact numbers are totally arbitrary, and this should probably be done in a different way
-			if (pitCounter*Math.pow(LevelLoader.TILE_SIZE,2) > ((width+8)*(height)) ) {
+			if (pitCounter * Math.pow(LevelLoader.TILE_SIZE, 2) > ((width + 8) * (height)) ) {
+				ZzLog.logAction(ZzLog.ACTION_UNIT_FALL, getLoggableObject());
 				LevelLoader.SOUND_PLAYER.play("fall");
 				alive = false;
 				new ZzTimer().start(.2, fallCounter, function(t:ZzTimer) : void {
@@ -80,6 +81,19 @@ package
 					}
 				});
 			}
+		}
+		
+		/**
+		 * Returns a loggable summary of this object's state
+		 * @return
+		 */
+		public function getLoggableObject() : Object {
+			return { 
+					"ZzUnitType" : String(this),
+					"x" : x, 
+					"y" : y, 
+					"id" : this.ID 
+					};
 		}
 	}
 }

@@ -47,6 +47,7 @@ package
 		public static const ACTION_WIN_GAME:int = 14;
 		public static const ACTION_MOUSE_HISTORY:int = 15;
 		public static const ACTION_POWER_UP_APPEAR:int = 16;
+		public static const ACTION_UNIT_FALL:int = 17;
 		
 		public static function logAction(aid:int, data:Object = null):void {
 			if (!DEBUG) {

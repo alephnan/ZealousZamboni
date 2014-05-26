@@ -518,7 +518,7 @@ package
 		 * Returns a loggable summary of this object's state
 		 * @return
 		 */
-		private function getLoggableObject() : Object {
+		public override function getLoggableObject() : Object {
 			return { 
 					"type" : type, 
 					"x" : x, 
