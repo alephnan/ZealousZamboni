@@ -85,6 +85,9 @@ package
 			mouseTimer.start(MOUSE_LOG_INTERVAL, 0, logMouse);
 			
 			levelEnded = false;
+			
+			var popup:Popup = new Popup();
+			add(popup);
 		}
 		
 		private function logMouse(t:FlxTimer) : void {
