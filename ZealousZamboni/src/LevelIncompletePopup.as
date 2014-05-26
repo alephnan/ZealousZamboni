@@ -29,6 +29,7 @@ package
 		
 		override public function update():void {
 			if (FlxG.keys.justPressed("ENTER")) {
+				ZzLog.logAction(ZzLog.ACTION_SKIP_STARTINCOMPLETE , { } );
 				onClick();
 			}
 			

@@ -72,6 +72,8 @@ package
 			
 			// player wants to skip screen, stop timer, and immediately go to next level
 			if (FlxG.keys.justPressed("ENTER")) {
+				ZzLog.logAction(ZzLog.ACTION_SKIP_LEVELCOMPLETE, {} );
+				
 				timer.stop();
 				kill();
 				PlayState(FlxG.state).unpause();

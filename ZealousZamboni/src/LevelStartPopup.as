@@ -14,6 +14,7 @@ package
 		private var tipScreen: Boolean;
 		// reference to timer, so we can stop it if we skip end screen
 		private var timer : FlxTimer;
+		private var enterPressCount : int;
 		
 		public function LevelStartPopup(imagePopup:Class=null, imageMessage:Class=null) 
 		{
@@ -64,6 +65,8 @@ package
 		
 		override public function update():void {
 			if (FlxG.keys.justPressed("ENTER")) {
+				enterPressCount++;
+				ZzLog.logAction(ZzLog.ACTION_SKIP_LEVELCOMPLETE, {"numEnterPress" : enterPressCount} );
 				onClick();
 				
 			}

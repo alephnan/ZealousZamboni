@@ -60,6 +60,8 @@ package
 		private static const INTERMEDIATE_TIPS_INDEX:uint = 12;
 		
 		
+		
+		
 		// Tuan's Level testing
 		/*public const Level1QId:uint = 1;
 		[Embed(source = '../res/tuanlevels/one.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
