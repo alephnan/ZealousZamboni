@@ -7,7 +7,7 @@
 		should focus on clearing the horse-shoe shaped traps in front of each entrance
 	</description>
 	<popup mainImg="skatersStuckPop" tip="BEGINNER_TIPS_INDEX"/>
-	<zamboni x="120" y="224" />
+	<zamboni x="120" y="232" />
 	<skater x="1" y="1" dir="DOWN">
 		<start>6</start>
 		<time>3</time>

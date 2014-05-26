@@ -18,7 +18,7 @@
 		approximately a 3-5 second timeframe.
 	</solution>
 	<popup mainImg="skatersStuckPop" tip="BEGINNER_TIPS_INDEX"/>
-	<zamboni x="504" y="312" />
+	<zamboni x="504" y="350" />
 	<skater x="160" y="96 ">
 		<start>2</start>
 		<time>20</time>

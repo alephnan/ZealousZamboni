@@ -24,7 +24,7 @@
 	</solution>
 
 	<popup mainImg="skatersStuckPop" tip="BEGINNER_TIPS_INDEX"/>
-	<zamboni x="320" y="280"/>
+	<zamboni x="320" y="310"/>
 	<skater x="160" y="96 ">
 		<start>2</start>
 		<time>10</time>
