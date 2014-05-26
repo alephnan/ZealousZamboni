@@ -99,6 +99,7 @@ package
 			if (imageMessage == null) {
 				onComplete(null);
 			} else {
+				// only load tips for version A
 				if (tipScreen == false && ZzLog.ABversion() == 0) {
 					
 					setAll("exists", false, false);

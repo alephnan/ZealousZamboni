@@ -12,8 +12,10 @@ package
 		private static const SKEY:String = "1715d3eb78138f878ef005ea285f0087";
 		private static const VID:int = 1;	// This should always be 1
 		
+		// This can change (acts like an actual version ID)
 		// generate either version A_CID, B_CID, or C_CID, randomly
-		private static const CID:int = (Math.floor(Math.random() * 3) + 2);   // This can change (acts like an actual version ID)
+		private static const CID:int = (Math.floor(Math.random() * 999999) % 3) + 2;
+		//private static const CID:int = (Math.floor(Math.random() * 3) + 2);  // old way to compute random number. but it seems to require RNG be 'warmed up'. not sure on this
 		private static const A_CID:int = 2;
 		private static const B_CID:int = 3;
 		private static const C_CID:int = 4;
@@ -90,9 +92,6 @@ package
 			}
 		}
 		
-		public static function tempABversion() : int {
-			return 0;
-		}
 		
 		public static function logLevelStart(qId:int, data:Object = null):void 
 		{

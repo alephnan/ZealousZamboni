@@ -91,7 +91,7 @@ package
 			
 			levelEnded = false;
 			
-			// load popup only if version B
+			
 			onStart();
 			
 		}
@@ -101,6 +101,8 @@ package
 			var popup : LevelStartPopup;
 			
 			var version = ZzLog.ABversion();
+			
+			
 			if ( version == 0) { // level goal popup + tip
 				if (images.length != 2) {
 					popup = new LevelStartPopup(Media.cleanIcePop, Media.tipStarConversionPNG);
@@ -114,7 +116,7 @@ package
 					popup = new LevelStartPopup(images[0]);
 				}
 			} else { // version == 2
-				// no popups
+				// don't load any popups
 			}
 			
 			pauseGroup.add(popup);
@@ -160,6 +162,7 @@ package
 		public function endLevel() : void {
 			if (!levelEnded) {
 				levelEnded = true;
+				levelEnded = true;
 			}else {
 				return;
 			}
@@ -182,8 +185,7 @@ package
 			} else {
 				//FlxG.switchState(new LevelWinState());
 				
-				// load lecvel complete popup
-			
+				// load level complete popup
 				pauseGroup.add(new LevelCompletePopup());
 			}
 		}
