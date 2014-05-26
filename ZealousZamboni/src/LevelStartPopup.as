@@ -10,11 +10,15 @@ package
 		private var popGraphic:FlxSprite;
 		private var button:FlxButton;
 		private var imageMessage:Class;
-
+	
+		private var tipScreen: Boolean;
+		// reference to timer, so we can stop it if we skip end screen
+		private var timer : FlxTimer;
 		
 		public function LevelStartPopup(imagePopup:Class=null, imageMessage:Class=null) 
 		{
-		
+			
+			tipScreen = false;
 			super();
 			if (imagePopup == null)
 				imagePopup = Media.cleanIcePop;
@@ -59,7 +63,7 @@ package
 		}
 		
 		override public function update():void {
-			if (FlxG.keys.ENTER) {
+			if (FlxG.keys.justPressed("ENTER")) {
 				onClick();
 				
 			}
@@ -82,11 +86,17 @@ package
 			if (imageMessage == null) {
 				onComplete(null);
 			} else {
-				
-				setAll("exists", false, false);
-				new FlxTimer().start(2, 1, onComplete);
-				popGraphic.loadGraphic(imageMessage);
-				popGraphic.exists = true;
+				if(tipScreen == false) {
+					setAll("exists", false, false);
+					timer = new FlxTimer().start(2, 1, onComplete);
+					popGraphic.loadGraphic(imageMessage);
+					popGraphic.exists = true;
+					
+					tipScreen = true;
+				} else {
+					timer.stop();
+					onComplete(null);
+				}
 			}
 		}
 		

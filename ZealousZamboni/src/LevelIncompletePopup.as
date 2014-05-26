@@ -28,7 +28,7 @@ package
 		}
 		
 		override public function update():void {
-			if (FlxG.keys.ENTER) {
+			if (FlxG.keys.justPressed("ENTER")) {
 				onClick();
 			}
 			
