@@ -28,6 +28,10 @@ package
 		}
 		
 		override public function update():void {
+			if (FlxG.keys.ENTER) {
+				onClick();
+			}
+			
 			switch(button.status) {
 				case FlxButton.HIGHLIGHT:
 					button.alpha = 1.0;

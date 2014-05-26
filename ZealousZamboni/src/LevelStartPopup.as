@@ -10,9 +10,11 @@ package
 		private var popGraphic:FlxSprite;
 		private var button:FlxButton;
 		private var imageMessage:Class;
+
 		
 		public function LevelStartPopup(imagePopup:Class=null, imageMessage:Class=null) 
 		{
+		
 			super();
 			if (imagePopup == null)
 				imagePopup = Media.cleanIcePop;
@@ -57,6 +59,10 @@ package
 		}
 		
 		override public function update():void {
+			if (FlxG.keys.ENTER) {
+				onClick();
+				
+			}
 			switch(button.status) {
 				case FlxButton.HIGHLIGHT:
 					button.alpha = 1.0;
@@ -76,6 +82,7 @@ package
 			if (imageMessage == null) {
 				onComplete(null);
 			} else {
+				
 				setAll("exists", false, false);
 				new FlxTimer().start(2, 1, onComplete);
 				popGraphic.loadGraphic(imageMessage);

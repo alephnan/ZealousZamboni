@@ -15,6 +15,7 @@ package
 		private var starShots:uint;
 		private var starGoal:uint;
 		private var star:FlxSprite;
+		private var timer:FlxTimer;
 		
 		public function LevelCompletePopup() 
 		{
@@ -41,7 +42,7 @@ package
 			star = new FlxSprite(starStart.x, starStart.y, Media.bigStarPng);
 			star.followPath(starPath, 400);
 			starPath.drawDebug(FlxG.camera);
-			new FlxTimer().start(3, starGoal + 1, onTimer);
+			timer = new FlxTimer().start(3, starGoal + 1, onTimer);
 			
 			add(popGraphic);
 			add(goalTxt);
@@ -68,6 +69,16 @@ package
 					}
 				}
 			}
+			
+			// player wants to skip screen, stop timer, and immediately go to next level
+			if (FlxG.keys.ENTER) {
+				timer.stop();
+				kill();
+				PlayState(FlxG.state).unpause();
+				FlxG.level++;
+				FlxG.switchState(new PlayState());
+			}
+			
 			super.update();
 		}
 		
