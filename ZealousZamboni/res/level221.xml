@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="30" goal="2">
+	<disco>
+		<start>2</start>
+		<time>20</time>
+	</disco>
+	<description>
+		Disco pit zombies
+	</description>
+	<zamboni x="400" y="352" />
+	<skater dir="LEFT">
+		<start>2</start>
+		<time>20</time>
+	</skater>
+	<!-- top left zombie -->
+	<zombie x="190" y="100">
+		<start>5</start>
+	</zombie>
+	<!-- top left zombie -->
+	<zombie x="190" y="100">
+		<start>10</start>
+	</zombie>
+	<!-- top left zombie -->
+	<zombie x="190" y="100">
+		<start>15</start>
+	</zombie>
+	<!-- top left zombie -->
+	<zombie x="190" y="100">
+		<start>20</start>
+	</zombie>
+	<!-- top right zombie -->
+	<zombie x="446" y="100">
+		<start>5</start>
+	</zombie>
+	<!-- top right zombie -->
+	<zombie x="446" y="100">
+		<start>10</start>
+	</zombie>
+	<!-- top right zombie -->
+	<zombie x="446" y="100">
+		<start>15</start>
+	</zombie>
+	<!-- bottom left zombie -->
+	<zombie x="190" y="408">
+		<start>5</start>
+	</zombie>
+	<!-- bottom left zombie -->
+	<zombie x="190" y="408">
+		<start>10</start>
+	</zombie>
+	<!-- bottom left zombie -->
+	<zombie x="190" y="408">
+		<start>15</start>
+	</zombie>
+	<!-- bottom right zombie -->
+	<zombie x="446" y="408">
+		<start>5</start>
+	</zombie>
+	<!-- bottom right zombie -->
+	<zombie x="446" y="408">
+		<start>10</start>
+	</zombie>
+	<!-- bottom right zombie -->
+	<zombie x="446" y="408">
+		<start>15</start>
+	</zombie>
+	
+</level>

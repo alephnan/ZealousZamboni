@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="40" goal="3">
+	<description>
+		Pits that only kill skaters
+	</description>
+	<zamboni x="392" y="326" />
+	<skater dir="DOWN">
+		<start>4</start>
+		<time>20</time>
+	</skater>
+</level>

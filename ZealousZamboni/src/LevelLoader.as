@@ -137,7 +137,11 @@ package
 		[Embed(source = '../res/level219.txt', mimeType = "application/octet-stream")] public var Level17Csv:Class;
 		[Embed(source = "../res/level219.xml", mimeType = "application/octet-stream")] public var Level17XML:Class;
 		
-		public static const NUM_LEVELS:uint = 17;
+		public const Level18QId:uint = 221;
+		[Embed(source = '../res/level221.txt', mimeType = "application/octet-stream")] public var Level18Csv:Class;
+		[Embed(source = "../res/level221.xml", mimeType = "application/octet-stream")] public var Level18XML:Class;
+		
+		public static const NUM_LEVELS:uint = 18;
 		
 		private var level:FlxTilemap;
 		
