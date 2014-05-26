@@ -11,12 +11,24 @@ package
 		private static const GAME_ID:int = 107;
 		private static const SKEY:String = "1715d3eb78138f878ef005ea285f0087";
 		private static const VID:int = 1;	// This should always be 1
-		private static const CID:int = 2;   // This can change (acts like an actual version ID)
+		
+		// generate either version A_CID, B_CID, or C_CID, randomly
+		private static const CID:int = (Math.floor(Math.random() * 3) + 2);   // This can change (acts like an actual version ID)
+		private static const A_CID:int = 2;
+		private static const B_CID:int = 3;
+		private static const C_CID:int = 4;
+		
 		public static const PREGAME_QID:int = 31337;
 		
 		// CID = 1	5pm release on 5/16
-	
 		
+		
+		/* Release on Memoral Day 5/26
+		 * 
+		 * CID = 2 A/B testing: version with level goal popup + tips
+		 * CID = 3 A/B testing: version with level goal popup (no tips) 
+		 * CID = 4 A/B testing: version without level goal popup, nor tips
+		*/
 		/**
 		 * If set to true, calls to log will not have any effect
 		 */
@@ -61,6 +73,25 @@ package
 					trace(e.message);
 				}
 			}
+		}
+		
+
+		// return 0 to indicate A
+		// return 1 to indicate  B
+		// return 2 to indicate C
+		// ... open for expansion to multiple versions
+		public static function ABversion() : int {
+			if (CID == A_CID) {
+				return 0;
+			} else if (CID == B_CID) { 
+				return 1;
+			} else { // CID == C_CID
+				return 2;
+			}
+		}
+		
+		public static function tempABversion() : int {
+			return 0;
 		}
 		
 		public static function logLevelStart(qId:int, data:Object = null):void 

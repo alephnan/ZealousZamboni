@@ -54,7 +54,7 @@ package
 			var heightOffset:uint = goalTxt.y - 38;
 			popGraphic.stamp(stamp, widthOffset, heightOffset);
 			
-			var numTxt:FlxText = new FlxText(widthOffset + stamp.width - 25, heightOffset + stamp.height - 2, 300, "x " + goal, true);
+			var numTxt:FlxText = new FlxText(widthOffset + stamp.width - 25, heightOffset + stamp.height - 2, 100, "x " + goal, true);
 			numTxt.setFormat("coolvetica", 44, 0x000000, "center");
 			
 	
@@ -66,7 +66,10 @@ package
 			add(lvlTxt);
 			add(goalTxt);
 			add(skipTxt);
+		
 			add(numTxt);
+			
+			
 			PlayState(FlxG.state).pause();
 		}
 		
@@ -96,7 +99,7 @@ package
 			if (imageMessage == null) {
 				onComplete(null);
 			} else {
-				if (tipScreen == false) {
+				if (tipScreen == false && ZzLog.ABversion() == 0) {
 					
 					setAll("exists", false, false);
 					skipTxt.exists = true;
@@ -106,7 +109,9 @@ package
 					
 					tipScreen = true;
 				} else {
-					timer.stop();
+					if (timer != null) {
+						timer.stop();
+					}
 					onComplete(null);
 				}
 			}

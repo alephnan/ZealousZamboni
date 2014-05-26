@@ -100,6 +100,7 @@ package
 		// Clears Ice Tiles surrounding zamboni current position
 		private function trailSweep() : void {
 			
+			
 			level.overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
 				if (LevelLoader.isTrail(tile.index)) {
 					var tx:Number = tile.x / LevelLoader.TILE_SIZE;

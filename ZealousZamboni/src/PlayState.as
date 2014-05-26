@@ -91,14 +91,32 @@ package
 			
 			levelEnded = false;
 			
+			// load popup only if version B
 			onStart();
+			
 		}
 		
 		public function onStart():void {
 			var images:Array = levelLoader.getPopupImages();
-			if (images.length != 2)
-				var popup:LevelStartPopup = new LevelStartPopup(Media.cleanIcePop, Media.tipStarConversionPNG);
-			var popup:LevelStartPopup = new LevelStartPopup(images[0], images[1]);
+			var popup : LevelStartPopup;
+			
+			var version = ZzLog.ABversion();
+			if ( version == 0) { // level goal popup + tip
+				if (images.length != 2) {
+					popup = new LevelStartPopup(Media.cleanIcePop, Media.tipStarConversionPNG);
+				} else {
+					popup = new LevelStartPopup(images[0], images[1]);
+				}
+			} else if (version == 1) { // just level goal popup
+				if (images.length != 2) {
+					popup = new LevelStartPopup(images[0]);
+				} else {
+					popup = new LevelStartPopup(images[0]);
+				}
+			} else { // version == 2
+				// no popups
+			}
+			
 			pauseGroup.add(popup);
 		}
 		
@@ -163,6 +181,9 @@ package
 				FlxG.switchState(new EndState());
 			} else {
 				//FlxG.switchState(new LevelWinState());
+				
+				// load lecvel complete popup
+			
 				pauseGroup.add(new LevelCompletePopup());
 			}
 		}
