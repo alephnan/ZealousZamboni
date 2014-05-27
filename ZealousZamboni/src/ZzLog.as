@@ -14,11 +14,12 @@ package
 		
 		// This can change (acts like an actual version ID)
 		// generate either version A_CID, B_CID, or C_CID, randomly
-		private static const CID:int = (Math.floor(Math.random() * 999999) % 3) + 2;
+		//private static const CID:int = (Math.floor(Math.random() * 999999) % 3) + 2;
+		private static const CID:int = 11;	//hardcoded to 2 since we didn't have time to put in proper a/b testing
 		//private static const CID:int = (Math.floor(Math.random() * 3) + 2);  // old way to compute random number. but it seems to require RNG be 'warmed up'. not sure on this
-		private static const A_CID:int = 2;
-		private static const B_CID:int = 3;
-		private static const C_CID:int = 4;
+		private static const A_CID:int = 10;
+		private static const B_CID:int = 11;
+		private static const C_CID:int = 12;
 		
 		public static const PREGAME_QID:int = 31337;
 		
