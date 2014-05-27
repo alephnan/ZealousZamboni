@@ -105,24 +105,25 @@ package
 		[Embed(source = '../res/level102.txt', mimeType = "application/octet-stream")] public var Level5Csv:Class;
 		[Embed(source = "../res/level102.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
 		
-		public const Level5BQId:uint = 102;
-		[Embed(source = '../res/level102.txt', mimeType = "application/octet-stream")] public var Level5BCsv:Class;
-		[Embed(source = "../res/level102.xml", mimeType = "application/octet-stream")] public var Level5BXML:Class;
+		public const Level5BQId:uint = 252;
+		[Embed(source = '../res/level252.txt', mimeType = "application/octet-stream")] public var Level5BCsv:Class;
+		[Embed(source = "../res/level252.xml", mimeType = "application/octet-stream")] public var Level5BXML:Class;
 		
 		public const Level6QId:uint = 211;
 		[Embed(source = '../res/level211.txt', mimeType = "application/octet-stream")] public var Level6Csv:Class;
 		[Embed(source = "../res/level211.xml", mimeType = "application/octet-stream")] public var Level6XML:Class;
 		[Embed(source = "../res/level211_ruts.txt", mimeType = "application/octet-stream")] public var Level6Ruts:Class; 
 		
-		public const Level6BQId:uint = 211;
-		[Embed(source = '../res/level211.txt', mimeType = "application/octet-stream")] public var Level6BCsv:Class;
-		[Embed(source = "../res/level211.xml", mimeType = "application/octet-stream")] public var Level6BXML:Class;
-		[Embed(source = "../res/level211_ruts.txt", mimeType = "application/octet-stream")] public var Level6BRuts:Class; 
+		public const Level6BQId:uint = 253;
+		[Embed(source = '../res/level253.txt', mimeType = "application/octet-stream")] public var Level6BCsv:Class;
+		[Embed(source = "../res/level253.xml", mimeType = "application/octet-stream")] public var Level6BXML:Class;
+		[Embed(source = "../res/level253_ruts.txt", mimeType = "application/octet-stream")] public var Level6BRuts:Class; 
 		
 		public const Level7QId:uint = 104;
 		[Embed(source = '../res/level104.txt', mimeType = "application/octet-stream")] public var Level7Csv:Class;
 		[Embed(source = "../res/level104.xml", mimeType = "application/octet-stream")] public var Level7XML:Class;
 		
+		//Same as original level 7 since it was so hard
 		public const Level7BQId:uint = 104;
 		[Embed(source = '../res/level104.txt', mimeType = "application/octet-stream")] public var Level7BCsv:Class;
 		[Embed(source = "../res/level104.xml", mimeType = "application/octet-stream")] public var Level7BXML:Class;
@@ -131,14 +132,15 @@ package
 		[Embed(source = '../res/level105.txt', mimeType = "application/octet-stream")] public var Level8Csv:Class;
 		[Embed(source = "../res/level105.xml", mimeType = "application/octet-stream")] public var Level8XML:Class;
 		
-		public const Level8BQId:uint = 105;
-		[Embed(source = '../res/level105.txt', mimeType = "application/octet-stream")] public var Level8BCsv:Class;
-		[Embed(source = "../res/level105.xml", mimeType = "application/octet-stream")] public var Level8BXML:Class;
+		public const Level8BQId:uint = 254;
+		[Embed(source = '../res/level254.txt', mimeType = "application/octet-stream")] public var Level8BCsv:Class;
+		[Embed(source = "../res/level254.xml", mimeType = "application/octet-stream")] public var Level8BXML:Class;
 		
 		public const Level9QId:uint = 212;
 		[Embed(source = '../res/level212.txt', mimeType = "application/octet-stream")] public var Level9Csv:Class;
 		[Embed(source = "../res/level212.xml", mimeType = "application/octet-stream")] public var Level9XML:Class;
 		
+		//Same as original level 9
 		public const Level9BQId:uint = 212;
 		[Embed(source = '../res/level212.txt', mimeType = "application/octet-stream")] public var Level9BCsv:Class;
 		[Embed(source = "../res/level212.xml", mimeType = "application/octet-stream")] public var Level9BXML:Class;
@@ -147,6 +149,7 @@ package
 		[Embed(source = '../res/level213.txt', mimeType = "application/octet-stream")] public var Level10Csv:Class;
 		[Embed(source = "../res/level213.xml", mimeType = "application/octet-stream")] public var Level10XML:Class;
 		
+		//same as original level 10
 		public const Level10BQId:uint = 213;
 		[Embed(source = '../res/level213.txt', mimeType = "application/octet-stream")] public var Level10BCsv:Class;
 		[Embed(source = "../res/level213.xml", mimeType = "application/octet-stream")] public var Level10BXML:Class;
@@ -244,8 +247,6 @@ package
 			//levelCopy.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
 			//Set entrances as non-collidable
 			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
-			
-			
 		}
 		
 		public function getPlayer() : Zamboni {
