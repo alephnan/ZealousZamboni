@@ -17,9 +17,9 @@ package
 		//private static const CID:int = (Math.floor(Math.random() * 999999) % 3) + 2;
 		//private static const CID:int = 11;	//hardcoded to 2 since we didn't have time to put in proper a/b testing
 		//private static const CID:int = (Math.floor(Math.random() * 3) + 2);  // old way to compute random number. but it seems to require RNG be 'warmed up'. not sure on this
-		private static const CID:int = int(FlxG.random() * 100) % 2 + 10;
-		private static const A_CID:int = 10;	// a/b release on 5/27
-		private static const B_CID:int = 11;	// a/b release on 5/27
+		private static const CID:int = int(FlxG.random() * 100) % 2 + 13;
+		private static const A_CID:int = 13;	// a/b release on 5/27	// changed from 10 to 13 5/28
+		private static const B_CID:int = 14;	// a/b release on 5/27	// changed from 11 to 14 5/28
 		private static const C_CID:int = 12;
 		
 		public static const PREGAME_QID:int = 31337;
@@ -85,6 +85,7 @@ package
 		// return 2 to indicate C
 		// ... open for expansion to multiple versions
 		public static function ABversion() : int {
+			//trace(CID);
 			if (CID == A_CID) {
 				return 0;
 			} else if (CID == B_CID) { 
