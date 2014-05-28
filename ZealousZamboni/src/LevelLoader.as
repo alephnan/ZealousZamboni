@@ -182,9 +182,9 @@ package
 		[Embed(source = '../res/level220.txt', mimeType = "application/octet-stream")] public var Level14Csv:Class;
 		[Embed(source = "../res/level220.xml", mimeType = "application/octet-stream")] public var Level14XML:Class;
 		
-		public const Level14BQId:uint = 220;
-		[Embed(source = '../res/level220.txt', mimeType = "application/octet-stream")] public var Level14BCsv:Class;
-		[Embed(source = "../res/level220.xml", mimeType = "application/octet-stream")] public var Level14BXML:Class;
+		public const Level14BQId:uint = 260;
+		[Embed(source = '../res/level260.txt', mimeType = "application/octet-stream")] public var Level14BCsv:Class;
+		[Embed(source = "../res/level260.xml", mimeType = "application/octet-stream")] public var Level14BXML:Class;
 		
 		public const Level15QId:uint = 217;
 		[Embed(source = '../res/level217.txt', mimeType = "application/octet-stream")] public var Level15Csv:Class;
