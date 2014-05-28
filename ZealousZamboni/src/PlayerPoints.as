@@ -117,6 +117,19 @@ package
 			return false;
 		}
 		
+		public function checkLoss():Boolean {
+			var numTrailsLeft:uint = 0;
+			var data:Array = PlayState(FlxG.state).level.getData();
+			for (var i:uint = 0; i < data.length; ++i) {
+				if (data[i] >= LevelLoader.TRAIL_TILE_INDEX && data[i] < LevelLoader.TRAIL_TILE_INDEX + LevelLoader.NUM_COLORS)
+					numTrailsLeft++;
+			}
+			var sq:SkaterQueue = SkaterQueue(PlayState(FlxG.state).activeSprites[PlayState.SKATERS_INDEX]);
+			var outOfSkatersNotEnoughTrails:Boolean = sq.skatersFinished() && (numTrailsLeft + numSmallStars) < STAR_CONVERSION;
+			//var notEnoughSkatersLeft:Boolean = (sq.activeSkaters() + sq.skatersLeft()) < (playerBigStarGoal - numBigStars);
+			return !checkWin() && outOfSkatersNotEnoughTrails;
+		}
+		
 	}
 
 }

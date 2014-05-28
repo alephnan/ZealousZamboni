@@ -27,6 +27,14 @@ package
 			return skaters.length == 0 && countLiving() == 0;
 		}
 		
+		public function skatersLeft():uint {
+			return skaters.length;
+		}
+		
+		public function activeSkaters():uint {
+			return countLiving();
+		}
+		
 		public function startTimer():void {
 			initialNumSkaters = skaters.length;
 			this.skaters.sortOn("startTime", Array.NUMERIC | Array.DESCENDING);
@@ -73,7 +81,9 @@ package
 					//if we have skater x,y use the nearest entrance to that instead of round robin
 					p = ZzUtils.getNearestEntrance(new FlxPoint(next.x, next.y));
 				}
+				
 				var skater:Skater = new Skater(p.x, p.y, next.iceTime, null, next.toX, next.toY, next.dir);
+				//var skater:Skater = new Skater(next.x, next.y, next.iceTime, null, next.x, next.y, next.dir);
 				skater.setSkaterCompleteFn(skaterComplete);
 				add(skater);
 				skater.postConstruct(PlayState(FlxG.state).addDep);

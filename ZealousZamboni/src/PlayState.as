@@ -100,7 +100,7 @@ package
 			var images:Array = levelLoader.getPopupImages();
 			var popup : LevelStartPopup;
 			
-			var version = ZzLog.ABversion();
+			var version:int = ZzLog.ABversion();
 			
 			
 			if ( version == 0) { // level goal popup + tip

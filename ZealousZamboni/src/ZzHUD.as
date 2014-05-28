@@ -101,9 +101,9 @@ package
 			timerTxt.text = getTimeString(timer.timeLeft);
 			super.update();
 			
-			if (playerPoints.checkWin() && timer.timeLeft > 3) {
+			if ((playerPoints.checkWin() || playerPoints.checkLoss()) && timer.timeLeft > 2) {
 				timer.stop();
-				timer.start(3, 1, endLevel);
+				timer.start(2, 1, endLevel);
 				timerTxt.exists = false;
 			}
 		}
@@ -129,7 +129,7 @@ package
 			return uint(timeLeft / 60) + ":" + seconds;
 		}
 		
-		public function endLevel(timer:ZzTimer):void {
+		public function endLevel(timer:ZzTimer=null):void {
 			PlayState(FlxG.state).endLevel();
 		}
 		

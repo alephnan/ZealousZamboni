@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="1" time="40" goal="2">
+	<description>
+		This level is just like the previous level except it introduces the player
+		to the timer. So it should help to reinforce driving and trail collection, but
+		also challenge the player to go as fast as possible
+	</description>
+	<popup mainImg="skatersStuckPop" tip="BEGINNER_TIPS_INDEX"/>
+	<zamboni x="168" y="224"/>
+	<skater x="121" y="132" toX="121" toY="136" dir="DOWN">
+		<start>2</start>
+		<time>15</time>
+	</skater>
+	<skater x="492" y="128" toX="492" toY="130" dir="DOWN">
+		<start>2</start>
+		<time>15</time>
+	</skater>
+</level>
