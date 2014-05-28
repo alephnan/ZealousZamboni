@@ -158,34 +158,67 @@ package
 		[Embed(source = '../res/level214.txt', mimeType = "application/octet-stream")] public var Level11Csv:Class;
 		[Embed(source = "../res/level214.xml", mimeType = "application/octet-stream")] public var Level11XML:Class;
 		
+		public const Level11BQId:uint = 214;
+		[Embed(source = '../res/level214.txt', mimeType = "application/octet-stream")] public var Level11BCsv:Class;
+		[Embed(source = "../res/level214.xml", mimeType = "application/octet-stream")] public var Level11BXML:Class;
+		
 		public const Level12QId:uint = 215;
 		[Embed(source = '../res/level215.txt', mimeType = "application/octet-stream")] public var Level12Csv:Class;
 		[Embed(source = "../res/level215.xml", mimeType = "application/octet-stream")] public var Level12XML:Class;
+		
+		public const Level12BQId:uint = 215;
+		[Embed(source = '../res/level215.txt', mimeType = "application/octet-stream")] public var Level12BCsv:Class;
+		[Embed(source = "../res/level215.xml", mimeType = "application/octet-stream")] public var Level12BXML:Class;
 		
 		public const Level13QId:uint = 216;
 		[Embed(source = '../res/level216.txt', mimeType = "application/octet-stream")] public var Level13Csv:Class;
 		[Embed(source = "../res/level216.xml", mimeType = "application/octet-stream")] public var Level13XML:Class;
 		
+		public const Level13BQId:uint = 216;
+		[Embed(source = '../res/level216.txt', mimeType = "application/octet-stream")] public var Level13BCsv:Class;
+		[Embed(source = "../res/level216.xml", mimeType = "application/octet-stream")] public var Level13BXML:Class;
+		
 		public const Level14QId:uint = 220;
 		[Embed(source = '../res/level220.txt', mimeType = "application/octet-stream")] public var Level14Csv:Class;
 		[Embed(source = "../res/level220.xml", mimeType = "application/octet-stream")] public var Level14XML:Class;
+		
+		public const Level14BQId:uint = 220;
+		[Embed(source = '../res/level220.txt', mimeType = "application/octet-stream")] public var Level14BCsv:Class;
+		[Embed(source = "../res/level220.xml", mimeType = "application/octet-stream")] public var Level14BXML:Class;
 		
 		public const Level15QId:uint = 217;
 		[Embed(source = '../res/level217.txt', mimeType = "application/octet-stream")] public var Level15Csv:Class;
 		[Embed(source = "../res/level217.xml", mimeType = "application/octet-stream")] public var Level15XML:Class;
 		[Embed(source = "../res/level217_ruts.txt", mimeType = "application/octet-stream")] public var Level15Ruts:Class;
 		
+		public const Level15BQId:uint = 217;
+		[Embed(source = '../res/level217.txt', mimeType = "application/octet-stream")] public var Level15BCsv:Class;
+		[Embed(source = "../res/level217.xml", mimeType = "application/octet-stream")] public var Level15BXML:Class;
+		[Embed(source = "../res/level217_ruts.txt", mimeType = "application/octet-stream")] public var Level15BRuts:Class;
+		
 		public const Level16QId:uint = 218;
 		[Embed(source = '../res/level218.txt', mimeType = "application/octet-stream")] public var Level16Csv:Class;
 		[Embed(source = "../res/level218.xml", mimeType = "application/octet-stream")] public var Level16XML:Class;
+		
+		public const Level16BQId:uint = 218;
+		[Embed(source = '../res/level218.txt', mimeType = "application/octet-stream")] public var Level16BCsv:Class;
+		[Embed(source = "../res/level218.xml", mimeType = "application/octet-stream")] public var Level16BXML:Class;
 		
 		public const Level17QId:uint = 219;
 		[Embed(source = '../res/level219.txt', mimeType = "application/octet-stream")] public var Level17Csv:Class;
 		[Embed(source = "../res/level219.xml", mimeType = "application/octet-stream")] public var Level17XML:Class;
 		
+		public const Level17BQId:uint = 219;
+		[Embed(source = '../res/level219.txt', mimeType = "application/octet-stream")] public var Level17BCsv:Class;
+		[Embed(source = "../res/level219.xml", mimeType = "application/octet-stream")] public var Level17BXML:Class;
+		
 		public const Level18QId:uint = 221;
 		[Embed(source = '../res/level221.txt', mimeType = "application/octet-stream")] public var Level18Csv:Class;
 		[Embed(source = "../res/level221.xml", mimeType = "application/octet-stream")] public var Level18XML:Class;
+		
+		public const Level18BQId:uint = 221;
+		[Embed(source = '../res/level221.txt', mimeType = "application/octet-stream")] public var Level18BCsv:Class;
+		[Embed(source = "../res/level221.xml", mimeType = "application/octet-stream")] public var Level18BXML:Class;
 		
 		public static const NUM_LEVELS:uint = 18;
 		
