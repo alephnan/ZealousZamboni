@@ -11,21 +11,21 @@ def mainloop():
 	players = json.loads(f.read());
 	times = list()
 	maxTime = -1
-	print "Number of players: %d" % len(players)
+	#print "Number of players: %d" % len(players)
 	for player in players:
 		if player['uid'] != "3BD04335-7068-C88B-2C2B-F46936612340" and player['uid'] != "80836283-5BB6-6862-C96A-5527B1222647":
-			print ""
-			print "Player %s" % player['uid']
+			#print ""
+			#print "Player %s" % player['uid']
 			levels = player['levels']
 			time = activeTimePlayed(levels)
-			print "Active play time(seconds): %s" % time
-			if time > 5:
+			#print "Active play time(seconds): %s" % time
+			if len(player['pageloads']) == 1:
 				times.append(time)
 	times.sort(key=int)
-	print ""
-	print "Number active players: %d" % len(times)
-	print ", ".join(str(time) for time in times)
-	print "max time: %d" % max(times)
+	#print ""
+	#print "Number active players: %d" % len(times)
+	#print ", ".join(str(time) for time in times)
+	#print "max time: %d" % max(times)
 	percents = list()
 	maxTime = int(max(times))
 	for x in range(0, maxTime):
