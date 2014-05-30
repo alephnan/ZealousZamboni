@@ -71,6 +71,7 @@ package
 			level = levelLoader.getTilemap();
 			levelTime = levelLoader.levelTime;
 			playerPoints = new PlayerPoints(14, levelLoader.goalPoints);
+			add(new FlxSprite(0, 0, Media.snowBackgroundPNG));	// load background here
 			add(level);
 			player = levelLoader.getPlayer();
 			activeSprites.push(player);

@@ -14,6 +14,10 @@ package
 	{
 		[Embed(source = '../res/start.txt', mimeType = "application/octet-stream")] public var StartCsv:Class;
 		
+		//private static const WALL_INDEX:uint = 512;
+		//private static const ICE_TILE_INDEX_END:uint = 1024;
+		//private static const NUM_TILES:uint = 2048;
+		
 		private var map:FlxTilemap;
 		private var player:Zamboni;
 		private var start:FlxSprite;
@@ -25,12 +29,16 @@ package
 			
 			map = new FlxTilemap();
 			level = map;
-			map.loadMap(new StartCsv(), Media.StartTilesheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
-			map.setTileProperties(LevelLoader.WALL_INDEX, FlxObject.ANY, tileCollision, null, LevelLoader.NUM_TILES - LevelLoader.WALL_INDEX);
+			//map.loadMap(new StartCsv(), Media.StartTilesheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
+			map.loadMap(new StartCsv(), Media.TileSheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
+			//map.setTileProperties(LevelLoader.WALL_INDEX, FlxObject.ANY, tileCollision, null, LevelLoader.NUM_TILES - LevelLoader.WALL_INDEX);
+			map.setTileProperties(LevelLoader.ICE_TILE_INDEX_END, FlxObject.ANY, tileCollision, null, LevelLoader.NUM_TILES - LevelLoader.ICE_TILE_INDEX_END);
+			add(new FlxSprite(0, 0, Media.snowBackgroundPNG));
 			add(map);
 			player = new Zamboni(255, 340, map);
 			add(player);
-			start = new FlxSprite(72, 293, Media.StartImg);
+			start = new FlxSprite(75, 293, Media.StartImg);
+			start.width += 10;
 			start.immovable = true;
 			add(start);
 			

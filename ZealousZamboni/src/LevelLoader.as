@@ -17,30 +17,52 @@ package
 		
 		/* TILE INDICES */
 		public static const ICE_TILE_INDEX:uint = 0;
-		public static const ICE_TILE_INDEX_END:uint = 1024; //non-inclusive
-		public static const ENTRANCE_TILE_INDEX:uint = 1052;	// Skater entrance
-		public static const DOWN_ARROW_BLOCK:uint = 1024;		// Arrow block -- DOWN
-		public static const UP_ARROW_BLOCK:uint = 1025;		// Arrow block -- UP
-		public static const LEFT_ARROW_BLOCK:uint = 1026;		// Arrow block -- LEFT
-		public static const RIGHT_ARROW_BLOCK:uint = 1027;		// Arrow block -- RIGHT
-		public static const SOLID_BLOCK:uint = 1053;
-		public static const WALL_INDEX:uint = 1054;
-		public static const TRAIL_TILE_INDEX:uint = 1078; // starting index of first trail color, that skater leaves
-		public static const NUM_COLORS:uint = 10; // number of different trail colors
-		public static const PIT_INDEX:uint = 1028;
+		//public static const ICE_TILE_INDEX_END:uint = 1024; //non-inclusive
+		public static const ICE_TILE_INDEX_END:uint = 512; //non-inclusive
+		//public static const ENTRANCE_TILE_INDEX:uint = 1052;	// Skater entrance
+		public static const ENTRANCE_TILE_INDEX:uint = 785;	// Skater entrance
+		//public static const DOWN_ARROW_BLOCK:uint = 1024;		// Arrow block -- DOWN
+		public static const DOWN_ARROW_BLOCK:uint = 786;		// Arrow block -- DOWN
+		//public static const UP_ARROW_BLOCK:uint = 1025;		// Arrow block -- UP
+		public static const UP_ARROW_BLOCK:uint = 787;		// Arrow block -- UP
+		//public static const LEFT_ARROW_BLOCK:uint = 1026;		// Arrow block -- LEFT
+		public static const LEFT_ARROW_BLOCK:uint = 788;		// Arrow block -- LEFT
+		//public static const RIGHT_ARROW_BLOCK:uint = 1027;		// Arrow block -- RIGHT
+		public static const RIGHT_ARROW_BLOCK:uint = 789;		// Arrow block -- RIGHT
+		//public static const SOLID_BLOCK:uint = 1053;
+		public static const SOLID_BLOCK:uint = 780;
+		//public static const WALL_INDEX:uint = 1054;
+		//public static const WALL_INDEX:uint = 512;
+		//public static const TRAIL_TILE_INDEX:uint = 1078; // starting index of first trail color, that skater leaves
+		public static const TRAIL_TILE_INDEX:uint = 776; // starting index of first trail color, that skater leaves
+		//public static const NUM_COLORS:uint = 10; // number of different trail colors
+		public static const NUM_COLORS:uint = 8; // number of different trail tiles
+		//public static const PIT_INDEX:uint = 1028;
+		public static const PIT_INDEX:uint = 784;
 		
 		// Index range for north / south walls (including corners) (inclusive)
-		public static const NORTH_WALL_LOW:uint = 1089;
-		public static const NORTH_WALL_HIGH:uint = 1100;
-		public static const SOUTH_WALL_LOW :uint = 1057;
-		public static const SOUTH_WALL_HIGH	:uint = 1068;
-		// East and west walls only have 2 pieces each
-		public static const	WEST_WALL_A:uint = 1103;
-		public static const WEST_WALL_B:uint = 1103 + 32;
-		public static const EAST_WALL_A:uint = 1106;
-		public static const EAST_WALL_B:uint = 1106 + 32;
+		//public static const NORTH_WALL_LOW:uint = 1089;
+		public static const NORTH_WALL_LOW:uint = 512;
+		//public static const NORTH_WALL_HIGH:uint = 1100;
+		public static const NORTH_WALL_HIGH:uint = 639;
+		//public static const SOUTH_WALL_LOW :uint = 1057;
+		public static const SOUTH_WALL_LOW :uint = 640;
+		//public static const SOUTH_WALL_HIGH	:uint = 1068;
+		public static const SOUTH_WALL_HIGH:uint = 767;
 		
-		public static const NUM_TILES:uint = 1184;
+		// East and west walls only have 2 pieces each
+		//public static const	WEST_WALL_A:uint = 1103;
+		public static const WALL_TILE_WIDTH:uint = 4;
+		public static const WALL_TILE_HEIGHT:uint = 12;
+		public static const	WEST_WALL_START:uint = 768;
+		//public static const WEST_WALL_B:uint = 1103 + 32;
+		//public static const EAST_WALL_A:uint = 1106;
+		public static const EAST_WALL_START:uint = 772;
+		//public static const EAST_WALL_B:uint = 1106 + 32;
+		
+		//public static const NUM_TILES:uint = 1184;
+		public static const NUM_TILES:uint = 2048;
+		public static const TILESHEET_TILE_WIDTH:uint = 32;
 		
 		public static const DEFAULT_GOAL_POINTS:uint = 1;
 	
@@ -62,7 +84,8 @@ package
 		
 		
 		public const Level1QId:uint = 301;
-		[Embed(source = '../res/level301.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
+		//[Embed(source = '../res/level301.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
+		[Embed(source = '../res/test.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		[Embed(source = "../res/level206.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
 		[Embed(source = "../res/level301_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class; 
 		
@@ -272,14 +295,18 @@ package
 			if(rutNm in this)
 				addRutsToMap(new this[rutNm]());
 			
-			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
+			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, ICE_TILE_INDEX_END);
 			
-			level.setTileProperties(1054, FlxObject.ANY, null, null);
+			//level.setTileProperties(1054, FlxObject.ANY, null, null);
 			//levelCopy = new FlxTilemap();
 			//levelCopy.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
 			//levelCopy.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
 			//Set entrances as non-collidable
 			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
+			/*trace("East:");
+			isVerticalWall(EAST_WALL_START, 0);
+			trace("West:");
+			isVerticalWall(WEST_WALL_START, 0);*/
 		}
 		
 		public function getPlayer() : Zamboni {
@@ -315,10 +342,24 @@ package
 				return true;
 			if ( tileIndex >= SOUTH_WALL_LOW && tileIndex <= SOUTH_WALL_HIGH)
 				return true;
-			if (tileIndex == EAST_WALL_A || tileIndex == EAST_WALL_B)
+			/*if (tileIndex == EAST_WALL_A || tileIndex == EAST_WALL_B)
 				return true;
 			if (tileIndex == WEST_WALL_A || tileIndex == WEST_WALL_B)
 				return true;
+			return false;*/
+			return isVerticalWall(EAST_WALL_START, tileIndex) || isVerticalWall(WEST_WALL_START, tileIndex);
+		}
+		
+		private static function isVerticalWall(wallTileStart:uint, tileIndex:uint):Boolean {
+			var checkTile:uint = wallTileStart;
+			for (var i:uint = 0; i < WALL_TILE_HEIGHT; ++i) {
+				checkTile = wallTileStart + i * 32;
+				for (var j:uint = 0; j < WALL_TILE_WIDTH; ++j) {
+					//trace("\t" + (checkTile + j));
+					if (checkTile + j == tileIndex)
+						return true;
+				}
+			}
 			return false;
 		}
 		

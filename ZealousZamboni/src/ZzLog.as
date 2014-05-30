@@ -86,13 +86,13 @@ package
 		// ... open for expansion to multiple versions
 		public static function ABversion() : int {
 			//trace(CID);
-			if (CID == A_CID) {
+			/*if (CID == A_CID) {
 				return 0;
 			} else if (CID == B_CID) { 
 				return 1;
 			} else { // CID == C_CID
 				return 2;
-			}
+			}*/
 			return 0;
 		}
 		

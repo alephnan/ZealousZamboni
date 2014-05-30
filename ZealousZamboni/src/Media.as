@@ -7,8 +7,8 @@ package
 	public class Media 
 	{
 		// Art
-		[Embed(source = "../media/rink_tiles5.png")] public static const TileSheet:Class;
-		[Embed(source = "../media/rink_tiles5.png")] public static const StartTilesheet:Class;
+		//[Embed(source = "../media/rink_tiles5.png")] public static const TileSheet:Class;
+		//[Embed(source = "../media/rink_tiles5.png")] public static const StartTilesheet:Class;
 		[Embed(source = "../media/start.png")] public static const StartImg:Class;
 		[Embed(source = "../media/mouse.png")] public static const MouseImg:Class;
 		[Embed(source = "../media/heart.png")] public static const HeartImg:Class;
@@ -65,7 +65,11 @@ package
 		[Embed(source = '../media/fonts/black_crayon.ttf', fontName = "crayon", embedAsCFF = "false")] public static const crayon:Class;
 		[Embed(source = '../media/fonts/ChallengeContour.ttf', fontName = "challenge", embedAsCFF = "false")] public static const challenge:Class;
 		[Embed(source = '../media/fonts/SansPosterBold.ttf', fontName = "poster", embedAsCFF = "false")] public static const poster:Class;
-		[Embed(source = '../media/fonts/PistonPressure.ttf', fontName = "piston", embedAsCFF="false")] public static const piston:Class;
+		[Embed(source = '../media/fonts/PistonPressure.ttf', fontName = "piston", embedAsCFF = "false")] public static const piston:Class;
+		
+		// Lake
+		[Embed(source = "../media/lake/snow_tiles.png")] public static const TileSheet:Class;
+		[Embed(source = "../media/lake/snow_background.png")] public static const snowBackgroundPNG:Class;
 	}
 
 }
