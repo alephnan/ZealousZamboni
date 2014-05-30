@@ -12,6 +12,7 @@
 	</skater>
 	<zombie x="152" y="256">
 		<start>8</start>
+		<type>big</type>
 	</zombie>
 	<zombie x="152" y="256">
 		<start>15</start>

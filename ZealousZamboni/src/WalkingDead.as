@@ -8,6 +8,9 @@ package
 	 */
 	public class WalkingDead extends ZzUnit 
 	{
+		public static const SIMPLE:String = "simple";
+		
+		public static const BIG:String = "big";
 		
 		private var speed:Number;
 		
@@ -21,9 +24,12 @@ package
 		
 		private var isStarted:Boolean = false;
 		
-		public function WalkingDead(X:Number, Y:Number) {
+		private var type:String;
+		
+		public function WalkingDead(X:Number, Y:Number, type:String) {
 			super(X, Y);
 			//place holder stuff
+			this.type = type;
 			speed = 100;
 			loadGraphic(Media.walkingDeadPNG, true, true, 32, 32, true);
 			//this.color = 0x780090D0;
@@ -48,6 +54,11 @@ package
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			this.play("walkS", true);
+			if (type == BIG) {
+				health = 3;
+				scale = new FlxPoint(1.4, 1.4);
+				color = 0xFF999999;
+			}
 			new ZzTimer().start(START_TIME, 1, function (t:*) : void { isStarted = true } );
 			
 			ZzLog.logAction(ZzLog.ACTION_ZOMBIE_ENTER, getLoggableObject());
@@ -108,23 +119,46 @@ package
 		override public function onCollision(other:FlxObject) : void {
 			if (!alive) return;
 			if (other is Zamboni) {
-				ZzLog.logAction(ZzLog.ACTION_ZOMBIE_DIE, getLoggableObject());
-				PlayState(FlxG.state).playerPoints.generateReward(other.getMidpoint(), PlayerPoints.KILL_ZOMBIE_REWARD, false);
-				alive = false;
-				LevelLoader.SOUND_PLAYER.play("zombieDeath");
-				LevelLoader.SOUND_PLAYER.play("zombieHit");
-				this.stopFollowingPath(true);
-				this.pathSpeed = 0;
-				this.maxVelocity.x = 1000;
-				this.maxVelocity.y = 1000;
-				this.velocity.x = other.velocity.x*3;
-				this.velocity.y = other.velocity.y*3;
-				this.angularVelocity = 900;
-				this.angularAcceleration = -400;
-				var tm:ZzTimer = new ZzTimer();
-				tm.start(1, 1, function (t:*) : void {
-					kill()
-				});
+				if(health == 1){
+					ZzLog.logAction(ZzLog.ACTION_ZOMBIE_DIE, getLoggableObject());
+					PlayState(FlxG.state).playerPoints.generateReward(other.getMidpoint(), PlayerPoints.KILL_ZOMBIE_REWARD, false);
+					alive = false;
+					LevelLoader.SOUND_PLAYER.play("zombieDeath");
+					LevelLoader.SOUND_PLAYER.play("zombieHit");
+					this.stopFollowingPath(true);
+					this.pathSpeed = 0;
+					this.maxVelocity.x = 1000;
+					this.maxVelocity.y = 1000;
+					this.velocity.x = other.velocity.x*3;
+					this.velocity.y = other.velocity.y*3;
+					this.angularVelocity = 900;
+					this.angularAcceleration = -400;
+					var tm:ZzTimer = new ZzTimer();
+					tm.start(1, 1, function (t:*) : void {
+						kill()
+					});
+				}else {
+					isStarted = false;
+					health--;
+					LevelLoader.SOUND_PLAYER.play("zombieHit");
+					this.stopFollowingPath(true);
+					this.maxVelocity.x = 1000;
+					this.maxVelocity.y = 1000;
+					this.velocity.x = other.velocity.x;
+					this.velocity.y = other.velocity.y;
+					other.velocity.x = 0;
+					other.velocity.y = 0;
+					this.angularVelocity = 900;
+					this.angularAcceleration = -400;
+					new ZzTimer().start(2, 1, function () {
+						velocity.x = 0;
+						velocity.y = 0;
+						isStarted = true;
+						angularVelocity = 0;
+						angularAcceleration = 0;
+						angle = 0;
+					});
+				}
 				
 			}
 			

@@ -28,7 +28,7 @@ package
 		
 		private function startSprite(timer:ZzTimer):void {
 			var next:SpriteData = zombies.pop();
-			var zombie:WalkingDead = new WalkingDead(next.x, next.y);
+			var zombie:WalkingDead = new WalkingDead(next.x, next.y, next.type);
 			add(zombie);
 			//PlayState(FlxG.state).addUnit(zombie);
 		}

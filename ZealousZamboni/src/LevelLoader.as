@@ -453,13 +453,17 @@ package
 			for each (var z:XML in xml.zombie) {
 				var zombieX:int = z.@x;
 				var zombieY:int = z.@y;
+				var zombieType:String = WalkingDead.SIMPLE;
+				if (z.type) {
+					zombieType = z.type;
+				}
 				if (DEBUG)
 					trace("zombie x = " + zombieX + ", zombie y = " + zombieY);
 				if (resize) {
 					zombieX *= resizeX;
 					zombieY *= resizeY;
 				}
-				zombies.addSpriteData(new SpriteData(zombieX, zombieY, int(z.start)));
+				zombies.addSpriteData(new SpriteData(zombieX, zombieY, int(z.start), 0, zombieType));
 			}
 			queues.push(zombies);
 			
