@@ -23,6 +23,8 @@ package
 		[Embed(source = '../media/mouse_plain.png')] public static const MousePlainImg:Class;
 		[Embed(source = '../media/notmute.png')] public static const mutePng:Class;
 		[Embed(source = '../media/mute.png')] public static const unmutePng:Class;
+		[Embed(source = '../media/pause.png')] public static const pausePng:Class;
+		[Embed(source = '../media/pause_toggle.png')] public static const unpausePng:Class;
 		[Embed(source = '../media/star_big_small.png')] public static const bigStarPng:Class;
 		[Embed(source = '../media/star_big.png')] public static const bigStarOrigPng:Class;
 		[Embed(source = '../media/star_big_outline_small.png')] public static const bigStarOutlinePng:Class;

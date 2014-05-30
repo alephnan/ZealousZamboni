@@ -16,6 +16,7 @@ package
 		public static var bigStarXY:FlxPoint = new FlxPoint(0, 0);
 		
 		private var restartButton:FlxButton;
+		private var pauseButton:FlxButton;
 		private var muteButton:FlxButton;
 		
 		private var player:Zamboni;
@@ -45,6 +46,11 @@ package
 			restartButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 30, null, onRestart);
 			restartButton.loadGraphic(Media.restartPNG);
 			add(restartButton);
+			
+			// pause button
+			/*pauseButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 80, null, togglePause);
+			pauseButton.loadGraphic(Media.pausePng);
+			add(pauseButton);*/
 			
 			// mute button
 			muteButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 80, null, toggleMute);
@@ -136,6 +142,18 @@ package
 		public function onRestart():void {
 			PlayState(FlxG.state).restartLevel();
 		}
+		
+		/*public function togglePause():void {
+			if (FlxG.paused) {
+				trace("unpausing");
+				PlayState(FlxG.state).unpause();
+				pauseButton.loadGraphic(Media.pausePng);
+			} else if (!FlxG.paused) {
+				trace("pausing");
+				pauseButton.loadGraphic(Media.unpausePng);
+				PlayState(FlxG.state).pause();
+			}
+		}*/
 		
 		override public function destroy():void {
 			super.destroy();
