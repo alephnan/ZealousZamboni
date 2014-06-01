@@ -68,7 +68,7 @@ package
 		[Embed(source = '../media/fonts/PistonPressure.ttf', fontName = "piston", embedAsCFF = "false")] public static const piston:Class;
 		
 		// Lake
-		[Embed(source = "../media/lake/snow_tiles.png")] public static const TileSheet:Class;
+		[Embed(source = "../media/lake/snow_tiles2.png")] public static const TileSheet:Class;
 		[Embed(source = "../media/lake/snow_background.png")] public static const snowBackgroundPNG:Class;
 	}
 

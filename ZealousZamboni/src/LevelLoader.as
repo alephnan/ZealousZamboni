@@ -18,46 +18,46 @@ package
 		/* TILE INDICES */
 		public static const ICE_TILE_INDEX:uint = 0;
 		//public static const ICE_TILE_INDEX_END:uint = 1024; //non-inclusive
-		public static const ICE_TILE_INDEX_END:uint = 512; //non-inclusive
+		public static const ICE_TILE_INDEX_END:uint = 768; //non-inclusive
 		//public static const ENTRANCE_TILE_INDEX:uint = 1052;	// Skater entrance
-		public static const ENTRANCE_TILE_INDEX:uint = 785;	// Skater entrance
+		public static const ENTRANCE_TILE_INDEX:uint = 1103;	// Skater entrance
 		//public static const DOWN_ARROW_BLOCK:uint = 1024;		// Arrow block -- DOWN
-		public static const DOWN_ARROW_BLOCK:uint = 786;		// Arrow block -- DOWN
+		public static const DOWN_ARROW_BLOCK:uint = 768;		// Arrow block -- DOWN
 		//public static const UP_ARROW_BLOCK:uint = 1025;		// Arrow block -- UP
-		public static const UP_ARROW_BLOCK:uint = 787;		// Arrow block -- UP
+		public static const UP_ARROW_BLOCK:uint = 769;		// Arrow block -- UP
 		//public static const LEFT_ARROW_BLOCK:uint = 1026;		// Arrow block -- LEFT
-		public static const LEFT_ARROW_BLOCK:uint = 788;		// Arrow block -- LEFT
+		public static const LEFT_ARROW_BLOCK:uint = 770;		// Arrow block -- LEFT
 		//public static const RIGHT_ARROW_BLOCK:uint = 1027;		// Arrow block -- RIGHT
-		public static const RIGHT_ARROW_BLOCK:uint = 789;		// Arrow block -- RIGHT
+		public static const RIGHT_ARROW_BLOCK:uint = 771;		// Arrow block -- RIGHT
 		//public static const SOLID_BLOCK:uint = 1053;
-		public static const SOLID_BLOCK:uint = 780;
+		public static const SOLID_BLOCK:uint = 1104;
 		//public static const WALL_INDEX:uint = 1054;
 		//public static const WALL_INDEX:uint = 512;
 		//public static const TRAIL_TILE_INDEX:uint = 1078; // starting index of first trail color, that skater leaves
-		public static const TRAIL_TILE_INDEX:uint = 776; // starting index of first trail color, that skater leaves
+		public static const TRAIL_TILE_INDEX:uint = 1094; // starting index of first trail color, that skater leaves
 		//public static const NUM_COLORS:uint = 10; // number of different trail colors
 		public static const NUM_COLORS:uint = 8; // number of different trail tiles
 		//public static const PIT_INDEX:uint = 1028;
-		public static const PIT_INDEX:uint = 784;
+		public static const PIT_INDEX:uint = 1102;
 		
 		// Index range for north / south walls (including corners) (inclusive)
 		//public static const NORTH_WALL_LOW:uint = 1089;
-		public static const NORTH_WALL_LOW:uint = 512;
+		public static const NORTH_WALL_LOW:uint = 896;
 		//public static const NORTH_WALL_HIGH:uint = 1100;
-		public static const NORTH_WALL_HIGH:uint = 639;
+		//public static const NORTH_WALL_HIGH:uint = 639;
 		//public static const SOUTH_WALL_LOW :uint = 1057;
-		public static const SOUTH_WALL_LOW :uint = 640;
+		//public static const SOUTH_WALL_LOW :uint = 640;
 		//public static const SOUTH_WALL_HIGH	:uint = 1068;
-		public static const SOUTH_WALL_HIGH:uint = 767;
+		public static const SOUTH_WALL_HIGH:uint = 1087;
 		
 		// East and west walls only have 2 pieces each
 		//public static const	WEST_WALL_A:uint = 1103;
-		public static const WALL_TILE_WIDTH:uint = 4;
-		public static const WALL_TILE_HEIGHT:uint = 12;
-		public static const	WEST_WALL_START:uint = 768;
+		public static const WALL_TILE_WIDTH:uint = 3;
+		public static const WALL_TILE_HEIGHT:uint = 8;
+		public static const	WEST_WALL_START:uint = 1088;
 		//public static const WEST_WALL_B:uint = 1103 + 32;
 		//public static const EAST_WALL_A:uint = 1106;
-		public static const EAST_WALL_START:uint = 772;
+		public static const EAST_WALL_START:uint = 1091;
 		//public static const EAST_WALL_B:uint = 1106 + 32;
 		
 		//public static const NUM_TILES:uint = 1184;
@@ -84,8 +84,8 @@ package
 		
 		
 		public const Level1QId:uint = 301;
-		//[Embed(source = '../res/level301.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
-		[Embed(source = '../res/test.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
+		[Embed(source = '../res/level301.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
+		//[Embed(source = '../res/test.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		[Embed(source = "../res/level206.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
 		[Embed(source = "../res/level301_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class; 
 		
@@ -327,9 +327,11 @@ package
 		
 		
 		public static function isSolid(tileIndex:uint) : Boolean {
-			if (isWall(tileIndex))
+			/*if (isWall(tileIndex))
 				return true;
 			if (tileIndex >= SOLID_BLOCK && tileIndex <  SOUTH_WALL_LOW)
+				return true;*/
+			if (tileIndex >= NORTH_WALL_LOW)
 				return true;
 				
 			return false;
@@ -338,15 +340,17 @@ package
 		
 		// return true if the given tileIndex is a wall, false otherwise
 		public static function isWall(tileIndex:uint) : Boolean {
-			if ( tileIndex >= NORTH_WALL_LOW && tileIndex <= NORTH_WALL_HIGH)
+			/*if ( tileIndex >= NORTH_WALL_LOW && tileIndex <= NORTH_WALL_HIGH)
 				return true;
 			if ( tileIndex >= SOUTH_WALL_LOW && tileIndex <= SOUTH_WALL_HIGH)
 				return true;
-			/*if (tileIndex == EAST_WALL_A || tileIndex == EAST_WALL_B)
+			if (tileIndex == EAST_WALL_A || tileIndex == EAST_WALL_B)
 				return true;
 			if (tileIndex == WEST_WALL_A || tileIndex == WEST_WALL_B)
 				return true;
 			return false;*/
+			if (tileIndex >= NORTH_WALL_LOW && tileIndex <= SOUTH_WALL_HIGH)
+				return true;
 			return isVerticalWall(EAST_WALL_START, tileIndex) || isVerticalWall(WEST_WALL_START, tileIndex);
 		}
 		
