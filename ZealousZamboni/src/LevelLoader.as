@@ -422,7 +422,7 @@ package
 				}
 				if (DEBUG)
 					trace("Skater time on ice: " + skateTime);
-				skaters.addSpriteData(new SpriteData(skaterX, skaterY, startTime, skateTime, null, skaterTX, skaterTY, startDir));
+				skaters.addSpriteData(new SpriteData(Skater, skaterX, skaterY, startTime, skateTime, null, skaterTX, skaterTY, startDir));
 			}
 			queues.push(skaters);
 			
@@ -443,13 +443,13 @@ package
 					trace("power up start = " + startTime);
 					trace("Powerup type: " + powerupType);
 				}
-				powerups.addSpriteData(new SpriteData(powerupX, powerupY, startTime, 0, powerupType));
+				powerups.addSpriteData(new SpriteData(PowerUp, powerupX, powerupY, startTime, 0, powerupType));
 			}
 			queues.push(powerups);
 			
 			// Zombies: coordinates
 			// TODO: add start time 
-			var zombies:WalkingDeadQueue = new WalkingDeadQueue();
+			var zombies:MonsterQueue = new MonsterQueue();
 			for each (var z:XML in xml.zombie) {
 				var zombieX:int = z.@x;
 				var zombieY:int = z.@y;
@@ -463,7 +463,19 @@ package
 					zombieX *= resizeX;
 					zombieY *= resizeY;
 				}
-				zombies.addSpriteData(new SpriteData(zombieX, zombieY, int(z.start), 0, zombieType));
+				zombies.addSpriteData(new SpriteData(WalkingDead, zombieX, zombieY, int(z.start), 0, zombieType));
+			}
+			for each (z in xml.lakeMonster) {
+				zombieX = z.@x;
+				zombieY = z.@y;
+				zombieType = "Unknown";
+				if (DEBUG)
+					trace("lakemonster x = " + zombieX + ", lakemonster y = " + zombieY);
+				if (resize) {
+					zombieX *= resizeX;
+					zombieY *= resizeY;
+				}
+				zombies.addSpriteData(new SpriteData(LakeMonster, zombieX, zombieY, int(z.start), 0, zombieType));
 			}
 			queues.push(zombies);
 			

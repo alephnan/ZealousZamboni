@@ -6,7 +6,7 @@ package
 	 * @author Kenny
 	 * Calling these WalkingDead so they don't get confused with zambonies lol
 	 */
-	public class WalkingDead extends ZzUnit 
+	public class WalkingDead extends Monster
 	{
 		public static const SIMPLE:String = "simple";
 		
@@ -27,7 +27,7 @@ package
 		private var type:String;
 		
 		public function WalkingDead(X:Number, Y:Number, type:String) {
-			super(X, Y);
+			super(X, Y, type);
 			//place holder stuff
 			this.type = type;
 			speed = 100;
@@ -150,7 +150,7 @@ package
 					other.velocity.y = 0;
 					this.angularVelocity = 900;
 					this.angularAcceleration = -400;
-					new ZzTimer().start(2, 1, function () {
+					new ZzTimer().start(2, 1, function () : void{
 						velocity.x = 0;
 						velocity.y = 0;
 						isStarted = true;

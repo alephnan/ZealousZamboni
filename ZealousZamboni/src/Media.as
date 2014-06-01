@@ -13,6 +13,7 @@ package
 		[Embed(source = "../media/mouse.png")] public static const MouseImg:Class;
 		[Embed(source = "../media/heart.png")] public static const HeartImg:Class;
 		[Embed(source = '../media/rocket.png')] public static const boosterPNG:Class;
+		[Embed(source = '../media/lake_monster.png')] public static const lakeMonsterPNG:Class;
 		[Embed(source = '../media/tirechains.png')] public static const tirechainsPNG:Class;
 		[Embed(source='../media/skater.png')] public static const skaterPNG:Class;
 		[Embed(source = '../media/skater2.png')] public static const skater2PNG:Class;
