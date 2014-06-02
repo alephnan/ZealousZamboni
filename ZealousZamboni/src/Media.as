@@ -18,11 +18,11 @@ package
 		//[Embed(source = '../media/skater2.png')] public static const skater2PNG:Class;
 		[Embed(source = '../media/zombie.png')] public static const walkingDeadPNG:Class;
 		[Embed(source = '../media/zamboni_4way.png')] public static const zamboniPNG:Class;
-		[Embed(source = '../media/redo2.png')] public static const restartPNG:Class;
+		//[Embed(source = '../media/redo2.png')] public static const restartPNG:Class;
 		[Embed(source = '../media/SplashScreen.jpg')] public static const splashPNG:Class;
 		[Embed(source = '../media/mouse_plain.png')] public static const MousePlainImg:Class;
-		[Embed(source = '../media/notmute.png')] public static const mutePng:Class;
-		[Embed(source = '../media/mute.png')] public static const unmutePng:Class;
+		//[Embed(source = '../media/notmute.png')] public static const mutePng:Class;
+		//[Embed(source = '../media/mute.png')] public static const unmutePng:Class;
 		[Embed(source = '../media/pause.png')] public static const pausePng:Class;
 		[Embed(source = '../media/pause_toggle.png')] public static const unpausePng:Class;
 		[Embed(source = '../media/star_big_small.png')] public static const bigStarPng:Class;
@@ -68,10 +68,13 @@ package
 		[Embed(source = '../media/fonts/PistonPressure.ttf', fontName = "piston", embedAsCFF = "false")] public static const piston:Class;
 		
 		// Lake
-		[Embed(source = "../media/lake/snow_tiles4.png")] public static const TileSheet:Class;
-		[Embed(source = "../media/lake/snow_background3.png")] public static const snowBackgroundPNG:Class;
+		[Embed(source = "../media/lake/snow_tiles2.png")] public static const TileSheet:Class;
+		[Embed(source = "../media/lake/snow_background2.png")] public static const snowBackgroundPNG:Class;
 		[Embed(source='../media/lake/skater.png')] public static const skaterPNG:Class;
 		[Embed(source = '../media/lake/skater2.png')] public static const skater2PNG:Class;
+		[Embed(source = '../media/lake/redo2.png')] public static const restartPNG:Class;
+		[Embed(source = '../media/lake/notmute.png')] public static const mutePng:Class;
+		[Embed(source = '../media/lake/mute.png')] public static const unmutePng:Class;
 	}
 
 }

@@ -44,7 +44,7 @@ class TileOptions extends JFrame {
 		buttonPanel.setLayout(new GridLayout(Main.IMG_TILE_HEIGHT, Main.IMG_TILE_WIDTH));
 		JScrollPane scroller = new JScrollPane(buttonPanel, 
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.add(cursorOpts, BorderLayout.NORTH);
 		this.add(scroller, BorderLayout.CENTER);
 		final JTextField cursorHeightf = new JTextField("1  ");

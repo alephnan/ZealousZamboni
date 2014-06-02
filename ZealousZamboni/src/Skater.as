@@ -19,10 +19,10 @@ package
 	public class Skater extends ZzUnit
 	{
 		public static const TYPE_SIMPLE:String = "simple";
-		/*[Embed(source='../media/skater.png')]
+		[Embed(source='../media/lake/skater.png')]
 		private var skaterPNG:Class;
-		[Embed(source='../media/skater2.png')]
-		private var skater2PNG:Class;*/
+		[Embed(source='../media/lake/skater2.png')]
+		private var skater2PNG:Class;
 		
 		private static const SKATER_DEATH_SLACK:Number = 1; // seconds
 		private static const START_TIME:Number = 0.5;
@@ -77,7 +77,7 @@ package
 			var o:Number = 0;
 			//place holder stuff
 			if (Math.random() < .5) {
-				loadGraphic(Media.skaterPNG, true, true, 32, 32, true);
+				loadGraphic(skaterPNG, true, true, 32, 32, true);
 				addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 				o = 16;
 				addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
@@ -87,10 +87,11 @@ package
 				addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 				o = 64;
 				addAnimation("death", [o + 0, o + 1, o + 2, o + 3, o + 4], 8, true);
-				addAnimation("splash", [o + 5, o + 6, o + 7, o + 8, o + 9], 8, false); 
+				o = 80;
+				addAnimation("splash", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 3, o + 2, o + 1], 10, true);
 				addAnimation("hurt", [16], 1, true);
 			}else {
-				loadGraphic(Media.skater2PNG, true, true, 32, 32, true);
+				loadGraphic(skater2PNG, true, true, 32, 32, true);
 				addAnimation("walkS", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 				o = 16;
 				addAnimation("walkN", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
@@ -100,7 +101,8 @@ package
 				addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 				o = 64;
 				addAnimation("death", [o + 0, o + 1, o + 2, o + 3, o + 4], 8, true);
-				addAnimation("splash", [o + 5, o + 6, o + 7, o + 8, o + 9], 8, false);
+				o = 80;
+				addAnimation("splash", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 3, o + 2, o + 1], 10, true);
 				addAnimation("hurt", [16], 1, true);
 			}
 			deathTimer = new ZzTimer();
@@ -233,7 +235,7 @@ package
 			{
 				if (skaterStuck)
 				{
-					this.play("death", false);
+					this.play("splash", false);
 				}
 				else if (goingLeft)
 				{
@@ -302,8 +304,8 @@ package
 			exists = false;
 			progress.exists = false;
 			if (timer != null) {
-				startSkaterDeath();
 				timer.start(2, 1, skaterDeathCleanup);
+				startSkaterDeath();
 			} else {
 				skaterDeathCleanup();
 			}
