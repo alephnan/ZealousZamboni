@@ -17,52 +17,52 @@ package
 		
 		/* TILE INDICES */
 		public static const ICE_TILE_INDEX:uint = 0;
-		//public static const ICE_TILE_INDEX_END:uint = 1024; //non-inclusive
-		public static const ICE_TILE_INDEX_END:uint = 768; //non-inclusive
+		//public static const ICE_TILE_INDEX_END:uint1024; //non-inclusive
+		public static const ICE_TILE_INDEX_END:uint = 4800;	//on - inclusive
 		//public static const ENTRANCE_TILE_INDEX:uint = 1052;	// Skater entrance
-		public static const ENTRANCE_TILE_INDEX:uint = 1103;	// Skater entrance
+		public static const ENTRANCE_TILE_INDEX:uint = 5040;	// Skater entrance
 		//public static const DOWN_ARROW_BLOCK:uint = 1024;		// Arrow block -- DOWN
-		public static const DOWN_ARROW_BLOCK:uint = 768;		// Arrow block -- DOWN
+		public static const DOWN_ARROW_BLOCK:uint = 4960;		// Arrow block -- DOWN
 		//public static const UP_ARROW_BLOCK:uint = 1025;		// Arrow block -- UP
-		public static const UP_ARROW_BLOCK:uint = 769;		// Arrow block -- UP
+		public static const UP_ARROW_BLOCK:uint = 4961;		// Arrow block -- UP
 		//public static const LEFT_ARROW_BLOCK:uint = 1026;		// Arrow block -- LEFT
-		public static const LEFT_ARROW_BLOCK:uint = 770;		// Arrow block -- LEFT
+		public static const LEFT_ARROW_BLOCK:uint = 4962;		// Arrow block -- LEFT
 		//public static const RIGHT_ARROW_BLOCK:uint = 1027;		// Arrow block -- RIGHT
-		public static const RIGHT_ARROW_BLOCK:uint = 771;		// Arrow block -- RIGHT
+		public static const RIGHT_ARROW_BLOCK:uint = 4963;		// Arrow block -- RIGHT
 		//public static const SOLID_BLOCK:uint = 1053;
-		public static const SOLID_BLOCK:uint = 1104;
+		public static const SOLID_BLOCK:uint = 7760;
 		//public static const WALL_INDEX:uint = 1054;
 		//public static const WALL_INDEX:uint = 512;
 		//public static const TRAIL_TILE_INDEX:uint = 1078; // starting index of first trail color, that skater leaves
-		public static const TRAIL_TILE_INDEX:uint = 1094; // starting index of first trail color, that skater leaves
+		public static const TRAIL_TILE_INDEX:uint = 4800; // starting index of first trail color, that skater leaves
 		//public static const NUM_COLORS:uint = 10; // number of different trail colors
-		public static const NUM_COLORS:uint = 8; // number of different trail tiles
+		public static const NUM_COLORS:uint = 4; // number of different trail tiles
 		//public static const PIT_INDEX:uint = 1028;
-		public static const PIT_INDEX:uint = 1102;
+		public static const PIT_INDEX:uint = 5120;
 		
 		// Index range for north / south walls (including corners) (inclusive)
 		//public static const NORTH_WALL_LOW:uint = 1089;
-		public static const NORTH_WALL_LOW:uint = 896;
+		public static const NORTH_WALL_LOW:uint = 5360;
 		//public static const NORTH_WALL_HIGH:uint = 1100;
 		//public static const NORTH_WALL_HIGH:uint = 639;
 		//public static const SOUTH_WALL_LOW :uint = 1057;
 		//public static const SOUTH_WALL_LOW :uint = 640;
 		//public static const SOUTH_WALL_HIGH	:uint = 1068;
-		public static const SOUTH_WALL_HIGH:uint = 1087;
+		public static const SOUTH_WALL_HIGH:uint = 5679;
 		
 		// East and west walls only have 2 pieces each
 		//public static const	WEST_WALL_A:uint = 1103;
-		public static const WALL_TILE_WIDTH:uint = 3;
-		public static const WALL_TILE_HEIGHT:uint = 8;
-		public static const	WEST_WALL_START:uint = 1088;
+		public static const WALL_TILE_WIDTH:uint = 4;
+		public static const WALL_TILE_HEIGHT:uint = 30;
+		public static const	WEST_WALL_START:uint = 5680;
 		//public static const WEST_WALL_B:uint = 1103 + 32;
 		//public static const EAST_WALL_A:uint = 1106;
-		public static const EAST_WALL_START:uint = 1091;
+		//public static const EAST_WALL_START:uint = 1091;
 		//public static const EAST_WALL_B:uint = 1106 + 32;
 		
 		//public static const NUM_TILES:uint = 1184;
-		public static const NUM_TILES:uint = 3072;
-		public static const TILESHEET_TILE_WIDTH:uint = 32;
+		public static const NUM_TILES:uint = 8080;
+		public static const TILESHEET_TILE_WIDTH:uint = 60;
 		
 		public static const DEFAULT_GOAL_POINTS:uint = 1;
 	
@@ -82,33 +82,38 @@ package
 		private static const INTERMEDIATE_TIPS_INDEX:uint = 12;
 		
 		
-		
+		//done
 		public const Level1QId:uint = 301;
 		[Embed(source = '../res/level301.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		//[Embed(source = '../res/test.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		[Embed(source = "../res/level206.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
 		[Embed(source = "../res/level301_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class; 
 		
+		//done
 		public const Level1BQId:uint = 256;
 		[Embed(source = '../res/level256.txt', mimeType = "application/octet-stream")] public const Level1BCsv:Class;
 		[Embed(source = "../res/level256.xml", mimeType = "application/octet-stream")] public const Level1BXML:Class;
 		[Embed(source = "../res/level256_ruts.txt", mimeType = "application/octet-stream")] public const Level1BRuts:Class; 
-	
+		
+		// done
 		public const Level2QId:uint = 302;
 		[Embed(source = '../res/level302.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
 		[Embed(source = "../res/level302.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
 		//[Embed(source = "../res/level208_ruts.txt", mimeType = "application/octet-stream")] public var Level2Ruts:Class; 
 		
+		// done
 		public const Level2BQId:uint = 257;
 		[Embed(source = '../res/level257.txt', mimeType = "application/octet-stream")] public var Level2BCsv:Class;
 		[Embed(source = "../res/level257.xml", mimeType = "application/octet-stream")] public var Level2BXML:Class;
 		[Embed(source = "../res/level257_ruts.txt", mimeType = "application/octet-stream")] public var Level2BRuts:Class; 
 		
+		// done
 		public const Level3QId:uint = 303;
 		[Embed(source = '../res/level303.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
 		[Embed(source = "../res/level303.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
 		//[Embed(source = "../res/level209_ruts.txt", mimeType = "application/octet-stream")] public var Level3Ruts:Class; 
 		
+		// done
 		public const Level3BQId:uint = 258;
 		[Embed(source = '../res/level258.txt', mimeType = "application/octet-stream")] public var Level3BCsv:Class;
 		[Embed(source = "../res/level258.xml", mimeType = "application/octet-stream")] public var Level3BXML:Class;
@@ -116,18 +121,22 @@ package
 		
 		
 		/**/
+		// done
 		public const Level4QId:uint = 101;
 		[Embed(source = '../res/level101.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
 		[Embed(source = "../res/level101.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;
 		
+		// done
 		public const Level4BQId:uint = 251;
 		[Embed(source = '../res/level251.txt', mimeType = "application/octet-stream")] public var Level4BCsv:Class;
 		[Embed(source = "../res/level251.xml", mimeType = "application/octet-stream")] public var Level4BXML:Class;
 		
+		// done
 		public const Level5QId:uint = 102;
 		[Embed(source = '../res/level102.txt', mimeType = "application/octet-stream")] public var Level5Csv:Class;
 		[Embed(source = "../res/level102.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
 		
+		// done
 		public const Level5BQId:uint = 252;
 		[Embed(source = '../res/level252.txt', mimeType = "application/octet-stream")] public var Level5BCsv:Class;
 		[Embed(source = "../res/level252.xml", mimeType = "application/octet-stream")] public var Level5BXML:Class;
@@ -351,7 +360,8 @@ package
 			return false;*/
 			if (tileIndex >= NORTH_WALL_LOW && tileIndex <= SOUTH_WALL_HIGH)
 				return true;
-			return isVerticalWall(EAST_WALL_START, tileIndex) || isVerticalWall(WEST_WALL_START, tileIndex);
+			//return isVerticalWall(EAST_WALL_START, tileIndex) || isVerticalWall(WEST_WALL_START, tileIndex);
+			return isVerticalWall(WEST_WALL_START, tileIndex);
 		}
 		
 		private static function isVerticalWall(wallTileStart:uint, tileIndex:uint):Boolean {
