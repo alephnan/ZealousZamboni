@@ -61,7 +61,7 @@ package
 		//public static const EAST_WALL_B:uint = 1106 + 32;
 		
 		//public static const NUM_TILES:uint = 1184;
-		public static const NUM_TILES:uint = 2048;
+		public static const NUM_TILES:uint = 3072;
 		public static const TILESHEET_TILE_WIDTH:uint = 32;
 		
 		public static const DEFAULT_GOAL_POINTS:uint = 1;

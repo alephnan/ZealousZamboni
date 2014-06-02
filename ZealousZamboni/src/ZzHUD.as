@@ -11,7 +11,7 @@ package
 	 */
 	public class ZzHUD extends FlxGroup 
 	{
-		
+		private static const TEXT_COLOR:uint = 0x000000;
 		public static var smallStarXY:FlxPoint = new FlxPoint(0, 0);
 		public static var bigStarXY:FlxPoint = new FlxPoint(0, 0);
 		
@@ -70,7 +70,7 @@ package
 			bigStarXY.x = lastStar.x;
 			bigStarXY.y = lastStar.y;
 			subGoalText = new FlxText(FlxSprite(goalStars[goalStars.length - 1]).x - 100, 12, 70, "0", true);
-			subGoalText.setFormat("coolvetica", 40, 0xffffff);
+			subGoalText.setFormat("coolvetica", 40, TEXT_COLOR);
 			add(subGoalText);
 			
 			// small star
@@ -83,7 +83,7 @@ package
 			
 			// level timer
 			timerTxt = new FlxText(40, 10, 100, getTimeString(levelTime), true);
-			timerTxt.setFormat("coolvetica", 50, 0xffffff);
+			timerTxt.setFormat("coolvetica", 50, TEXT_COLOR);
 			add(timerTxt);
 			timer = new ZzTimer();
 			timer.start(levelTime, 1, endLevel);

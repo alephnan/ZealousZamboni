@@ -69,7 +69,7 @@ package
 		
 		// Lake
 		[Embed(source = "../media/lake/snow_tiles2.png")] public static const TileSheet:Class;
-		[Embed(source = "../media/lake/snow_background.png")] public static const snowBackgroundPNG:Class;
+		[Embed(source = "../media/lake/snow_background2.png")] public static const snowBackgroundPNG:Class;
 	}
 
 }

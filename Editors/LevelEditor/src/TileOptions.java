@@ -66,7 +66,8 @@ class TileOptions extends JFrame {
 		});
 		cursorOpts.add(setOpts);
 		//buttonPanel.setLayout(new GridLayout(buttonHeight, BUTTON_WIDTH));
-		buttonPanel.setBackground(Color.BLACK);
+		//buttonPanel.setBackground(Color.BLACK);
+		buttonPanel.setOpaque(false);
 		group = new ButtonGroup();
 		ActionListener buttListener = new ButtonHandler();
 		for (int i = 0, len = icons.length; i < len; ++i) {

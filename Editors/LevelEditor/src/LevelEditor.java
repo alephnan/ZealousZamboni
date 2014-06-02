@@ -175,7 +175,8 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 		
 		// button panel to hold all of the buttons
 		buttonPanel = new JPanel();
-		buttonPanel.setBackground(Color.BLACK);
+		//buttonPanel.setBackground(Color.BLACK);
+		buttonPanel.setOpaque(false);
 		
 		donePanel.add(cursorCoords, BorderLayout.WEST);
 		if (editFile == null) {

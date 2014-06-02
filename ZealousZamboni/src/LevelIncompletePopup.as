@@ -23,7 +23,7 @@ package
 			
 
 			var skipTxt:FlxText = new FlxText(FlxG.width / 2 - 150, FlxG.height - 35, 300, "Press Enter to Continue", true);
-			skipTxt.setFormat("coolvetica", 20, 0xFFFFFF, "center");
+			skipTxt.setFormat("coolvetica", 20, 0x000000, "center");
 			
 			add(skipTxt);
 			add(popGraphic);

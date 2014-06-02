@@ -44,7 +44,7 @@ package
 			
 			var txt1:FlxText = new FlxText(FlxG.width / 2 - 330, 40, FlxG.width, "Controls");
 			//txt1.scale = new FlxPoint(2, 2);
-			txt1.setFormat("poster", 64, 0xE8E8E8, "center", 0x808080);
+			txt1.setFormat("poster", 72, 0x000000, "center", 0x808080);
 			//txt1.setFormat(null, 44, 0xE8E8E8, "center");
 			add(txt1);
 			
@@ -53,7 +53,7 @@ package
 			add(txt2);
 			
 			var txt3:FlxText = new FlxText(410, 350, 100, "OR", true);
-			txt3.setFormat("coolvetica", 40, 0xb8b8b8, "center");
+			txt3.setFormat("coolvetica", 40, 0x000000, "center");
 			add(txt3);
 			
 			add(new FlxSprite(280, 240, Media.MouseImg));
