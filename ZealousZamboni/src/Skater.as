@@ -87,7 +87,7 @@ package
 				addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 				o = 64;
 				addAnimation("death", [o + 0, o + 1, o + 2, o + 3, o + 4], 8, true);
-				addAnimation("splash", [o + 5, o + 6, o + 7, o + 8, o + 9], 8, false);
+				addAnimation("splash", [o + 5, o + 6, o + 7, o + 8, o + 9], 8, false); 
 				addAnimation("hurt", [16], 1, true);
 			}else {
 				loadGraphic(Media.skater2PNG, true, true, 32, 32, true);
