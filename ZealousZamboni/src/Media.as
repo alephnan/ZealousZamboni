@@ -14,8 +14,8 @@ package
 		[Embed(source = "../media/heart.png")] public static const HeartImg:Class;
 		[Embed(source = '../media/rocket.png')] public static const boosterPNG:Class;
 		[Embed(source = '../media/tirechains.png')] public static const tirechainsPNG:Class;
-		[Embed(source='../media/skater.png')] public static const skaterPNG:Class;
-		[Embed(source = '../media/skater2.png')] public static const skater2PNG:Class;
+		//[Embed(source='../media/skater.png')] public static const skaterPNG:Class;
+		//[Embed(source = '../media/skater2.png')] public static const skater2PNG:Class;
 		[Embed(source = '../media/zombie.png')] public static const walkingDeadPNG:Class;
 		[Embed(source = '../media/zamboni_4way.png')] public static const zamboniPNG:Class;
 		[Embed(source = '../media/redo2.png')] public static const restartPNG:Class;
@@ -70,6 +70,8 @@ package
 		// Lake
 		[Embed(source = "../media/lake/snow_tiles2.png")] public static const TileSheet:Class;
 		[Embed(source = "../media/lake/snow_background2.png")] public static const snowBackgroundPNG:Class;
+		[Embed(source='../media/lake/skater.png')] public static const skaterPNG:Class;
+		[Embed(source = '../media/lake/skater2.png')] public static const skater2PNG:Class;
 	}
 
 }

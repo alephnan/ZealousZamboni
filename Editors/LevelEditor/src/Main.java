@@ -24,7 +24,7 @@ public class Main {
 	
 	// This is the path to the tiles we use in the game
 	public static final String TILE_IMG = "../../ZealousZamboni/media/lake/snow_tiles2.png";
-	//public static final String TILE_IMG = "../../ZealousZamboni/media/lake/snow_tiles.png";
+	//public static final String TILE_IMG = "../../ZealousZamboni/media/rink_tiles5.png";
 	public static int TILE_SIZE = 8;
 	
 	public static int IMG_TILE_WIDTH;	//number tiles wide
