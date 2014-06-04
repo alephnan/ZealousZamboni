@@ -63,7 +63,7 @@ package
 		private var levelTime:Number = 30;
 		
 		override public function create() : void {
-			FlxG.bgColor = 0xffaaaaaa;
+			//FlxG.bgColor = 0xffaaaaaa;
 			levelLoader = new LevelLoader();
 			activeSprites = new Array();
 			
