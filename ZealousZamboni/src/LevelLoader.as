@@ -537,6 +537,10 @@ package
 			queues = null;
 		}
 		
+		public static function isPit(index:uint) : Boolean {
+			return(index >= PIT_INDEX && index < PIT_END);
+		}
+		
 	}
 	
 }
