@@ -27,6 +27,7 @@ import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -42,6 +43,8 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 	// This is the path to the resources directory in our zamboni code
 	public static final String PATH = "../../ZealousZamboni/res/";
 	public static final int TRANSPARENT_TILE_INDEX = 7759;
+	public static final int ICE_START = 0;
+	public static final int ICE_END = 4780;
 	// GUI strings
 	private static final String FILEMSG = "enter filename here";
 	private static final String FILE_ERR = "Filename error!";
@@ -55,6 +58,7 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 	private int tileHeight;
 	private int cursorWidth = 1;
 	private int cursorHeight = 1;
+	private JCheckBox onlyIceBox;
 	private File editFile;
 	private JLabel cursorCoords;
 	private GridButton[][] buttonArray;
@@ -269,6 +273,8 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 		jl.setHorizontalTextPosition(SwingConstants.RIGHT);
 		from.add(jl);
 		from.add(rangeArray[2]);
+		onlyIceBox = new JCheckBox();
+		
 		rangePanel.add(from);
 		JButton rangeButton = new JButton("Set");
 		rangeButton.addActionListener(new ActionListener() {
@@ -288,6 +294,8 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 		jl.setHorizontalTextPosition(SwingConstants.CENTER);
 
 		rangePanel.add(jl);
+		rangePanel.add(new JLabel("Only Ice"));
+		rangePanel.add(onlyIceBox);
 		this.add(rangePanel, BorderLayout.NORTH);
 	}
 	
@@ -447,8 +455,10 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 			//System.out.println(selectedTileRanges);
 			for(GridButton clicked : getSelectedButts()){
 				int i = itr.next();
-				clicked.setIcon(icons[i]);
-				clicked.index = i;
+				if(!onlyIceBox.isSelected() || clicked.index < ICE_END){
+					clicked.setIcon(icons[i]);
+					clicked.index = i;
+				}
 			}
 		}
 	}
