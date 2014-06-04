@@ -12,7 +12,7 @@ package
 		
 		//The one and only place the starting level should be defined
 		//This in general is 1, but can be set to others for debugging porpoises (they have a lot of bugs in them, I guess)
-		public static var STARTING_LEVEL:uint = 1;
+		public static var STARTING_LEVEL:uint = 6;
 		
 		private static var TIMERS:Array = new Array();
 		

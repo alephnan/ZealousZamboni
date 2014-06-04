@@ -20,8 +20,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -39,7 +41,7 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 	
 	// This is the path to the resources directory in our zamboni code
 	public static final String PATH = "../../ZealousZamboni/res/";
-	
+	public static final int TRANSPARENT_TILE_INDEX = 7759;
 	// GUI strings
 	private static final String FILEMSG = "enter filename here";
 	private static final String FILE_ERR = "Filename error!";
@@ -135,7 +137,14 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 				translateDown();
 			}
 		});
-		translatePanel.add(translate, BorderLayout.SOUTH);
+		translatePanel.add(translate, BorderLayout.CENTER);
+		translate = new JButton("Update Old Tiles");
+		translate.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				autoUpdate();
+			}
+		});
+		translatePanel.add(translate, BorderLayout.AFTER_LAST_LINE);
 		JFrame tFrame = new JFrame();
 		tFrame.add(translatePanel);
 		tFrame.setVisible(true);
@@ -294,6 +303,48 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 			f = null;
 		}
 		return f;
+	}
+	
+	//See autoUpdate()
+	static final Map<Integer, Integer> oldToNew = new HashMap<>();
+	static{
+		//entrance
+		oldToNew.put(1052, 5040);
+		//arrows
+		oldToNew.put(1024, 4960);
+		oldToNew.put(1025, 4961);
+		oldToNew.put(1026, 4962);
+		oldToNew.put(1027, 4963);
+		//solid
+		oldToNew.put(1053, 7760);
+		//trail
+		oldToNew.put(1078, 4800);
+		//pitfall
+		oldToNew.put(1028, 5120);
+		//Edges
+		for(int i = 1089;i<1100;i++)	
+			oldToNew.put(i, 5363);
+		for(int i = 1057;i<1068;i++)	
+			oldToNew.put(i, 5363);
+		//black
+		oldToNew.put(1121, TRANSPARENT_TILE_INDEX);
+	}
+	
+	/*
+	 * Automatically updates some predefined tilemap values.
+	 * This is mostly for help-- a human will still need to straighten a lot out
+	 */
+	private void autoUpdate(){
+		for(int i = 0;i<buttonArray.length;i++){
+			for(int j = 0;j<buttonArray[0].length;j++){
+				int oldIndex = buttonArray[i][j].index;
+				if(oldToNew.containsKey(oldIndex)){
+					buttonArray[i][j].setIcon(icons[oldToNew.get(oldIndex)]);
+					buttonArray[i][j].index = oldToNew.get(oldIndex);
+				}
+				
+			}
+		}
 	}
 	
 	/**
@@ -500,8 +551,8 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 		for(int i = tileHeight-1;i>=0;i--){
 			for(int j = tileWidth-1;j>=0;j--){
 				if(j-1 < 0){
-					buttonArray[i][j].setIcon(icons[1121]);
-					buttonArray[i][j].index = 1121;
+					buttonArray[i][j].setIcon(icons[TRANSPARENT_TILE_INDEX]);
+					buttonArray[i][j].index = TRANSPARENT_TILE_INDEX;
 				}else{
 					buttonArray[i][j].setIcon(buttonArray[i][j-1].getIcon());
 					buttonArray[i][j].index = buttonArray[i][j-1].index;
@@ -515,8 +566,8 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 			for(int i = tileHeight-1;i>=0;i--){
 				for(int j = tileWidth-1;j>=0;j--){
 					if(i-1 < 0){
-						buttonArray[i][j].setIcon(icons[1121]);
-						buttonArray[i][j].index = 1121;
+						buttonArray[i][j].setIcon(icons[TRANSPARENT_TILE_INDEX]);
+						buttonArray[i][j].index = TRANSPARENT_TILE_INDEX;
 					}else{
 						buttonArray[i][j].setIcon(buttonArray[i-1][j].getIcon());
 						buttonArray[i][j].index = buttonArray[i-1][j].index;
@@ -530,8 +581,8 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 		for (int i = tileHeight-1; i >= 0; i--) {
 			for (int j = 0; j<tileWidth ; j++) {
 				if (j+1 > tileWidth-1) {
-					buttonArray[i][j].setIcon(icons[1121]);
-					buttonArray[i][j].index = 1121;
+					buttonArray[i][j].setIcon(icons[TRANSPARENT_TILE_INDEX]);
+					buttonArray[i][j].index = TRANSPARENT_TILE_INDEX;
 				} else {
 					buttonArray[i][j].setIcon(buttonArray[i][j + 1].getIcon());
 					buttonArray[i][j].index = buttonArray[i][j + 1].index;
@@ -545,8 +596,8 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 			for (int i = 0; i <tileHeight; i++) {
 				for (int j = 0; j<tileWidth ; j++) {
 					if (i+1 >= tileHeight) {
-						buttonArray[i][j].setIcon(icons[1121]);
-						buttonArray[i][j].index = 1121;
+						buttonArray[i][j].setIcon(icons[TRANSPARENT_TILE_INDEX]);
+						buttonArray[i][j].index = TRANSPARENT_TILE_INDEX;
 					} else {
 						buttonArray[i][j].setIcon(buttonArray[i+1][j].getIcon());
 						buttonArray[i][j].index = buttonArray[i+1][j].index;
