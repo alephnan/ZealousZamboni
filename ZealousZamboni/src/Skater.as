@@ -415,10 +415,10 @@ package
 				return ZzUtils.entranceBlocked(new FlxPoint(curPosX, curPosY));
 			}
 			//trace("skater on entrance tile: " + curPosX + ", " + curPosY);
-			return !(tileMap.getTile(curPosX + 1, curPosY) <= LevelLoader.RIGHT_ARROW_BLOCK ||
-			         tileMap.getTile(curPosX - 1, curPosY) <= LevelLoader.RIGHT_ARROW_BLOCK ||
-					 tileMap.getTile(curPosX, curPosY + 1) <= LevelLoader.RIGHT_ARROW_BLOCK ||
-					 tileMap.getTile(curPosX, curPosY - 1) <= LevelLoader.RIGHT_ARROW_BLOCK);
+			return (LevelLoader.isSolid((tileMap.getTile(curPosX + 1, curPosY))) &&
+			         LevelLoader.isSolid(tileMap.getTile(curPosX - 1, curPosY)) &&
+					 LevelLoader.isSolid(tileMap.getTile(curPosX, curPosY + 1)) &&
+					 LevelLoader.isSolid(tileMap.getTile(curPosX, curPosY - 1)));
 		}
 		
 		public function isGoingRight():void

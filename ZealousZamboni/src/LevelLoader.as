@@ -39,6 +39,7 @@ package
 		public static const NUM_COLORS:uint = 4; // number of different trail tiles
 		//public static const PIT_INDEX:uint = 1028;
 		public static const PIT_INDEX:uint = 5120;
+		public static const PIT_END:uint = 5360;
 		
 		// Index range for north / south walls (including corners) (inclusive)
 		//public static const NORTH_WALL_LOW:uint = 1089;
@@ -305,17 +306,9 @@ package
 				addRutsToMap(new this[rutNm]());
 			
 			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, ICE_TILE_INDEX_END);
-			
-			//level.setTileProperties(1054, FlxObject.ANY, null, null);
-			//levelCopy = new FlxTilemap();
-			//levelCopy.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
-			//levelCopy.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
+			level.setTileProperties(DOWN_ARROW_BLOCK, FlxObject.NONE, null, null, PIT_END - DOWN_ARROW_BLOCK);
 			//Set entrances as non-collidable
-			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
-			/*trace("East:");
-			isVerticalWall(EAST_WALL_START, 0);
-			trace("West:");
-			isVerticalWall(WEST_WALL_START, 0);*/
+			level.setTileProperties(ENTRANCE_TILE_INDEX, FlxObject.NONE);
 		}
 		
 		public function getPlayer() : Zamboni {
@@ -340,8 +333,9 @@ package
 				return true;
 			if (tileIndex >= SOLID_BLOCK && tileIndex <  SOUTH_WALL_LOW)
 				return true;*/
-			if (tileIndex >= NORTH_WALL_LOW)
+			if (tileIndex >= NORTH_WALL_LOW || isTrail(tileIndex)){
 				return true;
+			}
 				
 			return false;
 			
