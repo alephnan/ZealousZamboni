@@ -328,7 +328,7 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 		//trail
 		oldToNew.put(1078, 4800);
 		//pitfall
-		oldToNew.put(1028, 5120);
+		oldToNew.put(1028, 5214);
 		//Edges
 		for(int i = 1089;i<1100;i++)	
 			oldToNew.put(i, 5363);
