@@ -27,19 +27,19 @@ def mainloop():
 	#print ", ".join(str(time) for time in times)
 	#print "max time: %d" % max(times)
 	quits = list()
-	for x in range(0, TOTAL_LEVELS):
+	for x in range(0, TOTAL_LEVELS + 1):
 		quits.append(0)
 	for ml in maxLevels:
 		quits[ml] = quits[ml] + 1
-	for x in range(0, TOTAL_LEVELS):
+	for x in range(0, TOTAL_LEVELS + 1):
 		print "%d\t%f" % (x + 1, float(quits[x]) / len(maxLevels))
 	
 def getPlayerMaxLevel(levels):
-	levelMap = [31337, 206, 208, 209, 101, 102, 211, 104, 105, 212, 213, 214, 215, 216, 220, 217, 218, 219, 221]
+	levelMap = [31337, 301, 302, 303, 101, 102, 211, 104, 105, 212, 213, 214, 215, 216, 220, 217, 218, 219, 221]
 	maxLevel = -1
 	for level in levels:
 		i = 0
-		while level['qid'] != levelMap[i] and i < len(levelMap):
+		while i < len(levelMap) and level['qid'] != levelMap[i]:
 			i = i + 1
 		if i > maxLevel:
 			maxLevel = i

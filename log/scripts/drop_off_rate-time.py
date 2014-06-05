@@ -19,8 +19,8 @@ def mainloop():
 			levels = player['levels']
 			time = activeTimePlayed(levels)
 			#print "Active play time(seconds): %s" % time
-			if len(player['pageloads']) == 1:
-				times.append(time)
+			#if len(player['pageloads']) == 1:
+			times.append(time)
 	times.sort(key=int)
 	#print ""
 	#print "Number active players: %d" % len(times)

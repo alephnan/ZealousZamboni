@@ -18,9 +18,16 @@ package
 		//private static const CID:int = 11;	//hardcoded to 2 since we didn't have time to put in proper a/b testing
 		//private static const CID:int = (Math.floor(Math.random() * 3) + 2);  // old way to compute random number. but it seems to require RNG be 'warmed up'. not sure on this
 		private static const CID:int = int(FlxG.random() * 100) % 2 + 23;
-		private static const A_CID:int = 23;	// a/b release on 5/27	// changed from 10 to 13 5/28
-		private static const B_CID:int = 24;	// a/b release on 5/27	// changed from 11 to 14 5/28
+		private static const A_CID:int = 23;
+		private static const B_CID:int = 24;
 		private static const C_CID:int = -1;
+		
+		// a/b release on 5/27: 10
+		// a/b release on 5/27: 11
+		// a/b release on 5/28: 13
+		// a/b release on 5/28: 14
+		// a/b release on 6/4: 23
+		// a/b release on 6/4: 24
 		
 		public static const PREGAME_QID:int = 31337;
 		

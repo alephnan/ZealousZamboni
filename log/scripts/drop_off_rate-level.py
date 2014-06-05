@@ -37,11 +37,11 @@ def mainloop():
 		print "%f\t%f" % (x + 1, float(numActive) / len(maxLevels))
 	
 def getPlayerMaxLevel(levels):
-	levelMap = [31337, 206, 208, 209, 101, 102, 211, 104, 105, 212, 213, 214, 215, 216, 220, 217, 218, 219, 221]
+	levelMap = [31337, 256, 257, 258, 251, 252, 253, 104, 254, 212, 213, 214, 215, 216, 260, 217, 218, 219, 221]
 	maxLevel = -1
 	for level in levels:
 		i = 0
-		while level['qid'] != levelMap[i] and i < len(levelMap):
+		while i < len(levelMap) and level['qid'] != levelMap[i]:
 			i = i + 1
 		if i > maxLevel:
 			maxLevel = i
