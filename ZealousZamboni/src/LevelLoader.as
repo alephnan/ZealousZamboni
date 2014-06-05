@@ -17,30 +17,53 @@ package
 		
 		/* TILE INDICES */
 		public static const ICE_TILE_INDEX:uint = 0;
-		public static const ICE_TILE_INDEX_END:uint = 1024; //non-inclusive
-		public static const ENTRANCE_TILE_INDEX:uint = 1052;	// Skater entrance
-		public static const DOWN_ARROW_BLOCK:uint = 1024;		// Arrow block -- DOWN
-		public static const UP_ARROW_BLOCK:uint = 1025;		// Arrow block -- UP
-		public static const LEFT_ARROW_BLOCK:uint = 1026;		// Arrow block -- LEFT
-		public static const RIGHT_ARROW_BLOCK:uint = 1027;		// Arrow block -- RIGHT
-		public static const SOLID_BLOCK:uint = 1053;
-		public static const WALL_INDEX:uint = 1054;
-		public static const TRAIL_TILE_INDEX:uint = 1078; // starting index of first trail color, that skater leaves
-		public static const NUM_COLORS:uint = 10; // number of different trail colors
-		public static const PIT_INDEX:uint = 1028;
+		//public static const ICE_TILE_INDEX_END:uint1024; //non-inclusive
+		public static const ICE_TILE_INDEX_END:uint = 4800;	//on - inclusive
+		//public static const ENTRANCE_TILE_INDEX:uint = 1052;	// Skater entrance
+		public static const ENTRANCE_TILE_INDEX:uint = 5040;	// Skater entrance
+		//public static const DOWN_ARROW_BLOCK:uint = 1024;		// Arrow block -- DOWN
+		public static const DOWN_ARROW_BLOCK:uint = 4960;		// Arrow block -- DOWN
+		//public static const UP_ARROW_BLOCK:uint = 1025;		// Arrow block -- UP
+		public static const UP_ARROW_BLOCK:uint = 4961;		// Arrow block -- UP
+		//public static const LEFT_ARROW_BLOCK:uint = 1026;		// Arrow block -- LEFT
+		public static const LEFT_ARROW_BLOCK:uint = 4962;		// Arrow block -- LEFT
+		//public static const RIGHT_ARROW_BLOCK:uint = 1027;		// Arrow block -- RIGHT
+		public static const RIGHT_ARROW_BLOCK:uint = 4963;		// Arrow block -- RIGHT
+		//public static const SOLID_BLOCK:uint = 1053;
+		public static const SOLID_BLOCK:uint = 7760;
+		//public static const WALL_INDEX:uint = 1054;
+		//public static const WALL_INDEX:uint = 512;
+		//public static const TRAIL_TILE_INDEX:uint = 1078; // starting index of first trail color, that skater leaves
+		public static const TRAIL_TILE_INDEX:uint = 4800; // starting index of first trail color, that skater leaves
+		//public static const NUM_COLORS:uint = 10; // number of different trail colors
+		public static const NUM_COLORS:uint = 4; // number of different trail tiles
+		//public static const PIT_INDEX:uint = 1028;
+		public static const PIT_INDEX:uint = 5120;
+		public static const PIT_END:uint = 5360;
 		
 		// Index range for north / south walls (including corners) (inclusive)
-		public static const NORTH_WALL_LOW:uint = 1089;
-		public static const NORTH_WALL_HIGH:uint = 1100;
-		public static const SOUTH_WALL_LOW :uint = 1057;
-		public static const SOUTH_WALL_HIGH	:uint = 1068;
-		// East and west walls only have 2 pieces each
-		public static const	WEST_WALL_A:uint = 1103;
-		public static const WEST_WALL_B:uint = 1103 + 32;
-		public static const EAST_WALL_A:uint = 1106;
-		public static const EAST_WALL_B:uint = 1106 + 32;
+		//public static const NORTH_WALL_LOW:uint = 1089;
+		public static const NORTH_WALL_LOW:uint = 5360;
+		//public static const NORTH_WALL_HIGH:uint = 1100;
+		//public static const NORTH_WALL_HIGH:uint = 639;
+		//public static const SOUTH_WALL_LOW :uint = 1057;
+		//public static const SOUTH_WALL_LOW :uint = 640;
+		//public static const SOUTH_WALL_HIGH	:uint = 1068;
+		public static const SOUTH_WALL_HIGH:uint = 5679;
 		
-		public static const NUM_TILES:uint = 1184;
+		// East and west walls only have 2 pieces each
+		//public static const	WEST_WALL_A:uint = 1103;
+		public static const WALL_TILE_WIDTH:uint = 4;
+		public static const WALL_TILE_HEIGHT:uint = 30;
+		public static const	WEST_WALL_START:uint = 5680;
+		//public static const WEST_WALL_B:uint = 1103 + 32;
+		//public static const EAST_WALL_A:uint = 1106;
+		//public static const EAST_WALL_START:uint = 1091;
+		//public static const EAST_WALL_B:uint = 1106 + 32;
+		
+		//public static const NUM_TILES:uint = 1184;
+		public static const NUM_TILES:uint = 8080;
+		public static const TILESHEET_TILE_WIDTH:uint = 60;
 		
 		public static const DEFAULT_GOAL_POINTS:uint = 1;
 	
@@ -60,32 +83,38 @@ package
 		private static const INTERMEDIATE_TIPS_INDEX:uint = 12;
 		
 		
-		
+		//done
 		public const Level1QId:uint = 301;
 		[Embed(source = '../res/level301.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
+		//[Embed(source = '../res/test.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		[Embed(source = "../res/level206.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
 		[Embed(source = "../res/level301_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class; 
 		
+		//done
 		public const Level1BQId:uint = 256;
 		[Embed(source = '../res/level256.txt', mimeType = "application/octet-stream")] public const Level1BCsv:Class;
 		[Embed(source = "../res/level256.xml", mimeType = "application/octet-stream")] public const Level1BXML:Class;
 		[Embed(source = "../res/level256_ruts.txt", mimeType = "application/octet-stream")] public const Level1BRuts:Class; 
-	
+		
+		// done
 		public const Level2QId:uint = 302;
 		[Embed(source = '../res/level302.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
 		[Embed(source = "../res/level302.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
 		//[Embed(source = "../res/level208_ruts.txt", mimeType = "application/octet-stream")] public var Level2Ruts:Class; 
 		
+		// done
 		public const Level2BQId:uint = 257;
 		[Embed(source = '../res/level257.txt', mimeType = "application/octet-stream")] public var Level2BCsv:Class;
 		[Embed(source = "../res/level257.xml", mimeType = "application/octet-stream")] public var Level2BXML:Class;
 		[Embed(source = "../res/level257_ruts.txt", mimeType = "application/octet-stream")] public var Level2BRuts:Class; 
 		
+		// done
 		public const Level3QId:uint = 303;
 		[Embed(source = '../res/level303.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
 		[Embed(source = "../res/level303.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
 		//[Embed(source = "../res/level209_ruts.txt", mimeType = "application/octet-stream")] public var Level3Ruts:Class; 
 		
+		// done
 		public const Level3BQId:uint = 258;
 		[Embed(source = '../res/level258.txt', mimeType = "application/octet-stream")] public var Level3BCsv:Class;
 		[Embed(source = "../res/level258.xml", mimeType = "application/octet-stream")] public var Level3BXML:Class;
@@ -93,18 +122,22 @@ package
 		
 		
 		/**/
+		// done
 		public const Level4QId:uint = 101;
 		[Embed(source = '../res/level101.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
 		[Embed(source = "../res/level101.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;
 		
+		// done
 		public const Level4BQId:uint = 251;
 		[Embed(source = '../res/level251.txt', mimeType = "application/octet-stream")] public var Level4BCsv:Class;
 		[Embed(source = "../res/level251.xml", mimeType = "application/octet-stream")] public var Level4BXML:Class;
 		
+		// done
 		public const Level5QId:uint = 102;
 		[Embed(source = '../res/level102.txt', mimeType = "application/octet-stream")] public var Level5Csv:Class;
 		[Embed(source = "../res/level102.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
 		
+		// done
 		public const Level5BQId:uint = 252;
 		[Embed(source = '../res/level252.txt', mimeType = "application/octet-stream")] public var Level5BCsv:Class;
 		[Embed(source = "../res/level252.xml", mimeType = "application/octet-stream")] public var Level5BXML:Class;
@@ -272,14 +305,10 @@ package
 			if(rutNm in this)
 				addRutsToMap(new this[rutNm]());
 			
-			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
-			
-			level.setTileProperties(1054, FlxObject.ANY, null, null);
-			//levelCopy = new FlxTilemap();
-			//levelCopy.loadMap(new this["Level" + level_num + "Csv"](), TileSheet, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0, 6);
-			//levelCopy.setTileProperties(ICE_TILE_INDEX, 0, null, null, 1053);
+			level.setTileProperties(ICE_TILE_INDEX, 0, null, null, ICE_TILE_INDEX_END);
+			level.setTileProperties(DOWN_ARROW_BLOCK, FlxObject.NONE, null, null, PIT_END - DOWN_ARROW_BLOCK);
 			//Set entrances as non-collidable
-			level.setTileProperties(ENTRANCE_TILE_INDEX, 0);
+			level.setTileProperties(ENTRANCE_TILE_INDEX, FlxObject.NONE);
 		}
 		
 		public function getPlayer() : Zamboni {
@@ -300,10 +329,13 @@ package
 		
 		
 		public static function isSolid(tileIndex:uint) : Boolean {
-			if (isWall(tileIndex))
+			/*if (isWall(tileIndex))
 				return true;
 			if (tileIndex >= SOLID_BLOCK && tileIndex <  SOUTH_WALL_LOW)
+				return true;*/
+			if (tileIndex >= NORTH_WALL_LOW || isTrail(tileIndex)){
 				return true;
+			}
 				
 			return false;
 			
@@ -311,7 +343,7 @@ package
 		
 		// return true if the given tileIndex is a wall, false otherwise
 		public static function isWall(tileIndex:uint) : Boolean {
-			if ( tileIndex >= NORTH_WALL_LOW && tileIndex <= NORTH_WALL_HIGH)
+			/*if ( tileIndex >= NORTH_WALL_LOW && tileIndex <= NORTH_WALL_HIGH)
 				return true;
 			if ( tileIndex >= SOUTH_WALL_LOW && tileIndex <= SOUTH_WALL_HIGH)
 				return true;
@@ -319,6 +351,23 @@ package
 				return true;
 			if (tileIndex == WEST_WALL_A || tileIndex == WEST_WALL_B)
 				return true;
+			return false;*/
+			if (tileIndex >= NORTH_WALL_LOW && tileIndex <= SOUTH_WALL_HIGH)
+				return true;
+			//return isVerticalWall(EAST_WALL_START, tileIndex) || isVerticalWall(WEST_WALL_START, tileIndex);
+			return isVerticalWall(WEST_WALL_START, tileIndex);
+		}
+		
+		private static function isVerticalWall(wallTileStart:uint, tileIndex:uint):Boolean {
+			var checkTile:uint = wallTileStart;
+			for (var i:uint = 0; i < WALL_TILE_HEIGHT; ++i) {
+				checkTile = wallTileStart + i * 32;
+				for (var j:uint = 0; j < WALL_TILE_WIDTH; ++j) {
+					//trace("\t" + (checkTile + j));
+					if (checkTile + j == tileIndex)
+						return true;
+				}
+			}
 			return false;
 		}
 		
@@ -502,6 +551,10 @@ package
 			level = null;
 			player = null;
 			queues = null;
+		}
+		
+		public static function isPit(index:uint) : Boolean {
+			return(index >= PIT_INDEX && index < PIT_END);
 		}
 		
 	}

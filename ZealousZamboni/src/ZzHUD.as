@@ -11,11 +11,12 @@ package
 	 */
 	public class ZzHUD extends FlxGroup 
 	{
-		
+		private static const TEXT_COLOR:uint = 0x000000;
 		public static var smallStarXY:FlxPoint = new FlxPoint(0, 0);
 		public static var bigStarXY:FlxPoint = new FlxPoint(0, 0);
 		
 		private var restartButton:FlxButton;
+		private var pauseButton:FlxButton;
 		private var muteButton:FlxButton;
 		
 		private var player:Zamboni;
@@ -46,6 +47,11 @@ package
 			restartButton.loadGraphic(Media.restartPNG);
 			add(restartButton);
 			
+			// pause button
+			/*pauseButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 80, null, togglePause);
+			pauseButton.loadGraphic(Media.pausePng);
+			add(pauseButton);*/
+			
 			// mute button
 			muteButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 80, null, toggleMute);
 			muteButton.loadGraphic(Media.mutePng);
@@ -64,7 +70,7 @@ package
 			bigStarXY.x = lastStar.x;
 			bigStarXY.y = lastStar.y;
 			subGoalText = new FlxText(FlxSprite(goalStars[goalStars.length - 1]).x - 100, 12, 70, "0", true);
-			subGoalText.setFormat("coolvetica", 40, 0xffffff);
+			subGoalText.setFormat("coolvetica", 40, TEXT_COLOR);
 			add(subGoalText);
 			
 			// small star
@@ -77,7 +83,7 @@ package
 			
 			// level timer
 			timerTxt = new FlxText(40, 10, 100, getTimeString(levelTime), true);
-			timerTxt.setFormat("coolvetica", 50, 0xffffff);
+			timerTxt.setFormat("coolvetica", 50, TEXT_COLOR);
 			add(timerTxt);
 			timer = new ZzTimer();
 			timer.start(levelTime, 1, endLevel);
@@ -136,6 +142,18 @@ package
 		public function onRestart():void {
 			PlayState(FlxG.state).restartLevel();
 		}
+		
+		/*public function togglePause():void {
+			if (FlxG.paused) {
+				trace("unpausing");
+				PlayState(FlxG.state).unpause();
+				pauseButton.loadGraphic(Media.pausePng);
+			} else if (!FlxG.paused) {
+				trace("pausing");
+				pauseButton.loadGraphic(Media.unpausePng);
+				PlayState(FlxG.state).pause();
+			}
+		}*/
 		
 		override public function destroy():void {
 			super.destroy();

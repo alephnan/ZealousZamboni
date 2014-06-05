@@ -44,7 +44,7 @@ class TileOptions extends JFrame {
 		buttonPanel.setLayout(new GridLayout(Main.IMG_TILE_HEIGHT, Main.IMG_TILE_WIDTH));
 		JScrollPane scroller = new JScrollPane(buttonPanel, 
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.add(cursorOpts, BorderLayout.NORTH);
 		this.add(scroller, BorderLayout.CENTER);
 		final JTextField cursorHeightf = new JTextField("1  ");
@@ -66,7 +66,8 @@ class TileOptions extends JFrame {
 		});
 		cursorOpts.add(setOpts);
 		//buttonPanel.setLayout(new GridLayout(buttonHeight, BUTTON_WIDTH));
-		buttonPanel.setBackground(Color.BLACK);
+		//buttonPanel.setBackground(Color.BLACK);
+		buttonPanel.setOpaque(false);
 		group = new ButtonGroup();
 		ActionListener buttListener = new ButtonHandler();
 		for (int i = 0, len = icons.length; i < len; ++i) {

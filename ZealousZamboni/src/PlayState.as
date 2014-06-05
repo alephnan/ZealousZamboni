@@ -63,7 +63,7 @@ package
 		private var levelTime:Number = 30;
 		
 		override public function create() : void {
-			FlxG.bgColor = 0xffaaaaaa;
+			//FlxG.bgColor = 0xffaaaaaa;
 			levelLoader = new LevelLoader();
 			activeSprites = new Array();
 			
@@ -71,6 +71,7 @@ package
 			level = levelLoader.getTilemap();
 			levelTime = levelLoader.levelTime;
 			playerPoints = new PlayerPoints(14, levelLoader.goalPoints);
+			add(new FlxSprite(0, 0, Media.snowBackgroundPNG));	// load background here
 			add(level);
 			player = levelLoader.getPlayer();
 			activeSprites.push(player);

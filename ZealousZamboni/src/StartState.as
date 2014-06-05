@@ -14,6 +14,10 @@ package
 	{
 		[Embed(source = '../res/start.txt', mimeType = "application/octet-stream")] public var StartCsv:Class;
 		
+		//private static const WALL_INDEX:uint = 512;
+		//private static const ICE_TILE_INDEX_END:uint = 1024;
+		//private static const NUM_TILES:uint = 2048;
+		
 		private var map:FlxTilemap;
 		private var player:Zamboni;
 		private var start:FlxSprite;
@@ -25,18 +29,22 @@ package
 			
 			map = new FlxTilemap();
 			level = map;
-			map.loadMap(new StartCsv(), Media.StartTilesheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
-			map.setTileProperties(LevelLoader.WALL_INDEX, FlxObject.ANY, tileCollision, null, LevelLoader.NUM_TILES - LevelLoader.WALL_INDEX);
+			//map.loadMap(new StartCsv(), Media.StartTilesheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
+			map.loadMap(new StartCsv(), Media.TileSheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
+			//map.setTileProperties(LevelLoader.WALL_INDEX, FlxObject.ANY, tileCollision, null, LevelLoader.NUM_TILES - LevelLoader.WALL_INDEX);
+			map.setTileProperties(LevelLoader.ICE_TILE_INDEX_END, FlxObject.ANY, tileCollision, null, LevelLoader.NUM_TILES - LevelLoader.ICE_TILE_INDEX_END);
+			add(new FlxSprite(0, 0, Media.snowBackgroundPNG));
 			add(map);
 			player = new Zamboni(255, 340, map);
 			add(player);
-			start = new FlxSprite(72, 293, Media.StartImg);
+			start = new FlxSprite(75, 293, Media.StartImg);
+			start.width += 10;
 			start.immovable = true;
 			add(start);
 			
 			var txt1:FlxText = new FlxText(FlxG.width / 2 - 330, 40, FlxG.width, "Controls");
 			//txt1.scale = new FlxPoint(2, 2);
-			txt1.setFormat("poster", 64, 0xE8E8E8, "center", 0x808080);
+			txt1.setFormat("poster", 72, 0x000000, "center", 0x808080);
 			//txt1.setFormat(null, 44, 0xE8E8E8, "center");
 			add(txt1);
 			
@@ -45,7 +53,7 @@ package
 			add(txt2);
 			
 			var txt3:FlxText = new FlxText(410, 350, 100, "OR", true);
-			txt3.setFormat("coolvetica", 40, 0xb8b8b8, "center");
+			txt3.setFormat("coolvetica", 40, 0x000000, "center");
 			add(txt3);
 			
 			add(new FlxSprite(280, 240, Media.MouseImg));

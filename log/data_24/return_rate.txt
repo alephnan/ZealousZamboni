@@ -1,0 +1,261 @@
+Number of players: 64
+
+Player 049ADA8A-D96C-630E-43EB-0092472B2AF3
+	Number of page loads (visits): 1
+	Number of levels played: 3
+
+Player 069E5457-ACB1-3502-5DF5-FD5BF4FEB731
+	Number of page loads (visits): 1
+	Number of levels played: 7
+
+Player 06FE5961-1AC6-60A8-0088-FE53D5BAC339
+	Number of page loads (visits): 1
+	Number of levels played: 5
+
+Player 0A4BEEF0-249A-78B9-FFB9-C91866FD3CFA
+	Number of page loads (visits): 1
+	Number of levels played: 4
+
+Player 0CB2E33C-7E52-9167-26B3-5543294F3CD0
+	Number of page loads (visits): 1
+	Number of levels played: 7
+
+Player 0F2DC8B9-8B02-94FF-CD02-3201301E0A51
+	Number of page loads (visits): 1
+	Number of levels played: 8
+
+Player 1274942C-596D-9784-9CEB-56231AD0DC34
+	Number of page loads (visits): 1
+	Number of levels played: 3
+
+Player 130BDEEB-1532-2C2F-F885-C0044A042702
+	Number of page loads (visits): 1
+	Number of levels played: 4
+
+Player 14A360EE-6702-8D9B-6CE6-76038429C263
+	Number of page loads (visits): 1
+	Number of levels played: 3
+
+Player 1534289D-29DD-78F7-0885-2D5F1AE7D2B2
+	Number of page loads (visits): 1
+	Number of levels played: 3
+
+Player 192EC151-36B8-7A98-DD2B-5524937DB177
+	Number of page loads (visits): 1
+	Number of levels played: 2
+
+Player 1E3029B4-2769-D9D7-AB59-03611FA238DB
+	Number of page loads (visits): 1
+	Number of levels played: 7
+
+Player 239DB19B-33DE-84CD-096C-84EE34FE47E3
+	Number of page loads (visits): 1
+	Number of levels played: 12
+
+Player 2C510522-41A3-EDC0-C53D-DC49C05858A2
+	Number of page loads (visits): 1
+	Number of levels played: 3
+
+Player 31CD52E7-B31C-761C-1D37-F67A96F40DB4
+	Number of page loads (visits): 1
+	Number of levels played: 2
+
+Player 35BC34A3-1B13-0459-75DC-F7BDCFB21FF7
+	Number of page loads (visits): 1
+	Number of levels played: 15
+
+Player 367EFBE3-A7C5-388F-9F29-B9A5F7687856
+	Number of page loads (visits): 1
+	Number of levels played: 3
+
+Player 3DBB3AE4-9359-0A3F-64F4-6C8C4EECDCA0
+	Number of page loads (visits): 1
+	Number of levels played: 6
+
+Player 3E636344-F268-92E4-BA4B-82F10C823C6E
+	Number of page loads (visits): 1
+	Number of levels played: 6
+
+Player 3F046B74-74CD-A49F-6913-95706557F3DE
+	Number of page loads (visits): 2
+	Number of levels played: 6
+
+Player 45C6B6DD-AF07-788F-572D-0265CDF5C7D8
+	Number of page loads (visits): 1
+	Number of levels played: 5
+
+Player 45EA3A36-9B0E-2836-74A5-C567614770BB
+	Number of page loads (visits): 1
+	Number of levels played: 6
+
+Player 4787544A-0DE2-65ED-0363-029600FCBA76
+	Number of page loads (visits): 1
+	Number of levels played: 6
+
+Player 4866CFF9-1BAD-1B3F-9823-2E5207FCFB96
+	Number of page loads (visits): 1
+	Number of levels played: 2
+
+Player 4BEA4730-2E95-59A7-BD23-FDD06C6973DE
+	Number of page loads (visits): 1
+	Number of levels played: 2
+
+Player 54EF11C6-5546-C2CF-85EE-7605E3FE9E7C
+	Number of page loads (visits): 1
+	Number of levels played: 7
+
+Player 5FDDACA6-0766-BED9-3F59-B0E8B1E53782
+	Number of page loads (visits): 1
+	Number of levels played: 3
+
+Player 6723638C-74B8-3243-BAD5-E9DE05049DE8
+	Number of page loads (visits): 1
+	Number of levels played: 1
+
+Player 69FB3FC6-5568-FBE9-77E1-1255C3E487C3
+	Number of page loads (visits): 1
+	Number of levels played: 25
+
+Player 6B6E1453-6706-D236-2184-D0722156E42B
+	Number of page loads (visits): 1
+	Number of levels played: 5
+
+Player 6C2786AD-AB9D-A471-C82F-04010AEC9C4C
+	Number of page loads (visits): 1
+	Number of levels played: 4
+
+Player 702D8AD9-4F1F-A8F0-D444-66EEC282C36A
+	Number of page loads (visits): 1
+	Number of levels played: 7
+
+Player 716D6432-EFB7-E911-9EB0-44EEFF83F896
+	Number of page loads (visits): 1
+	Number of levels played: 4
+
+Player 731B413A-2066-5CAF-3031-775FB75D39A2
+	Number of page loads (visits): 1
+	Number of levels played: 4
+
+Player 7B854677-4AC1-73D9-35C0-886396F6DB30
+	Number of page loads (visits): 1
+	Number of levels played: 6
+
+Player 803D0500-493A-5064-EE28-F3B6B3FBC252
+	Number of page loads (visits): 1
+	Number of levels played: 4
+
+Player 80836283-5BB6-6862-C96A-5527B1222647
+	Number of page loads (visits): 224
+	Number of levels played: 545
+
+Player 8881125F-A69C-549F-BB66-CA1B85B3D349
+	Number of page loads (visits): 1
+	Number of levels played: 7
+
+Player 89419FB5-7509-71C5-40FE-0868E9887A11
+	Number of page loads (visits): 1
+	Number of levels played: 5
+
+Player 8AC5A1BC-6F78-C3D2-80C0-7077FA5CD444
+	Number of page loads (visits): 1
+	Number of levels played: 1
+
+Player 90A9D69F-1A39-92AE-AE17-4867F3858E11
+	Number of page loads (visits): 1
+	Number of levels played: 1
+
+Player 94C83D55-057C-A219-EC8F-BD3EFD10F0BB
+	Number of page loads (visits): 1
+	Number of levels played: 2
+
+Player 97BCD47A-5C66-D43A-E615-8AEF6377C3DC
+	Number of page loads (visits): 1
+	Number of levels played: 5
+
+Player AAA99C48-4198-C0B3-BC06-15D5F80AA41C
+	Number of page loads (visits): 2
+	Number of levels played: 9
+
+Player AFEE3CBC-A9D3-4AFA-E56C-A0A61EC54F17
+	Number of page loads (visits): 1
+	Number of levels played: 7
+
+Player B5F25648-4AEF-59E3-3128-EF2C33A7ED2B
+	Number of page loads (visits): 1
+	Number of levels played: 6
+
+Player BAE7E207-ECFB-0AF2-8820-A87F68CC4A44
+	Number of page loads (visits): 1
+	Number of levels played: 3
+
+Player BBB7AD1E-241F-7F8F-C55B-165A30D582F2
+	Number of page loads (visits): 1
+	Number of levels played: 2
+
+Player BE9F5D06-876D-0BDC-397A-39DB6E917739
+	Number of page loads (visits): 1
+	Number of levels played: 9
+
+Player C821F5DA-BA78-2655-64EC-C5554D3B02E3
+	Number of page loads (visits): 1
+	Number of levels played: 6
+
+Player CD593B2E-2FA1-8401-96EF-971CC0897459
+	Number of page loads (visits): 1
+	Number of levels played: 4
+
+Player DBE2A794-0456-7EAF-5CBE-0B4362FE3B52
+	Number of page loads (visits): 1
+	Number of levels played: 9
+
+Player E1556D39-3795-77BC-EA9A-0E3F43D523CA
+	Number of page loads (visits): 1
+	Number of levels played: 9
+
+Player E4F55B2C-E6DD-4491-A958-C83D984751A7
+	Number of page loads (visits): 1
+	Number of levels played: 8
+
+Player E6C1455E-B84F-0054-D38F-83BD3AB9843A
+	Number of page loads (visits): 1
+	Number of levels played: 5
+
+Player EF092139-D95C-6AFC-B24F-FC96C65A352C
+	Number of page loads (visits): 1
+	Number of levels played: 6
+
+Player F0B8162D-C842-4B64-A2E9-775ABC7D6D31
+	Number of page loads (visits): 1
+	Number of levels played: 4
+
+Player F35C5BE3-681B-C7C3-9A89-EF957454933F
+	Number of page loads (visits): 1
+	Number of levels played: 10
+
+Player F78A4820-971B-D63C-78EA-620218616BE1
+	Number of page loads (visits): 3
+	Number of levels played: 7
+
+Player F88BAB4B-FD2C-A9FC-0001-0B8B290944B0
+	Number of page loads (visits): 1
+	Number of levels played: 3
+
+Player FAE63B1B-3939-CA4D-8A2E-818E6C652AC3
+	Number of page loads (visits): 1
+	Number of levels played: 4
+
+Player FB7F5CA3-93A6-243E-911A-9B6E53DE3123
+	Number of page loads (visits): 1
+	Number of levels played: 3
+
+Player FCDDAE9F-6AF9-CE34-DBCF-D250F65DB28C
+	Number of page loads (visits): 1
+	Number of levels played: 3
+
+Player FED2AE86-B08D-E1A0-0064-25435D3D82E1
+	Number of page loads (visits): 1
+	Number of levels played: 6
+max visits: 2
+0	0.952381
+1	0.031746
+2	0.015873

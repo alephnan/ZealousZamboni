@@ -19,9 +19,9 @@ package
 	public class Skater extends ZzUnit
 	{
 		public static const TYPE_SIMPLE:String = "simple";
-		[Embed(source='../media/skater.png')]
+		[Embed(source='../media/lake/skater.png')]
 		private var skaterPNG:Class;
-		[Embed(source='../media/skater2.png')]
+		[Embed(source='../media/lake/skater2.png')]
 		private var skater2PNG:Class;
 		
 		private static const SKATER_DEATH_SLACK:Number = 1; // seconds
@@ -51,7 +51,7 @@ package
 		private var isStarted:Boolean = false;
 		
 		// color of trail associated with this skater
-		private var trailColor:uint; 
+		private var trailIndex:uint; 
 		
 		// Type of skater for later use
 		private var type:String;
@@ -61,8 +61,8 @@ package
 		public function Skater(X:Number, Y:Number, time:int, type:String = TYPE_SIMPLE, toX:Number = 0, toY:Number = 0, dir:String = "DOWN")
 		{
 			// randomly choose a trail color
-			trailColor = Math.floor(Math.random() * LevelLoader.NUM_COLORS) + LevelLoader.TRAIL_TILE_INDEX;
-			
+			//trailColor = Math.floor(Math.random() * LevelLoader.NUM_COLORS) + LevelLoader.TRAIL_TILE_INDEX;
+			trailIndex = 0;
 			super(X, Y);
 			this.type = type;
 			timeToSkate = time;
@@ -87,6 +87,8 @@ package
 				addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 				o = 64;
 				addAnimation("death", [o + 0, o + 1, o + 2, o + 3, o + 4], 8, true);
+				o = 80;
+				addAnimation("splash", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 3, o + 2, o + 1], 10, true);
 				addAnimation("hurt", [16], 1, true);
 			}else {
 				loadGraphic(skater2PNG, true, true, 32, 32, true);
@@ -99,6 +101,8 @@ package
 				addAnimation("walkE", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 5, o + 6, o + 7, o + 8, o + 9, o + 10, o + 11], 6, true);
 				o = 64;
 				addAnimation("death", [o + 0, o + 1, o + 2, o + 3, o + 4], 8, true);
+				o = 80;
+				addAnimation("splash", [o + 0, o + 1, o + 2, o + 3, o + 4, o + 3, o + 2, o + 1], 10, true);
 				addAnimation("hurt", [16], 1, true);
 			}
 			deathTimer = new ZzTimer();
@@ -170,7 +174,8 @@ package
 				if (currentTile >= LevelLoader.ICE_TILE_INDEX && currentTile < LevelLoader.ICE_TILE_INDEX_END)
 				{
 					// Add skater trail
-					tilemap.setTile(xTile, yTile, trailColor, true);
+					//tilemap.setTile(xTile, yTile, trailColor, true);
+					tilemap.setTile(xTile, yTile, (trailIndex++ % LevelLoader.NUM_COLORS) + LevelLoader.TRAIL_TILE_INDEX);
 				}
 				else if (currentTile >= LevelLoader.DOWN_ARROW_BLOCK && currentTile <= LevelLoader.RIGHT_ARROW_BLOCK)
 				{
@@ -208,7 +213,8 @@ package
 							goingLeft = true;
 						}
 					}
-					tilemap.setTile(xTile, yTile, trailColor, true);
+					//tilemap.setTile(xTile, yTile, trailColor, true);
+					tilemap.setTile(xTile, yTile, (trailIndex++ % LevelLoader.NUM_COLORS) + LevelLoader.TRAIL_TILE_INDEX);
 				}
 			}
 		}
@@ -229,7 +235,7 @@ package
 			{
 				if (skaterStuck)
 				{
-					this.play("death", false);
+					this.play("splash", false);
 				}
 				else if (goingLeft)
 				{
@@ -298,8 +304,8 @@ package
 			exists = false;
 			progress.exists = false;
 			if (timer != null) {
-				startSkaterDeath();
 				timer.start(2, 1, skaterDeathCleanup);
+				startSkaterDeath();
 			} else {
 				skaterDeathCleanup();
 			}
@@ -409,10 +415,10 @@ package
 				return ZzUtils.entranceBlocked(new FlxPoint(curPosX, curPosY));
 			}
 			//trace("skater on entrance tile: " + curPosX + ", " + curPosY);
-			return !(tileMap.getTile(curPosX + 1, curPosY) <= LevelLoader.RIGHT_ARROW_BLOCK ||
-			         tileMap.getTile(curPosX - 1, curPosY) <= LevelLoader.RIGHT_ARROW_BLOCK ||
-					 tileMap.getTile(curPosX, curPosY + 1) <= LevelLoader.RIGHT_ARROW_BLOCK ||
-					 tileMap.getTile(curPosX, curPosY - 1) <= LevelLoader.RIGHT_ARROW_BLOCK);
+			return (LevelLoader.isSolid((tileMap.getTile(curPosX + 1, curPosY))) &&
+			         LevelLoader.isSolid(tileMap.getTile(curPosX - 1, curPosY)) &&
+					 LevelLoader.isSolid(tileMap.getTile(curPosX, curPosY + 1)) &&
+					 LevelLoader.isSolid(tileMap.getTile(curPosX, curPosY - 1)));
 		}
 		
 		public function isGoingRight():void
@@ -502,9 +508,10 @@ package
 		}
 		
 		private function startSkaterDeath():void {
-			explosion.at(this);
-			explosion.gravity = 100;
-			explosion.start(true, 2);
+			//explosion.at(this);
+			//explosion.gravity = 100;
+			//explosion.start(true, 2);
+			this.play("splash");
 		}
 		
 		override public function destroy():void {

@@ -56,7 +56,7 @@ package
 			var self:FlxObject = this;
 			//Here we get the property level instead of using the . notation because both startState and PlayState have levels
 			FlxTilemap(FlxG.state["level"]).overlapsWithCallback(this, function(tile:FlxTile, e1:FlxObject) : void {
-				if (tile.index == LevelLoader.PIT_INDEX) {
+				if (LevelLoader.isPit(tile.index)) {
 					pitCounter++;
 				}
 			});

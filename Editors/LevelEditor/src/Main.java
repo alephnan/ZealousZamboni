@@ -1,8 +1,10 @@
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -10,7 +12,6 @@ import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 /**
@@ -23,8 +24,9 @@ public class Main {
 	public static final int TILE_HEIGHT = 30;
 	
 	// This is the path to the tiles we use in the game
-	public static final String TILE_IMG = "../../ZealousZamboni/media/rink_tiles5.png";
-	
+	public static final String TILE_IMG = "../../ZealousZamboni/media/lake/tilesheetoutline.png";
+	//public static final String TILE_IMG = "../../ZealousZamboni/media/lake/snow_tiles2.png";
+	//public static final String TILE_IMG = "../../ZealousZamboni/media/rink_tiles5.png";
 	public static int TILE_SIZE = 8;
 	
 	public static int IMG_TILE_WIDTH;	//number tiles wide
@@ -50,6 +52,8 @@ public class Main {
 	public static ImageIcon[] getTiles() {
 		ImageIcon[] arr = null;
 		try {
+			FileInputStream fis = new FileInputStream(new File(TILE_IMG));
+			BufferedImage img = ImageIO.read(fis);
 			FileImageInputStream is = new FileImageInputStream(new File(TILE_IMG));
 			ImageReader imageReader = ImageIO.getImageReaders(is).next();
 			imageReader.setInput(is, false, true);
@@ -59,13 +63,15 @@ public class Main {
 			int numRows = imageReader.getHeight(0) / TILE_SIZE;
 			IMG_TILE_HEIGHT = numRows;
 			arr = new ImageIcon[numColumns * numRows];
-			
 			Dimension d = new Dimension(TILE_SIZE, TILE_SIZE);
 			for (int i = 0; i < numRows; ++i) {
 				for (int j = 0; j < numColumns; ++j) {
-					Rectangle rect = new Rectangle(new Point(j * TILE_SIZE, i * TILE_SIZE), d);
-					BufferedImage bi = getTile(rect, imageReader, readParameters);
-					arr[i*numColumns + j] = new ImageIcon(bi);
+					BufferedImage piece = new BufferedImage(TILE_SIZE,TILE_SIZE,img.getType());
+					Graphics2D g = piece.createGraphics();
+					g.drawImage(img, 0, 0, TILE_SIZE, TILE_SIZE, TILE_SIZE * j, TILE_SIZE *i,
+							TILE_SIZE*j+TILE_SIZE, TILE_SIZE*i+TILE_SIZE, null);
+					arr[i*numColumns + j] = new ImageIcon(piece);
+					
 				}
 			}
 			imageReader.dispose();
