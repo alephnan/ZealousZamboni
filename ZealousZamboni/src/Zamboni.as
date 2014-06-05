@@ -428,6 +428,8 @@ package
 					} );
 					other.kill();
 				}
+			}else if (other is LakeMonster) {
+				this.kill();
 			}
 		}
 		

@@ -91,7 +91,7 @@ package
 			mouseTimer.start(MOUSE_LOG_INTERVAL, 0, logMouse);
 			
 			levelEnded = false;
-			
+			player.postConstruct(addDep);
 			
 			onStart();
 			

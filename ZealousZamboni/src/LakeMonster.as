@@ -11,6 +11,9 @@ package
 		private static const POP_TIME:Number = .5;
 		private static const CHOMP_TIME:Number = 2;
 		private static const DEATH_TIME:Number = .5;
+		
+		private var isDeadly:Boolean = false;
+		
 		public function LakeMonster(X:Number, Y:Number, type:String) {
 			super(X, Y, type);
 			loadGraphic(Media.lakeMonsterPNG, true, true, 64, 64, true);
@@ -35,12 +38,15 @@ package
 		
 		private function chomp() : void {
 			play("chomp");
+			this.allowCollisions = FlxObject.ANY;
 			doAction(death, CHOMP_TIME);
+			isDeadly = true;
 		}
 		
 		private function death() : void {
 			play("death");
 			doAction(kill, DEATH_TIME);
+			isDeadly = false;
 		}
 		
 		//Waits until the given time and then calls the given function

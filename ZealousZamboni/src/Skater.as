@@ -154,6 +154,7 @@ package
 		
 		override public function postConstruct(addDependency:Function):void
 		{
+			super.postConstruct(addDependency);
 			timer.start(timeToSkate, 1, timerUp);
 			LevelLoader.SOUND_PLAYER.play("skaterStart");
 			addDependency(progress);
@@ -344,7 +345,7 @@ package
 				isGoingUp();
 			else if (goingRight)
 				isGoingRight();
-			if (other is WalkingDead)
+			if (other is WalkingDead || other is LakeMonster)
 			{
 				ZzLog.logAction(ZzLog.ACTION_SKATER_EATEN_BY_ZOMBIE, getLoggableObject());
 				skaterDeathHandler(new ZzTimer());

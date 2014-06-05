@@ -17,9 +17,9 @@ package
 		//private static const CID:int = (Math.floor(Math.random() * 999999) % 3) + 2;
 		//private static const CID:int = 11;	//hardcoded to 2 since we didn't have time to put in proper a/b testing
 		//private static const CID:int = (Math.floor(Math.random() * 3) + 2);  // old way to compute random number. but it seems to require RNG be 'warmed up'. not sure on this
-		private static const CID:int = int(FlxG.random() * 100) % 2 + 23;
-		private static const A_CID:int = 23;
-		private static const B_CID:int = 24;
+		private static const CID:int = A_CID;// int(FlxG.random() * 100) % 2 + 23;
+		private static const A_CID:int = 33;
+		private static const B_CID:int = 34;
 		private static const C_CID:int = -1;
 		
 		// a/b release on 5/27: 10
@@ -43,7 +43,7 @@ package
 		/**
 		 * If set to true, calls to log will not have any effect
 		 */
-		public static var DEBUG:Boolean = false;
+		public static var DEBUG:Boolean = true;
 		
 		private static const logger:Logger = new Logger(GAME_NAME, GAME_ID, SKEY, VID, CID);
 		

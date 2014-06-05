@@ -17,9 +17,12 @@ package
 	{
 		
 		private static var nextZId:int = 0;
+		//Handles  death splash
+		private var splashEmitter:FlxEmitter;
 		
 		public function ZzUnit(X:Number, Y:Number) {
 			super(X, Y);
+			setupSplash();
 			ID = nextZId++;
 		}
 		
@@ -29,7 +32,7 @@ package
 		 * @param	addDependency
 		 */
 		public function postConstruct(addDependency:Function) : void {
-			
+			addDependency(splashEmitter);
 		}
 		
 		public function setNextMove(level:FlxTilemap, entities:FlxGroup) : void {
@@ -66,6 +69,9 @@ package
 			//considering how many pixels are overlapping pits vs how many aren't
 			//The exact numbers are totally arbitrary, and this should probably be done in a different way
 			if (pitCounter * Math.pow(LevelLoader.TILE_SIZE, 2) > ((width + 8) * (height)) ) {
+				splash();
+				maxVelocity.x = 0;
+				maxVelocity.y = 0;
 				ZzLog.logAction(ZzLog.ACTION_UNIT_FALL, getLoggableObject());
 				LevelLoader.SOUND_PLAYER.play("fall");
 				alive = false;
@@ -77,9 +83,25 @@ package
 						scale.y /= 1.5;
 						velocity.x = 0;
 						velocity.y = 0;
-						angle += 45;
+						flicker(1);
 					}
 				});
+			}
+		}
+		
+		public function splash():void {
+			splashEmitter.at(this);
+			splashEmitter.gravity = 20;
+			splashEmitter.start(true, 1);
+		}
+		private function setupSplash():void {
+			splashEmitter = new FlxEmitter(4, 4, 50);
+			var color:Array = new Array( 0xff0055ff, 0xff0077ff, 0xff0021df );
+			for (var i:uint = 0; i < 50; ++i) {
+				var particle:FlxParticle = new FlxParticle();
+				particle.makeGraphic(4, 4, color[i%3]);
+				particle.exists = false;
+				splashEmitter.add(particle);
 			}
 		}
 		
