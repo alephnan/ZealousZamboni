@@ -46,7 +46,7 @@ package
 		//Sound played when this skater is stuck
 		private var skaterStuckSnd:SoundChannel;
 		//Handles skater death explosion
-		private var explosion:FlxEmitter;
+		//private var explosion:FlxEmitter;
 		
 		private var isStarted:Boolean = false;
 		
@@ -106,7 +106,7 @@ package
 				addAnimation("hurt", [16], 1, true);
 			}
 			deathTimer = new ZzTimer();
-			setupSkaterDeath()
+			//setupSkaterDeath()
 			
 			// Change sprite size to be size of tile (better for trails)
 			this.width = LevelLoader.TILE_SIZE;
@@ -158,7 +158,7 @@ package
 			timer.start(timeToSkate, 1, timerUp);
 			LevelLoader.SOUND_PLAYER.play("skaterStart");
 			addDependency(progress);
-			addDependency(explosion);
+			//addDependency(explosion);
 		}
 		
 		override public function preUpdate():void
@@ -216,12 +216,19 @@ package
 					}
 					//tilemap.setTile(xTile, yTile, trailColor, true);
 					tilemap.setTile(xTile, yTile, (trailIndex++ % LevelLoader.NUM_COLORS) + LevelLoader.TRAIL_TILE_INDEX);
-				}
+				} /*else {	// not trail tile or arrow tile
+						if (!skaterStuck && PlayState.TUTORIAL && !Tutorial.SKATER_TURN_ALERT && currentTile >= ) {
+							PlayState(FlxG.state).tutorialState.handleSkaterCallout(Tutorial.SKATER_TURN_ALERT, this);
+					}
+				}*/
 			}
 		}
 		
 		override public function update():void
 		{
+			if (PlayState.TUTORIAL && !Tutorial.SKATER_BAR_ALERT) {
+				PlayState(FlxG.state).tutorialState.handleSkaterCallout(Tutorial.SKATER_BAR_ALERT, this);
+			}
 			super.update();
 			if (!alive) return;
 			if(pathSpeed ==0){
@@ -237,6 +244,9 @@ package
 				if (skaterStuck)
 				{
 					this.play("splash", false);
+					if (PlayState.TUTORIAL && ! Tutorial.SKATER_STUCK_ALERT) {
+						PlayState(FlxG.state).tutorialState.handleSkaterCallout(Tutorial.SKATER_STUCK_ALERT, this);
+					}
 				}
 				else if (goingLeft)
 				{
@@ -297,15 +307,18 @@ package
 		{
 		}
 		
-		private function skaterDeathHandler(timer:ZzTimer=null):void
+		private function skaterDeathHandler(dtimer:ZzTimer=null):void
 		{
+			trace("Skater died");
 			ZzLog.logAction(ZzLog.ACTION_SKATER_DIE, getLoggableObject() );
 			LevelLoader.SOUND_PLAYER.play("skaterDeath");
 			alive = false;
 			exists = false;
 			progress.exists = false;
-			if (timer != null) {
-				timer.start(2, 1, skaterDeathCleanup);
+			progress = null;
+			if (dtimer != null) {
+				dtimer.stop();
+				dtimer.start(2, 1, skaterDeathCleanup);
 				startSkaterDeath();
 			} else {
 				skaterDeathCleanup();
@@ -313,7 +326,7 @@ package
 		}
 		
 		private function skaterDeathCleanup(timer:ZzTimer = null):void {
-			explosion.kill();
+			//explosion.kill();
 			//PlayState(FlxG.state).skaterComplete(this, true);
 			skaterComplete(this, true);
 		}
@@ -329,7 +342,6 @@ package
 					ZzLog.logAction(ZzLog.ACTION_SKATER_STUCK, getLoggableObject() );
 					skaterStuck = true;
 					deathTimer.start(SKATER_DEATH_SLACK, 1, skaterDeathHandler);
-	
 					skaterStuckSnd =  LevelLoader.SOUND_PLAYER.play("skaterStuck", 0, (int)(SKATER_DEATH_SLACK / (LevelLoader.SOUND_PLAYER.length("skaterStuck"))));
 				}
 			}
@@ -337,6 +349,9 @@ package
 			{
 				endStuck();
 			}
+			
+			
+			
 			if (goingLeft)
 				isGoingLeft();
 			else if (goingDown)
@@ -493,7 +508,7 @@ package
 			goingDown = goingUp = goingLeft = goingRight = false;
 		}
 		
-		private function setupSkaterDeath():void {
+		/*private function setupSkaterDeath():void {
 			explosion = new FlxEmitter(4, 4, 100);
 			var color:Array = new Array( 0xff000000, 0xffff0000, 0xff0101df );
 			for (var i:uint = 0; i < 100; ++i) {
@@ -502,7 +517,7 @@ package
 				particle.exists = false;
 				explosion.add(particle);
 			}
-		}
+		}*/
 		
 		public function setSkaterCompleteFn(complete:Function):void {
 			this.skaterComplete = complete;
@@ -518,9 +533,10 @@ package
 		override public function destroy():void {
 			super.destroy();
 			timer = null;
-			progress.destroy();
+			//progress.destroy();
+			progress = null;
 			deathTimer = null;
-			explosion.destroy();
+			//explosion.destroy();
 		}
 		
 		/**

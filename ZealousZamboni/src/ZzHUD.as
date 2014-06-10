@@ -18,6 +18,7 @@ package
 		private var restartButton:FlxButton;
 		private var pauseButton:FlxButton;
 		private var muteButton:FlxButton;
+		private var menuButton:FlxButton;
 		
 		private var player:Zamboni;
 		private var timerTxt:FlxText;
@@ -29,6 +30,7 @@ package
 		private var numFilledBigStars:uint;
 		private var subGoalStar:FlxSprite;
 		private var subGoalText:FlxText;
+		private var quitToMainMenu:Boolean;
 		
 		
 		/**
@@ -41,6 +43,7 @@ package
 			this.playerPoints = playerPoints;
 			add(playerPoints);
 			numFilledBigStars = 0;
+			quitToMainMenu = false;
 
 			// restart button
 			restartButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 30, null, onRestart);
@@ -48,14 +51,20 @@ package
 			add(restartButton);
 			
 			// pause button
-			/*pauseButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 80, null, togglePause);
+			pauseButton = new FlxButton(FlxG.width - FlxG.width / 4 + 98, 133, null, togglePause);
 			pauseButton.loadGraphic(Media.pausePng);
-			add(pauseButton);*/
+			add(pauseButton);
 			
 			// mute button
 			muteButton = new FlxButton(FlxG.width - FlxG.width / 4 + 90, 80, null, toggleMute);
 			muteButton.loadGraphic(Media.mutePng);
 			add(muteButton);
+			
+			// menu button
+			menuButton = new FlxButton(FlxG.width - FlxG.width / 4 + 98, 400, null, onMainMenu);
+			menuButton.loadGraphic(Media.menuButtonPNG);
+			menuButton.scale = new FlxPoint(0.8, 0.8);
+			add(menuButton);
 
 			// big stars
 			goalStars = new Array();
@@ -106,8 +115,8 @@ package
 			subGoalText.text = String(playerPoints.getSmallStars());
 			timerTxt.text = getTimeString(timer.timeLeft);
 			super.update();
-			
-			if ((playerPoints.checkWin() || playerPoints.checkLoss()) && timer.timeLeft > 2) {
+			var playState:PlayState = PlayState(FlxG.state);
+			if ((playerPoints.checkWin() || playerPoints.checkLoss() || !playState.player.alive) && timer.timeLeft > 2 && !PlayState.TUTORIAL) {
 				timer.stop();
 				timer.start(2, 1, endLevel);
 				timerTxt.exists = false;
@@ -135,7 +144,7 @@ package
 			return uint(timeLeft / 60) + ":" + seconds;
 		}
 		
-		public function endLevel(timer:ZzTimer=null):void {
+		public function endLevel(timer:ZzTimer = null):void {
 			PlayState(FlxG.state).endLevel();
 		}
 		
@@ -143,21 +152,29 @@ package
 			PlayState(FlxG.state).restartLevel();
 		}
 		
-		/*public function togglePause():void {
+		public function togglePause():void {
 			if (FlxG.paused) {
-				trace("unpausing");
 				PlayState(FlxG.state).unpause();
 				pauseButton.loadGraphic(Media.pausePng);
 			} else if (!FlxG.paused) {
-				trace("pausing");
 				pauseButton.loadGraphic(Media.unpausePng);
 				PlayState(FlxG.state).pause();
 			}
-		}*/
+		}
+		
+		public function onMainMenu():void {
+			ZzLog.logAction(ZzLog.ACTION_QUIT_TO_MAIN_MENU, null);
+			quitToMainMenu = true;
+			PlayState(FlxG.state).endLevel();
+		}
 		
 		override public function destroy():void {
 			super.destroy();
 			player = null;
+		}
+		
+		public function quitToMenu():Boolean {
+			return quitToMainMenu;
 		}
 	}
 	

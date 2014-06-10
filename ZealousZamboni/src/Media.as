@@ -17,7 +17,8 @@ package
 		[Embed(source = '../media/tirechains.png')] public static const tirechainsPNG:Class;
 		//[Embed(source='../media/skater.png')] public static const skaterPNG:Class;
 		//[Embed(source = '../media/skater2.png')] public static const skater2PNG:Class;
-		[Embed(source = '../media/zombie.png')] public static const walkingDeadPNG:Class;
+		[Embed(source = '../media/lake_zombie.png')] public static const walkingDeadPNG:Class;
+		//[Embed(source = '../media/zombie.png')] public static const walkingDeadPNG:Class;
 		[Embed(source = '../media/zamboni_4way.png')] public static const zamboniPNG:Class;
 		//[Embed(source = '../media/redo2.png')] public static const restartPNG:Class;
 		[Embed(source = '../media/SplashScreenIce.png')] public static const splashPNG:Class;
@@ -34,9 +35,12 @@ package
 		[Embed(source = '../media/baby_star.png')] public static const babyStarPng:Class;
 		[Embed(source = '../media/arrow_go_64.png')] public static const goArrowPNG:Class;
 		[Embed(source = '../media/retry.png')] public static const retryPNG:Class;
+		[Embed(source = '../media/lake/menu_button2.png')] public static const menuButtonPNG:Class;
 		[Embed(source = '../media/wasd.png')] public static const wasdPNG:Class;
+		[Embed(source = '../media/news.png')] public static const newsPNG:Class;
+		[Embed(source = '../media/control_selection.png')] public static const controlSelectionPNG:Class;
 		[Embed(source = '../media/level_complete.png')] public static const levelCompletePNG:Class;
-		[Embed(source = '../media/level_incomplete.png')] public static const levelIncompletePNG:Class;
+		[Embed(source = '../media/level_incomplete2.png')] public static const levelIncompletePNG:Class;
 		
 		// Start level messages
 		[Embed(source = '../media/popup.png')] public static const blankPop:Class;
@@ -67,6 +71,7 @@ package
 		[Embed(source = '../media/fonts/ChallengeContour.ttf', fontName = "challenge", embedAsCFF = "false")] public static const challenge:Class;
 		[Embed(source = '../media/fonts/SansPosterBold.ttf', fontName = "poster", embedAsCFF = "false")] public static const poster:Class;
 		[Embed(source = '../media/fonts/PistonPressure.ttf', fontName = "piston", embedAsCFF = "false")] public static const piston:Class;
+		[Embed(source = '../media/fonts/thys.ttf', fontName = "thys", embedAsCFF = "false")] public static const thys:Class;
 		
 		// Lake
 		[Embed(source = "../media/lake/tilesheetoutline.png")] public static const TileSheet:Class;
@@ -76,6 +81,13 @@ package
 		[Embed(source = '../media/lake/redo2.png')] public static const restartPNG:Class;
 		[Embed(source = '../media/lake/notmute.png')] public static const mutePng:Class;
 		[Embed(source = '../media/lake/mute.png')] public static const unmutePng:Class;
+		[Embed(source = '../media/lake/callout_round_backward_right.png')] public static const calloutPng:Class;
+		[Embed(source = '../media/lake/callout_round_left.png')] public static const calloutLeftPng:Class;
+		[Embed(source = '../media/lake/callout_round_backward_left.png')] public static const calloutBackwardLeftPng:Class;
+		[Embed(source = '../media/lake/callout_controls.png')] public static const calloutControlsPng:Class;
+		[Embed(source = '../media/lake/callout_mouse.png')] public static const calloutMousePng:Class;
+		[Embed(source = '../media/menu_splash.png')] public static const menuPng:Class;
 	}
+	
 
 }

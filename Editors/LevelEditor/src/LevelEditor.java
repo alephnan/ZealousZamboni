@@ -460,6 +460,17 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 					clicked.index = i;
 				}
 			}
+			//if (choice == EditChoice.ADD_RUTS) {
+				int numRuts = 0;
+				for (int i = 0; i < tileHeight; ++i) {
+					for (int j = 0; j < tileWidth; ++j) {
+						if (isRutTile(buttonArray[i][j].index)) {
+							numRuts++;
+						}
+					}
+				}
+				System.out.println("Number of ruts: " + numRuts);
+			//}
 		}
 	}
 	
@@ -508,7 +519,7 @@ class LevelEditor extends JFrame implements MouseMotionListener, KeyListener{
 	}
 	
 	private boolean isRutTile(int index) {
-		return (index >= 1078 && index < 1088);
+		return (index >= 4800 && index < 4960);
 	}
 	
 	private File openExistingFile() {

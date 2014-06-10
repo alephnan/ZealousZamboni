@@ -8,7 +8,7 @@
 	</description>
 	<popup mainImg="cleanIcePop" tip="TUTORIAL_TIPS_INDEX"/>
 	<zamboni x="184" y="96"/>
-	<!--<lakeMonster x="184" y="96">
+	<lakeMonster x="184" y="96">
 		<start>4</start>
 	</lakeMonster>
 	
@@ -22,5 +22,5 @@
 	
 	<lakeMonster x="184" y="96">
 		<start>20</start>
-	</lakeMonster>-->
+	</lakeMonster>
 </level>

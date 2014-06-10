@@ -55,6 +55,16 @@ package
 				action();
 			});
 		}
+		
+		override public function update():void {
+			super.update();
+			var zamboni:Zamboni = PlayState(FlxG.state).player;
+			if (this.overlaps(zamboni) && isDeadly) {
+				LevelIncompletePopup.LEVEL_LOST_REASON = "The lake monster got you!";
+				zamboni.kill();
+				death();
+			}
+		}
 	}
 	
 }

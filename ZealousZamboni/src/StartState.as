@@ -29,9 +29,7 @@ package
 			
 			map = new FlxTilemap();
 			level = map;
-			//map.loadMap(new StartCsv(), Media.StartTilesheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
 			map.loadMap(new StartCsv(), Media.TileSheet, LevelLoader.TILE_SIZE, LevelLoader.TILE_SIZE, FlxTilemap.OFF, 0, 0, LevelLoader.ICE_TILE_INDEX_END);
-			//map.setTileProperties(LevelLoader.WALL_INDEX, FlxObject.ANY, tileCollision, null, LevelLoader.NUM_TILES - LevelLoader.WALL_INDEX);
 			map.setTileProperties(LevelLoader.ICE_TILE_INDEX_END, FlxObject.ANY, tileCollision, null, LevelLoader.NUM_TILES - LevelLoader.ICE_TILE_INDEX_END);
 			add(new FlxSprite(0, 0, Media.snowBackgroundPNG));
 			add(map);
@@ -52,12 +50,14 @@ package
 			txt2.setFormat("coolvetica", 40, 0x33CCFF, "center");
 			add(txt2);
 			
-			var txt3:FlxText = new FlxText(410, 350, 100, "OR", true);
-			txt3.setFormat("coolvetica", 40, 0x000000, "center");
-			add(txt3);
+			//var txt3:FlxText = new FlxText(435, 380, 100, "OR", true);
+			//txt3.setFormat("coolvetica", 40, 0x000000, "center");
+			//add(txt3);
 			
-			add(new FlxSprite(280, 240, Media.MouseImg));
-			add(new FlxSprite(500, 310, Media.wasdPNG));
+			add(new FlxSprite(440, 330, Media.controlSelectionPNG));
+			add(new FlxSprite(380, 160, Media.MouseImg));
+			add(new FlxSprite(340, 380, Media.newsPNG));
+			add(new FlxSprite(510, 380, Media.wasdPNG));
 			FlxG.mouse.show();
 			
 			LevelLoader.SOUND_PLAYER.startPlaylist();

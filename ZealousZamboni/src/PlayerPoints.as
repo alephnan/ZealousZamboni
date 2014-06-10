@@ -11,8 +11,6 @@ package
 		public static const PICKUP_POWERUP_REWARD:uint = 10;
 		public static const STAR_CONVERSION:uint = 500;
 		public static const KILL_ZOMBIE_REWARD:uint = 100;
-		
-		
 		public static const NUM_STAR_PARTICLES:uint = 400;
 		private static const BIG_STAR_START:FlxPoint = new FlxPoint(FlxG.width / 2, FlxG.height / 2);
 		private static const PATH_VELOCITY:uint = 900;
@@ -24,7 +22,6 @@ package
 		private var bigStarPath:FlxPath;
 		
 		public function PlayerPoints(maxSize:uint=12, playerBigStarGoal:uint=1) {
-			//super(maxSize);
 			super();
 			numSmallStars = 0;
 			numBigStars = 0;
@@ -51,43 +48,18 @@ package
 			}
 			
 			if (numSmallStars >= STAR_CONVERSION) {
+				if (PlayState.TUTORIAL) {
+					PlayState(FlxG.state).tutorialState.handleConversionCallout();
+				}
 				numBigStars += numSmallStars / STAR_CONVERSION;
 				numSmallStars %= STAR_CONVERSION;
 				bigStarAnimation();
-				//add(new Shoutout("SUPER!", shoutoutCallback));
 			}
 		}
 		
-		/*public function shoutoutCallback(shoutout:Shoutout):void {
-			bigStarAnimation();
-			shoutout = null;
-		}*/
-		
-		/*private function bigStarAnimation():void {
-			bigStar.x = BIG_STAR_START.x;
-			bigStar.y = BIG_STAR_START.y;
-			if (numBigStars > 1) {
-				var tail:FlxPoint = bigStarPath.tail();
-				tail.x += 50;
-			}
-			bigStar.exists = true;
-			bigStar.visible = true;
-			bigStar.followPath(bigStarPath, PATH_VELOCITY);
-		}*/
-		
-			private function bigStarAnimation():void {
-				bigStar.animate(numBigStars);
-			}
-		
-		/*private function setupBigStarPath():void {
-			bigStar = new BigStar(BIG_STAR_START.x, BIG_STAR_START.y);
-			add(bigStar);
-			bigStarPath = new FlxPath();
-			bigStarPath.addPoint(BIG_STAR_START, true);
-			bigStarPath.add(30, FlxG.height / 4 + 20);
-			bigStarPath.add(FlxG.width, FlxG.height / 4);
-			bigStarPath.addPoint(ZzHUD.bigStarXY, true);
-		}*/
+		private function bigStarAnimation():void {
+			bigStar.animate(numBigStars);
+		}
 		
 		private function setupEmitter():void {
 			for (var i:uint = 0; i < NUM_STAR_PARTICLES; ++i) {
@@ -125,9 +97,13 @@ package
 					numTrailsLeft++;
 			}
 			var sq:SkaterQueue = SkaterQueue(PlayState(FlxG.state).activeSprites[PlayState.SKATERS_INDEX]);
+			var mq:MonsterQueue = MonsterQueue(PlayState(FlxG.state).activeSprites[PlayState.ZOMBIES_INDEX]);
 			var outOfSkatersNotEnoughTrails:Boolean = sq.skatersFinished() && (numTrailsLeft + numSmallStars) < STAR_CONVERSION;
-			//var notEnoughSkatersLeft:Boolean = (sq.activeSkaters() + sq.skatersLeft()) < (playerBigStarGoal - numBigStars);
-			return !checkWin() && outOfSkatersNotEnoughTrails;
+			var notEnoughZombiesLeft:Boolean = (mq.activeZombies + mq.zombiesLeft) * KILL_ZOMBIE_REWARD < STAR_CONVERSION;
+			var loss:Boolean = !checkWin() && outOfSkatersNotEnoughTrails && notEnoughZombiesLeft;
+			if (loss)
+				LevelIncompletePopup.LEVEL_LOST_REASON = "Too many skaters died!";
+			return loss;
 		}
 		
 	}

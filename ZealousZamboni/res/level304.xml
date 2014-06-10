@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level width="640" height="480" lives="100" time="600" goal="3">
+	<description>
+		Tutorial level -- Introduces player to cleaning ruts, collecting stars, collisions with solid objects, pitfalls, skater death, skater time bar, and strategic skater blocking.
+	</description>
+	<popup mainImg="blankPop" tip="BEGINNER_TIPS_INDEX"/>
+	<zamboni x="232" y="88" startDir="walkE" />
+	<skater x="552" y="328" toX="512" toY="328" dir="LEFT">
+		<start>99</start>
+		<time>10</time>
+	</skater>
+	<skater x="480" y="432" toX="480" toY="400" dir="UP">
+		<start>100</start>
+		<time>5</time>
+	</skater>
+</level>

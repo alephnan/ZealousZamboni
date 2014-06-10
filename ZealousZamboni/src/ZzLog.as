@@ -29,7 +29,7 @@ package
 		// a/b release on 6/4: 23
 		// a/b release on 6/4: 24
 		
-		public static const PREGAME_QID:int = 31337;
+		public static const PREGAME_QID:int = 31338;
 		
 		// CID = 1	5pm release on 5/16
 		
@@ -75,6 +75,7 @@ package
 		public static const ACTION_SKIP_STARTPOPUP_TIP:int = 20;
 		public static const ACTION_SKIP_STARTINCOMPLETE:int = 21;
 		public static const ACTION_SKIP_LEVELCOMPLETE:int = 22;
+		public static const ACTION_QUIT_TO_MAIN_MENU:int = 23;
 		
 		public static function logAction(aid:int, data:Object = null):void {
 			if (!DEBUG) {

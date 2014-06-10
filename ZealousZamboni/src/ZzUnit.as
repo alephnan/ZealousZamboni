@@ -63,6 +63,9 @@ package
 					pitCounter++;
 				}
 			});
+			if (!FlxG.paused && PlayState.TUTORIAL && pitCounter > 0 && !Tutorial.PIT_ALERT) {
+				PlayState(FlxG.state).tutorialState.handlePitCallout();
+			}
 			var fallCounter:int = 8;
 			//If we're over a pit, we fall in
 			//This calculation looks super weird. What we're doing is basically
@@ -77,6 +80,7 @@ package
 				alive = false;
 				new ZzTimer().start(.2, fallCounter, function(t:ZzTimer) : void {
 					if (t.finished) {
+						LevelIncompletePopup.LEVEL_LOST_REASON = LevelIncompletePopup.PITFALL;
 						finalDeath();
 					}else {
 						scale.x /= 1.5;

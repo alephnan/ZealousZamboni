@@ -41,7 +41,8 @@ package
 			button.loadGraphic(Media.goArrowPNG);
 			
 			// level text
-			var lvlTxt:FlxText = new FlxText(FlxG.width / 2 - 140, FlxG.height / 2 - 105, 300, "Level " + FlxG.level, true);
+			var levelStr:String = (FlxG.level == 0) ? "Warm-up" : "Level " + FlxG.level;
+			var lvlTxt:FlxText = new FlxText(FlxG.width / 2 - 140, FlxG.height / 2 - 105, 300, levelStr, true);
 			lvlTxt.setFormat("poster", 45, 0x000000, "center");
 			
 			// goal text
@@ -100,8 +101,8 @@ package
 				onComplete(null);
 			} else {
 				// only load tips for version A
-				if (tipScreen == false && ZzLog.ABversion() == 0) {
-					
+				//if (tipScreen == false && ZzLog.ABversion() == 0) {
+				if (false) {
 					setAll("exists", false, false);
 					skipTxt.exists = true;
 					timer = new FlxTimer().start(2, 1, onComplete);

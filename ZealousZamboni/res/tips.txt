@@ -2,7 +2,7 @@
 Clear trails to collect mini-stars;
 Skaters always try to turn to their left;
 500 mini stars earns 1 big star;
-When skaters cannot go anywhere, they blow up;
+When skaters cross bad ice, they sink;
 the bar above the skater indicates its progress on the ice;
 Use the reset button if you think you cannot win;
 Watch out for tight spots where skaters get stuck easily;

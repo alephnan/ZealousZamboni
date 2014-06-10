@@ -1,6 +1,6 @@
 package  
 {
-	import org.flixel.FlxTimer;
+	import org.flixel.*;
 	/**
 	 * ...
 	 * @author Dana Van Aken
@@ -12,6 +12,12 @@ package
 		{
 			super();
 			ZzUtils.registerTimer(this);
+		}
+		
+		override public function update():void {
+			if (!FlxG.paused) {
+				super.update();
+			}
 		}
 		
 	}

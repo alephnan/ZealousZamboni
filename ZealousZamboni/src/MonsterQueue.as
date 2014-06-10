@@ -18,6 +18,18 @@ package
 			zombies.push(sd);
 		}
 		
+		public function zombiesFinished():Boolean {
+			return zombies.length == 0 && countLiving() == 0;
+		}
+		
+		public function zombiesLeft():uint {
+			return zombies.length;
+		}
+		
+		public function activeZombies():uint {
+			return countLiving();
+		}
+		
 		public function startTimer():void {
 			this.zombies.sortOn("startTime", Array.NUMERIC | Array.DESCENDING);
 			for each (var zombie:SpriteData in zombies) {

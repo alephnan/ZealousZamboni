@@ -20,13 +20,12 @@ package
 		public static const ZOMBIES_INDEX:uint = 3;
 		
 		private var levelLoader:LevelLoader;
+		
+		public static var TUTORIAL:Boolean;
+		public var tutorialState:Tutorial;
    
 		//Set of all blocks in the level
 		public var level:FlxTilemap;
-		
-		//public var levelNum:uint = 1;
-		
-		//public var skatersFinished:Boolean = false;
 		
 		//Set of all sprites active in the level (including the player)
 		public var activeSprites:Array;
@@ -42,6 +41,8 @@ package
 		
 		public var pauseGroup:FlxGroup;
 		
+		public var subLevel:FlxTilemap;
+		
 		private static const MOUSE_CURRENTLY_PRESSED:int = 0;
 		private static const MOUSE_NOT_PRESSED:int = 1;
 		private static const MOUSE_JUST_CLICKED:int = 2;
@@ -56,17 +57,13 @@ package
 		
 		private var levelEnded : Boolean;
 		
-		//Minimum number of points player must achieve by time limit to win level
-		//private var playerGoalPoints:uint = 50;
-		
 		//Time that the level lasts for
 		private var levelTime:Number = 30;
 		
 		override public function create() : void {
-			//FlxG.bgColor = 0xffaaaaaa;
 			levelLoader = new LevelLoader();
 			activeSprites = new Array();
-			
+			trace("FlxG.level = " + FlxG.level);
 			levelLoader.loadLevel(FlxG.level);
 			level = levelLoader.getTilemap();
 			levelTime = levelLoader.levelTime;
@@ -75,15 +72,15 @@ package
 			add(level);
 			player = levelLoader.getPlayer();
 			activeSprites.push(player);
-			add(player);
 			startSprites(levelLoader.getSpriteQueues());
+			add(player);
 			hud = new ZzHUD(player, levelTime, playerPoints);
-			add(hud);
+			
 			ZzLog.logLevelStart(levelLoader.levelQId);
 			
 			pauseGroup = new FlxGroup();
 			add(pauseGroup);
-			
+			pauseGroup.add(hud);
 			FlxG.mouse.show();
 			//First element in mouseHistory is a header containing metadata
 			mouseHistory.push( { "interval" : MOUSE_LOG_INTERVAL, "start" : new Date().time} );
@@ -93,10 +90,17 @@ package
 			levelEnded = false;
 			player.postConstruct(addDep);
 			
+			TUTORIAL = false;
+			if (FlxG.level == 0) {
+				TUTORIAL = true;
+				tutorialState = new Tutorial(level);
+				pauseGroup.add(tutorialState);
+			}
+			
 			onStart();
 			
 		}
-		
+
 		public function onStart():void {
 			var images:Array = levelLoader.getPopupImages();
 			var popup : LevelStartPopup;
@@ -169,6 +173,8 @@ package
 			}
 			if (playerPoints.checkWin()) {
 				winLevel();
+			} else if (hud.quitToMenu()) {
+				gotoMain();
 			}else {
 				loseLevel();
 			}
@@ -189,6 +195,12 @@ package
 				// load level complete popup
 				pauseGroup.add(new LevelCompletePopup());
 			}
+		}
+		
+		private function gotoMain():void {
+			mouseTimer.stop()
+			ZzLog.logLevelEnd(false, mouseHistory, 0);
+			FlxG.switchState(new MenuState());
 		}
 		
 		private function loseLevel():void {

@@ -12,7 +12,7 @@ package
 		
 		//The one and only place the starting level should be defined
 		//This in general is 1, but can be set to others for debugging porpoises (they have a lot of bugs in them, I guess)
-		public static var STARTING_LEVEL:uint = 15;
+		public static var STARTING_LEVEL:uint = 0;
 		
 		private static var TIMERS:Array = new Array();
 		
@@ -90,6 +90,17 @@ package
 				copy[i] = orig[i];
 			}
 			return copy;
+		}
+		
+		public static function parseRects(rectsStr:String):Array {
+			var rects:Array = new Array();
+			//var rectsStr:String = xml.@doors;
+			var rectsStr2:Array = rectsStr.split("|");
+			for each (var r:String in rectsStr2) {
+				var rect:Array = r.split(",");
+				rects.push(new FlxRect(rect[0], rect[1], rect[2], rect[3]));
+			}
+			return rects;
 		}
 		
 		public static function registerTimer(timer:ZzTimer):void {

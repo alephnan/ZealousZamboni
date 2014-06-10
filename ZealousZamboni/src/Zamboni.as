@@ -24,7 +24,7 @@ package
 		// constants for sliding motion on ice.
 		// variable names "acceleration" and "friction" already inherited used by ZzUnit
 		private var CUSTOM_ACCELERATION:Number = 50;
-		private static const CUSTOM_FRICTION:Number = 5;
+		private static const CUSTOM_FRICTION:Number = 7;
 		private var tireChains:Boolean = false;
 		// how far a trail can be away from zamboni boundary area, and still be considered overlap
 		private static const ZAMBONI_TRAIL_CLEANING_TOLERANCE : uint = 6;
@@ -36,7 +36,7 @@ package
 		//FlxG.debug = true;
 		//FlxG.visualDebug = true;
 		
-		public function Zamboni(startX:Number, startY:Number, level:FlxTilemap) {
+		public function Zamboni(startX:Number, startY:Number, level:FlxTilemap, startDir:String = null) {
 			super(startX, startY);
 			levelCopy = ZzUtils.copyArray(level.getData(false));
 			this.level = level;
@@ -55,7 +55,10 @@ package
 			// initial bounding box of zamboni
 			horizontal = true;
 			orientboundingBoxHorizontal();
-			play("walkWest");
+			if (startDir == null || startDir == "")
+				play("walkW");
+			else
+				play(startDir);
 		}
 		
 		/*
@@ -144,28 +147,6 @@ package
 			// checks for rotation along wall
 			wallHug(oldhorizontal);
 		}
-		
-		/*public function updatePlayerHealth(updateAmount:Number, penalty:Boolean = true):void {
-			if (updateAmount <= 0)
-				return;
-			if (penalty) {
-				hurt(updateAmount);
-			} else {
-				if (health + updateAmount > PlayerPoints.PLAYER_MAX_HEALTH) {
-					health = PlayerPoints.PLAYER_MAX_HEALTH;
-				} else {
-					health += updateAmount;
-				}
-			}
-		}
-		
-		override public function hurt(damage:Number):void {
-			if (health - damage < 0) {
-				health = 0;
-			} else {
-				health -= damage;
-			}
-		}*/
 		
 		/*  Prevents zamboni from rotating when next to wall.  This would cause a glitch where
 			zamboni can "rotate out" of wall, and drive off the rink! 
@@ -355,8 +336,14 @@ package
 				
 				// accelerate zamboni in direction of mouse
 				activeMotion(xDirection, yDirection, dx, dy);
-			} else if (FlxG.keys.pressed("W") || FlxG.keys.pressed("S") || FlxG.keys.pressed("A") ||
-						FlxG.keys.pressed("D") ) {
+			} else if (FlxG.keys.pressed("W") || 
+					   FlxG.keys.pressed("S") || 
+					   FlxG.keys.pressed("A") ||
+					   FlxG.keys.pressed("D") || 
+					   FlxG.keys.pressed("UP") || 
+					   FlxG.keys.pressed("DOWN") || 
+					   FlxG.keys.pressed("LEFT") ||
+					   FlxG.keys.pressed("RIGHT")) {
 				//Logic for using keyboard instead of arrow keys
 				//We essentially approximate mouse movement
 				xDirection = 0;
@@ -366,22 +353,22 @@ package
 				//Normal zamboni acceleration depends on distance mouse is from zamboni, so here we hardcode it
 				//to 320-- which is almost max distance
 				var dm:Number = 320;
-				if (FlxG.keys.pressed("W")) {
+				if (FlxG.keys.pressed("W") || FlxG.keys.pressed("UP")) {
 					yDirection -= 1;
 					dy += dm;
 					faceNorth();
 				}
-				if (FlxG.keys.pressed("S")) {
+				if (FlxG.keys.pressed("S") || FlxG.keys.pressed("DOWN")) {
 					yDirection += 1;
 					dy += dm;
 					faceSouth();
 				}
-				if (FlxG.keys.pressed("A")) {
+				if (FlxG.keys.pressed("A") || FlxG.keys.pressed("LEFT")) {
 					xDirection -= 1;
 					dx -= dm;
 					faceWest();
 				}
-				if (FlxG.keys.pressed("D")) {
+				if (FlxG.keys.pressed("D")  || FlxG.keys.pressed("RIGHT")) {
 					xDirection += 1;
 					dx += dm;
 					faceEast();
@@ -437,6 +424,20 @@ package
 			super.destroy();
 			level = null;
 			levelCopy = null;
+		}
+		
+		public function resetZamboni(startx:uint, starty:uint, startDir:String):void {
+			this.reset(startx, starty);
+			this.scale = new FlxPoint(1, 1);
+			play(startDir);
+			maxVelocity.x = 170;
+			maxVelocity.y = 170;
+			velocity.x = 0;
+			velocity.y = 0;
+			
+			// initial bounding box of zamboni
+			horizontal = true;
+			orientboundingBoxHorizontal();
 		}
 	}
 	

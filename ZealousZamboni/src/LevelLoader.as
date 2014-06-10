@@ -36,7 +36,7 @@ package
 		//public static const TRAIL_TILE_INDEX:uint = 1078; // starting index of first trail color, that skater leaves
 		public static const TRAIL_TILE_INDEX:uint = 4800; // starting index of first trail color, that skater leaves
 		//public static const NUM_COLORS:uint = 10; // number of different trail colors
-		public static const NUM_COLORS:uint = 4; // number of different trail tiles
+		public static const NUM_COLORS:uint = 160; // number of different trail tiles
 		//public static const PIT_INDEX:uint = 1028;
 		public static const PIT_INDEX:uint = 5120;
 		public static const PIT_END:uint = 5360;
@@ -83,38 +83,36 @@ package
 		private static const INTERMEDIATE_TIPS_INDEX:uint = 12;
 		
 		
-		//done
+		public const Level0QId:uint = 304;
+		[Embed(source = '../res/level304.txt', mimeType = "application/octet-stream")] public const Level0Csv:Class;
+		[Embed(source = "../res/level304.xml", mimeType = "application/octet-stream")] public const Level0XML:Class;
+		[Embed(source = "../res/level304_ruts.txt", mimeType = "application/octet-stream")] public const Level0Ruts:Class;
+		
 		public const Level1QId:uint = 301;
 		[Embed(source = '../res/level301.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
-		//[Embed(source = '../res/test.txt', mimeType = "application/octet-stream")] public const Level1Csv:Class;
 		[Embed(source = "../res/level206.xml", mimeType = "application/octet-stream")] public const Level1XML:Class;
-		[Embed(source = "../res/level301_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class; 
+		[Embed(source = "../res/level301_ruts.txt", mimeType = "application/octet-stream")] public const Level1Ruts:Class;
 		
-		//done
 		public const Level1BQId:uint = 256;
 		[Embed(source = '../res/level256.txt', mimeType = "application/octet-stream")] public const Level1BCsv:Class;
 		[Embed(source = "../res/level256.xml", mimeType = "application/octet-stream")] public const Level1BXML:Class;
 		[Embed(source = "../res/level256_ruts.txt", mimeType = "application/octet-stream")] public const Level1BRuts:Class; 
 		
-		// done
 		public const Level2QId:uint = 302;
 		[Embed(source = '../res/level302.txt', mimeType = "application/octet-stream")] public var Level2Csv:Class;
 		[Embed(source = "../res/level302.xml", mimeType = "application/octet-stream")] public var Level2XML:Class;
 		//[Embed(source = "../res/level208_ruts.txt", mimeType = "application/octet-stream")] public var Level2Ruts:Class; 
 		
-		// done
 		public const Level2BQId:uint = 257;
 		[Embed(source = '../res/level257.txt', mimeType = "application/octet-stream")] public var Level2BCsv:Class;
 		[Embed(source = "../res/level257.xml", mimeType = "application/octet-stream")] public var Level2BXML:Class;
 		[Embed(source = "../res/level257_ruts.txt", mimeType = "application/octet-stream")] public var Level2BRuts:Class; 
 		
-		// done
 		public const Level3QId:uint = 303;
 		[Embed(source = '../res/level303.txt', mimeType = "application/octet-stream")] public var Level3Csv:Class;
 		[Embed(source = "../res/level303.xml", mimeType = "application/octet-stream")] public var Level3XML:Class;
 		//[Embed(source = "../res/level209_ruts.txt", mimeType = "application/octet-stream")] public var Level3Ruts:Class; 
 		
-		// done
 		public const Level3BQId:uint = 258;
 		[Embed(source = '../res/level258.txt', mimeType = "application/octet-stream")] public var Level3BCsv:Class;
 		[Embed(source = "../res/level258.xml", mimeType = "application/octet-stream")] public var Level3BXML:Class;
@@ -122,22 +120,18 @@ package
 		
 		
 		/**/
-		// done
 		public const Level4QId:uint = 101;
 		[Embed(source = '../res/level101.txt', mimeType = "application/octet-stream")] public var Level4Csv:Class;
 		[Embed(source = "../res/level101.xml", mimeType = "application/octet-stream")] public var Level4XML:Class;
 		
-		// done
 		public const Level4BQId:uint = 251;
 		[Embed(source = '../res/level251.txt', mimeType = "application/octet-stream")] public var Level4BCsv:Class;
 		[Embed(source = "../res/level251.xml", mimeType = "application/octet-stream")] public var Level4BXML:Class;
 		
-		// done
 		public const Level5QId:uint = 102;
 		[Embed(source = '../res/level102.txt', mimeType = "application/octet-stream")] public var Level5Csv:Class;
 		[Embed(source = "../res/level102.xml", mimeType = "application/octet-stream")] public var Level5XML:Class;
 		
-		// done
 		public const Level5BQId:uint = 252;
 		[Embed(source = '../res/level252.txt', mimeType = "application/octet-stream")] public var Level5BCsv:Class;
 		[Embed(source = "../res/level252.xml", mimeType = "application/octet-stream")] public var Level5BXML:Class;
@@ -253,7 +247,7 @@ package
 		[Embed(source = '../res/level221.txt', mimeType = "application/octet-stream")] public var Level18BCsv:Class;
 		[Embed(source = "../res/level221.xml", mimeType = "application/octet-stream")] public var Level18BXML:Class;
 		
-		public static const NUM_LEVELS:uint = 18;
+		public static const NUM_LEVELS:uint = 19;	// This includes the tutorial
 		
 		private var level:FlxTilemap;
 		
@@ -271,6 +265,10 @@ package
 		private var DEBUG:Boolean;
 		
 		public var goalPoints:uint;
+		
+		private var doors:Array;
+		
+		private var rooms:Array;
 		/**
 		 * The qId for the current level.
 		 */
@@ -280,6 +278,7 @@ package
 		
 		public function LevelLoader(debugEnabled:Boolean = false) {
 			this.DEBUG = debugEnabled;
+			doors = null;
 		}
 		
 		/**
@@ -326,7 +325,6 @@ package
 		public function getPopupImages():Array {
 			return popupImages;
 		}
-		
 		
 		public static function isSolid(tileIndex:uint) : Boolean {
 			/*if (isWall(tileIndex))
@@ -440,13 +438,14 @@ package
 			// Zamboni starting coordinates
 			var zamboniX:int = parseInt(xml.zamboni.@x);
 			var zamboniY:int = parseInt(xml.zamboni.@y);
+			var zStartDir:String = xml.zamboni.@startDir;
 			if (DEBUG)
 				trace("zamboni x = " + zamboniX + ", zamboni y = " + zamboniY);
 			if (resize) {
 				zamboniX *= resizeX;
 				zamboniY *= resizeY;
 			}
-			player = new Zamboni(zamboniX, zamboniY, level);
+			player = new Zamboni(zamboniX, zamboniY, level, zStartDir);
 			//addUnit(player);
 			
 			player.health = lives;
@@ -457,8 +456,8 @@ package
 				var skaterY:int = s.@y;
 				var skaterTX:int = s.@toX;
 				var skaterTY:int = s.@toY;
-				if (DEBUG)
-					trace("skater x = " + skaterX + ", skater y = " + skaterY);
+				//if (DEBUG)
+					trace("skaterT x = " + skaterTX + ", skaterT y = " + skaterTY);
 				if (resize) {
 					skaterX *= resizeX;
 					skaterY *= resizeY;
